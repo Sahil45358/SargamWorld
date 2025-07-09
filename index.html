@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sargam Collection 🎶</title>
+  <title>सारगम संग्रह 🎶</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a2e0e6a67a.js" crossorigin="anonymous"></script>
@@ -12,35 +12,55 @@
   <header>
     <div class="logo">
       <i class="fas fa-music"></i>
-      <h1>Sargam Collection</h1>
+      <h1>सारगम संग्रह</h1>
     </div>
-    <p>Explore notations of Indian Classical, Bollywood, and Marathi songs</p>
+    <p>भारतीय राग, बॉलीवुड व मराठी गीतों की सारगम</p>
   </header>
 
   <main>
+    <section class="learning-swar">
+      <h2>स्वर परिचय 🎼</h2>
+      <ul>
+        <li><strong>शुद्ध स्वर (स म प ध नि):</strong> मूल स्वर—उच्चारण सामान्य।</li>
+        <li><strong>कोमल स्वर (रे ग ध नी):</strong> एक स्वर नीचे—flat स्वर।</li>
+        <li><strong>तीव्र स्वर (म):</strong> एक स्वर ऊपर—sharp स्वर।</li>
+      </ul>
+    </section>
+
     <section class="song-list" id="songs-list">
-      <!-- Example song -->
       <article>
-        <h2>🎵 Sa Re Ga Ma</h2>
+        <h2>🎵 लग जा गले</h2>
+        <p><em>लता मंगेशकर</em></p>
         <pre>
-S R G M | P D N S'
-S' N D P | M G R S
+लग जा गले कि फिर ये                   पल / हा…  
+ ग रे ग – रे ग – / ग रे ग – रे ग – –
+
+हो… /– – – –
+ ग ग रे ग रे सा / सा रे ग – रे रे – –
+
+शायद कि फिर इस जन्म में / मुलाक़ात हो ना हो  
+ .प .ध ध / .ध ध – / .नि रे .नि .ध .प –
+
+लग जा गले कि फिर ये पल हो ना हो  
+ .प प प – प ध / प म ध प म ग ग –
+
+(बाकी कोरस इसी पैटर्न में…)
         </pre>
       </article>
     </section>
 
     <section class="form-section">
-      <h3>🎶 Submit a New Sargam</h3>
+      <h3>🎶 नया सारगम जोड़ें</h3>
       <form id="sargamForm">
-        <input type="text" id="songTitle" placeholder="Enter Song Title" required />
-        <textarea id="songSargam" rows="6" placeholder="Enter Sargam Notation..." required></textarea>
-        <button type="submit"><i class="fas fa-plus-circle"></i> Add Song</button>
+        <input type="text" id="songTitle" placeholder="गीत का नाम" required />
+        <textarea id="songSargam" rows="6" placeholder="सारगम यहाँ लिखें..." required></textarea>
+        <button type="submit"><i class="fas fa-plus-circle"></i> जोड़ें</button>
       </form>
     </section>
   </main>
 
   <footer>
-    <p>🎧 Made with love for Indian music lovers.</p>
+    <p>🎧 भारतीय संगीत प्रेमियों के लिए प्यार से बनाया गया।</p>
   </footer>
 
   <script src="script.js"></script>
