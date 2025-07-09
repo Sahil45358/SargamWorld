@@ -10,13 +10,15 @@ document.getElementById('sargamForm').addEventListener('submit', function(e) {
     document.getElementById('songs-list').appendChild(article);
     this.reset();
   }
-  document.getElementById('searchInput').addEventListener('keyup', function () {
+  });
+
+ document.getElementById('searchInput').addEventListener('input', function () {
   const filter = this.value.toLowerCase();
   const cards = document.querySelectorAll('.song-card');
 
   cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
+    const text = card.textContent.toLowerCase();
     card.style.display = text.includes(filter) ? 'block' : 'none';
   });
 });
-});
+
