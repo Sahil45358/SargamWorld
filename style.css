@@ -1,44 +1,106 @@
+/* Fonts & base */
 body {
-  font-family: sans-serif;
-  line-height: 1.6;
-  background: #f4f4f4;
   margin: 0;
-  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #fff8f0;
+  color: #333;
 }
 
 header {
-  background: #6200ea;
-  color: #fff;
-  padding: 1rem;
+  background: linear-gradient(to right, #240b36, #c31432);
+  color: white;
+  padding: 2rem 1rem;
   text-align: center;
 }
 
-main {
-  padding: 1rem;
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-article {
-  background: #fff;
-  margin-bottom: 1rem;
+.logo i {
+  font-size: 2rem;
+}
+
+.logo h1 {
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+}
+
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.song-list article {
+  background-color: #fff;
+  border-left: 5px solid #c31432;
   padding: 1rem;
-  border-left: 5px solid #6200ea;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.song-list h2 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+pre {
+  background: #f7f7f7;
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: monospace;
+}
+
+.form-section {
+  background: #fdf3f3;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.form-section h3 {
+  margin-top: 0;
+  color: #c31432;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 input, textarea {
-  padding: 0.5rem;
+  padding: 0.8rem;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 button {
-  background: #6200ea;
-  color: #fff;
+  background-color: #c31432;
+  color: white;
   border: none;
-  padding: 0.5rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #a00d25;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #999;
 }
