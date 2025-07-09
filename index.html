@@ -3,20 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sargam Collection</title>
+  <title>Sargam Collection 🎶</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e0e6a67a.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
-    <h1>Sargam Collection</h1>
-    <p>Indian Classical, Bollywood & Marathi Songs</p>
+    <div class="logo">
+      <i class="fas fa-music"></i>
+      <h1>Sargam Collection</h1>
+    </div>
+    <p>Explore notations of Indian Classical, Bollywood, and Marathi songs</p>
   </header>
 
   <main>
-    <section id="songs-list">
+    <section class="song-list" id="songs-list">
       <!-- Example song -->
       <article>
-        <h2>Sa Re Ga Ma (Example Song)</h2>
+        <h2>🎵 Sa Re Ga Ma</h2>
         <pre>
 S R G M | P D N S'
 S' N D P | M G R S
@@ -24,15 +29,19 @@ S' N D P | M G R S
       </article>
     </section>
 
-    <section id="submit">
-      <h3>Submit a New Sargam</h3>
+    <section class="form-section">
+      <h3>🎶 Submit a New Sargam</h3>
       <form id="sargamForm">
-        <input type="text" id="songTitle" placeholder="Song Title" required />
-        <textarea id="songSargam" placeholder="Enter Sargam here..." required></textarea>
-        <button type="submit">Add Song</button>
+        <input type="text" id="songTitle" placeholder="Enter Song Title" required />
+        <textarea id="songSargam" rows="6" placeholder="Enter Sargam Notation..." required></textarea>
+        <button type="submit"><i class="fas fa-plus-circle"></i> Add Song</button>
       </form>
     </section>
   </main>
+
+  <footer>
+    <p>🎧 Made with love for Indian music lovers.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
