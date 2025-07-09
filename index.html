@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sargam Collection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Sargam Collection</h1>
+    <p>Indian Classical, Bollywood & Marathi Songs</p>
+  </header>
+
+  <main>
+    <section id="songs-list">
+      <!-- Example song -->
+      <article>
+        <h2>Sa Re Ga Ma (Example Song)</h2>
+        <pre>
+S R G M | P D N S'
+S' N D P | M G R S
+        </pre>
+      </article>
+    </section>
+
+    <section id="submit">
+      <h3>Submit a New Sargam</h3>
+      <form id="sargamForm">
+        <input type="text" id="songTitle" placeholder="Song Title" required />
+        <textarea id="songSargam" placeholder="Enter Sargam here..." required></textarea>
+        <button type="submit">Add Song</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
