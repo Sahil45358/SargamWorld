@@ -119,6 +119,58 @@ button:hover {
   background-color: #a00d25;
 }
 
+.hero {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(to right, #240b36, #c31432);
+  color: #fff;
+  border-radius: 0 0 10px 10px;
+}
+
+.search {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.search input {
+  padding: 0.7rem;
+  width: 60%;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.song-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem 2rem;
+}
+
+.song-card {
+  background-color: #fff;
+  padding: 1rem;
+  width: 280px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.song-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.song-card h3 {
+  margin-top: 0;
+}
+
+.song-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
 footer {
   text-align: center;
   padding: 1rem;
