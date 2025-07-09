@@ -12,13 +12,14 @@ document.getElementById('sargamForm').addEventListener('submit', function(e) {
   }
   });
 
- document.getElementById('searchInput').addEventListener('input', function () {
-  const filter = this.value.toLowerCase();
-  const cards = document.querySelectorAll('.song-card');
+  document.getElementById('searchInput').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.song-card');
 
-  cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(filter) ? 'block' : 'none';
+    cards.forEach(card => {
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      const desc = card.querySelector('p').textContent.toLowerCase();
+      const match = title.includes(filter) || desc.includes(filter);
+      card.style.display = match ? 'block' : 'none';
+    });
   });
-});
-
