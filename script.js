@@ -1,3 +1,4 @@
+<script>
 document.getElementById('sargamForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -23,3 +24,4 @@ document.getElementById('sargamForm').addEventListener('submit', function(e) {
       card.style.display = match ? 'block' : 'none';
     });
   });
+</script>
