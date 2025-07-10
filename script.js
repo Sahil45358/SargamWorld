@@ -24,4 +24,26 @@ document.getElementById('sargamForm').addEventListener('submit', function(e) {
       card.style.display = match ? 'block' : 'none';
     });
   });
+
+function filterSongs() {
+  const input = document.getElementById('searchBar').value.toLowerCase();
+  const cards = document.getElementsByClassName('song-card');
+  for (let card of cards) {
+    const title = card.querySelector('h3').innerText.toLowerCase();
+    card.style.display = title.includes(input) ? 'block' : 'none';
+  }
+}
+
+function filterByLetter(letter) {
+  const cards = document.getElementsByClassName('song-card');
+  for (let card of cards) {
+    const title = card.querySelector('h3').innerText.toLowerCase();
+    if (letter === 'all') {
+      card.style.display = 'block';
+    } else {
+      card.style.display = title.startsWith(letter) ? 'block' : 'none';
+    }
+  }
+}
 </script>
+
