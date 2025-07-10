@@ -151,13 +151,14 @@ window.onload = function sortSongsAZ() {
   const cards = Array.from(list.getElementsByClassName('song-card'));
 
   cards.sort((a, b) => {
-    const titleA = a.querySelector('h3').innerText.toLowerCase();
-    const titleB = b.querySelector('h3').innerText.toLowerCase();
+    const titleA = a.querySelector('h3').innerText.replace(/🎵\s*/g, '').toLowerCase();
+    const titleB = b.querySelector('h3').innerText.replace(/🎵\s*/g, '').toLowerCase();
     return titleA.localeCompare(titleB);
   });
 
   cards.forEach(card => list.appendChild(card));
 };
+
 </script>
 
   <footer>
