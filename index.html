@@ -20,6 +20,39 @@
   <section class="search">
    <input type="text" id="searchInput" placeholder="Search songs...">
   </section>
+<!-- Search Bar -->
+<input type="text" id="searchBar" placeholder="Search songs..." onkeyup="filterSongs()" />
+
+<!-- A-Z Filter -->
+<div id="azFilter">
+  <button onclick="filterByLetter('all')">All</button>
+  <button onclick="filterByLetter('a')">A</button>
+  <button onclick="filterByLetter('b')">B</button>
+  <button onclick="filterByLetter('c')">C</button>
+  <button onclick="filterByLetter('d')">D</button>
+  <button onclick="filterByLetter('e')">E</button>
+  <button onclick="filterByLetter('f')">F</button>
+  <button onclick="filterByLetter('j')">J</button>
+  <button onclick="filterByLetter('h')">H</button>
+  <button onclick="filterByLetter('i')">I</button>
+  <button onclick="filterByLetter('j')">J</button>
+  <button onclick="filterByLetter('k')">K</button>
+  <button onclick="filterByLetter('l')">L</button>
+  <button onclick="filterByLetter('m')">M</button>
+  <button onclick="filterByLetter('n')">N</button>
+  <button onclick="filterByLetter('o')">O</button>
+  <button onclick="filterByLetter('p')">P</button>
+  <button onclick="filterByLetter('q')">Q</button>
+  <button onclick="filterByLetter('r')">R</button>
+  <button onclick="filterByLetter('s')">S</button>
+  <button onclick="filterByLetter('t')">T</button>
+  <button onclick="filterByLetter('u')">U</button>
+  <button onclick="filterByLetter('v')">V</button>
+  <button onclick="filterByLetter('w')">W</button>
+  <button onclick="filterByLetter('x')">X</button>
+  <button onclick="filterByLetter('y')">Y</button>
+  <button onclick="filterByLetter('z')">Z</button>
+</div>
 
   <section id="songList" class="song-list">
   <div class="song-card">
