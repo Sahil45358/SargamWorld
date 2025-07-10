@@ -19,6 +19,12 @@
 
 <!-- Search Bar -->
 <input type="text" id="searchBar" placeholder="Search songs..." onkeyup="filterSongs()" />
+<label for="genreFilter">Filter by Genre:</label>
+<select id="genreFilter" onchange="filterByGenre()">
+  <option value="all">All</option>
+  <option value="romantic">Romantic</option>
+  <option value="devotional">Devotional</option>
+</select>
 
   <section id="songList" class="song-list">
  <div class="song-card" data-genre="romantic">
