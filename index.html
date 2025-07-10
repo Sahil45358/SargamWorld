@@ -147,18 +147,19 @@ function filterSongs() {
 }
 
 window.onload = function sortSongsAZ() {
-  const list = document.querySelector('.song-list');
+  const list = document.getElementById('songList'); // your actual container
   const cards = Array.from(list.getElementsByClassName('song-card'));
 
+  // Extract plain text title (without emojis or symbols)
   cards.sort((a, b) => {
-    const titleA = a.querySelector('h3').innerText.replace(/🎵\s*/g, '').toLowerCase();
-    const titleB = b.querySelector('h3').innerText.replace(/🎵\s*/g, '').toLowerCase();
+    const titleA = a.querySelector('h3').innerText.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+    const titleB = b.querySelector('h3').innerText.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
     return titleA.localeCompare(titleB);
   });
 
+  // Re-append sorted cards
   cards.forEach(card => list.appendChild(card));
 };
-
 </script>
 
   <footer>
