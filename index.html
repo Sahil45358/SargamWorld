@@ -286,6 +286,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     doc.save(`${title}.pdf`);
   }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const content = document.querySelector("pre, .sargam-content");
+  if (content) {
+    const button = document.createElement("button");
+    button.textContent = "Download PDF";
+    button.style.marginTop = "20px";
+    button.onclick = downloadPDF;
+    content.parentNode.insertBefore(button, content.nextSibling);
+  }
+});
+
+
 </script>
 
 
