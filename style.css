@@ -241,4 +241,14 @@ footer {
   background: linear-gradient(to right, #e8f5e9, #c8e6c9);
   color: #1b5e20;
 }
+.genre-badge.sad {
+  border-color: #9c27b0;
+  background: linear-gradient(to right, #f3e5f5, #e1bee7);
+  color: #4a148c;
+}
 
+.genre-badge.patriotic {
+  border-color: #ef6c00;
+  background: linear-gradient(to right, #fff3e0, #ffe0b2);
+  color: #e65100;
+}
