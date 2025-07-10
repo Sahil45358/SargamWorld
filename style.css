@@ -203,3 +203,29 @@ footer {
 #azFilter button:hover {
   background: #ccc;
 }
+#genreFilter {
+  margin: 10px 0;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.genre-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  color: #fff;
+  background-color: #555;
+}
+
+.genre-badge.romantic {
+  background-color: #e91e63;
+}
+
+.genre-badge.devotional {
+  background-color: #4caf50;
+}
