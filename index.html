@@ -111,43 +111,15 @@
 
    
 <script>
-document.getElementById('sargamForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  const title = document.getElementById('songTitle').value.trim();
-  const sargam = document.getElementById('songSargam').value.trim();
-
-  if (title && sargam) {
-    const article = document.createElement('article');
-    article.innerHTML = `<h2>🎵 ${title}</h2><pre>${sargam}</pre>`;
-    document.getElementById('songs-list').appendChild(article);
-    this.reset();
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  // STEP 1: Remove 🎵 emojis BEFORE sorting
+  const titles = document.querySelectorAll('.song-card h3');
+  titles.forEach(title => {
+    title.innerText = title.innerText.replace(/🎵\s*/g, '');
   });
 
-  document.getElementById('searchInput').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    const cards = document.querySelectorAll('.song-card');
-
-    cards.forEach(card => {
-      const title = card.querySelector('h3').textContent.toLowerCase();
-      const desc = card.querySelector('p').textContent.toLowerCase();
-      const match = title.includes(filter) || desc.includes(filter);
-      card.style.display = match ? 'block' : 'none';
-    });
-  });
-
-function filterSongs() {
-  const input = document.getElementById('searchBar').value.toLowerCase();
-  const cards = document.getElementsByClassName('song-card');
-  for (let card of cards) {
-    const title = card.querySelector('h3').innerText.toLowerCase();
-    card.style.display = title.includes(input) ? 'block' : 'none';
-  }
-}
-
-window.onload = function sortSongsAZ() {
-  const list = document.querySelector('.song-list');
+  // STEP 2: Sort alphabetically AFTER emoji removal
+  const list = document.getElementById('songList');
   const cards = Array.from(list.getElementsByClassName('song-card'));
 
   cards.sort((a, b) => {
@@ -157,15 +129,18 @@ window.onload = function sortSongsAZ() {
   });
 
   cards.forEach(card => list.appendChild(card));
-};
 
-document.addEventListener('DOMContentLoaded', () => {
-  const titles = document.querySelectorAll('.song-card h3');
-  titles.forEach(title => {
-    title.innerText = title.innerText.replace(/🎵\s*/g, '');
+  // STEP 3: Enable search
+  document.getElementById('searchBar').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    cards.forEach(card => {
+      const title = card.querySelector('h3').innerText.toLowerCase();
+      card.style.display = title.includes(filter) ? 'block' : 'none';
+    });
   });
 });
 </script>
+
 
 
   <footer>
