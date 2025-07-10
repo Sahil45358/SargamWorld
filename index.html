@@ -146,21 +146,21 @@ function filterSongs() {
   }
 }
 
-window.onload = function sortSongsAZ() {
-  const list = document.getElementById('songList'); // your actual container
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const list = document.getElementById('songList');
   const cards = Array.from(list.getElementsByClassName('song-card'));
 
-  // Extract plain text title (without emojis or symbols)
   cards.sort((a, b) => {
     const titleA = a.querySelector('h3').innerText.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
     const titleB = b.querySelector('h3').innerText.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
     return titleA.localeCompare(titleB);
   });
 
-  // Re-append sorted cards
   cards.forEach(card => list.appendChild(card));
-};
+});
 </script>
+
 
   <footer>
     <p>🎧 Made with love for Indian music lovers.</p>
