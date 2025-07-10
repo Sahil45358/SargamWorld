@@ -214,18 +214,27 @@ footer {
 }
 .genre-badge {
   display: inline-block;
-  padding: 4px 10px;
-  margin-top: 8px;
+  margin-top: 10px;
+  padding: 4px 12px;
   font-size: 0.8rem;
-  border-radius: 12px;
-  color: #fff;
-  background-color: #555;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  color: #333;
 }
 
 .genre-badge.romantic {
-  background-color: #e91e63;
+  border-color: #e91e63;
+  background: linear-gradient(to right, #fce4ec, #f8bbd0);
+  color: #880e4f;
 }
 
 .genre-badge.devotional {
-  background-color: #4caf50;
+  border-color: #4caf50;
+  background: linear-gradient(to right, #e8f5e9, #c8e6c9);
+  color: #1b5e20;
 }
+
