@@ -146,17 +146,24 @@ function filterSongs() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const list = document.getElementById('songList');
+window.onload = function sortSongsAZ() {
+  const list = document.querySelector('.song-list');
   const cards = Array.from(list.getElementsByClassName('song-card'));
 
   cards.sort((a, b) => {
-    const titleA = a.querySelector('h3').innerText.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
-    const titleB = b.querySelector('h3').innerText.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+    const titleA = a.querySelector('h3').innerText.toLowerCase();
+    const titleB = b.querySelector('h3').innerText.toLowerCase();
     return titleA.localeCompare(titleB);
   });
 
   cards.forEach(card => list.appendChild(card));
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const titles = document.querySelectorAll('.song-card h3');
+  titles.forEach(title => {
+    title.innerText = title.innerText.replace(/🎵\s*/g, '');
+  });
 });
 </script>
 
