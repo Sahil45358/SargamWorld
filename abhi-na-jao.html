@@ -5,8 +5,13 @@
   <title>Abhi Na Jao Chhod Kar – Full Sargam</title>
   <link rel="stylesheet" href="style.css"/>
   <meta name="google" content="notranslate"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  window.jspdf.jsPDF.API.events.push(['addFonts', function() {
+    this.addFileToVFS('NotoSansDevanagari-Regular.ttf', '<BASE64_FONT_DATA>');
+    this.addFont('NotoSansDevanagari-Regular.ttf', 'NotoDevanagari', 'normal');
+  }]);
+</script>
 </head>
 <body>
   <header>
@@ -138,19 +143,19 @@ Nahin | nahin | nahin nahin
   </main>
 <script>
   async function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    const title = document.querySelector('h1, h2, h3').innerText;
-    const content = document.querySelector('.sargam-content')?.innerText || 'No content found.';
-
-    doc.setFontSize(16);
-    doc.text(title, 10, 20);
-    doc.setFontSize(12);
-    doc.text(content, 10, 30, { maxWidth: 180 });
-
-    doc.save(`${title}.pdf`);
-  }
+ async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFont('NotoDevanagari');
+  doc.setFontSize(16);
+  const title = document.querySelector('h1').innerText;
+  const content = document.querySelector('.sargam-content').innerText;
+  doc.text(title, 10, 20);
+  doc.setFontSize(12);
+  const lines = doc.splitTextToSize(content, 180);
+  doc.text(lines, 10, 30);
+  doc.save(`${title}.pdf`);
+}
 
   document.addEventListener("DOMContentLoaded", () => {
     const content = document.querySelector(".sargam-content");
