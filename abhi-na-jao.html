@@ -142,31 +142,30 @@ Nahin | nahin | nahin nahin
     <p><a href="index.html">⬅️ Back to song list</a></p>
   </main>
 <script>
-  async function downloadPDF() {
- async function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.setFont('NotoDevanagari');
-  doc.setFontSize(16);
-  const title = document.querySelector('h1').innerText;
-  const content = document.querySelector('.sargam-content').innerText;
-  doc.text(title, 10, 20);
-  doc.setFontSize(12);
-  const lines = doc.splitTextToSize(content, 180);
-  doc.text(lines, 10, 30);
-  doc.save(`${title}.pdf`);
-}
+ function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont('NotoDevanagari');
+    doc.setFontSize(16);
+    const title = document.querySelector('h1').innerText;
+    const content = document.querySelector('.sargam-content').innerText;
+    const lines = doc.splitTextToSize(content, 180);
+    doc.text(title, 10, 20);
+    doc.setFontSize(12);
+    doc.text(lines, 10, 30);
+    doc.save(`${title}.pdf`);
+  }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  window.onload = () => {
     const content = document.querySelector(".sargam-content");
     if (content) {
-      const button = document.createElement("button");
-      button.textContent = "📥 Download PDF";
-      button.style.marginTop = "20px";
-      button.onclick = downloadPDF;
-      content.parentNode.insertBefore(button, content.nextSibling);
+      const btn = document.createElement("button");
+      btn.textContent = "📥 Download PDF";
+      btn.style.margin = "20px 0";
+      btn.onclick = downloadPDF;
+      content.insertAdjacentElement('afterend', btn);
     }
-  });
+  };
 </script>
 
   <footer>
