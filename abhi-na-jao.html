@@ -33,103 +33,7 @@
 
     <section>
       <h2>Lyrics & Sargam (Flute in F#)</h2>
-      <pre class="notranslate">
-<strong>STHAYI:</strong>
-
-Abhi | na | jaao | chhod | kar  
-ग ग | म~ग | रे ग~रे | सा नि नि | नि~रे
-
-ke | dil | abhi | bhara | nahin  
-रे | रे~नि | रे प | म म ग रे ग | रे सा रे ग
-
-<strong>INTERLUDE:</strong>  
-प नि ध नि प नि ध नि प नि ध प ग  
-सा ग रे ग सा ग रे ग सा सा ध प सा (×2)
-
-Abhi | abhi | to | aayi | hoo  
-ग ग | ग म~ग | प | म~ग प | म~ग
-
-abhi | abhi | to  
-म ग~रे | ग~म | प
-
-Abhi | abhi | to | aayi | hoo  
-ग ग | ग म~ग | प | म~ग प | म~ग
-
-bahar | banke | chhayi | ho  
-म ग~रे ग | म~ग प | म~ग प | म~ग
-
-Hawa | zara | mahak | to | le  
-सा ग | ग नि’ | ध’ प’ म | प’ | म~ग
-
-nazar | jara | bahek | to | le  
-म ग~रे | ग म~ग | प म~ग | प | म~ग
-
-Ye | shaam | dhal | to | le | zara  
-म | ध’ ध’ | नि’ ध’ | सा’ | ध’~ म | सा’ {ध’ सा’ ध’ सा’ ध’}
-
-<strong>Interlude (Upper Octave):</strong>  
-म’ ग’ सा’ ध’ म’ सा’ ध’ म’ सा’ ध’
-
-Ye | shaam | dhal | to | le | zara  
-म | ध’ ध’ | नि’~ ध’ | सा’ | नि’~ ध’ | सा नि’~ ध’
-
-Ye | dil | samhal | to | le | zara  
-नि’ | ध’~ प’ | ध’ नि’~ ध’ | सा’ | नि’~ ध’ | सा नि’~ ध’
-
-Main | thodi | der | jee | to | lun  
-ग | ग म | {प ध नि सा नि} | नि ध प ध | प | म~ग
-
-nashe | ke | ghoont | pi | to | lun  
-म ग रे | ग | म~ग प | म~ग | प | म~ग
-
-abhi | to | kuchh | kaha | nahin  
-म प~नि | नि | सा’ नि’ | रे’ नि’~ सा’ | ध’ प’
-
-Abhi | to | kuchh | suna | nahin  
-म रे | ग | म ग | प ग~ म | र सा
-
-Abhi na jaao chhod kar ke dil abhi bhara nahin  
-
-<strong>ANTARA:</strong>
-
-Sitaren | jhilmila | uthe  
-प प (ध) प | म~रे र प | प प
-
-Charag | jagmaga | uthe  
-र प (ध) प | म~रे र प | प {प ध नि}
-
-Bas | ab | na | mujhko | tokna  
-नि’ | नि’ नि’ | नि’ | सा’ नि’ रे’ | नि’~ प’ रे’ नि’
-
-Na | badhke | raah | rokna  
-प | नि नि | सा नि रे | {नि सा ध प म ग}
-
-Agar | main | ruk | gayi | abhi  
-ग ग | ग | म~ग | प म~ग | प म~ग
-
-to | jaa | na | paungi | kabhi  
-म | ग~रे | ग | म~ग प म~ग | प म~ग
-
-Yehi | kahoge | tum | sada  
-ग म प नि | नि सा नि रे’ | नि सा | ध प
-
-ke | dil | abhi | nahin | bhara  
-ग | रे | ग म | प ग म | र सा
-
-Jo | khatm | ho | kisi | jagah  
-ग ग | म ग | रे ग | र सा नि ध | नि रा
-
-ye | aisa | silsila | nahin  
-रे | नि रा | र प म म ग र | र सा
-
-Abhi | nahin | abhi | nahin  
-ग ग~ म | ग र~ ग | स स नि ध | नि रा
-
-Nahin | nahin | nahin nahin  
-म म | ध म­(नि)­ध प | म म ग रे ग | र सा
-
----
-
+  
 <pre class="notranslate">
 <strong>STHAYI:</strong>
 
@@ -229,6 +133,33 @@ Nahin | nahin | nahin nahin
 
     <p><a href="index.html">⬅️ Back to song list</a></p>
   </main>
+<script>
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const title = document.querySelector('h1, h2, h3').innerText;
+    const content = document.querySelector('.sargam-content')?.innerText || 'No content found.';
+
+    doc.setFontSize(16);
+    doc.text(title, 10, 20);
+    doc.setFontSize(12);
+    doc.text(content, 10, 30, { maxWidth: 180 });
+
+    doc.save(`${title}.pdf`);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector(".sargam-content");
+    if (content) {
+      const button = document.createElement("button");
+      button.textContent = "📥 Download PDF";
+      button.style.marginTop = "20px";
+      button.onclick = downloadPDF;
+      content.parentNode.insertBefore(button, content.nextSibling);
+    }
+  });
+</script>
 
   <footer>
     <p>🎶 Authentic Swar for “Abhi Na Jao Chhod Kar” in Raga Yaman.</p>
