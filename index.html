@@ -230,6 +230,8 @@
 </div>
 
      <!-- Add more song cards here -->
+    <div id="pagination" class="pagination"></div>
+
 </section>
 
    
@@ -296,6 +298,42 @@ document.addEventListener("DOMContentLoaded", function () {
     button.onclick = downloadPDF;
     content.parentNode.insertBefore(button, content.nextSibling);
   }
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = Array.from(document.querySelectorAll('.song-card'));
+  const itemsPerPage = 14;
+  const pagination = document.getElementById('pagination');
+
+  let currentPage = 1;
+
+  function renderPage(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    cards.forEach((card, i) => {
+      card.style.display = i >= start && i < end ? 'block' : 'none';
+    });
+
+    renderPagination(page);
+  }
+
+  function renderPagination(activePage) {
+    const totalPages = Math.ceil(cards.length / itemsPerPage);
+    pagination.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = i === activePage ? 'active' : '';
+      btn.onclick = () => {
+        currentPage = i;
+        renderPage(currentPage);
+      };
+      pagination.appendChild(btn);
+    }
+  }
+
+  renderPage(currentPage);
 });
 
 
