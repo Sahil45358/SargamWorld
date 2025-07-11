@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Sargam Collection 🎶</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 <body>
@@ -274,31 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     card.style.display = matches ? 'block' : 'none';
   });
 }
- async function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
 
-    const title = document.querySelector('h1, h2, h3').innerText;
-    const content = document.querySelector('pre, .sargam-content').innerText;
-
-    doc.setFontSize(16);
-    doc.text(title, 10, 20);
-    doc.setFontSize(12);
-    doc.text(content, 10, 30);
-
-    doc.save(`${title}.pdf`);
-  }
-
-document.addEventListener("DOMContentLoaded", function () {
-  const content = document.querySelector("pre, .sargam-content");
-  if (content) {
-    const button = document.createElement("button");
-    button.textContent = "Download PDF";
-    button.style.marginTop = "20px";
-    button.onclick = downloadPDF;
-    content.parentNode.insertBefore(button, content.nextSibling);
-  }
-});
 document.addEventListener('DOMContentLoaded', () => {
   const cards = Array.from(document.querySelectorAll('.song-card'));
   const itemsPerPage = 14;
