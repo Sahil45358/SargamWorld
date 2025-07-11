@@ -6,12 +6,7 @@
   <link rel="stylesheet" href="style.css"/>
   <meta name="google" content="notranslate"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-window.jspdf.jsPDF.API.events.push(['addFonts', function() {
-  this.addFileToVFS('NotoSansDevanagari-Regular.ttf', '<YOUR_FULL_BASE64>');
-  this.addFont('NotoSansDevanagari-Regular.ttf', 'NotoDevanagari', 'normal');
-}]);
-</script>
+  
 </head>
 <body>
   <header>
@@ -142,11 +137,14 @@ Nahin | nahin | nahin nahin
     <p><a href="index.html">⬅️ Back to song list</a></p>
   </main>
 <script>
-
+  window.jspdf.jsPDF.API.events.push(['addFonts', function() {
+    this.addFileToVFS("NotoSansDevanagari-Regular.ttf", "AAEAAAARAQAABAA..."); // full base64
+    this.addFont("NotoSansDevanagari-Regular.ttf", "NotoDevanagari", "normal");
+  }]);
   function downloadPDF() {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFont('helvetica');            // default font
+const doc = new jsPDF();
+doc.setFont('NotoDevanagari');
     doc.setFontSize(16);
     const title = document.querySelector('h1').innerText;
     const content = document.querySelector('.sargam-content').innerText;
