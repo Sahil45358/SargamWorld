@@ -4,118 +4,153 @@
   <meta charset="UTF-8" />
   <title>SurSargam – Harmonium</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .harmonium-wrap {
+      max-width: 1200px;
+      margin: 3rem auto;
+      text-align: center;
+    }
+
+    #noteDisplay {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #c31432;
+    }
+
+    #harmonium {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 200px;
+      margin: 2rem 0;
+    }
+
+    .white-key {
+      width: 60px;
+      height: 200px;
+      background: #fff8e1;
+      border: 2px solid #5d4037;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 0 0 5px 5px;
+      margin: 0 1px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      font-weight: bold;
+      font-size: 0.8rem;
+      font-family: 'Verdana', sans-serif;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .black-key {
+      width: 40px;
+      height: 120px;
+      background: #2b2b2b;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+      border: 1px solid #000;
+      border-radius: 0 0 5px 5px;
+      cursor: pointer;
+    }
+
+    .white-key:hover {
+      background-color: #fff3c1;
+    }
+
+    .black-key:active {
+      background-color: #444;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>🎹 SurSargam – Harmonium (3 Saptak)</h1>
-    <p>Click the keys to hear notes – only C2, C3, and C4 are labeled</p>
+    <h1>🎹 SurSargam – Harmonium</h1>
+    <p>Click any key to hear its pitch</p>
   </header>
 
   <main class="harmonium-wrap">
     <div id="noteDisplay">Click a key…</div>
-    <div class="harmonium"</div>
-    <div id="harmonium">
-    <!-- White Keys -->
-    <div class="white-key" data-note="C3"><span class="note-label">C3</span></div>
-    <div class="white-key" data-note="D3"><span class="note-label">D3</span></div>
-    <div class="white-key" data-note="E3"><span class="note-label">E3</span></div>
-    <div class="white-key" data-note="F3"><span class="note-label">F3</span></div>
-    <div class="white-key" data-note="G3"><span class="note-label">G3</span></div>
-    <div class="white-key" data-note="A3"><span class="note-label">A3</span></div>
-    <div class="white-key" data-note="B3"><span class="note-label">B3</span></div>
-    <div class="white-key" data-note="C4"><span class="note-label">C4</span></div>
-
-    <!-- Black Keys -->
-    <div class="black-key" style="left: 45px;" data-note="C#3"></div>
-    <div class="black-key" style="left: 105px;" data-note="D#3"></div>
-    <div class="black-key" style="left: 225px;" data-note="F#3"></div>
-    <div class="black-key" style="left: 285px;" data-note="G#3"></div>
-    <div class="black-key" style="left: 345px;" data-note="A#3"></div>
-  </div>
-    <p style="margin-top: 2rem;"><a href="index.html">⬅️ Back to Home</a></p>
+    <div id="harmonium"></div>
+    <p><a href="index.html">⬅️ Back to Home</a></p>
   </main>
 
   <footer>
-    <p>🎶 SurSargam • Harmonium with interactive note playback</p>
+    <p>🎶 SurSargam • Interactive Harmonium with C2–C4 Octaves.</p>
   </footer>
 
-  <script>
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    const ctx = new AudioCtx();
-    const container = document.getElementById('harmonium');
-    const noteDisplay = document.getElementById('noteDisplay');
+<script>
+const harmonium = document.getElementById('harmonium');
+const display = document.getElementById('noteDisplay');
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-    const notes = [
-      'C2','C#2','D2','D#2','E2','F2','F#2','G2','G#2','A2','A#2','B2',
-      'C3','C#3','D3','D#3','E3','F3','F#3','G3','G#3','A3','A#3','B3',
-      'C4','C#4','D4','D#4','E4','F4','F#4','G4','G#4','A4','A#4','B4'
-    ];
+const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+const blackNotes = ['C#', 'D#', '', 'F#', 'G#', 'A#', ''];
+const semitoneSteps = {
+  'C': 0, 'C#': 1, 'D': 2, 'D#': 3, 'E': 4,
+  'F': 5, 'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11
+};
+const baseFreq = 65.41; // C2
 
-    notes.forEach(note => {
-      const key = document.createElement('div');
-      const isBlack = note.includes('#');
-      key.className = isBlack ? 'black-key' : 'white-key';
-      if (['C2', 'C3', 'C4'].includes(note)) key.textContent = note;
-      key.onclick = () => playNote(note);
-      container.appendChild(key);
-    });
+let whiteKeyCount = 0;
 
-    function playNote(note) {
-      const freq = noteToFrequency(note);
-      noteDisplay.textContent = '🎵 ' + note;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.85);
+for (let octave = 2; octave <= 4; octave++) {
+  for (let i = 0; i < whiteNotes.length; i++) {
+    const note = whiteNotes[i];
+    const noteId = note + octave;
+
+    const key = document.createElement('div');
+    key.className = 'white-key';
+    if (note === 'C') key.innerText = noteId;
+    key.dataset.note = noteId;
+
+    harmonium.appendChild(key);
+
+    const step = semitoneSteps[note] + (octave - 2) * 12;
+    const freq = baseFreq * Math.pow(2, step / 12);
+
+    key.onclick = () => playNote(noteId, freq);
+
+    // Position black keys in between correct white keys
+    const blackNote = blackNotes[i];
+    if (blackNote !== '') {
+      const black = document.createElement('div');
+      black.className = 'black-key';
+      black.dataset.note = blackNote + octave;
+
+      const blackStep = semitoneSteps[blackNote] + (octave - 2) * 12;
+      const blackFreq = baseFreq * Math.pow(2, blackStep / 12);
+
+      black.onclick = () => playNote(black.dataset.note, blackFreq);
+
+      // Offset from left based on white key width
+      black.style.left = (whiteKeyCount * 62 + 45) + 'px';
+      harmonium.appendChild(black);
     }
 
-    function noteToFrequency(note) {
-      const A4 = 440;
-      const keys = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-      const key = note.slice(0, -1);
-      const octave = parseInt(note.slice(-1));
-      const n = keys.indexOf(key) + (octave - 4) * 12;
-      return A4 * Math.pow(2, (n - 9) / 12);
-    }
-  
-const noteDisplay = document.getElementById("noteDisplay");
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-document.querySelectorAll('.white-key, .black-key').forEach(key => {
-  key.addEventListener('click', () => {
-    const note = key.getAttribute('data-note');
-    noteDisplay.textContent = "🎵 " + note;
-    playNote(note);
-  });
-});
-
-function playNote(note) {
-  const frequencies = {
-    'C3': 130.81, 'C#3': 138.59, 'D3': 146.83, 'D#3': 155.56,
-    'E3': 164.81, 'F3': 174.61, 'F#3': 185.00, 'G3': 196.00,
-    'G#3': 207.65, 'A3': 220.00, 'A#3': 233.08, 'B3': 246.94,
-    'C4': 261.63
-  };
-
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  osc.frequency.value = frequencies[note];
-  osc.type = 'sine';
-
-  gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.5, audioCtx.currentTime + 0.01);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.0);
-
-  osc.connect(gain).connect(audioCtx.destination);
-  osc.start();
-  osc.stop(audioCtx.currentTime + 1.05);
+    whiteKeyCount++;
+  }
 }
-  </script>
+
+function playNote(label, frequency) {
+  display.textContent = '🎵 ' + label;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine'; // Replace this with 'triangle' or better if using samples
+  osc.frequency.value = frequency;
+
+  gain.gain.setValueAtTime(0.001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+
+  osc.connect(gain).connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime + 1.25);
+}
+</script>
 </body>
 </html>
