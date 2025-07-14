@@ -325,7 +325,22 @@
 
 </section>
     <div id="pagination" class="pagination"></div>
-   
+
+    <!-- 🔽 ADD THIS PIANO SECTION BELOW -->
+<section id="sargam-piano" style="margin-top:3rem;">
+  <h2>🎹 Interactive Sargam Piano</h2>
+  <p>Click any key to hear its note across Mandra, Madhya, and Taar Saptaks.</p>
+  <div id="noteDisp" style="font-weight: bold; color: #c31432; margin: 1rem 0;">Click a key…</div>
+
+  <div style="display:flex;justify-content:space-between">
+    <span class="octave-label">Mandra</span>
+    <span class="octave-label">Madhya</span>
+    <span class="octave-label">Taar</span>
+  </div>
+
+  <div id="piano" class="piano"></div>
+</section>
+   </main>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // STEP 1: Remove 🎵 emojis BEFORE sorting
@@ -403,6 +418,67 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPage(currentPage);
 });
 
+  const SA_FREQ = 261.63;
+const step = Math.pow(2, 1 / 12);
+const whiteSaOrder = ['Sa','Re','Ga','Ma','Pa','Dha','Ni'];
+const blackLabels  = ['Re(k)','Ga(k)','','Ma(T)','Dha(k)','Ni(k)',''];
+const semitoneOffset = {
+  Sa:0, 'Re(k)':1, Re:2, 'Ga(k)':3, Ga:4,
+  Ma:5, 'Ma(T)':6, Pa:7, 'Dha(k)':8, Dha:9,
+  'Ni(k)':10, Ni:11
+};
+const octaves = [-1, 0, 1];
+
+const piano = document.getElementById('piano');
+const disp = document.getElementById('noteDisp');
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+const ctx = new AudioCtx();
+
+function freqOf(swar, octShift) {
+  const semi = semitoneOffset[swar] + octShift * 12;
+  return SA_FREQ * Math.pow(step, semi);
+}
+
+function createKey(label, isBlack, leftPos) {
+  const key = document.createElement('div');
+  key.className = isBlack ? 'black' : 'white';
+  key.textContent = label;
+  if (isBlack) key.style.left = leftPos + 'px';
+  key.onmousedown = () => playKey(label);
+  piano.appendChild(key);
+}
+
+let whiteIndex = 0;
+octaves.forEach(oct => {
+  whiteSaOrder.forEach((label, i) => {
+    createKey(`${label}${oct === -1 ? '.' : oct === 1 ? '`' : ''}`, false);
+    whiteIndex++;
+    const blk = blackLabels[i];
+    if (blk) {
+      const left = (whiteIndex * 60) - 15;
+      createKey(`${blk}${oct === -1 ? '.' : oct === 1 ? '`' : ''}`, true, left);
+    }
+  });
+});
+piano.style.gridTemplateColumns = `repeat(${piano.querySelectorAll('.white').length}, 60px)`;
+
+function playKey(noteLabel) {
+  disp.textContent = '🎵 ' + noteLabel;
+  const clean = noteLabel.replace(/[`\.]/, '');
+  const octShift = noteLabel.includes('`') ? 1 : (noteLabel.includes('.') ? -1 : 0);
+  const hz = freqOf(clean, octShift);
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = hz;
+  gain.gain.setValueAtTime(0.001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime + 0.85);
+}
 
 </script>
 
