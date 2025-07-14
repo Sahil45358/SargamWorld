@@ -13,7 +13,25 @@
 
   <main class="harmonium-wrap">
     <div id="noteDisplay">Click a key…</div>
-    <div class="harmonium" id="harmonium"></div>
+    <div class="harmonium"</div>
+    <div id="harmonium">
+    <!-- White Keys -->
+    <div class="white-key" data-note="C3"><span class="note-label">C3</span></div>
+    <div class="white-key" data-note="D3"><span class="note-label">D3</span></div>
+    <div class="white-key" data-note="E3"><span class="note-label">E3</span></div>
+    <div class="white-key" data-note="F3"><span class="note-label">F3</span></div>
+    <div class="white-key" data-note="G3"><span class="note-label">G3</span></div>
+    <div class="white-key" data-note="A3"><span class="note-label">A3</span></div>
+    <div class="white-key" data-note="B3"><span class="note-label">B3</span></div>
+    <div class="white-key" data-note="C4"><span class="note-label">C4</span></div>
+
+    <!-- Black Keys -->
+    <div class="black-key" style="left: 45px;" data-note="C#3"></div>
+    <div class="black-key" style="left: 105px;" data-note="D#3"></div>
+    <div class="black-key" style="left: 225px;" data-note="F#3"></div>
+    <div class="black-key" style="left: 285px;" data-note="G#3"></div>
+    <div class="black-key" style="left: 345px;" data-note="A#3"></div>
+  </div>
     <p style="margin-top: 2rem;"><a href="index.html">⬅️ Back to Home</a></p>
   </main>
 
@@ -65,6 +83,39 @@
       const n = keys.indexOf(key) + (octave - 4) * 12;
       return A4 * Math.pow(2, (n - 9) / 12);
     }
+  
+const noteDisplay = document.getElementById("noteDisplay");
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+document.querySelectorAll('.white-key, .black-key').forEach(key => {
+  key.addEventListener('click', () => {
+    const note = key.getAttribute('data-note');
+    noteDisplay.textContent = "🎵 " + note;
+    playNote(note);
+  });
+});
+
+function playNote(note) {
+  const frequencies = {
+    'C3': 130.81, 'C#3': 138.59, 'D3': 146.83, 'D#3': 155.56,
+    'E3': 164.81, 'F3': 174.61, 'F#3': 185.00, 'G3': 196.00,
+    'G#3': 207.65, 'A3': 220.00, 'A#3': 233.08, 'B3': 246.94,
+    'C4': 261.63
+  };
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.frequency.value = frequencies[note];
+  osc.type = 'sine';
+
+  gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.5, audioCtx.currentTime + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.0);
+
+  osc.connect(gain).connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 1.05);
+}
   </script>
 </body>
 </html>
