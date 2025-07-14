@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SurSargam – 3‑Octave Piano</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ——— Piano style (inherits site colours) ——— */
+    .piano-wrap   {max-width:1100px;margin:2rem auto;text-align:center}
+    .octave-label {font-weight:700;color:#240b36;margin:6px 24px}
+    #noteDisp     {margin:1rem 0;font-size:1.2rem;font-weight:600;color:#c31432}
+
+    .piano        {position:relative;display:grid;grid-auto-flow:column;height:200px}
+    .white        {width:60px;height:100%;border:1px solid #333;background:#fff;
+                   box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;
+                   font-size:.8rem;cursor:pointer;user-select:none}
+    .black        {width:42px;height:120px;background:#000;position:absolute;z-index:2;
+                   margin-left:-21px;color:#fff;font-size:.7rem;display:flex;
+                   align-items:flex-end;justify-content:center;cursor:pointer;user-select:none;
+                   box-shadow:1px 1px 4px rgba(0,0,0,.35)}
+    .white:active {background:#ffdede}
+    .black:active {background:#333}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎹 SurSargam – Three‑Octave Piano</h1>
+    <p>Click any key to hear its pitch and see its Sargam label</p>
+  </header>
+
+  <main class="piano-wrap">
+    <div id="noteDisp">Click a key…</div>
+
+    <!-- Octave headings -->
+    <div style="display:flex;justify-content:space-between">
+      <span class="octave-label">Mandra</span>
+      <span class="octave-label">Madhya</span>
+      <span class="octave-label">Taar</span>
+    </div>
+
+    <!-- The keyboard -->
+    <div id="piano" class="piano"></div>
+
+    <p style="margin-top:2rem"><a href="index.html">⬅️ Back to Home</a></p>
+  </main>
+
+  <footer>
+    <p>🎶 SurSargam • Interactive Sargam keyboard (Sa Re Ga Ma…).</p>
+  </footer>
+
+<script>
+/* ---------- CONFIG ---------- */
+// Base frequency: Sa (C4) = 261.63 Hz
+const SA_FREQ = 261.63;   // Madhya Sa
+// Equal‑temperament ratios (semitone steps):
+const step = Math.pow(2, 1/12);
+const westernNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+// Map white‑key order Sa‑Ni (C‑B) and black positions
+const whiteSaOrder = ['Sa','Re','Ga','Ma','Pa','Dha','Ni'];
+const blackLabels  = ['Re(k)','Ga(k)','','Ma(T)','Dha(k)','Ni(k)',''];
+// Frequency offset per swar in semitones from Sa
+const semitoneOffset = {Sa:0, 'Re(k)':1, Re:2,'Ga(k)':3,Ga:4,Ma:5,'Ma(T)':6,Pa:7,'Dha(k)':8,Dha:9,'Ni(k)':10,Ni:11};
+// Build three octaves:  −1 (Mandra), 0 (Madhya), +1 (Taar)
+const octaves = [-1,0,1];
+
+/* ---------- Build keyboard ---------- */
+const piano   = document.getElementById('piano');
+const disp    = document.getElementById('noteDisp');
+const AudioCtx = window.AudioContext||window.webkitAudioContext;
+const ctx     = new AudioCtx();
+
+function freqOf(swar,octShift){
+  const semi = semitoneOffset[swar] + octShift*12;
+  return SA_FREQ * Math.pow(step, semi);
+}
+
+function createKey(label,isBlack,leftPos){
+  const key = document.createElement('div');
+  key.className = isBlack?'black':'white';
+  key.textContent = label;
+  if(isBlack) key.style.left = leftPos + 'px';
+  key.onmousedown = () => playKey(label);
+  piano.appendChild(key);
+}
+
+let whiteIndex = 0;
+octaves.forEach(oct=>{
+  whiteSaOrder.forEach((label,i)=>{
+    // Add white
+    createKey(`${label}${oct===-1?'.':oct===1?'`':''}`,false);
+    whiteIndex++;
+    // Add black if exists
+    const blk = blackLabels[i];
+    if(blk){
+      const left = (whiteIndex*60)-15; // center between whites
+      createKey(`${blk}${oct===-1?'.':oct===1?'`':''}`,true,left);
+    }
+  });
+});
+piano.style.gridTemplateColumns = `repeat(${piano.querySelectorAll('.white').length},60px)`;
+
+/* ---------- Sound ---------- */
+function playKey(noteLabel){
+  disp.textContent = '🎵 ' + noteLabel;
+  // Strip octave marks for frequency lookup
+  const clean = noteLabel.replace(/[`\.]/,'');
+  const octShift = noteLabel.includes('`')?1:(noteLabel.includes('.')?-1:0);
+  const hz = freqOf(clean,octShift);
+
+  const osc = ctx.createOscillator();
+  const gain= ctx.createGain();
+  osc.type='sine';
+  osc.frequency.value = hz;
+  gain.gain.setValueAtTime(0.001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime+0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.8);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime+0.85);
+}
+</script>
+</body>
+</html>
