@@ -275,3 +275,103 @@ footer {
   color: #fff;
   border-color: #333;
 }
+
+/* Music Theory Page Styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f4;
+  color: #1d1d1d;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: linear-gradient(to right, #d9e4dd, #edf2f4);
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #444;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  border-radius: 8px;
+}
+
+h2 {
+  border-left: 5px solid #4caf50;
+  padding-left: 10px;
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  color: #2a4d29;
+}
+
+p, ul, li {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: square;
+  padding-left: 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+table th {
+  background-color: #e3f2e1;
+  color: #2c3e50;
+}
+
+code {
+  background-color: #eef1f3;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: Consolas, monospace;
+}
+
+a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #eef1f1;
+  border-top: 1px solid #ccc;
+}
