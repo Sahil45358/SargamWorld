@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Three‑Octave Sargam Piano</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* --- Piano Layout --- */
+    .piano-wrap {max-width: 1100px;margin:2rem auto;text-align:center}
+    #noteDisplay {margin:1rem 0;font-size:1.2rem;font-weight:600;color:#c31432}
+    .octave-labels {display:flex;justify-content:space-between;margin:0 5px 8px}
+    .octave-labels span {font-weight:700;color:#240b36}
+    .piano {position:relative;display:grid;grid-auto-flow:column;height:200px}
+    .white {width:60px;border:1px solid #333;background:#fff;z-index:1;
+            display:flex;align-items:flex-end;justify-content:center;font-size:.8rem}
+    .black {width:40px;height:120px;background:#000;position:absolute;z-index:2;
+            margin-left:-20px;color:#fff;font-size:.7rem;display:flex;
+            align-items:flex-end;justify-content:center}
+    .white:active,.black:active {background:#ffdede}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🎹 Three‑Octave Sargam Piano</h1>
+  <p>Click any key to see its Sargam name (Sa Re Ga Ma Pa Dha Ni)</p>
+</header>
+
+<main class="piano-wrap">
+  <div id="noteDisplay">Click a key…</div>
+
+  <!-- Octave labels -->
+  <div class="octave-labels">
+    <span>Mandra Saptak</span><span>Madhya</span><span>Tara Saptak</span>
+  </div>
+
+  <!-- Piano -->
+  <div class="piano" id="piano"></div>
+
+  <p style="margin-top:2rem;"><a href="../index.html">⬅️ Back to home</a></p>
+</main>
+
+<script>
+/* ---------- Generate 3‑octave piano ---------- */
+const whiteOrder = ['Sa','Re','Ga','Ma','Pa','Dha','Ni'];
+const blackOrder = ['Re(k)','Ga(k)', '', 'Ma(T)', 'Dha(k)','Ni(k)','']; // '' where no black key
+const piano = document.getElementById('piano');
+const noteDisplay = document.getElementById('noteDisplay');
+
+function addKey(name,isBlack,leftShift=false){
+  const key=document.createElement('div');
+  key.className=isBlack?'black':'white';
+  key.textContent=name;
+  key.onclick=()=>noteDisplay.textContent=name;
+  if(isBlack){key.style.left=`${leftShift}px`;}
+  piano.appendChild(key);
+}
+
+let octave = ['Mandra','Madhya','Tara'];
+for(let o=0;o<3;o++){
+  for(let i=0;i<7;i++){
+    // white key
+    addKey(`${whiteOrder[i]}${o===0?'':'\u200B'.repeat(o)}`,false);
+    // black key (if exists)
+    if(blackOrder[i]){
+      let idx = piano.children.length-1;
+      let left = idx*60;          // 60 = white key width
+      addKey(`${blackOrder[i]}${o===0?'':'\u200B'.repeat(o)}`,true,left+45); // black offset
+    }
+  }
+}
+
+/* Make piano container wide enough */
+piano.style.gridTemplateColumns=`repeat(${piano.querySelectorAll('.white').length}, 60px)`;
+</script>
+
+<footer>
+  <p>🎶 SurSargam • Visualize Sa Re Ga across three saptaks.</p>
+</footer>
+</body>
+</html>
