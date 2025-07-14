@@ -267,12 +267,6 @@ pre {
 }
 
 /* Unified SurSargam Theme */
-body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  background-color: #fff8f0;
-  color: #333;
-}
 
 header {
   background: linear-gradient(to right, #240b36, #c31432);
@@ -320,30 +314,28 @@ footer {
   color: #c31432;
 }
 
-.harmonium {
-  position: relative;
-  width: 840px;
-  margin: 2rem auto;
-  height: 240px;
-  background: linear-gradient(180deg, #e0c097 0%, #c49e6c 100%);
-  padding-top: 20px;
-  border-radius: 8px;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0,0,0,0.1);
-  overflow-x: auto;
+#harmonium {
+  display: flex;
+  justify-content: center;
+  position: relative; /* Required for absolute black key positioning */
+  height: 200px;
 }
 
 .white-key {
-  position: relative;
   width: 60px;
   height: 200px;
-  background: #fffef8;
-  border: 1px solid #ccc;
-  border-bottom: 8px solid #ccc;
-  box-sizing: border-box;
-  border-radius: 0 0 4px 4px;
-  margin-right: -1px;
+  background: #fff8e1;
+  border: 2px solid #5d4037;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-weight: bold;
+  font-family: 'Verdana', sans-serif;
   cursor: pointer;
-  transition: background .1s;
+  user-select: none;
+  transition: transform 0.1s;
 }
 
 .black-key {
@@ -356,14 +348,25 @@ footer {
   border-radius: 0 0 3px 3px;
   cursor: pointer;
   transition: background .1s;
+  top: 0;
+  z-index: 2;
 }
 
-.white-key:active { background: #ddd; }
-.black-key:active { background: #444; }
+.white-key:hover {
+  transform: scale(1.03);
+  background-color: #fff3c1;
+}
 
 .note-label {
-  font-size: .75rem;
-  margin-bottom: 6px;
-  opacity: 0.8;
-  font-family: sans-serif;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #3e2723;
+}
+.white-key:active {
+  background-color: #ffe0b2;
+  transform: scale(0.98);
+}
+
+.black-key:active {
+  background-color: #111;
 }
