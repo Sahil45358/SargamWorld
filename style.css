@@ -307,66 +307,65 @@ footer {
   border-top: 1px solid #e0e0e0;
 }
 
-/* Piano Styles */
-.piano-wrap {
+.harmonium-wrap {
+  max-width: 1000px;
+  margin: 3rem auto;
   text-align: center;
 }
 
-.octave-label {
-  font-weight: 700;
-  color: #240b36;
-  margin: 6px 24px;
-}
-
-#noteDisp {
-  margin: 1rem 0;
+#noteDisplay {
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   color: #c31432;
 }
 
-.piano {
+.harmonium {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
   position: relative;
-  display: grid;
-  grid-auto-flow: column;
-  height: 200px;
+  height: 220px;
+  overflow-x: auto;
 }
 
-.white {
+.white-key {
   width: 60px;
   height: 100%;
-  border: 1px solid #333;
-  background: #fff;
+  border: 1px solid #999;
+  background: white;
   box-sizing: border-box;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  user-select: none;
+  position: relative;
+  z-index: 1;
 }
 
-.black {
-  width: 42px;
-  height: 120px;
-  background: #000;
-  position: absolute;
+.black-key {
+  width: 40px;
+  height: 140px;
+  background: black;
+  color: white;
+  position: relative;
+  margin-left: -20px;
+  margin-right: -20px;
   z-index: 2;
-  margin-left: -21px;
-  color: #fff;
-  font-size: 0.7rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  font-size: 0.75rem;
   cursor: pointer;
-  user-select: none;
-  box-shadow: 1px 1px 4px rgba(0,0,0,0.35);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
-.white:active {
-  background: #ffdede;
+.white-key:active {
+  background: #fce4ec;
 }
 
-.black:active {
-  background: #333;
+.black-key:active {
+  background: #444;
 }
+
