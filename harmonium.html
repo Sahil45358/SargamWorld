@@ -18,46 +18,51 @@
       color: #c31432;
     }
 
-    #harmonium {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      height: 200px;
-      margin: 2rem 0;
-    }
+    #harmonium-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+#harmonium {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 1140px;
+  height: 200px;
+}
 
     .white-key {
-      width: 60px;
-      height: 200px;
-      background: #fff8e1;
-      border: 2px solid #5d4037;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      border-radius: 0 0 5px 5px;
-      margin: 0 1px;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      font-weight: bold;
-      font-size: 0.8rem;
-      font-family: 'Verdana', sans-serif;
-      user-select: none;
-      cursor: pointer;
-    }
+  flex: 1; /* Equal width for all white keys */
+  height: 100%;
+  max-width: 50px;
+  background: #fff8e1;
+  border: 2px solid #5d4037;
+  border-radius: 0 0 5px 5px;
+  margin: 0 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-weight: bold;
+  font-size: 0.8rem;
+  font-family: 'Verdana', sans-serif;
+  cursor: pointer;
+  position: relative;
+}
 
-    .black-key {
-      width: 40px;
-      height: 120px;
-      background: #2b2b2b;
-      position: absolute;
-      top: 0;
-      z-index: 2;
-      border: 1px solid #000;
-      border-radius: 0 0 5px 5px;
-      cursor: pointer;
-    }
-
+.black-key {
+  position: absolute;
+  width: 30px;
+  height: 120px;
+  background: #2b2b2b;
+  top: 0;
+  z-index: 2;
+  border-radius: 0 0 5px 5px;
+  cursor: pointer;
+  margin-left: -15px; /* center over white key gap */
+}
     .white-key:hover {
       background-color: #fff3c1;
     }
@@ -75,7 +80,9 @@
 
   <main class="harmonium-wrap">
     <div id="noteDisplay">Click a key…</div>
-    <div id="harmonium"></div>
+<div id="harmonium-container">
+  <div id="harmonium"></div>
+</div>
     <p><a href="index.html">⬅️ Back to Home</a></p>
   </main>
 
@@ -113,7 +120,9 @@ for (let octave = 2; octave <= 4; octave++) {
     const step = semitoneSteps[note] + (octave - 2) * 12;
     const freq = baseFreq * Math.pow(2, step / 12);
 
-    key.onclick = () => playNote(noteId, freq);
+ key.onmousedown = () => startNote(noteId, freq);
+key.onmouseup = stopNote;
+key.onmouseleave = stopNote;
 
     // Position black keys in between correct white keys
     const blackNote = blackNotes[i];
@@ -125,7 +134,9 @@ for (let octave = 2; octave <= 4; octave++) {
       const blackStep = semitoneSteps[blackNote] + (octave - 2) * 12;
       const blackFreq = baseFreq * Math.pow(2, blackStep / 12);
 
-      black.onclick = () => playNote(black.dataset.note, blackFreq);
+     black.onmousedown = () => startNote(black.dataset.note, blackFreq);
+black.onmouseup = stopNote;
+black.onmouseleave = stopNote;
 
       // Offset from left based on white key width
       black.style.left = (whiteKeyCount * 62 + 45) + 'px';
@@ -150,6 +161,27 @@ function playNote(label, frequency) {
   osc.connect(gain).connect(ctx.destination);
   osc.start();
   osc.stop(ctx.currentTime + 1.25);
+}
+  let osc = null, gain = null;
+
+function startNote(label, frequency) {
+  display.textContent = '🎵 ' + label;
+
+  osc = ctx.createOscillator();
+  gain = ctx.createGain();
+
+  osc.type = 'sine'; // You can try 'square' or 'triangle' for richer tones
+  osc.frequency.value = frequency;
+
+  gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  osc.connect(gain).connect(ctx.destination);
+
+  osc.start();
+}
+
+function stopNote() {
+  if (gain) gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+  if (osc) osc.stop(ctx.currentTime + 0.25);
 }
 </script>
 </body>
