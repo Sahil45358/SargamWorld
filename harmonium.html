@@ -2,151 +2,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Virtual Harmonium</title>
+  <title>SurSargam – Harmonium</title>
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      background: #f8f8f8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'Verdana', sans-serif;
+      background: url('wood-texture.jpg') repeat;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
     }
 
-    .container {
-      margin-top: 30px;
-      overflow: hidden;
-      max-width: 100%;
+    header, footer {
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    #noteDisplay {
+      font-size: 1.4rem;
+      color: #ffeb3b;
+      margin-bottom: 1rem;
+    }
+
+    #harmonium-container {
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
     }
 
     #harmonium {
-      display: flex;
       position: relative;
-      height: 200px;
-      border: 3px solid #333;
-      background: #ccc;
+      display: flex;
+      align-items: flex-end;
+      height: 220px;
+      padding: 0 10px;
     }
 
     .white-key {
       width: 40px;
-      height: 100%;
-      background: white;
-      border: 1px solid #999;
-      box-sizing: border-box;
+      height: 200px;
+      background: #fff8e1;
+      border: 1px solid #5d4037;
+      margin: 0 1px;
+      border-radius: 0 0 5px 5px;
       position: relative;
       z-index: 1;
+      box-shadow: inset 0 0 5px #aaa;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .white-key.pressed {
-      background: #ddd;
+    .white-key:hover {
+      background: #fff3c1;
     }
 
     .black-key {
-      width: 25px;
-      height: 120px;
-      background: black;
       position: absolute;
+      width: 28px;
+      height: 120px;
+      background: #1b1b1b;
       z-index: 2;
-      margin-left: -12.5px;
+      top: 0;
       border-radius: 0 0 4px 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     }
 
-    .black-key.pressed {
-      background: #333;
+    .black-key:active {
+      background: #444;
+    }
+
+    a {
+      color: #ffeb3b;
+      text-decoration: none;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Virtual Harmonium</h1>
-    <div id="harmonium"></div>
-  </div>
+  <header>
+    <h1>🎹 SurSargam – Harmonium</h1>
+    <p>Click or hold any key to hear its pitch</p>
+  </header>
+
+  <main>
+    <div id="noteDisplay">Click a key…</div>
+    <div id="harmonium-container">
+      <div id="harmonium"></div>
+    </div>
+    <p><a href="index.html">⬅️ Back to Home</a></p>
+  </main>
+
+  <footer>
+    <p>🎶 SurSargam • Interactive Harmonium • Octaves C2 to C4</p>
+  </footer>
 
   <script>
     const harmonium = document.getElementById('harmonium');
-
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const audioCtx = new AudioContext();
-
-    const noteFrequencies = {
-      'C2': 65.41, 'C#2': 69.30, 'D2': 73.42, 'D#2': 77.78, 'E2': 82.41, 'F2': 87.31, 'F#2': 92.50,
-      'G2': 98.00, 'G#2': 103.83, 'A2': 110.00, 'A#2': 116.54, 'B2': 123.47,
-      'C3': 130.81, 'C#3': 138.59, 'D3': 146.83, 'D#3': 155.56, 'E3': 164.81, 'F3': 174.61, 'F#3': 185.00,
-      'G3': 196.00, 'G#3': 207.65, 'A3': 220.00, 'A#3': 233.08, 'B3': 246.94,
-      'C4': 261.63
-    };
+    const display = document.getElementById('noteDisplay');
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
     const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
     const blackNotes = ['C#', 'D#', '', 'F#', 'G#', 'A#', ''];
+    const semitoneSteps = {
+      'C': 0, 'C#': 1, 'D': 2, 'D#': 3, 'E': 4,
+      'F': 5, 'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11
+    };
 
-    function createKey(note, octave) {
-      const fullNote = note + octave;
-      const isBlack = note.includes('#');
-      const key = document.createElement('div');
-      key.classList.add(isBlack ? 'black-key' : 'white-key');
-      key.dataset.note = fullNote;
+    const baseFreq = 65.41; // C2
+    let whiteKeyCount = 0;
 
-      let oscillator;
+    for (let octave = 2; octave <= 4; octave++) {
+      for (let i = 0; i < whiteNotes.length; i++) {
+        const note = whiteNotes[i];
+        const noteId = note + octave;
 
-      const startNote = () => {
-        if (!oscillator) {
-          oscillator = audioCtx.createOscillator();
-          oscillator.frequency.value = noteFrequencies[fullNote];
-          oscillator.type = 'sine';
-          oscillator.connect(audioCtx.destination);
-          oscillator.start();
-          key.classList.add('pressed');
+        const white = document.createElement('div');
+        white.className = 'white-key';
+        white.dataset.note = noteId;
+        if (note === 'C') white.innerText = noteId;
+
+        const step = semitoneSteps[note] + (octave - 2) * 12;
+        const freq = baseFreq * Math.pow(2, step / 12);
+
+        white.onmousedown = () => startNote(noteId, freq);
+        white.onmouseup = stopNote;
+        white.onmouseleave = stopNote;
+        white.ontouchstart = (e) => { e.preventDefault(); startNote(noteId, freq); };
+        white.ontouchend = stopNote;
+
+        harmonium.appendChild(white);
+
+        const blackNote = blackNotes[i];
+        if (blackNote !== '') {
+          const black = document.createElement('div');
+          black.className = 'black-key';
+          const blackNoteId = blackNote + octave;
+          const blackStep = semitoneSteps[blackNote] + (octave - 2) * 12;
+          const blackFreq = baseFreq * Math.pow(2, blackStep / 12);
+
+          black.dataset.note = blackNoteId;
+
+          const leftOffset = whiteKeyCount * 42 + 30;
+          black.style.left = leftOffset + 'px';
+
+          black.onmousedown = () => startNote(blackNoteId, blackFreq);
+          black.onmouseup = stopNote;
+          black.onmouseleave = stopNote;
+          black.ontouchstart = (e) => { e.preventDefault(); startNote(blackNoteId, blackFreq); };
+          black.ontouchend = stopNote;
+
+          harmonium.appendChild(black);
         }
-      };
 
-      const stopNote = () => {
-        if (oscillator) {
-          oscillator.stop();
-          oscillator.disconnect();
-          oscillator = null;
-          key.classList.remove('pressed');
-        }
-      };
-
-      key.addEventListener('mousedown', startNote);
-      key.addEventListener('mouseup', stopNote);
-      key.addEventListener('mouseleave', stopNote);
-      key.addEventListener('touchstart', e => { e.preventDefault(); startNote(); });
-      key.addEventListener('touchend', stopNote);
-
-      return { key, isBlack, note };
-    }
-
-    function buildHarmonium() {
-      const keys = [];
-      let left = 0;
-
-      for (let octave = 2; octave <= 4; octave++) {
-        for (let i = 0; i < whiteNotes.length; i++) {
-          const white = createKey(whiteNotes[i], octave);
-          white.key.style.left = left + 'px';
-          harmonium.appendChild(white.key);
-          keys.push(white);
-          left += 40;
-        }
-      }
-
-      left = 40;
-      for (let octave = 2; octave <= 4; octave++) {
-        for (let i = 0; i < blackNotes.length; i++) {
-          const bn = blackNotes[i];
-          if (bn !== '') {
-            const black = createKey(bn, octave);
-            black.key.style.left = (i * 40 + 30) + (octave - 2) * 280 + 'px';
-            harmonium.appendChild(black.key);
-            keys.push(black);
-          }
-        }
+        whiteKeyCount++;
       }
     }
 
-    buildHarmonium();
+    let osc = null, gain = null;
+
+    function startNote(label, frequency) {
+      display.textContent = '🎵 ' + label;
+      osc = ctx.createOscillator();
+      gain = ctx.createGain();
+
+      osc.type = 'triangle'; // Richer tone
+      osc.frequency.setValueAtTime(frequency, ctx.currentTime);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+    }
+
+    function stopNote() {
+      if (gain) gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      if (osc) osc.stop(ctx.currentTime + 0.4);
+    }
   </script>
 </body>
 </html>
