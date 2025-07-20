@@ -139,8 +139,19 @@ black.onmouseup = stopNote;
 black.onmouseleave = stopNote;
 
       // Offset from left based on white key width
-const leftOffset = (whiteKeyCount - 1 + 0.65) * (100 / 21); // proportion in %
-black.style.left = `calc(${leftOffset}% - 15px)`;
+const positionInSet = whiteKeyCount % 7;
+const whiteKeyWidth = 50; // same as CSS max-width
+let offset = 0;
+
+switch (positionInSet) {
+  case 0: offset = whiteKeyWidth * (whiteKeyCount) - 15; break; // C#
+  case 1: offset = whiteKeyWidth * (whiteKeyCount) - 5; break;  // D#
+  case 3: offset = whiteKeyWidth * (whiteKeyCount) - 15; break; // F#
+  case 4: offset = whiteKeyWidth * (whiteKeyCount) - 5; break;  // G#
+  case 5: offset = whiteKeyWidth * (whiteKeyCount) - 10; break; // A#
+  default: offset = -9999; break; // no black key
+}
+black.style.left = `${offset}px`;
       harmonium.appendChild(black);
     }
 
