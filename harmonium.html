@@ -101,7 +101,10 @@
   </header>
 
   <div id="noteDisplay">Press a key…</div>
-  <div id="harmonium"></div>
+  <div id="harmonium">
+  <div id="white-keys"></div>
+  <div id="black-keys"></div>
+</div>
 
   <p><a href="index.html">⬅️ Back to Home</a></p>
 
@@ -124,7 +127,9 @@ const activeNodes = {};
   };
   const baseFreq = 65.41; // Frequency of C2
 
-  const container = document.getElementById('harmonium');
+const whiteContainer = document.getElementById('white-keys');
+const blackContainer = document.getElementById('black-keys');
+   
   const noteDisplay = document.getElementById('noteDisplay');
   let activeNotes = {};
 
@@ -198,30 +203,27 @@ function stopNote(note, keyDiv) {
     return key;
   }
 
- // 1. Add all white keys (in flex flow)
+// White keys
 for (let oct = 2; oct <= 4; oct++) {
   whiteKeys.forEach((pitch, i) => {
     const note = pitch + oct;
     const whiteKey = makeKey(note, false);
-    whiteKey.style.position = 'relative'; // ensure stacking context
-    container.appendChild(whiteKey);
+    whiteContainer.appendChild(whiteKey);
   });
 }
 
-// 2. Overlay black keys absolutely (on top)
+// Black keys
 for (let oct = 2; oct <= 4; oct++) {
   whiteKeys.forEach((pitch, i) => {
     if (blackMap[pitch]) {
       const blackNote = pitch + '#' + oct;
       const blackKey = makeKey(blackNote, true);
       const index = ((oct - 2) * 7 + i);
-      blackKey.style.position = 'absolute';
       blackKey.style.left = `${index * 50 + 35}px`;
-      container.appendChild(blackKey);
+      blackContainer.appendChild(blackKey);
     }
   });
 }
-
    // wav
    async function loadSamples() {
   const notes = [];
