@@ -111,7 +111,11 @@
  <script>
   let isMouseDown = false;
 let currentNoteId = null;
+   const audioBuffers = {};
+const activeNodes = {};
+   
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
+   loadSamples();
   const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   const blackMap = { C: true, D: true, F: true, G: true, A: true };
   const semitones = {
@@ -130,9 +134,8 @@ let currentNoteId = null;
   }
 
 function playNote(note, keyDiv) {
-  if (activeNotes[note]) return;
+  if (!audioBuffers[note]) return;
 
-  // If dragging and another note is active, stop all previous active notes
   if (isMouseDown) {
     document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
       const activeNote = key.dataset.note;
@@ -140,31 +143,25 @@ function playNote(note, keyDiv) {
     });
   }
 
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = 'triangle';
-  osc.frequency.value = freqOf(note);
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.05);
-  osc.start();
+  const source = ctx.createBufferSource();
+  source.buffer = audioBuffers[note];
+  source.connect(ctx.destination);
+  source.loop = true;
+  source.start();
 
-  activeNotes[note] = { osc, gain };
-
+  activeNodes[note] = source;
   keyDiv.classList.add('active');
   noteDisplay.innerText = note;
 }
 
-  function stopNote(note, keyDiv) {
-    if (!activeNotes[note]) return;
-    const { osc, gain } = activeNotes[note];
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
-    osc.stop(ctx.currentTime + 0.35);
-    delete activeNotes[note];
-
-    keyDiv.classList.remove('active');
+function stopNote(note, keyDiv) {
+  const source = activeNodes[note];
+  if (source) {
+    source.stop();
+    delete activeNodes[note];
   }
+  keyDiv.classList.remove('active');
+}
 
   document.body.addEventListener('mousedown', () => isMouseDown = true);
   document.body.addEventListener('mouseup', () => {
@@ -218,6 +215,24 @@ function playNote(note, keyDiv) {
       }
     });
   }
+   // wav
+   async function loadSamples() {
+  const notes = [];
+  const octaves = [2, 3, 4];
+  const keys = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+
+  octaves.forEach(oct => {
+    keys.forEach(note => notes.push(`${note}${oct}`));
+  });
+
+  await Promise.all(notes.map(async (note) => {
+    const response = await fetch(`harmonium/${note}.wav`);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+    audioBuffers[note] = audioBuffer;
+  }));
+}
+
 </script>
 </body>
 </html>
