@@ -198,30 +198,29 @@ function stopNote(note, keyDiv) {
     return key;
   }
 
-   for (let oct = 2; oct <= 4; oct++) {
-    whiteKeys.forEach((pitch, i) => {
-      const note = pitch + oct;
-      const whiteKey = makeKey(note, false);
-      whiteKey.style.position = 'relative'; // Important to prevent overlap
-      container.appendChild(whiteKey);
-    });
-  }
+ // 1. Add all white keys (in flex flow)
+for (let oct = 2; oct <= 4; oct++) {
+  whiteKeys.forEach((pitch, i) => {
+    const note = pitch + oct;
+    const whiteKey = makeKey(note, false);
+    whiteKey.style.position = 'relative'; // ensure stacking context
+    container.appendChild(whiteKey);
+  });
+}
 
-  // Now add black keys separately and position them
-  for (let oct = 2; oct <= 4; oct++) {
-    whiteKeys.forEach((pitch, i) => {
-      if (blackMap[pitch]) {
-        const blackNote = pitch + '#' + oct;
-        const blackKey = makeKey(blackNote, true);
-
-        const index = ((oct - 2) * 7 + i);
-        blackKey.style.position = 'absolute';
-        blackKey.style.left = `${index * 50 + 35}px`;
-
-        container.appendChild(blackKey);
-      }
-    });
-  }
+// 2. Overlay black keys absolutely (on top)
+for (let oct = 2; oct <= 4; oct++) {
+  whiteKeys.forEach((pitch, i) => {
+    if (blackMap[pitch]) {
+      const blackNote = pitch + '#' + oct;
+      const blackKey = makeKey(blackNote, true);
+      const index = ((oct - 2) * 7 + i);
+      blackKey.style.position = 'absolute';
+      blackKey.style.left = `${index * 50 + 35}px`;
+      container.appendChild(blackKey);
+    }
+  });
+}
 
    // wav
    async function loadSamples() {
