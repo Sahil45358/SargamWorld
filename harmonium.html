@@ -101,152 +101,108 @@
   <footer>SurSargam • Harmonium Simulator with Wood Texture & Sustain</footer>
 
   
-  <script>
-    let isMouseDown = false;
-    
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-    const blackMap = { C: true, D: true, F: true, G: true, A: true };
-    const semitones = { 'C': 0, 'C#': 1, 'D': 2, 'D#': 3, 'E': 4, 'F': 5, 'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11 };
-    const baseFreq = 65.41; // Frequency of C2
+ <script>
+  let isMouseDown = false;
 
-    const container = document.getElementById('harmonium');
-    const noteDisplay = document.getElementById('noteDisplay');
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+  const blackMap = { C: true, D: true, F: true, G: true, A: true };
+  const semitones = {
+    'C': 0, 'C#': 1, 'D': 2, 'D#': 3, 'E': 4,
+    'F': 5, 'F#': 6, 'G': 7, 'G#': 8, 'A': 9, 'A#': 10, 'B': 11
+  };
+  const baseFreq = 65.41; // Frequency of C2
 
-    let activeNotes = {};
+  const container = document.getElementById('harmonium');
+  const noteDisplay = document.getElementById('noteDisplay');
+  let activeNotes = {};
 
-    function freqOf(note) {
-      const [pitch, oct] = note.match(/([A-G]#?)(\d)/).slice(1);
-      return baseFreq * Math.pow(2, (semitones[pitch] + (oct - 2) * 12) / 12);
-    }
-
-    function playNote(note, keyDiv) {
-      if (activeNotes[note]) return;
-
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.value = freqOf(note);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.05);
-      osc.start();
-
-      activeNotes[note] = { osc, gain };
-
-      keyDiv.classList.add('active');
-      noteDisplay.innerText = note;
-    }
-
-    function stopNote(note, keyDiv) {
-      if (!activeNotes[note]) return;
-      const { osc, gain } = activeNotes[note];
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
-      osc.stop(ctx.currentTime + 0.35);
-      delete activeNotes[note];
-
-      keyDiv.classList.remove('active');
-    }
-
-    function makeKey(note, isBlack, position = 0) {
-      const key = document.createElement('div');
-      key.className = isBlack ? 'black-key' : 'white-key';
-      key.dataset.note = note;
-
-      if (!isBlack && note.startsWith('C')) {
-        const label = document.createElement('div');
-        label.className = 'label';
-        label.innerText = note;
-        key.appendChild(label);
-      }
-
-      let isMouseDown = false;
-let currentOsc = null;
-let currentGain = null;
-
-// Listen for mouse down and up globally
-document.body.addEventListener('mousedown', () => isMouseDown = true);
-document.body.addEventListener('mouseup', () => {
-  isMouseDown = false;
-  stopNote();
-});
-
-// Start playing sound
-function startNote(label, frequency) {
-  display.textContent = '🎵 ' + label;
-
-  stopNote(); // stop any previous note first
-
-  currentOsc = ctx.createOscillator();
-  currentGain = ctx.createGain();
-
-  currentOsc.type = 'sine';
-  currentOsc.frequency.value = frequency;
-
-  currentGain.gain.setValueAtTime(0.3, ctx.currentTime);
-  currentOsc.connect(currentGain).connect(ctx.destination);
-
-  currentOsc.start();
-}
-
-// Stop the currently playing note
-function stopNote() {
-  if (currentGain) {
-    currentGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
-    currentGain = null;
+  function freqOf(note) {
+    const [pitch, oct] = note.match(/([A-G]#?)(\d)/).slice(1);
+    return baseFreq * Math.pow(2, (semitones[pitch] + (oct - 2) * 12) / 12);
   }
-  if (currentOsc) {
-    currentOsc.stop(ctx.currentTime + 0.25);
-    currentOsc = null;
+
+  function playNote(note, keyDiv) {
+    if (activeNotes[note]) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = freqOf(note);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.05);
+    osc.start();
+
+    activeNotes[note] = { osc, gain };
+
+    keyDiv.classList.add('active');
+    noteDisplay.innerText = note;
   }
-}
 
-    // Build harmonium keys
-    for (let oct = 2; oct <= 4; oct++) {
-      whiteKeys.forEach((pitch, i) => {
-        const note = pitch + oct;
-        const whiteKey = makeKey(note, false);
-        container.appendChild(whiteKey);
-        
-        key.addEventListener('mousedown', () => startNote(noteId, freq));
-key.addEventListener('mouseenter', () => {
-  if (isMouseDown) startNote(noteId, freq);
-});
-key.addEventListener('mouseup', stopNote);
-key.addEventListener('mouseleave', () => {
-  if (!isMouseDown) stopNote();
-});
+  function stopNote(note, keyDiv) {
+    if (!activeNotes[note]) return;
+    const { osc, gain } = activeNotes[note];
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+    osc.stop(ctx.currentTime + 0.35);
+    delete activeNotes[note];
 
-        // Black keys
-        if (blackMap[pitch]) {
-          const blackNote = pitch + '#' + oct;
-          const blackKey = makeKey(blackNote, true);
-          // Position black keys relative to white keys
-          const index = ((oct - 2) * 7 + i);
-          blackKey.style.left = `${index * 50 + 35}px`;
-          container.appendChild(blackKey);
+    keyDiv.classList.remove('active');
+  }
 
-          black.addEventListener('mousedown', () => startNote(black.dataset.note, blackFreq));
-black.addEventListener('mouseenter', () => {
-  if (isMouseDown) startNote(black.dataset.note, blackFreq);
-});
-black.addEventListener('mouseup', stopNote);
-black.addEventListener('mouseleave', () => {
-  if (!isMouseDown) stopNote();
-});
-        }
-      });
-    }
-
-      
-   document.addEventListener('mousedown', () => isMouseDown = true);
-document.addEventListener('mouseup', () => isMouseDown = false);
-      document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
-        const note = key.dataset.note;
-        stopNote(note, key);
-      });
+  document.body.addEventListener('mousedown', () => isMouseDown = true);
+  document.body.addEventListener('mouseup', () => {
+    isMouseDown = false;
+    // Stop all notes on mouse release
+    document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
+      const note = key.dataset.note;
+      stopNote(note, key);
     });
-  </script>
+  });
+
+  function makeKey(note, isBlack) {
+    const key = document.createElement('div');
+    key.className = isBlack ? 'black-key' : 'white-key';
+    key.dataset.note = note;
+
+    if (!isBlack && note.startsWith('C')) {
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.innerText = note;
+      key.appendChild(label);
+    }
+
+    // Events for sound and dragging
+    key.addEventListener('mousedown', () => playNote(note, key));
+    key.addEventListener('mouseenter', () => {
+      if (isMouseDown) playNote(note, key);
+    });
+    key.addEventListener('mouseup', () => stopNote(note, key));
+    key.addEventListener('mouseleave', () => {
+      if (!isMouseDown) stopNote(note, key);
+    });
+
+    return key;
+  }
+
+  // Create keys
+  for (let oct = 2; oct <= 4; oct++) {
+    whiteKeys.forEach((pitch, i) => {
+      const note = pitch + oct;
+      const whiteKey = makeKey(note, false);
+      container.appendChild(whiteKey);
+
+      // Add black keys between appropriate white keys
+      if (blackMap[pitch]) {
+        const blackNote = pitch + '#' + oct;
+        const blackKey = makeKey(blackNote, true);
+        const index = ((oct - 2) * 7 + i);
+        blackKey.style.left = `${index * 50 + 35}px`;
+        container.appendChild(blackKey);
+      }
+    });
+  }
+</script>
 </body>
 </html>
