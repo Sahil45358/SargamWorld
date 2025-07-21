@@ -227,7 +227,7 @@ if (blackMap[pitch]) {
   });
 
   await Promise.all(notes.map(async (note) => {
-    const response = await fetch(`harmonium/${note}.wav`);
+    const response = await fetch(`harmonium/${encodeURIComponent(note)}.wav`);
     const arrayBuffer = await response.arrayBuffer();
     const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
     audioBuffers[note] = audioBuffer;
