@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>SurSargam – Harmonium</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
   <style>
     body {
       margin: 0;
@@ -88,6 +90,23 @@
       text-decoration: underline;
     }
 
+#keyboard {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  position: relative;
+  touch-action: none;
+}
+
+.key.white {
+  width: calc(100% / 21); /* Adjust based on total white keys */
+  height: 160px;
+}
+
+.key.black {
+  width: calc(100% / 35);
+  height: 100px;
+}
 
     
   </style>
@@ -234,6 +253,34 @@ if (blackMap[pitch]) {
   }));
 }
    loadSamples();
+
+ 
+   key.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  playNote(note);
+  isMouseDown = true;
+}, { passive: false });
+
+key.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  stopNote(note);
+  isMouseDown = false;
+}, { passive: false });
+
+key.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const element = document.elementFromPoint(touch.clientX, touch.clientY);
+  if (element && element.classList.contains("key") && isMouseDown) {
+    const draggedNote = element.getAttribute("data-note");
+    if (draggedNote !== currentNote) {
+      stopNote(currentNote);
+      playNote(draggedNote);
+      currentNote = draggedNote;
+    }
+  }
+}, { passive: false });
+
 </script>
 </body>
 </html>
