@@ -100,7 +100,10 @@
 
   <footer>SurSargam • Harmonium Simulator with Wood Texture & Sustain</footer>
 
+  
   <script>
+    let isMouseDown = false;
+    
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
     const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
     const blackMap = { C: true, D: true, F: true, G: true, A: true };
@@ -158,11 +161,46 @@
         key.appendChild(label);
       }
 
-      key.addEventListener('mousedown', () => playNote(note, key));
-      key.addEventListener('mouseup', () => stopNote(note, key));
-      key.addEventListener('mouseleave', () => stopNote(note, key));
-      return key;
-    }
+      let isMouseDown = false;
+let currentOsc = null;
+let currentGain = null;
+
+// Listen for mouse down and up globally
+document.body.addEventListener('mousedown', () => isMouseDown = true);
+document.body.addEventListener('mouseup', () => {
+  isMouseDown = false;
+  stopNote();
+});
+
+// Start playing sound
+function startNote(label, frequency) {
+  display.textContent = '🎵 ' + label;
+
+  stopNote(); // stop any previous note first
+
+  currentOsc = ctx.createOscillator();
+  currentGain = ctx.createGain();
+
+  currentOsc.type = 'sine';
+  currentOsc.frequency.value = frequency;
+
+  currentGain.gain.setValueAtTime(0.3, ctx.currentTime);
+  currentOsc.connect(currentGain).connect(ctx.destination);
+
+  currentOsc.start();
+}
+
+// Stop the currently playing note
+function stopNote() {
+  if (currentGain) {
+    currentGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+    currentGain = null;
+  }
+  if (currentOsc) {
+    currentOsc.stop(ctx.currentTime + 0.25);
+    currentOsc = null;
+  }
+}
 
     // Build harmonium keys
     for (let oct = 2; oct <= 4; oct++) {
@@ -170,6 +208,15 @@
         const note = pitch + oct;
         const whiteKey = makeKey(note, false);
         container.appendChild(whiteKey);
+        
+        key.addEventListener('mousedown', () => startNote(noteId, freq));
+key.addEventListener('mouseenter', () => {
+  if (isMouseDown) startNote(noteId, freq);
+});
+key.addEventListener('mouseup', stopNote);
+key.addEventListener('mouseleave', () => {
+  if (!isMouseDown) stopNote();
+});
 
         // Black keys
         if (blackMap[pitch]) {
@@ -179,11 +226,22 @@
           const index = ((oct - 2) * 7 + i);
           blackKey.style.left = `${index * 50 + 35}px`;
           container.appendChild(blackKey);
+
+          black.addEventListener('mousedown', () => startNote(black.dataset.note, blackFreq));
+black.addEventListener('mouseenter', () => {
+  if (isMouseDown) startNote(black.dataset.note, blackFreq);
+});
+black.addEventListener('mouseup', stopNote);
+black.addEventListener('mouseleave', () => {
+  if (!isMouseDown) stopNote();
+});
         }
       });
     }
 
-    document.addEventListener('mouseup', () => {
+      
+   document.addEventListener('mousedown', () => isMouseDown = true);
+document.addEventListener('mouseup', () => isMouseDown = false);
       document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
         const note = key.dataset.note;
         stopNote(note, key);
