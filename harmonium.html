@@ -281,6 +281,18 @@ key.addEventListener("touchmove", (e) => {
   }
 }, { passive: false });
 
+key.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  playNote(note);
+  key.classList.add("active");
+});
+
+key.addEventListener("touchend", () => {
+  stopNote();
+  key.classList.remove("active");
+});
+
+   
 </script>
 </body>
 </html>
