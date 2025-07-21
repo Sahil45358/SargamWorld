@@ -113,7 +113,7 @@ let currentNoteId = null;
 const activeNodes = {};
    
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
-   loadSamples();
+
   const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   const blackMap = { C: true, D: true, F: true, G: true, A: true };
   const semitones = {
@@ -232,7 +232,7 @@ if (blackMap[pitch]) {
     audioBuffers[note] = audioBuffer;
   }));
 }
-
+   loadSamples();
 </script>
 </body>
 </html>
