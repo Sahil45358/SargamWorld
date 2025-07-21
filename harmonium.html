@@ -91,6 +91,21 @@
       text-decoration: underline;
     }
 
+    #white-keys, #black-keys {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  height: 100%;
+}
+
+#black-keys {
+  pointer-events: none; /* Allow clicks to pass through to children */
+}
+
+.black-key {
+  pointer-events: auto; /* Enable click */
+}
     
   </style>
 </head>
