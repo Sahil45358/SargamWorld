@@ -110,7 +110,7 @@
   
  <script>
   let isMouseDown = false;
-
+let currentNoteId = null;
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
   const whiteKeys = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
   const blackMap = { C: true, D: true, F: true, G: true, A: true };
@@ -129,24 +129,32 @@
     return baseFreq * Math.pow(2, (semitones[pitch] + (oct - 2) * 12) / 12);
   }
 
-  function playNote(note, keyDiv) {
-    if (activeNotes[note]) return;
+function playNote(note, keyDiv) {
+  if (activeNotes[note]) return;
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.value = freqOf(note);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.05);
-    osc.start();
-
-    activeNotes[note] = { osc, gain };
-
-    keyDiv.classList.add('active');
-    noteDisplay.innerText = note;
+  // If dragging and another note is active, stop all previous active notes
+  if (isMouseDown) {
+    document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
+      const activeNote = key.dataset.note;
+      if (activeNote !== note) stopNote(activeNote, key);
+    });
   }
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'triangle';
+  osc.frequency.value = freqOf(note);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + 0.05);
+  osc.start();
+
+  activeNotes[note] = { osc, gain };
+
+  keyDiv.classList.add('active');
+  noteDisplay.innerText = note;
+}
 
   function stopNote(note, keyDiv) {
     if (!activeNotes[note]) return;
