@@ -91,21 +91,7 @@
       text-decoration: underline;
     }
 
-    #white-keys, #black-keys {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: flex;
-  height: 100%;
-}
 
-#black-keys {
-  pointer-events: none; /* Allow clicks to pass through to children */
-}
-
-.black-key {
-  pointer-events: auto; /* Enable click */
-}
     
   </style>
 </head>
@@ -117,10 +103,7 @@
 
   <div id="noteDisplay">Press a key…</div>
   <div id="harmonium">
-  <div id="white-keys"></div>
-  <div id="black-keys"></div>
-</div>
-
+ <div id="harmonium"></div>
   <p><a href="index.html">⬅️ Back to Home</a></p>
 
   <footer>SurSargam • Harmonium Simulator with Wood Texture & Sustain</footer>
@@ -142,8 +125,7 @@ const activeNodes = {};
   };
   const baseFreq = 65.41; // Frequency of C2
 
-const whiteContainer = document.getElementById('white-keys');
-const blackContainer = document.getElementById('black-keys');
+const container = document.getElementById('harmonium');
    
   const noteDisplay = document.getElementById('noteDisplay');
   let activeNotes = {};
@@ -223,22 +205,19 @@ for (let oct = 2; oct <= 4; oct++) {
   whiteKeys.forEach((pitch, i) => {
     const note = pitch + oct;
     const whiteKey = makeKey(note, false);
-    whiteContainer.appendChild(whiteKey);
-  });
-}
+    whiteKey.style.position = 'relative';
+    container.appendChild(whiteKey);
 
 // Black keys
-for (let oct = 2; oct <= 4; oct++) {
-  whiteKeys.forEach((pitch, i) => {
-    if (blackMap[pitch]) {
+if (blackMap[pitch]) {
       const blackNote = pitch + '#' + oct;
       const blackKey = makeKey(blackNote, true);
       const index = ((oct - 2) * 7 + i);
+      blackKey.style.position = 'absolute';
       blackKey.style.left = `${index * 50 + 35}px`;
-      blackContainer.appendChild(blackKey);
+      container.appendChild(blackKey);
     }
   });
-}
    // wav
    async function loadSamples() {
   const notes = [];
