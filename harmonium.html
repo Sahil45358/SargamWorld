@@ -51,7 +51,7 @@
       cursor: pointer;
     }
 
-    .white-active {
+    .white-key.active {
       background: #ffd;
     }
 
@@ -76,7 +76,7 @@
       box-shadow: inset 0 -4px 10px rgba(255,255,255,0.1);
     }
 
-    .black-active {
+    .black-key.active {
       background: #444;
     }
 
@@ -98,23 +98,16 @@
   touch-action: none;
 }
 
-.white {
+.key.white {
   width: calc(100% / 21); /* Adjust based on total white keys */
   height: 160px;
 }
 
-.black {
+.key.black {
   width: calc(100% / 35);
   height: 100px;
 }
 
-/* Highlighted Key Style */
-.highlighted {
-  background-color: #ffcc80 !important; /* Light Orange */
-  border-color: #ffb74d !important;
-  box-shadow: 0 0 10px #ffb74d;
-}
-    
 #scaleRaagSelector {
   text-align: center;
   margin-top: 1rem;
@@ -186,6 +179,7 @@
   background: #d0d0f0;
 }
 
+/* Replace the old highlight class */
 .highlight {
   background-color: #ffcc80 !important; /* light orange */
   border-color: #ffb74d !important;
@@ -207,7 +201,7 @@
     <button class="dropbtn">🎹 Select Scale/Raag ▼</button>
     <div class="dropdown-content">
       <div class="sub-dropdown">
-  <span onclick="toggleSubOptions('scales')">🎼 Scales ▼</span>
+  <span onclick="toggleSubOptions('scales')">🎼 Scales ▸</span>
   <div class="sub-options" id="scales-options">
           <button onclick="highlightScale('C Major')">C Major</button>
           <button onclick="highlightScale('C# Major')">C# Major</button>
@@ -224,7 +218,7 @@
         </div>
       </div>
       <div class="sub-dropdown">
-  <span onclick="toggleSubOptions('raags')">🎶 Raags ▼</span>
+  <span onclick="toggleSubOptions('raags')">🎶 Raags ▸</span>
   <div class="sub-options" id="raags-options">
           <button onclick="highlightRaag('Yaman')">Raag Yaman</button>
           <button onclick="highlightRaag('Bhairav')">Raag Bhairav</button>
@@ -236,7 +230,7 @@
   </div>
 </div>
   
-  <div id="noteDisplay">Press a </div>
+  <div id="noteDisplay">Press a key…</div>
   
  <div id="harmonium"></div>
   <p><a href="index.html">⬅️ Back to Home</a></p>
@@ -274,8 +268,8 @@ function playNote(note, keyDiv) {
   if (!audioBuffers[note]) return;
 
   if (isMouseDown) {
-    document.querySelectorAll('.white-active, .black-active').forEach(key => {
-      const activeNote = dataset.note;
+    document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
+      const activeNote = key.dataset.note;
       if (activeNote !== note) stopNote(activeNote, key);
     });
   }
@@ -304,42 +298,42 @@ function stopNote(note, keyDiv) {
   document.body.addEventListener('mouseup', () => {
     isMouseDown = false;
     // Stop all notes on mouse release
-    document.querySelectorAll('.white-active, .black-active').forEach(key => {
-      const note = dataset.note;
+    document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
+      const note = key.dataset.note;
       stopNote(note, key);
     });
   });
 
   function makeKey(note, isBlack) {
     const key = document.createElement('div');
-    className = isBlack ? 'black-key' : 'white-key';
-    dataset.note = note;
+    key.className = isBlack ? 'black-key' : 'white-key';
+    key.dataset.note = note;
 
     if (!isBlack && note.startsWith('C')) {
       const label = document.createElement('div');
       label.className = 'label';
       label.innerText = note;
-      appendChild(label);
+      key.appendChild(label);
     }
 
     // Desktop events
-addEventListener('mousedown', () => playNote(note, key));
-addEventListener('mouseenter', () => {
+key.addEventListener('mousedown', () => playNote(note, key));
+key.addEventListener('mouseenter', () => {
   if (isMouseDown) playNote(note, key);
 });
-addEventListener('mouseup', () => stopNote(note, key));
-addEventListener('mouseleave', () => {
+key.addEventListener('mouseup', () => stopNote(note, key));
+key.addEventListener('mouseleave', () => {
   if (!isMouseDown) stopNote(note, key);
 });
 
 // Mobile events
-addEventListener("touchstart", (e) => {
+key.addEventListener("touchstart", (e) => {
   e.preventDefault();
   playNote(note, key);
   isMouseDown = true;
 }, { passive: false });
 
-addEventListener("touchend", (e) => {
+key.addEventListener("touchend", (e) => {
   e.preventDefault();
   stopNote(note, key);
   isMouseDown = false;
@@ -352,7 +346,7 @@ for (let oct = 2; oct <= 4; oct++) {
   whiteKeys.forEach((pitch, i) => {
     const note = pitch + oct;
     const whiteKey = makeKey(note, false);
-    whitestyle.position = 'relative';
+    whiteKey.style.position = 'relative';
     container.appendChild(whiteKey);
 
 // Black keys
@@ -360,8 +354,8 @@ if (blackMap[pitch]) {
       const blackNote = pitch + '#' + oct;
       const blackKey = makeKey(blackNote, true);
       const index = ((oct - 2) * 7 + i);
-      blackstyle.position = 'absolute';
-      blackstyle.left = `${index * 50 + 35}px`;
+      blackKey.style.position = 'absolute';
+      blackKey.style.left = `${index * 50 + 35}px`;
       container.appendChild(blackKey);
     }
   });
@@ -415,7 +409,7 @@ const raagMap = {
 };
 
 function clearHighlights() {
-  document.querySelectorAll('.white-key, .black-key').forEach(key => classList.remove('highlight'));
+  document.querySelectorAll('.white-key, .black-key').forEach(key => key.classList.remove('highlight'));
 }
 
 function highlightScale(name) {
@@ -427,7 +421,7 @@ function highlightScale(name) {
       note = note.replace('E#', 'F').replace('B#', 'C');
       const full = `${note}${oct}`;
       const key = document.querySelector(`[data-note="${full}"]`);
-      if (key) classList.add('highlight');
+      if (key) key.classList.add('highlight');
     });
   }
 }
@@ -440,7 +434,7 @@ function highlightRaag(name) {
       const pitch = p.replace('b', '#'); // For flat notations
       const full = `${pitch}${oct}`;
       const key = document.querySelector(`[data-note="${full}"]`);
-      if (key) classList.add('highlight');
+      if (key) key.classList.add('highlight');
     });
   }
 }
@@ -462,7 +456,8 @@ document.querySelector('.dropbtn').addEventListener('click', function () {
   document.querySelector('.dropdown-content').classList.toggle('show');
 });
 
-  window.addEventListener('click', function (e) {
+   // Close dropdown when clicking outside
+window.addEventListener('click', function (e) {
   const dropdown = document.querySelector('.dropdown');
   if (!dropdown.contains(e.target)) {
     document.querySelector('.dropdown-content').classList.remove('show');
@@ -470,6 +465,7 @@ document.querySelector('.dropbtn').addEventListener('click', function () {
     document.getElementById('raags-options').classList.remove('show');
   }
 });
+
 
    
 </script>
