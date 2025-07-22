@@ -198,7 +198,7 @@
     <button class="dropbtn">🎹 Select Scale/Raag ▼</button>
     <div class="dropdown-content">
       <div class="sub-dropdown">
-  <span onclick="toggleSubOptions('scales')">🎼 Scales ▸</span>
+  <span onclick="toggleSubOptions('scales')">🎼 Scales ▼</span>
   <div class="sub-options" id="scales-options">
           <button onclick="highlightScale('C Major')">C Major</button>
           <button onclick="highlightScale('C# Major')">C# Major</button>
@@ -215,7 +215,7 @@
         </div>
       </div>
       <div class="sub-dropdown">
-  <span onclick="toggleSubOptions('raags')">🎶 Raags ▸</span>
+  <span onclick="toggleSubOptions('raags')">🎶 Raags ▼</span>
   <div class="sub-options" id="raags-options">
           <button onclick="highlightRaag('Yaman')">Raag Yaman</button>
           <button onclick="highlightRaag('Bhairav')">Raag Bhairav</button>
@@ -453,15 +453,10 @@ document.querySelector('.dropbtn').addEventListener('click', function () {
   document.querySelector('.dropdown-content').classList.toggle('show');
 });
 
-   // Close dropdown when clicking outside
-window.addEventListener('click', function (e) {
-  if (!e.target.matches('.dropbtn')) {
-    const dropdowns = document.getElementsByClassName('dropdown-content');
-    for (let i = 0; i < dropdowns.length; i++) {
-      dropdowns[i].classList.remove('show');
-    }
-
-    // Also close sub-options
+  window.addEventListener('click', function (e) {
+  const dropdown = document.querySelector('.dropdown');
+  if (!dropdown.contains(e.target)) {
+    document.querySelector('.dropdown-content').classList.remove('show');
     document.getElementById('scales-options').classList.remove('show');
     document.getElementById('raags-options').classList.remove('show');
   }
