@@ -383,42 +383,6 @@ function resumeAudioContext() {
 document.body.addEventListener('touchstart', resumeAudioContext, { once: true });
 document.body.addEventListener('click', resumeAudioContext, { once: true });
  
-   key.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  playNote(note);
-  isMouseDown = true;
-}, { passive: false });
-
-key.addEventListener("touchend", (e) => {
-  e.preventDefault();
-  stopNote(note);
-  isMouseDown = false;
-}, { passive: false });
-
-key.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const element = document.elementFromPoint(touch.clientX, touch.clientY);
-  if (element && element.classList.contains("key") && isMouseDown) {
-    const draggedNote = element.getAttribute("data-note");
-    if (draggedNote !== currentNote) {
-      stopNote(currentNote);
-      playNote(draggedNote);
-      currentNote = draggedNote;
-    }
-  }
-}, { passive: false });
-
-key.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  playNote(note);
-  key.classList.add("active");
-});
-
-key.addEventListener("touchend", () => {
-  stopNote();
-  key.classList.remove("active");
-});
 
    const scaleMap = {
   "C Major": ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
