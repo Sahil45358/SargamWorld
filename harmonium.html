@@ -223,13 +223,20 @@
           <button onclick="highlightRaag('Yaman')">Raag Yaman</button>
           <button onclick="highlightRaag('Bhairav')">Raag Bhairav</button>
           <button onclick="highlightRaag('Bhairavi')">Raag Bhairavi</button>
+    <button onclick="highlightRaag('Desh')">Raag Desh</button>
+<button onclick="highlightRaag('Kafi')">Raag Kafi</button>
+<button onclick="highlightRaag('Durga')">Raag Durga</button>
+<button onclick="highlightRaag('Bageshree')">Raag Bageshree</button>
+<button onclick="highlightRaag('Khamaj')">Raag Khamaj</button>
           <!-- Add more raags here -->
         </div>
       </div>
     </div>
   </div>
 </div>
-  
+
+  <div id="raag-info" style="text-align:center; font-size:18px; margin:10px 0;"></div>
+
   <div id="noteDisplay">Press a key…</div>
   
  <div id="harmonium"></div>
@@ -387,27 +394,65 @@ document.body.addEventListener('touchstart', resumeAudioContext, { once: true })
 document.body.addEventListener('click', resumeAudioContext, { once: true });
  
 
-   const scaleMap = {
+const scaleMap = {
   "C Major": ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
-  "C# Major": ['C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#'], // E# = F, B# = C
+  "C# Major": ['C#', 'D#', 'F', 'F#', 'G#', 'A#', 'C'],
   "D Major": ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
-  "D# Major": ['D#', 'E#', 'F##', 'G#', 'A#', 'B#', 'C##'],
+  "D# Major": ['D#', 'F', 'G', 'G#', 'A#', 'C', 'D'],
   "E Major": ['E', 'F#', 'G#', 'A', 'B', 'C#', 'D#'],
   "F Major": ['F', 'G', 'A', 'A#', 'C', 'D', 'E'],
-  "F# Major": ['F#', 'G#', 'A#', 'B', 'C#', 'D#', 'E#'],
+  "F# Major": ['F#', 'G#', 'A#', 'B', 'C#', 'D#', 'F'],
   "G Major": ['G', 'A', 'B', 'C', 'D', 'E', 'F#'],
-  "G# Major": ['G#', 'A#', 'B#', 'C#', 'D#', 'E#', 'F##'],
+  "G# Major": ['G#', 'A#', 'C', 'C#', 'D#', 'F', 'G'],
   "A Major": ['A', 'B', 'C#', 'D', 'E', 'F#', 'G#'],
-  "A# Major": ['A#', 'B#', 'C##', 'D#', 'E#', 'F##', 'G##'],
+  "A# Major": ['A#', 'C', 'D', 'D#', 'F', 'G', 'A'],
   "B Major": ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#']
 };
 
 const raagMap = {
-  "Yaman": ['C#', 'D#', 'F#', 'G', 'A', 'B'],
-  "Bhairav": ['C', 'Db', 'E', 'F', 'G', 'Ab', 'B'],
-  "Bhairavi": ['C', 'D', 'Eb', 'F', 'G', 'Ab', 'Bb']
+  "Yaman": {
+    notes: ['C#', 'D#', 'F#', 'G', 'A', 'B'],
+    aaroh: "N R G M^ D N S'",
+    avroh: "S' N D P M^ G R S"
+  },
+  "Bhairav": {
+    notes: ['C', 'Db', 'E', 'F', 'G', 'Ab', 'B'],
+    aaroh: "S r G M P d N S'",
+    avroh: "S' N d P M G r S"
+  },
+  "Bhairavi": {
+    notes: ['C', 'D', 'Eb', 'F', 'G', 'Ab', 'Bb'],
+    aaroh: "S R g M P d n S'",
+    avroh: "S' n d P M g R S"
+  },
+  "Desh": {
+    notes: ['C', 'D', 'F', 'G', 'A', 'Bb'],
+    aaroh: "N R M P N S'",
+    avroh: "S' n D P M G R S"
+  },
+  "Kafi": {
+    notes: ['C', 'D', 'Eb', 'F', 'G', 'A', 'Bb'],
+    aaroh: "S R g M P D n S'",
+    avroh: "S' n D P M g R S"
+  },
+  "Durga": {
+    notes: ['C', 'D', 'F', 'G', 'A'],
+    aaroh: "S R M P D S'",
+    avroh: "S' D P M R S"
+  },
+  "Bageshree": {
+    notes: ['C', 'D', 'Eb', 'F', 'G', 'A', 'Bb'],
+    aaroh: "S g M D n S'",
+    avroh: "S' n D M g R S"
+  },
+  "Khamaj": {
+    notes: ['C', 'D', 'E', 'F', 'G', 'A', 'Bb'],
+    aaroh: "S G M P D N S'",
+    avroh: "S' n D P M G R S"
+  }
 };
 
+   
 function clearHighlights() {
   document.querySelectorAll('.white-key, .black-key').forEach(key => key.classList.remove('highlight'));
 }
@@ -438,6 +483,15 @@ function highlightRaag(name) {
     });
   }
 }
+    // Display Aaroh and Avroh
+  const infoDiv = document.getElementById('raag-info');
+  infoDiv.innerHTML = `
+    <strong>${name}</strong><br>
+    <span style="color:green;"><b>Aaroh:</b></span> ${raag.aaroh}<br>
+    <span style="color:blue;"><b>Avroh:</b></span> ${raag.avroh}
+  `;
+}
+   
 // Toggle sub-options for Scales and Raags
 function toggleSubOptions(type) {
   const scaleList = document.getElementById('scales-options');
