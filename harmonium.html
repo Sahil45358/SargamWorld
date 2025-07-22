@@ -203,16 +203,28 @@ function stopNote(note, keyDiv) {
       key.appendChild(label);
     }
 
-    // Events for sound and dragging
-    key.addEventListener('mousedown', () => playNote(note, key));
-    key.addEventListener('mouseenter', () => {
-      if (isMouseDown) playNote(note, key);
-    });
-    key.addEventListener('mouseup', () => stopNote(note, key));
-    key.addEventListener('mouseleave', () => {
-      if (!isMouseDown) stopNote(note, key);
-    });
+    // Desktop events
+key.addEventListener('mousedown', () => playNote(note, key));
+key.addEventListener('mouseenter', () => {
+  if (isMouseDown) playNote(note, key);
+});
+key.addEventListener('mouseup', () => stopNote(note, key));
+key.addEventListener('mouseleave', () => {
+  if (!isMouseDown) stopNote(note, key);
+});
 
+// Mobile events
+key.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  playNote(note, key);
+  isMouseDown = true;
+}, { passive: false });
+
+key.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  stopNote(note, key);
+  isMouseDown = false;
+}, { passive: false });
     return key;
   }
 
@@ -253,7 +265,13 @@ if (blackMap[pitch]) {
   }));
 }
    loadSamples();
-
+function resumeAudioContext() {
+  if (ctx.state === 'suspended') {
+    ctx.resume();
+  }
+}
+document.body.addEventListener('touchstart', resumeAudioContext, { once: true });
+document.body.addEventListener('click', resumeAudioContext, { once: true });
  
    key.addEventListener("touchstart", (e) => {
   e.preventDefault();
