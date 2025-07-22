@@ -235,7 +235,7 @@
   </div>
 </div>
 
-  <div id="raag-info" style="text-align:center; font-size:18px; margin:10px 0;"></div>
+ <div id="raag-info" style="text-align: center; margin: 10px 0; font-weight: bold;"></div>
 
   <div id="noteDisplay">Press a key…</div>
   
@@ -475,32 +475,27 @@ function highlightScale(name) {
 
 function highlightRaag(name) {
   clearHighlights();
-  const raag = raagMap[name];
-  raag.notes.forEach(pitch => {
-    const normalized = pitch.replace('b', '#'); // Convert flat to sharp
-    for (let oct = 2; oct <= 4; oct++) {
-      const note = `${normalized}${oct}`;
-      const key = document.querySelector(`[data-note="${note}"]`);
-      if (key) key.classList.add('highlight');
-    }
-  });
+  const pitches = raagMap[name].notes;
+  const aaroh = raagMap[name].aaroh;
+  const avroh = raagMap[name].avroh;
 
   // Show Aaroh and Avroh
-  infoDiv.innerHTML = `
-    <strong>${name}</strong><br>
-    <span style="color:green;"><b>Aaroh:</b></span> ${raag.aaroh}<br>
-    <span style="color:blue;"><b>Avroh:</b></span> ${raag.avroh}
+  document.getElementById('raag-info').innerHTML = `
+    Raag ${name} <br>
+    Aaroh: ${aaroh} <br>
+    Avroh: ${avroh}
   `;
+
+  for (let oct = 2; oct <= 4; oct++) {
+    pitches.forEach(p => {
+      const pitch = p.replace('b', '#');
+      const full = `${pitch}${oct}`;
+      const key = document.querySelector(`[data-note="${full}"]`);
+      if (key) key.classList.add('highlight');
+    });
+  }
 }
 
-    // Display Aaroh and Avroh
-  const infoDiv = document.getElementById('raag-info');
-  infoDiv.innerHTML = `
-    <strong>${name}</strong><br>
-    <span style="color:green;"><b>Aaroh:</b></span> ${raag.aaroh}<br>
-    <span style="color:blue;"><b>Avroh:</b></span> ${raag.avroh}
-  `;
-}
    
 // Toggle sub-options for Scales and Raags
 function toggleSubOptions(type) {
