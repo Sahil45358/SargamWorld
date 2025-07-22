@@ -198,8 +198,8 @@
     <button class="dropbtn">🎹 Select Scale/Raag ▼</button>
     <div class="dropdown-content">
       <div class="sub-dropdown">
-        <span>🎼 Scales</span>
-        <div class="sub-options">
+  <span onclick="toggleSubOptions('scales')">🎼 Scales ▸</span>
+  <div class="sub-options" id="scales-options">
           <button onclick="highlightScale('C Major')">C Major</button>
           <button onclick="highlightScale('C# Major')">C# Major</button>
           <button onclick="highlightScale('D Major')">D Major</button>
@@ -215,8 +215,8 @@
         </div>
       </div>
       <div class="sub-dropdown">
-        <span>🎶 Raags</span>
-        <div class="sub-options">
+  <span onclick="toggleSubOptions('raags')">🎶 Raags ▸</span>
+  <div class="sub-options" id="raags-options">
           <button onclick="highlightRaag('Yaman')">Raag Yaman</button>
           <button onclick="highlightRaag('Bhairav')">Raag Bhairav</button>
           <button onclick="highlightRaag('Bhairavi')">Raag Bhairavi</button>
@@ -469,6 +469,19 @@ function highlightRaag(name) {
       const key = document.querySelector(`[data-note="${full}"]`);
       if (key) key.classList.add('highlight');
     });
+  }
+}
+// Toggle sub-options for Scales and Raags
+function toggleSubOptions(type) {
+  const scaleList = document.getElementById('scales-options');
+  const raagList = document.getElementById('raags-options');
+
+  if (type === 'scales') {
+    scaleList.classList.toggle('show');
+    raagList.classList.remove('show');
+  } else if (type === 'raags') {
+    raagList.classList.toggle('show');
+    scaleList.classList.remove('show');
   }
 }
 
