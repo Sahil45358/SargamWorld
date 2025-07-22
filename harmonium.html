@@ -51,7 +51,7 @@
       cursor: pointer;
     }
 
-    .white-key.active {
+    .white-active {
       background: #ffd;
     }
 
@@ -76,7 +76,7 @@
       box-shadow: inset 0 -4px 10px rgba(255,255,255,0.1);
     }
 
-    .black-key.active {
+    .black-active {
       background: #444;
     }
 
@@ -98,16 +98,23 @@
   touch-action: none;
 }
 
-.key.white {
+.white {
   width: calc(100% / 21); /* Adjust based on total white keys */
   height: 160px;
 }
 
-.key.black {
+.black {
   width: calc(100% / 35);
   height: 100px;
 }
 
+/* Highlighted Key Style */
+.highlighted {
+  background-color: #ffcc80 !important; /* Light Orange */
+  border-color: #ffb74d !important;
+  box-shadow: 0 0 10px #ffb74d;
+}
+    
 #scaleRaagSelector {
   text-align: center;
   margin-top: 1rem;
@@ -180,9 +187,11 @@
 }
 
 .highlight {
-  outline: 3px solid #2196f3;
-  box-shadow: 0 0 10px #2196f3;
+  background-color: #ffcc80 !important; /* light orange */
+  border-color: #ffb74d !important;
+  box-shadow: 0 0 10px #ffb74d;
 }
+
 
     
   </style>
@@ -227,7 +236,7 @@
   </div>
 </div>
   
-  <div id="noteDisplay">Press a key…</div>
+  <div id="noteDisplay">Press a </div>
   
  <div id="harmonium"></div>
   <p><a href="index.html">⬅️ Back to Home</a></p>
@@ -265,8 +274,8 @@ function playNote(note, keyDiv) {
   if (!audioBuffers[note]) return;
 
   if (isMouseDown) {
-    document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
-      const activeNote = key.dataset.note;
+    document.querySelectorAll('.white-active, .black-active').forEach(key => {
+      const activeNote = dataset.note;
       if (activeNote !== note) stopNote(activeNote, key);
     });
   }
@@ -295,42 +304,42 @@ function stopNote(note, keyDiv) {
   document.body.addEventListener('mouseup', () => {
     isMouseDown = false;
     // Stop all notes on mouse release
-    document.querySelectorAll('.white-key.active, .black-key.active').forEach(key => {
-      const note = key.dataset.note;
+    document.querySelectorAll('.white-active, .black-active').forEach(key => {
+      const note = dataset.note;
       stopNote(note, key);
     });
   });
 
   function makeKey(note, isBlack) {
     const key = document.createElement('div');
-    key.className = isBlack ? 'black-key' : 'white-key';
-    key.dataset.note = note;
+    className = isBlack ? 'black-key' : 'white-key';
+    dataset.note = note;
 
     if (!isBlack && note.startsWith('C')) {
       const label = document.createElement('div');
       label.className = 'label';
       label.innerText = note;
-      key.appendChild(label);
+      appendChild(label);
     }
 
     // Desktop events
-key.addEventListener('mousedown', () => playNote(note, key));
-key.addEventListener('mouseenter', () => {
+addEventListener('mousedown', () => playNote(note, key));
+addEventListener('mouseenter', () => {
   if (isMouseDown) playNote(note, key);
 });
-key.addEventListener('mouseup', () => stopNote(note, key));
-key.addEventListener('mouseleave', () => {
+addEventListener('mouseup', () => stopNote(note, key));
+addEventListener('mouseleave', () => {
   if (!isMouseDown) stopNote(note, key);
 });
 
 // Mobile events
-key.addEventListener("touchstart", (e) => {
+addEventListener("touchstart", (e) => {
   e.preventDefault();
   playNote(note, key);
   isMouseDown = true;
 }, { passive: false });
 
-key.addEventListener("touchend", (e) => {
+addEventListener("touchend", (e) => {
   e.preventDefault();
   stopNote(note, key);
   isMouseDown = false;
@@ -343,7 +352,7 @@ for (let oct = 2; oct <= 4; oct++) {
   whiteKeys.forEach((pitch, i) => {
     const note = pitch + oct;
     const whiteKey = makeKey(note, false);
-    whiteKey.style.position = 'relative';
+    whitestyle.position = 'relative';
     container.appendChild(whiteKey);
 
 // Black keys
@@ -351,8 +360,8 @@ if (blackMap[pitch]) {
       const blackNote = pitch + '#' + oct;
       const blackKey = makeKey(blackNote, true);
       const index = ((oct - 2) * 7 + i);
-      blackKey.style.position = 'absolute';
-      blackKey.style.left = `${index * 50 + 35}px`;
+      blackstyle.position = 'absolute';
+      blackstyle.left = `${index * 50 + 35}px`;
       container.appendChild(blackKey);
     }
   });
@@ -406,7 +415,7 @@ const raagMap = {
 };
 
 function clearHighlights() {
-  document.querySelectorAll('.white-key, .black-key').forEach(key => key.classList.remove('highlight'));
+  document.querySelectorAll('.white-key, .black-key').forEach(key => classList.remove('highlight'));
 }
 
 function highlightScale(name) {
@@ -418,7 +427,7 @@ function highlightScale(name) {
       note = note.replace('E#', 'F').replace('B#', 'C');
       const full = `${note}${oct}`;
       const key = document.querySelector(`[data-note="${full}"]`);
-      if (key) key.classList.add('highlight');
+      if (key) classList.add('highlight');
     });
   }
 }
@@ -431,7 +440,7 @@ function highlightRaag(name) {
       const pitch = p.replace('b', '#'); // For flat notations
       const full = `${pitch}${oct}`;
       const key = document.querySelector(`[data-note="${full}"]`);
-      if (key) key.classList.add('highlight');
+      if (key) classList.add('highlight');
     });
   }
 }
