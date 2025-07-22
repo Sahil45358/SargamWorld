@@ -461,29 +461,38 @@ function highlightScale(name) {
   clearHighlights();
   const pitches = scaleMap[name];
   for (let oct = 2; oct <= 4; oct++) {
-    pitches.forEach(p => {
-      let
-      note = note.replace('E#', 'F').replace('B#', 'C');
-      const full = `${note}${oct}`;
-      const key = document.querySelector(`[data-note="${full}"]`);
+    pitches.forEach(pitch => {
+      const note = `${pitch}${oct}`;
+      const key = document.querySelector(`[data-note="${note}"]`);
       if (key) key.classList.add('highlight');
     });
   }
+
+  // Clear raag info
+  infoDiv.innerHTML = `<strong>${name}</strong><br><em>Western scale</em>`;
 }
+
 
 function highlightRaag(name) {
   clearHighlights();
-   const raag = raagMap[name];
-  const pitches = raagMap[name];
-  for (let oct = 2; oct <= 4; oct++) {
-    pitches.forEach(p => {
-      const pitch = p.replace('b', '#'); // For flat notations
-      const full = `${pitch}${oct}`;
-      const key = document.querySelector(`[data-note="${full}"]`);
+  const raag = raagMap[name];
+  raag.notes.forEach(pitch => {
+    const normalized = pitch.replace('b', '#'); // Convert flat to sharp
+    for (let oct = 2; oct <= 4; oct++) {
+      const note = `${normalized}${oct}`;
+      const key = document.querySelector(`[data-note="${note}"]`);
       if (key) key.classList.add('highlight');
-    });
-  }
+    }
+  });
+
+  // Show Aaroh and Avroh
+  infoDiv.innerHTML = `
+    <strong>${name}</strong><br>
+    <span style="color:green;"><b>Aaroh:</b></span> ${raag.aaroh}<br>
+    <span style="color:blue;"><b>Avroh:</b></span> ${raag.avroh}
+  `;
 }
+
     // Display Aaroh and Avroh
   const infoDiv = document.getElementById('raag-info');
   infoDiv.innerHTML = `
