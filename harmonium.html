@@ -484,6 +484,24 @@ function toggleSubOptions(type) {
     scaleList.classList.remove('show');
   }
 }
+// Toggle dropdown main menu
+document.querySelector('.dropbtn').addEventListener('click', function () {
+  document.querySelector('.dropdown-content').classList.toggle('show');
+});
+
+   // Close dropdown when clicking outside
+window.addEventListener('click', function (e) {
+  if (!e.target.matches('.dropbtn')) {
+    const dropdowns = document.getElementsByClassName('dropdown-content');
+    for (let i = 0; i < dropdowns.length; i++) {
+      dropdowns[i].classList.remove('show');
+    }
+
+    // Also close sub-options
+    document.getElementById('scales-options').classList.remove('show');
+    document.getElementById('raags-options').classList.remove('show');
+  }
+});
 
    
 </script>
