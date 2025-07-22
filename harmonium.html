@@ -462,7 +462,7 @@ function highlightScale(name) {
   const pitches = scaleMap[name];
   for (let oct = 2; oct <= 4; oct++) {
     pitches.forEach(p => {
-      let note = p.replace('##', '#'); // Simplify double sharps
+      let
       note = note.replace('E#', 'F').replace('B#', 'C');
       const full = `${note}${oct}`;
       const key = document.querySelector(`[data-note="${full}"]`);
@@ -473,6 +473,7 @@ function highlightScale(name) {
 
 function highlightRaag(name) {
   clearHighlights();
+   const raag = raagMap[name];
   const pitches = raagMap[name];
   for (let oct = 2; oct <= 4; oct++) {
     pitches.forEach(p => {
