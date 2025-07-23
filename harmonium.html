@@ -228,6 +228,28 @@
 <button onclick="highlightRaag('Durga')">Raag Durga</button>
 <button onclick="highlightRaag('Bageshree')">Raag Bageshree</button>
 <button onclick="highlightRaag('Khamaj')">Raag Khamaj</button>
+    <button onclick="highlightRaag('Todi')">Raag Todi</button>
+<button onclick="highlightRaag('Marwa')">Raag Marwa</button>
+<button onclick="highlightRaag('Hansdhwani')">Raag Hansdhwani</button>
+<button onclick="highlightRaag('Charukeshi')">Raag Charukeshi</button>
+<button onclick="highlightRaag('Miyan ki Malhar')">Raag Miyan ki Malhar</button>
+<button onclick="highlightRaag('Shivranjani')">Raag Shivranjani</button>
+<button onclick="highlightRaag('Jog')">Raag Jog</button>
+<button onclick="highlightRaag('Kedar')">Raag Kedar</button>
+<button onclick="highlightRaag('Malkauns')">Raag Malkauns</button>
+  <button onclick="highlightRaag('Shree')">Raag Shree</button>
+  <button onclick="highlightRaag('Lalit')">Raag Lalit</button>
+  <button onclick="highlightRaag('Multani')">Raag Multani</button>
+  <button onclick="highlightRaag('Jogiya')">Raag Jogiya</button>
+  <button onclick="highlightRaag('Saraswati')">Raag Saraswati</button>
+  <button onclick="highlightRaag('Hemant')">Raag Hemant</button>
+  <button onclick="highlightRaag('Madhmad Sarang')">Raag Madhmad Sarang</button>
+    <button onclick="highlightRaag('Puriya')">Raag Puriya</button>
+<button onclick="highlightRaag('Patdeep')">Raag Patdeep</button>
+<button onclick="highlightRaag('Darbari Kanada')">Raag Darbari Kanada</button>
+<button onclick="highlightRaag('Shuddha Sarang')">Raag Shuddha Sarang</button>
+<button onclick="highlightRaag('Jaunpuri')">Raag Jaunpuri</button>
+
           <!-- Add more raags here -->
         </div>
       </div>
@@ -451,7 +473,120 @@ const raagMap = {
     aaroh: "S G M P D N S'",
     avroh: "S' n D P M G R S"
   }
+    
+  "Todi": {
+    notes: ['C#', 'D', 'E', 'G', 'A#', 'C'],
+    aaroh: "S r g M^ D N S'",
+    avroh: "S' N D M^ g r S"
+  },
+  "Marwa": {
+    notes: ['C#', 'D', 'F', 'G', 'A#', 'C'],
+    aaroh: "S r G M^ D N S'",
+    avroh: "S' N D M^ G r S"
+  },
+  "Hansdhwani": {
+    notes: ['C#', 'D#', 'F', 'G#', 'C'],
+    aaroh: "S R G P N S'",
+    avroh: "S' N P G R S"
+  },
+  "Charukeshi": {
+    notes: ['C#', 'D#', 'F', 'F#', 'G#', 'A', 'B'],
+    aaroh: "S R G M P d n S'",
+    avroh: "S' n d P M G R S"
+  },
+  "Miyan ki Malhar": {
+    notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
+    aaroh: "N S R M P N S'",
+    avroh: "S' N D P M R S"
+  },
+  "Shivranjani": {
+    notes: ['C#', 'D#', 'E', 'G#', 'A#'],
+    aaroh: "S R g P D S'",
+    avroh: "S' D P g R S"
+  },
+  "Jog": {
+    notes: ['C#', 'E', 'F', 'F#', 'G#', 'B'],
+    aaroh: "S G g M P n S'",
+    avroh: "S' n P M g G S"
+  },
+  "Kedar": {
+    notes: ['C#', 'D#', 'F', 'F#', 'G', 'G#', 'A#', 'C'],
+    aaroh: "S M M^ P N S'",
+    avroh: "S' N D P M^ G R S"
+  }
+  
+  "Malkauns": {
+    notes: ['C#', 'E', 'F#', 'A#', 'B'],
+    aaroh: "S g M d n S'",
+    avroh: "S' n d M g S"
+  },
+  "Shree": {
+    notes: ['C#', 'D', 'F', 'F#', 'A', 'C'],
+    aaroh: "N r G M d N S'",
+    avroh: "S' N d M G r S"
+  },
+  "Lalit": {
+    notes: ['C#', 'D', 'F', 'F#', 'G', 'A#', 'C'],
+    aaroh: "S r G M M^ D N S'",
+    avroh: "S' N D M^ M G r S"
+  },
+  "Multani": {
+    notes: ['C#', 'D', 'F', 'G', 'A#', 'C'],
+    aaroh: "S r G M^ D N S'",
+    avroh: "S' N D M^ G r S"
+  },
+  "Jogiya": {
+    notes: ['C#', 'D', 'F#', 'G#', 'A'],
+    aaroh: "S r M P d S'",
+    avroh: "S' d P M r S"
+  },
+  "Saraswati": {
+    notes: ['C#', 'D#', 'F', 'F#', 'A#', 'C'],
+    aaroh: "S R G M D N S'",
+    avroh: "S' N D M G R S"
+  },
+  "Hemant": {
+    notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
+    aaroh: "S R M P D N S'",
+    avroh: "S' N D P M R S"
+  },
+  "Madhmad Sarang": {
+    notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
+    aaroh: "S R M P N S'",
+    avroh: "S' N D P M R S"
+  }
+   "Puriya": {
+  notes: ['C#', 'D', 'F', 'F#', 'A#', 'C'],
+  aaroh: "N r G M D N S'",
+  avroh: "S' N D M G r N S"
+},
+
+"Patdeep": {
+  notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A#', 'C'],
+  aaroh: "N S g M P N S'",
+  avroh: "S' N D P M g R S"
+},
+
+"Darbari Kanada": {
+  notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B'],
+  aaroh: "S R g M P d n S'",
+  avroh: "S' n d P M g R S"
+},
+
+"Shuddha Sarang": {
+  notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
+  aaroh: "S R M P N S'",
+  avroh: "S' N D P M R S"
+},
+
+"Jaunpuri": {
+  notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B'],
+  aaroh: "S R M P d n S'",
+  avroh: "S' n d P M g R S"
+}
+
 };
+
 
    
 function clearHighlights() {
