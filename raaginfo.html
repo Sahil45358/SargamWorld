@@ -1,0 +1,61 @@
+<!-- raaginfo.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Raag Information – SurSargam</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #240b36, #c31432);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      margin: 0;
+      padding: 1rem;
+    }
+    .raag-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .raag-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 0 8px #000;
+      transition: transform 0.2s;
+    }
+    .raag-card:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
+    .header {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .back-button {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="header">Explore Raags</h1>
+  <div class="raag-container">
+    <a href="raags/yaman.html"><div class="raag-card">Raag Yaman</div></a>
+    <a href="raags/bhairav.html"><div class="raag-card">Raag Bhairav</div></a>
+    <a href="raags/bhairavi.html"><div class="raag-card">Raag Bhairavi</div></a>
+    <a href="raags/durga.html"><div class="raag-card">Raag Durga</div></a>
+    <!-- Add more similarly -->
+  </div>
+  <div class="back-button">
+    <a href="harmonium.html">🎹 Jump to Harmonium</a>
+  </div>
+</body>
+</html>
