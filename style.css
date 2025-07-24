@@ -301,4 +301,12 @@ footer {
   border-top: 1px solid #e0e0e0;
 }
 
-
+.card-row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 1200px;
+}
