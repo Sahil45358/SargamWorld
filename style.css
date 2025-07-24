@@ -301,35 +301,4 @@ footer {
   border-top: 1px solid #e0e0e0;
 }
 
-.card-container {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-}
 
-.song-card {
-  flex: 0 1 300px;
-  text-align: center;
-  background: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease;
-}
-
-.song-card:hover {
-  transform: translateY(-5px);
-}
-
-.song-card .btn {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #c31432;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-}
