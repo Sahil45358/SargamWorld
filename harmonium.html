@@ -600,17 +600,25 @@ function clearHighlights() {
   document.querySelectorAll('.white-key, .black-key').forEach(key => key.classList.remove('highlight'));
 }
 
-function highlightScale(scale) {
-  // Set the global S to the selected scale
-  currentSa = scale;
+function highlightScale(name) {
+  clearHighlights(); // Clear previous highlights
 
-  // Highlight keys for the scale
-  highlightNotes(scales[scale].notes);
+  const pitches = scaleMap[name];
+  for (let oct = 2; oct <= 4; oct++) {
+    pitches.forEach(pitch => {
+      const note = `${pitch}${oct}`;
+      const key = document.querySelector(`[data-note="${note}"]`);
+      if (key) key.classList.add('highlight');
+    });
+  }
 
-  // Remove Raag info when a scale is selected
-  const raagInfo = document.getElementById('raag-info');
-  raagInfo.innerHTML = `<strong>Selected Scale:</strong> ${scale}`;
+  // Clear any previously selected raag
+  highlightedRaag = null;
 
+  // Show only scale info
+  const infoDiv = document.getElementById('raag-info');
+  infoDiv.innerHTML = `<strong>Selected Scale:</strong> ${name}`;
+}
 
 
 function highlightRaag(name) {
