@@ -1,4 +1,3 @@
-<!-- raaginfo.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +11,21 @@
       color: white;
       margin: 0;
       padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .controls input, .controls select {
+      padding: 0.5rem;
+      margin: 0.5rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
     }
     .raag-container {
       display: grid;
@@ -35,10 +49,6 @@
       color: white;
       text-decoration: none;
     }
-    .header {
-      text-align: center;
-      margin-top: 1rem;
-    }
     .back-button {
       text-align: center;
       margin-top: 2rem;
@@ -46,16 +56,70 @@
   </style>
 </head>
 <body>
-  <h1 class="header">Explore Raags</h1>
-  <div class="raag-container">
-    <a href="raags/yaman.html"><div class="raag-card">Raag Yaman</div></a>
-    <a href="raags/bhairav.html"><div class="raag-card">Raag Bhairav</div></a>
-    <a href="raags/bhairavi.html"><div class="raag-card">Raag Bhairavi</div></a>
-    <a href="raags/durga.html"><div class="raag-card">Raag Durga</div></a>
-    <!-- Add more similarly -->
+  <h1>Explore Raags</h1>
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search Raag by name..." />
+    <select id="timeFilter">
+      <option value="">Filter by Time</option>
+      <option value="morning">Morning</option>
+      <option value="afternoon">Afternoon</option>
+      <option value="evening">Evening</option>
+      <option value="night">Night</option>
+    </select>
   </div>
+
+  <div class="raag-container" id="raagContainer">
+    <!-- All raags listed here with data-time attribute -->
+    <a href="raags/yaman.html"><div class="raag-card" data-name="Yaman" data-time="evening">Raag Yaman</div></a>
+    <a href="raags/bhairavi.html"><div class="raag-card" data-name="Bhairavi" data-time="morning">Raag Bhairavi</div></a>
+    <a href="raags/bhairav.html"><div class="raag-card" data-name="Bhairav" data-time="morning">Raag Bhairav</div></a>
+    <a href="raags/durga.html"><div class="raag-card" data-name="Durga" data-time="night">Raag Durga</div></a>
+    <a href="raags/desh.html"><div class="raag-card" data-name="Desh" data-time="evening">Raag Desh</div></a>
+    <!-- Add more similarly with data-name and data-time -->
+  </div>
+
   <div class="back-button">
     <a href="harmonium.html">🎹 Jump to Harmonium</a>
   </div>
+
+  <script>
+    const container = document.getElementById('raagContainer');
+    const cards = Array.from(container.querySelectorAll('.raag-card').parentNode ? container.querySelectorAll('a') : []);
+
+    // Sort alphabetically
+    function sortRaags() {
+      const sorted = cards.sort((a, b) => {
+        const nameA = a.querySelector('.raag-card').getAttribute('data-name').toLowerCase();
+        const nameB = b.querySelector('.raag-card').getAttribute('data-name').toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+      container.innerHTML = '';
+      sorted.forEach(card => container.appendChild(card));
+    }
+
+    sortRaags();
+
+    // Search filter
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      cards.forEach(card => {
+        const name = card.querySelector('.raag-card').getAttribute('data-name').toLowerCase();
+        card.style.display = name.includes(query) ? 'block' : 'none';
+      });
+    });
+
+    // Time filter
+    document.getElementById('timeFilter').addEventListener('change', function () {
+      const selectedTime = this.value;
+      cards.forEach(card => {
+        const time = card.querySelector('.raag-card').getAttribute('data-time');
+        if (!selectedTime || time === selectedTime) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
