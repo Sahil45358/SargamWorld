@@ -14,16 +14,17 @@
     }
     h1 {
       text-align: center;
-      margin-bottom: 1rem;
     }
     .controls {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
     .controls input, .controls select {
       padding: 0.5rem;
-      margin: 0.5rem;
-      border-radius: 8px;
+      border-radius: 5px;
       border: none;
       font-size: 1rem;
     }
@@ -56,11 +57,13 @@
   </style>
 </head>
 <body>
+
   <h1>Explore Raags</h1>
+
   <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search Raag by name..." />
+    <input type="text" id="searchInput" placeholder="Search Raag..." />
     <select id="timeFilter">
-      <option value="">Filter by Time</option>
+      <option value="">All Times</option>
       <option value="morning">Morning</option>
       <option value="afternoon">Afternoon</option>
       <option value="evening">Evening</option>
@@ -69,13 +72,7 @@
   </div>
 
   <div class="raag-container" id="raagContainer">
-    <!-- All raags listed here with data-time attribute -->
-    <a href="raags/yaman.html"><div class="raag-card" data-name="Yaman" data-time="evening">Raag Yaman</div></a>
-    <a href="raags/bhairavi.html"><div class="raag-card" data-name="Bhairavi" data-time="morning">Raag Bhairavi</div></a>
-    <a href="raags/bhairav.html"><div class="raag-card" data-name="Bhairav" data-time="morning">Raag Bhairav</div></a>
-    <a href="raags/durga.html"><div class="raag-card" data-name="Durga" data-time="night">Raag Durga</div></a>
-    <a href="raags/desh.html"><div class="raag-card" data-name="Desh" data-time="evening">Raag Desh</div></a>
-    <!-- Add more similarly with data-name and data-time -->
+    <!-- Cards will be populated here -->
   </div>
 
   <div class="back-button">
@@ -83,43 +80,68 @@
   </div>
 
   <script>
-    const container = document.getElementById('raagContainer');
-    const cards = Array.from(container.querySelectorAll('.raag-card').parentNode ? container.querySelectorAll('a') : []);
+    const raags = [
+      { name: 'Bageshree', file: 'bageshree.html', time: 'night' },
+      { name: 'Bhairav', file: 'bhairav.html', time: 'morning' },
+      { name: 'Bhairavi', file: 'bhairavi.html', time: 'morning' },
+      { name: 'Charukeshi', file: 'charukeshi.html', time: 'evening' },
+      { name: 'DarBari Kanada', file: 'darbari_kanada.html', time: 'night' },
+      { name: 'Desh', file: 'desh.html', time: 'evening' },
+      { name: 'Durga', file: 'durga.html', time: 'evening' },
+      { name: 'Hansdhwani', file: 'hansdhwani.html', time: 'morning' },
+      { name: 'Jaunpuri', file: 'jaunpuri.html', time: 'morning' },
+      { name: 'Jog', file: 'jog.html', time: 'night' },
+      { name: 'Jogiya', file: 'jogiya.html', time: 'morning' },
+      { name: 'Kafi', file: 'kafi.html', time: 'evening' },
+      { name: 'Kedar', file: 'kedar.html', time: 'night' },
+      { name: 'Khamaj', file: 'khamaj.html', time: 'evening' },
+      { name: 'Lalit', file: 'lalit.html', time: 'dawn' },
+      { name: 'Malkauns', file: 'malkauns.html', time: 'late_night' },
+      { name: 'Marwa', file: 'marwa.html', time: 'evening' },
+      { name: 'Madhmad Sarang', file: 'madhmad_sarang.html', time: 'afternoon' },
+      { name: 'Miyan ki Malhar', file: 'miyan_ki_malhar.html', time: 'evening' },
+      { name: 'Multani', file: 'multani.html', time: 'afternoon' },
+      { name: 'Patdeep', file: 'patdeep.html', time: 'afternoon' },
+      { name: 'Puriya', file: 'puriya.html', time: 'evening' },
+      { name: 'Saraswati', file: 'saraswati.html', time: 'morning' },
+      { name: 'Shivranjani', file: 'shivranjani.html', time: 'night' },
+      { name: 'Shree', file: 'shree.html', time: 'evening' },
+      { name: 'Shuddha Sarang', file: 'shuddha_sarang.html', time: 'afternoon' },
+      { name: 'Todi', file: 'todi.html', time: 'morning' },
+      { name: 'Yaman', file: 'yaman.html', time: 'evening' }
+    ];
 
-    // Sort alphabetically
-    function sortRaags() {
-      const sorted = cards.sort((a, b) => {
-        const nameA = a.querySelector('.raag-card').getAttribute('data-name').toLowerCase();
-        const nameB = b.querySelector('.raag-card').getAttribute('data-name').toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-      container.innerHTML = '';
-      sorted.forEach(card => container.appendChild(card));
-    }
+    function renderRaags() {
+      const container = document.getElementById("raagContainer");
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+      const selectedTime = document.getElementById("timeFilter").value;
 
-    sortRaags();
+      // Clear current cards
+      container.innerHTML = "";
 
-    // Search filter
-    document.getElementById('searchInput').addEventListener('input', function () {
-      const query = this.value.toLowerCase();
-      cards.forEach(card => {
-        const name = card.querySelector('.raag-card').getAttribute('data-name').toLowerCase();
-        card.style.display = name.includes(query) ? 'block' : 'none';
-      });
-    });
+      // Sort alphabetically
+      const sortedRaags = [...raags].sort((a, b) => a.name.localeCompare(b.name));
 
-    // Time filter
-    document.getElementById('timeFilter').addEventListener('change', function () {
-      const selectedTime = this.value;
-      cards.forEach(card => {
-        const time = card.querySelector('.raag-card').getAttribute('data-time');
-        if (!selectedTime || time === selectedTime) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
+      sortedRaags.forEach(raag => {
+        if (
+          raag.name.toLowerCase().includes(searchTerm) &&
+          (selectedTime === "" || raag.time === selectedTime)
+        ) {
+          const card = document.createElement("a");
+          card.href = `raags/${raag.file}`;
+          card.innerHTML = `<div class="raag-card">${raag.name}</div>`;
+          container.appendChild(card);
         }
       });
-    });
+    }
+
+    // Event Listeners
+    document.getElementById("searchInput").addEventListener("input", renderRaags);
+    document.getElementById("timeFilter").addEventListener("change", renderRaags);
+
+    // Initial render
+    renderRaags();
   </script>
+
 </body>
 </html>
