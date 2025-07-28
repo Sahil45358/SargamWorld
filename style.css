@@ -1,324 +1,358 @@
 /* Global */
 body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  background-color: #fff8f0;
-  color: #333;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #fff8f0;
+  color: #333;
 }
 
 a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: bold;
+  color: #c31432;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Header */
 header {
-  background: linear-gradient(to right, #240b36, #c31432);
-  color: white;
-  padding: 2rem 1rem;
-  text-align: center;
+  background: linear-gradient(to right, #240b36, #c31432);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
 }
 
 header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  margin: 0 0 0.5rem 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
 }
 
 header p {
-  font-size: 1.1rem;
-  color: #f4f4f4;
+  font-size: 1.1rem;
+  color: #f4f4f4;
 }
 
 /* Main Content */
 main {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem 1rem;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
 /* Sections */
 h2 {
-  border-left: 5px solid #c31432;
-  padding-left: 10px;
-  font-size: 1.5rem;
-  color: #c31432;
-  margin-top: 2rem;
+  border-left: 5px solid #c31432;
+  padding-left: 10px;
+  font-size: 1.5rem;
+  color: #c31432;
+  margin-top: 2rem;
 }
 
 ul {
-  list-style: disc;
-  padding-left: 1.5rem;
+  list-style: disc;
+  padding-left: 1.5rem;
 }
 
 p, ul, li {
-  font-size: 1rem;
-  line-height: 1.7;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
 }
 
 code {
-  background-color: #f4f4f4;
-  padding: 3px 6px;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  background-color: #f4f4f4;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
 }
 
 /* Tables */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 table th, table td {
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  text-align: left;
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
 }
 
 table th {
-  background-color: #fce4ec;
-  color: #880e4f;
+  background-color: #fce4ec;
+  color: #880e4f;
 }
 
 /* Footer */
 footer {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #999;
-  padding: 1rem;
-  margin-top: 2rem;
-  background-color: #fff3f3;
-  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #999;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #fff3f3;
+  border-top: 1px solid #e0e0e0;
 }
 
 /* Song List Page Specific */
 .song-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 .song-card {
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 16px 20px;
-  width: 280px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-align: left;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 16px 20px;
+  width: 280px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: left;
 }
 
 .song-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 .song-card h3 {
-  margin: 0 0 6px;
-  font-size: 1.1rem;
-  color: #2c3e50;
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  color: #2c3e50;
 }
 
 .song-card p {
-  margin: 0;
-  color: #555;
-  font-size: 0.95rem;
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
 }
 
 /* Pre tag for sargam */
 pre {
-  background: #f7f7f7;
-  padding: 1rem;
-  border-radius: 5px;
-  overflow-x: auto;
-  font-family: 'Noto Sans Devanagari', monospace;
-  font-size: 1rem;
-  line-height: 1.6;
+  background: #f7f7f7;
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: 'Noto Sans Devanagari', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 /* Swar Explanation Section */
 .learning-swar {
-  background: #fcf8f0;
-  padding: 1.5rem;
-  border-left: 4px solid #c31432;
-  margin-bottom: 2rem;
-  border-radius: 5px;
+  background: #fcf8f0;
+  padding: 1.5rem;
+  border-left: 4px solid #c31432;
+  margin-bottom: 2rem;
+  border-radius: 5px;
 }
 
 .learning-swar h2 {
-  margin-top: 0;
-  color: #c31432;
+  margin-top: 0;
+  color: #c31432;
 }
 
 /* Genre Badges */
 .genre-badge {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 4px 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
-  background: linear-gradient(to right, #fdfbfb, #ebedee);
-  color: #333;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  color: #333;
 }
 
 .genre-badge.romantic {
-  border-color: #e91e63;
-  background: linear-gradient(to right, #fce4ec, #f8bbd0);
-  color: #880e4f;
+  border-color: #e91e63;
+  background: linear-gradient(to right, #fce4ec, #f8bbd0);
+  color: #880e4f;
 }
 
 .genre-badge.devotional {
-  border-color: #4caf50;
-  background: linear-gradient(to right, #e8f5e9, #c8e6c9);
-  color: #1b5e20;
+  border-color: #4caf50;
+  background: linear-gradient(to right, #e8f5e9, #c8e6c9);
+  color: #1b5e20;
 }
 
 .genre-badge.sad {
-  border-color: #9c27b0;
-  background: linear-gradient(to right, #f3e5f5, #e1bee7);
-  color: #4a148c;
+  border-color: #9c27b0;
+  background: linear-gradient(to right, #f3e5f5, #e1bee7);
+  color: #4a148c;
 }
 
 .genre-badge.patriotic {
-  border-color: #ef6c00;
-  background: linear-gradient(to right, #fff3e0, #ffe0b2);
-  color: #e65100;
+  border-color: #ef6c00;
+  background: linear-gradient(to right, #fff3e0, #ffe0b2);
+  color: #e65100;
 }
 
 .genre-badge.rabindra {
-  border-color: #3f51b5;
-  background: linear-gradient(to right, #e8eaf6, #c5cae9);
-  color: #1a237e;
+  border-color: #3f51b5;
+  background: linear-gradient(to right, #e8eaf6, #c5cae9);
+  color: #1a237e;
 }
 
 /* Filters and Search */
 #searchBar {
-  padding: 8px;
-  width: 60%;
-  margin: 10px auto;
-  display: block;
-  border-radius: 5px;
-  font-size: 1rem;
+  padding: 8px;
+  width: 60%;
+  margin: 10px auto;
+  display: block;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 #azFilter {
-  text-align: center;
-  margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 #azFilter button {
-  margin: 2px;
-  padding: 5px 10px;
-  border: none;
-  background: #e3e3e3;
-  cursor: pointer;
-  border-radius: 4px;
+  margin: 2px;
+  padding: 5px 10px;
+  border: none;
+  background: #e3e3e3;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 #azFilter button:hover {
-  background: #ccc;
+  background: #ccc;
 }
 
 #genreFilter {
-  margin: 10px 0;
-  padding: 8px 12px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  cursor: pointer;
+  margin: 10px 0;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
 }
 
 /* Pagination */
 .pagination {
-  text-align: center;
-  margin: 20px 0;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .pagination button {
-  padding: 6px 12px;
-  margin: 0 4px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  cursor: pointer;
+  padding: 6px 12px;
+  margin: 0 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
 }
 
 .pagination button.active {
-  background-color: #333;
-  color: #fff;
-  border-color: #333;
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
 }
 
 /* Unified SurSargam Theme */
 
 header {
-  background: linear-gradient(to right, #240b36, #c31432);
-  color: white;
-  padding: 2rem 1rem;
-  text-align: center;
+  background: linear-gradient(to right, #240b36, #c31432);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
 }
 
 header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
 }
 
 header p {
-  font-size: 1.1rem;
-  color: #f4f4f4;
+  font-size: 1.1rem;
+  color: #f4f4f4;
 }
 
 main {
-  max-width: 1100px;
-  margin: 2rem auto;
-  padding: 1rem;
+  max-width: 1100px; /* Adjusted max-width for main content */
+  margin: 2rem auto;
+  padding: 1rem;
 }
 
 footer {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #999;
-  padding: 1rem;
-  margin-top: 2rem;
-  background-color: #fff3f3;
-  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #999;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #fff3f3;
+  border-top: 1px solid #e0e0e0;
 }
 
 .card-row {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 40px auto;
-  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 1200px;
 }
-
-
 
 .section-heading {
-  text-align: center;
-  color: #ffe6e6;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  border-bottom: 2px solid #ff9999;
-  padding-bottom: 0.5rem;
+  text-align: center;
+  color: #ffe6e6; /* This color might be for a different background, see specific rule below */
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #ff9999; /* This border might be for a different background */
+  padding-bottom: 0.5rem;
 }
+
+/* --- START: Section Separation Styling --- */
+
+/* Horizontal Rule Separator for sections */
+.section-separator {
+  border: none; /* Removes default browser border */
+  height: 2px; /* Thickness of the separator line */
+  /* Gradient color for the line, matching your theme */
+  background: linear-gradient(to right, #fce4ec, #c31432, #fce4ec);
+  margin: 60px auto; /* 60px vertical margin, 'auto' centers horizontally */
+  width: 80%; /* Width of the separator line */
+  border-radius: 2px; /* Slightly rounded ends for the line */
+}
+
+/* Adjust spacing for sections around the separator (optional, fine-tune as needed) */
+.learning-tools {
+    margin-bottom: 30px; /* Adds space below the learning tools section */
+}
+
+#songList {
+    margin-top: 30px; /* Adds space above the song list section */
+}
+
+/* Adjustments for the "Learning Tools" heading style */
+/* This targets the <h2> inside the .feature-row, if you want it centered */
+.feature-row .section-heading {
+    text-align: center; /* Keeps the heading centered */
+    color: #c31432; /* Primary accent color, overrides the general .section-heading color */
+    border-left: none; /* Removes the left border if you want a cleaner centered look */
+    padding-left: 0; /* Removes left padding */
+    border-bottom: 2px solid #240b36; /* Adds a subtle underline */
+    padding-bottom: 0.5rem; /* Space below the underline */
+    margin-bottom: 2.5rem; /* Increased margin below the heading */
+}
+
+/* --- END: Section Separation Styling --- */
