@@ -310,3 +310,15 @@ footer {
   margin: 40px auto;
   max-width: 1200px;
 }
+
+
+
+.section-heading {
+  text-align: center;
+  color: #ffe6e6;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #ff9999;
+  padding-bottom: 0.5rem;
+}
