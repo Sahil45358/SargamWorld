@@ -286,7 +286,7 @@ header p {
 }
 
 main {
-  max-width: 1100px; /* Adjusted max-width for main content */
+  max-width: 1100px;
   margin: 2rem auto;
   padding: 1rem;
 }
@@ -311,27 +311,28 @@ footer {
   max-width: 1200px;
 }
 
+/* Ensure .section-heading maintains its original theme styling */
 .section-heading {
   text-align: center;
-  color: #ffe6e6; /* This color might be for a different background, see specific rule below */
+  color: #ffe6e6; /* This was your original color for section-heading */
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
-  border-bottom: 2px solid #ff9999; /* This border might be for a different background */
+  border-bottom: 2px solid #ff9999; /* This was your original border-bottom */
   padding-bottom: 0.5rem;
 }
 
-/* --- START: Section Separation Styling --- */
+/* --- START: Section Separation Styling (Corrected) --- */
 
 /* Horizontal Rule Separator for sections */
 .section-separator {
   border: none; /* Removes default browser border */
-  height: 2px; /* Thickness of the separator line */
-  /* Gradient color for the line, matching your theme */
-  background: linear-gradient(to right, #fce4ec, #c31432, #fce4ec);
-  margin: 60px auto; /* 60px vertical margin, 'auto' centers horizontally */
-  width: 80%; /* Width of the separator line */
-  border-radius: 2px; /* Slightly rounded ends for the line */
+  height: 1px; /* Make it a very thin, subtle line */
+  /* Using a neutral color from your existing theme (e.g., footer border) */
+  background-color: #e0e0e0;
+  margin: 40px auto; /* Vertical margin to create space, 'auto' centers horizontally */
+  width: 90%; /* Width of the separator line */
+  border-radius: 0; /* No rounding, keeps it sharp */
 }
 
 /* Adjust spacing for sections around the separator (optional, fine-tune as needed) */
@@ -343,16 +344,4 @@ footer {
     margin-top: 30px; /* Adds space above the song list section */
 }
 
-/* Adjustments for the "Learning Tools" heading style */
-/* This targets the <h2> inside the .feature-row, if you want it centered */
-.feature-row .section-heading {
-    text-align: center; /* Keeps the heading centered */
-    color: #c31432; /* Primary accent color, overrides the general .section-heading color */
-    border-left: none; /* Removes the left border if you want a cleaner centered look */
-    padding-left: 0; /* Removes left padding */
-    border-bottom: 2px solid #240b36; /* Adds a subtle underline */
-    padding-bottom: 0.5rem; /* Space below the underline */
-    margin-bottom: 2.5rem; /* Increased margin below the heading */
-}
-
-/* --- END: Section Separation Styling --- */
+/* --- END: Section Separation Styling (Corrected) --- */
