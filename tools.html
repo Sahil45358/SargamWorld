@@ -6,12 +6,11 @@
   <title>SurSargam — Learning Tools</title>
   <meta name="description" content="SurSargam learning tools: harmonium simulator, raag explorer, taal trainer and more. Practice online, tune your Sa and sharpen your skills." />
   <link rel="stylesheet" href="style.css" />
-  <!-- Page-specific styles (move into style.css if you prefer a single stylesheet) -->
   <style>
-    :root{
-      --accent: #800000;           /* primary maroon accent - change here to change theme */
+    :root {
+      --accent: #800000;
       --accent-dark: #9b1717;
-      --bg: #f3eee8;              /* site background — matches your existing theme */
+      --bg: #f3eee8;
       --text: #222;
       --muted: #5a5a5a;
       --card-bg: #ffffff;
@@ -22,32 +21,38 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       background: var(--bg);
       color: var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
       line-height: 1.45;
     }
 
     .container { max-width: var(--container-w); margin: 0 auto; padding: 20px; }
 
-    /* Header / Navbar */
+    /* Navbar */
     .site-header {
       background: var(--accent);
       color: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
-    .nav-inner { max-width: var(--container-w); margin: 0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 20px; }
-    .brand { color: #fff; font-weight:700; text-decoration:none; font-size:1.05rem; letter-spacing:0.2px; }
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 20px;
+    }
+    .brand { color: #fff; font-weight:700; text-decoration:none; font-size:1.1rem; }
     .nav-links { display:flex; gap:10px; align-items:center; margin:0; padding:0; list-style:none; }
     .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); outline: none; }
-    .support-btn { background:#fff; color:var(--accent); padding:8px 10px; border-radius:8px; font-weight:700; text-decoration:none; }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
+    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; text-decoration:none; }
 
     /* Hero */
-    .hero { text-align:center; padding:26px 10px; }
-    .hero h1 { margin:0 0 6px; color:var(--accent); font-size:1.8rem; }
+    .hero { text-align:center; padding:28px 10px; }
+    .hero h1 { margin:0 0 6px; color:var(--accent); font-size:1.9rem; }
     .hero p { margin:0; color:var(--muted); }
 
     /* Tools grid */
@@ -56,9 +61,7 @@
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
       margin-top: 18px;
-      align-items: stretch;
     }
-
     .tool-card {
       display:flex;
       flex-direction:column;
@@ -73,11 +76,10 @@
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
       min-height: 160px;
     }
-    .tool-card:focus, .tool-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 22px 44px rgba(16,24,40,0.12);
+    .tool-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 36px rgba(16,24,40,0.12);
       border-color: rgba(128,0,0,0.12);
-      outline: none;
     }
     .tool-card h3 { margin: 0 0 8px; color: var(--accent); font-size:1.05rem; }
     .tool-card p { margin: 0 0 12px; color: var(--muted); font-size:0.96rem; }
@@ -85,17 +87,17 @@
 
     /* Support panel */
     .support-panel {
-      margin-top: 26px;
+      margin-top: 30px;
       border-radius: 10px;
-      padding: 14px;
-      background: linear-gradient(90deg, rgba(128,0,0,0.04), rgba(255,255,255,0));
+      padding: 16px;
+      background: linear-gradient(90deg, rgba(128,0,0,0.05), rgba(255,255,255,0));
       display:flex;
       justify-content:center;
       align-items:center;
     }
     .support-inner { display:flex; gap:16px; align-items:center; flex-wrap:wrap; justify-content:center; }
     .support-inner p { margin:0; color:var(--muted); max-width:620px; text-align:center; }
-    .support-buttons { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .support-buttons { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
     .btn {
       display:inline-block;
       padding:9px 14px;
@@ -109,134 +111,107 @@
     .upi { background:#fff; color:var(--accent); border:1px solid rgba(0,0,0,0.06); }
 
     /* Footer */
-    .site-footer { margin-top:34px; padding:18px; text-align:center; color:var(--muted); font-size:0.94rem; }
+    .site-footer {
+      margin-top:34px;
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:0.94rem;
+      background:#fafafa;
+      border-top:1px solid rgba(0,0,0,0.05);
+    }
 
-    /* Small devices fine-tuning */
     @media (max-width:520px){
       .hero h1 { font-size:1.4rem; }
-      .nav-inner { padding:10px; }
+      .nav-inner { padding:10px; flex-wrap:wrap; }
       .container { padding:14px; }
     }
   </style>
 </head>
 <body>
-  <!-- Header / Nav -->
-  <header class="site-header" role="banner">
-    <div class="nav-inner" aria-label="Main navigation">
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-inner">
       <a class="brand" href="index.html">SurSargam</a>
-
       <nav>
-        <ul class="nav-links" role="menubar" aria-label="Primary">
-          <li role="none"><a role="menuitem" href="index.html">Home</a></li>
-          <li role="none"><a role="menuitem" aria-current="page" href="tools.html">Learning Tools</a></li>
-          <li role="none"><a role="menuitem" href="about.html">About</a></li>
-          <li role="none"><a role="menuitem" href="contact.html">Contact</a></li>
-          <li role="none"><a class="support-btn" role="menuitem" href="support.html">☕ Support</a></li>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a class="active" href="tools.html">Learning Tools</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="support-btn" href="support.html">☕ Support</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Main -->
-  <main class="container" id="main">
-    <section class="hero" aria-labelledby="tools-heading">
-      <h1 id="tools-heading">Learning Tools — Practice & Explore</h1>
-      <p>All free tools for practicing sargam, taals, raags and tuning your voice. Each tool opens on a dedicated page.</p>
+  <main class="container">
+    <section class="hero">
+      <h1>Learning Tools — Practice & Explore</h1>
+      <p>Free tools for practicing sargam, taals, raags and music theory. Each tool opens in its own page.</p>
     </section>
 
-    <!-- Tools grid: SIDE-BY-SIDE on desktop, wraps on mobile -->
-    <section class="tools-grid" aria-label="Learning tools list">
-      <!-- Each card is an anchor so it's keyboard accessible by default -->
-      <a class="tool-card" href="harmonium.html" title="Open Harmonium simulator">
+    <section class="tools-grid">
+      <a class="tool-card" href="harmonium.html">
         <div>
           <h3>🎹 Harmonium Simulator</h3>
-          <p>3-octave virtual harmonium with sustain & note highlighting — play along with notations.</p>
+          <p>Play a 3-octave virtual harmonium with sustain & note highlighting.</p>
         </div>
-        <div class="cta">Try the harmonium →</div>
+        <div class="cta">Try Harmonium →</div>
       </a>
 
-      <a class="tool-card" href="raaginfo.html" title="Explore Raags">
+      <a class="tool-card" href="raaginfo.html">
         <div>
           <h3>🎶 Raag Explorer</h3>
-          <p>See aaroh & avroh, highlighted notes for each raag, and sample phrases to practice.</p>
+          <p>View Aaroh–Avroh, highlighted notes, and practice phrases for each raag.</p>
         </div>
-        <div class="cta">Explore raags →</div>
+        <div class="cta">Explore Raags →</div>
       </a>
 
-      <a class="tool-card" href="taalinfo.html" title="Taal trainer">
+      <a class="tool-card" href="taalinfo.html">
         <div>
           <h3>🪘 Taal Trainer</h3>
-          <p>Practice common taals (Teentaal, Dadra, Keherwa) with audio and cycle practice mode.</p>
+          <p>Practice common taals like Teentaal, Dadra, Keherwa with audio cycles.</p>
         </div>
-        <div class="cta">Practice taals →</div>
+        <div class="cta">Practice Taals →</div>
       </a>
 
-      <a class="tool-card" href="swar-practice.html" title="Swar practice">
+      <a class="tool-card" href="music-theory.html">
         <div>
-          <h3>🎼 Swar Practice</h3>
-          <p>Interactive exercises for Sa–Re–Ga, alankars and scale-building drills.</p>
+          <h3>🎼 Music Theory & Vocal Tips</h3>
+          <p>Learn swar basics, alankars, scale exercises, and singing techniques.</p>
         </div>
-        <div class="cta">Start practice →</div>
+        <div class="cta">Learn More →</div>
       </a>
 
-      <a class="tool-card" href="metronome.html" title="Metronome">
+      <a class="tool-card" href="metronome.html">
         <div>
           <h3>⏱️ Metronome</h3>
-          <p>Simple, reliable metronome with BPM presets and common taal mappings.</p>
+          <p>Keep time with a simple metronome, BPM presets & taal mapping.</p>
         </div>
-        <div class="cta">Open metronome →</div>
+        <div class="cta">Open Metronome →</div>
       </a>
-
-      <a class="tool-card" href="shruti-finder.html" title="Shruti finder">
-        <div>
-          <h3>🔍 Shruti Finder</h3>
-          <p>Find your tonic (Sa), and generate reference tones to tune voice or instrument.</p>
-        </div>
-        <div class="cta">Find Sa →</div>
-      </a>
-
-      <!-- Add more tool cards here as your project expands -->
     </section>
 
-    <!-- Support / Donation panel -->
-    <section class="support-panel" aria-labelledby="support-heading">
+    <!-- Support panel -->
+    <section class="support-panel">
       <div class="support-inner">
         <div>
-          <h3 id="support-heading" style="margin:0 0 6px; color:var(--accent);">Support SurSargam</h3>
-          <p>If you find these free tools useful, please consider supporting the project. Small contributions help keep the site ad-light, cover hosting costs, and let us build more tools.</p>
+          <h3 style="margin:0 0 6px; color:var(--accent);">Support SurSargam</h3>
+          <p>If these free tools help you, please support the project. Your contribution keeps it ad-light and growing.</p>
         </div>
-
-        <div class="support-buttons" role="group" aria-label="Support options">
-          <!-- Replace the buymeacoffee URL with your profile -->
-          <a class="btn buy-coffee" href="https://www.buymeacoffee.com/yourname" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
-          <!-- Link to your support.html (UPI info or QR can live there) -->
+        <div class="support-buttons">
+          <a class="btn buy-coffee" href="https://www.buymeacoffee.com/yourname" target="_blank">☕ Buy me a coffee</a>
           <a class="btn upi" href="support.html">UPI / Donate</a>
         </div>
       </div>
     </section>
-
-    <p class="note" style="text-align:center; margin-top:14px; color:var(--muted);">Tip: open a tool, try it, then come back using the navigation above.</p>
   </main>
 
   <!-- Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <small>© 2025 SurSargam — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
-    </div>
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
   </footer>
-
-  <!-- Tiny script to ensure anchor-cards are keyboard-friendly (anchors already are, but this improves focus outline) -->
-  <script>
-    // Add visible outline when keyboard-focus is used
-    (function() {
-      function handleFirstTab(e) {
-        if (e.key === 'Tab') {
-          document.body.classList.add('user-is-tabbing');
-          window.removeEventListener('keydown', handleFirstTab);
-        }
-      }
-      window.addEventListener('keydown', handleFirstTab);
-    })();
-  </script>
 </body>
 </html>
