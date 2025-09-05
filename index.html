@@ -393,86 +393,103 @@
   </footer>
 
   <!-- ✅ Scripts -->
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Remove 🎵 before sorting
-    const titles = document.querySelectorAll('.song-card h3');
-    titles.forEach(title => {
-      title.innerText = title.innerText.replace(/🎵\s*/g, '');
-    });
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Remove 🎵 before sorting
+  const titles = document.querySelectorAll('.song-card h3');
+  titles.forEach(title => {
+    title.innerText = title.innerText.replace(/🎵\s*/g, '');
+  });
 
-    // Sort alphabetically
-    const list = document.getElementById('songList');
-    const cards = Array.from(list.getElementsByClassName('song-card'));
-    cards.sort((a, b) => {
-      const titleA = a.querySelector('h3').innerText.toLowerCase();
-      const titleB = b.querySelector('h3').innerText.toLowerCase();
-      return titleA.localeCompare(titleB);
-    });
-    cards.forEach(card => list.appendChild(card));
+  // Sort alphabetically
+  const list = document.getElementById('songList');
+  const cards = Array.from(list.getElementsByClassName('song-card'));
+  cards.sort((a, b) => {
+    const titleA = a.querySelector('h3').innerText.toLowerCase();
+    const titleB = b.querySelector('h3').innerText.toLowerCase();
+    return titleA.localeCompare(titleB);
+  });
+  cards.forEach(card => list.appendChild(card));
 
-    // Search
-    document.getElementById('searchBar').addEventListener('input', function () {
-      const filter = this.value.toLowerCase();
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        card.style.display = text.includes(filter) ? 'block' : 'none';
-      });
-    });
+  // Globals for pagination
+  const itemsPerPage = 14;
+  const pagination = document.getElementById('pagination');
+  let currentPage = 1;
+  let filteredCards = cards.slice(); // default = all songs
 
-    // Pagination
-    const itemsPerPage = 14;
-    const pagination = document.getElementById('pagination');
-    let currentPage = 1;
+  // Render page
+  function renderPage(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
 
-    function renderPage(page) {
-      const start = (page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      cards.forEach((card, i) => {
-        card.style.display = i >= start && i < end ? 'block' : 'none';
-      });
-      renderPagination(page);
-    }
+    // Hide all first
+    cards.forEach(card => (card.style.display = 'none'));
 
-    function renderPagination(activePage) {
-      const totalPages = Math.ceil(cards.length / itemsPerPage);
-      pagination.innerHTML = '';
-      for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.textContent = i;
-        btn.className = i === activePage ? 'active' : '';
-        btn.onclick = () => {
-          currentPage = i;
-          renderPage(currentPage);
-        };
-        pagination.appendChild(btn);
+    // Show only filtered subset
+    filteredCards.forEach((card, i) => {
+      if (i >= start && i < end) {
+        card.style.display = 'block';
       }
-    }
+    });
 
+    renderPagination(page);
+  }
+
+  // Render pagination buttons
+  function renderPagination(activePage) {
+    const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+    pagination.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = i === activePage ? 'active' : '';
+      btn.onclick = () => {
+        currentPage = i;
+        renderPage(currentPage);
+      };
+      pagination.appendChild(btn);
+    }
+  }
+
+  // Search
+  document.getElementById('searchBar').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    filteredCards = cards.filter(card =>
+      card.innerText.toLowerCase().includes(filter)
+    );
+    currentPage = 1;
     renderPage(currentPage);
   });
 
   // Genre filter
-  function filterByGenre() {
-    const selected = document.getElementById('genreFilter').value;
-    const cards = document.querySelectorAll('.song-card');
-    cards.forEach(card => {
+  document.getElementById('genreFilter').addEventListener('change', function () {
+    const selected = this.value;
+    filteredCards = cards.filter(card => {
       const genre = card.getAttribute('data-genre');
-      card.style.display = (selected === 'all' || genre === selected) ? 'block' : 'none';
+      return selected === 'all' || genre === selected;
+    });
+    currentPage = 1;
+    renderPage(currentPage);
+  });
+
+  // Initial load
+  renderPage(currentPage);
+});
+
+// Hamburger (mobile menu)
+document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
     });
   }
-  </script>
-  // Hamburger 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
-
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
 });
 </script>
+
 
 </body>
 </html>
