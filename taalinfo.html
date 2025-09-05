@@ -2,26 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Learn Taals – SurSargam</title>
+  <title>Learn Taals – SargamWorld</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* Body & Main */
     body {
       margin: 0;
-      padding: 2rem;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to right, #240b36, #c31432);
       color: white;
+      line-height: 1.8;
     }
+
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
     h1 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
-    p {
-      line-height: 1.8;
+
+    ul {
+      margin-top: 0.5rem;
+      padding-left: 1.5rem;
     }
-    .section {
-      margin-bottom: 2rem;
+
+    li {
+      margin: 0.3rem 0;
     }
+
+    strong {
+      color: #ffe082;
+    }
+
+    /* Taal Link */
     .taal-link {
       display: inline-block;
       margin-top: 2rem;
@@ -37,32 +55,164 @@
     .taal-link:hover {
       background-color: #ffffff55;
     }
+
+    /* 🌐 Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #240b36, #c31432);
+      padding: 10px 20px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+    .navbar .nav-links li a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+    .navbar .nav-links li a:hover,
+    .navbar .nav-links li a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5em;
+    }
+
+    /* Mobile Nav */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #240b36;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .nav-links.show {
+        display: flex;
+      }
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* 🌟 Support Us Button */
+    .support-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      background: #ffdf80;
+      color: #240b36 !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+    .support-btn:hover {
+      background: white;
+      color: #c31432 !important;
+    }
+
+    /* 📌 Footer */
+    footer {
+      background: #240b36;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    footer a {
+      color: #ffdf80;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <h1>Learn Taals</h1>
 
-  <div class="section">
-    <p>
-      <strong>Taals</strong> are the rhythmic cycles or time measures in Indian classical music that form the foundation of all compositions and improvisations. A Taal defines the structure of beats (matras), how they are grouped into divisions (vibhags), and where emphasis is placed. Whether it's vocal, instrumental, or dance—taals serve as the **heartbeat of Indian classical performance**.
-    </p>
-    <p>
-      In Hindustani music, taals are played using percussion instruments such as:
+  <!-- Header & Navbar -->
+  <header class="navbar">
+    <div class="logo">🎶 SargamWorld</div>
+    <div class="hamburger">☰</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="raaginfo.html">Raags</a></li>
+      <li><a href="taalinfo.html" class="active">Taals</a></li>
+      <li><a href="music-theory.html">Music Theory</a></li>
+      <li><a href="harmonium.html">Harmonium</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <h1>Learn Taals</h1>
+    <div class="section">
+      <p>
+        <strong>Taals</strong> are the rhythmic cycles or time measures in Indian classical music that form the foundation of all compositions and improvisations. A Taal defines the structure of beats (matras), how they are grouped into divisions (vibhags), and where emphasis is placed. Whether it's vocal, instrumental, or dance—taals serve as the <em>heartbeat of Indian classical performance</em>.
+      </p>
+      
+      <p>In Hindustani music, taals are played using percussion instruments such as:</p>
       <ul>
         <li><strong>Tabla</strong> – Most common in classical and semi-classical styles</li>
         <li><strong>Pakhawaj</strong> – Often used in Dhrupad and temple music</li>
         <li><strong>Mridangam</strong> – South Indian counterpart (Carnatic)</li>
         <li><strong>Naal, Dholak, and Kanjira</strong> – Used in light music and folk</li>
       </ul>
-    </p>
-    <p>
-      Each taal has a specific number of beats (matras), divisions, and a pattern of claps (taali) and waves (khaali). Understanding these elements is crucial for musicians, vocalists, dancers, and even listeners, to appreciate and perform compositions with precision and grace.
-    </p>
-    <p>
-      Beginners can start with simpler taals like <strong>Teentaal</strong> or <strong>Keharwa</strong>, while advanced practitioners explore complex cycles like <strong>Jhaptaal</strong>, <strong>Rupak</strong>, and <strong>Dhamar</strong>. Mastery of taals is essential for **Laykari** (rhythmic improvisation) and synchronization with other performers.
-    </p>
-  </div>
 
-  <a class="taal-link" href="taals/index.html">Explore Taal Cards →</a>
+      <p>
+        Each taal has a specific number of beats (matras), divisions, and a pattern of claps (taali) and waves (khaali). Understanding these elements is crucial for musicians, vocalists, dancers, and even listeners, to appreciate and perform compositions with precision and grace.
+      </p>
+
+      <p>
+        Beginners can start with simpler taals like <strong>Teentaal</strong> or <strong>Keharwa</strong>, while advanced practitioners explore complex cycles like <strong>Jhaptaal</strong>, <strong>Rupak</strong>, and <strong>Dhamar</strong>. Mastery of taals is essential for <strong>Laykari</strong> (rhythmic improvisation) and synchronization with other performers.
+      </p>
+    </div>
+
+    <a class="taal-link" href="taals/index.html">Explore Taal Cards →</a>
+  </main>
+
+  <!-- Support Us Button -->
+  <a href="support.html" class="support-btn">☕ Support Us</a>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 SargamWorld • All Rights Reserved | 
+    <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a>
+  </footer>
+
+  <!-- Script for Hamburger -->
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+  </script>
+
 </body>
 </html>
