@@ -1,874 +1,463 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <title>Sargam Collection 🎶</title>
-
-  <link rel="stylesheet" href="style.css">
-
-
-
+  <meta charset="UTF-8">
+  <title>Sargam Collection 🎶</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <header>
-
-    <h1>Sargam Collection</h1>
-
-    <p>Explore Hindi songs with notations (Sargam)</p>
-
-  </header>
-
-
-
-  <main>
-
-  <section class="hero">
-
-    <h2>🎶 Welcome to Sargam Collection</h2>
-
-    <p>Discover and learn Hindi songs through detailed Sargam notations.</p>
-
-  </section>
-
-
-
-<!-- Search Bar -->
-
-<input type="text" id="searchBar" placeholder="Search songs..." onkeyup="filterSongs()" />
-
-<label for="genreFilter">Filter by Genre:</label>
-
-<select id="genreFilter" onchange="filterByGenre()">
-
-  <option value="all">All</option>
-
-  <option value="romantic">Romantic</option>
-
-  <option value="devotional">Devotional</option>
-
-  <option value="sad">Sad</option>
-
-  <option value="patriotic">Patriotic</option>
-
-  <option value="rabindra">Rabindra Sangeet</option>
-
-</select>
-
-<div class="card-container">
-
-<div class="feature-row">
-
- <h2 class="section-heading">🎓 Learning Tools</h2>
-
-<div class="learning-tools">
-
-  <div class="song-card">
-
-    <h3>🎼 Music Theory & Vocal Tips</h3>
-
-    <p>Learn basic theory, swar practice, and singing tips.</p>
-
-    <a href="theory.html" class="btn">Learn More</a>
-
-  </div>
-
-
-
-  <div class="song-card">
-
-    <h3>🎹 Play Harmonium (3-Octave)</h3>
-
-    <p>Practice playing notations with a built-in harmonium simulator.</p>
-
-    <a href="harmonium.html" class="btn">Try Harmonium</a>
-
-  </div>
-
-
-
-  <div class="song-card">
-
-    <h3>🎶 Explore Raags</h3>
-
-    <p>View detailed information about each Raag and their structure.</p>
-
-    <a href="raaginfo.html" class="btn">Go to Raag Info</a>
-
-  </div>
-
-
-
-  <div class="song-card">
-
-    <h3>🪘 Learn Taals</h3>
-
-    <p>Understand the rhythm system of Indian classical music with detailed Taal information.</p>
-
-    <a href="taalinfo.html" class="btn">Go to Taal Info</a>
-
-  </div>
-
-</div>
-
-
-
-    
-
-  <section id="songList" class="song-list">
-
- <div class="song-card" data-genre="romantic">
-
-    <a href="songs/lag-ja-gale.html">
-
-      <h3>🎵 Lag Ja Gale</h3>
-
-      <p>Woh Kaun Thi (1964) · Lata Mangeshkar</p>
-
-      <span class="genre-badge romantic">Romantic</span>
-
-    </a>
-
-  </div>
-
- <div class="song-card" data-genre="romantic">
-
-    <a href="songs/tu-tu-hai-wahi.html">
-
-      <h3>🎵 Tu Tu Hai Wahi</h3>
-
-      <p>Ye Wada Raha (1982) · Asha Bhonsle & Kishore Kumar</p>
-
-      <span class="genre-badge romantic">Romantic</span>
-
-    </a>
-
-  </div>
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="logo">🎶 Sargam Collection</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Hero -->
+  <header class="hero">
+    <h1>Welcome to Sargam Collection</h1>
+    <p>Explore Hindi songs with detailed Sargam notations</p>
+  </header>
+
+  <main>
+
+    <!-- ✅ Search & Filter -->
+    <section class="search-filter">
+      <input type="text" id="searchBar" placeholder="Search songs...">
+      <label for="genreFilter">Filter by Genre:</label>
+      <select id="genreFilter" onchange="filterByGenre()">
+        <option value="all">All</option>
+        <option value="romantic">Romantic</option>
+        <option value="devotional">Devotional</option>
+        <option value="sad">Sad</option>
+        <option value="patriotic">Patriotic</option>
+        <option value="rabindra">Rabindra Sangeet</option>
+      </select>
+    </section>
+
+    <!-- ✅ Song List -->
+    <section id="songList" class="song-list">
+      <!-- Example song card -->
+ <div class="song-card" data-genre="romantic">
+    <a href="songs/lag-ja-gale.html">
+      <h3>🎵 Lag Ja Gale</h3>
+      <p>Woh Kaun Thi (1964) · Lata Mangeshkar</p>
+      <span class="genre-badge romantic">Romantic</span>
+    </a>
+  </div>
+
+ <div class="song-card" data-genre="romantic">
+    <a href="songs/tu-tu-hai-wahi.html">
+      <h3>🎵 Tu Tu Hai Wahi</h3>
+      <p>Ye Wada Raha (1982) · Asha Bhonsle & Kishore Kumar</p>
+      <span class="genre-badge romantic">Romantic</span>
+    </a>
+  </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/abhi-na-jao.html">
-
-    <h3>🎵 Abhi Na Jao Chhod Kar</h3>
-
-    <p>Hum Dono (1961) · Rafi & Asha</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/abhi-na-jao.html">
+    <h3>🎵 Abhi Na Jao Chhod Kar</h3>
+    <p>Hum Dono (1961) · Rafi & Asha</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/ankhon-me-teri.html">
-
-    <h3>🎵 Ankhon Me Teri Ajab Si</h3>
-
-    <p>Om Shanti Om (2007) · K.K.</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/ankhon-me-teri.html">
+    <h3>🎵 Ankhon Me Teri Ajab Si</h3>
+    <p>Om Shanti Om (2007) · K.K.</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/bade-acchee-lagte-hai.html">
-
-    <h3>🎵 Bade Acchee Lagte Hai</h3>
-
-    <p>Balika Badhu (1976) · Amit Kumar</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/bade-acchee-lagte-hai.html">
+    <h3>🎵 Bade Acchee Lagte Hai</h3>
+    <p>Balika Badhu (1976) · Amit Kumar</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
+</div>
+      
+<div class="song-card" data-genre="romantic">
+  <a href="songs/dil-sambhal.html">
+    <h3>🎵 Dil Sambhal Ja Zara</h3>
+    <p>Murder 2 (2011) · Mohd. Irfan, Arijit Singh, Saim Bhatt</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
+</div>
+      
+<div class="song-card" data-genre="romantic">
+  <a href="songs/chhookar-mere-man-ko.html">
+    <h3>🎵 Chhookar Mere Man Ko</h3>
+    <p>Yarana (1981) · Kishore Kumar</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/dil-sambhal.html">
-
-    <h3>🎵 Dil Sambhal Ja Zara</h3>
-
-    <p>Murder 2 (2011) · Mohd. Irfan, Arijit Singh, Saim Bhatt</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/do-lafzo-ki-hai.html">
+    <h3>🎵 Do Lafzon Ki Hai</h3>
+    <p>The Great Gambler (1979) · Asha Bhonsle</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/chhookar-mere-man-ko.html">
-
-    <h3>🎵 Chhookar Mere Man Ko</h3>
-
-    <p>Yarana (1981) · Kishore Kumar</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/gulabi-aankhen.html">
+    <h3>🎵 Gulabi Aankhen Jo Teri Dekhi</h3>
+    <p>The Train (1970) · Mohammed Rafi</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/do-lafzo-ki-hai.html">
-
-    <h3>🎵 Do Lafzon Ki Hai</h3>
-
-    <p>The Great Gambler (1979) · Asha Bhonsle</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/jab-koi-baat.html">
+    <h3>🎵 Jab Koi Baat Bigad Jaaye</h3>
+    <p>Jurm (1990) · Kumar Sanu, Sadhana Sargam</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
+  <a href="songs/mitwa.html">
+    <h3>🎵 Mitwa</h3>
+    <p>Kabhi Alvida Naa Kehna (2006) · Shafqat Amanat Ali, Shankar Mahadevan</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
+    </div>
 
-  <a href="songs/gulabi-aankhen.html">
-
-    <h3>🎵 Gulabi Aankhen Jo Teri Dekhi</h3>
-
-    <p>The Train (1970) · Mohammed Rafi</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+<div class="song-card" data-genre="romantic">
+  <a href="songs/iktara.html">
+    <h3>🎵 Iktara (Ooorey Manva Tu)</h3>
+    <p>Wake Up Sid (2011) · Amitabh Bhattacharya, Kavita Seth, Tochi Raina</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
+    </div>
+      
+<div class="song-card" data-genre="romantic">
+  <a href="songs/o-mere-dil-ke-chain.html">
+    <h3>🎵 O Mere Dil Ke Chain</h3>
+    <p>Mere Jeevan Saathi (1972) · Kishore Kumar</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/jab-koi-baat.html">
-
-    <h3>🎵 Jab Koi Baat Bigad Jaaye</h3>
-
-    <p>Jurm (1990) · Kumar Sanu, Sadhana Sargam</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/pal-pal-pal.html">
+    <h3>🎵 Pal Pal Pal</h3>
+    <p>Lage Raho Munna Bhai (2006) · Shreya Ghoshal & Sonu Nigam</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
+</div>
+      
+<div class="song-card" data-genre="romantic">
+  <a href="songs/pehla-nasha.html">
+    <h3>🎵 Pehla Nasha</h3>
+    <p>Jo Jeeta Wohi Sikandar (1992) · Udit Narayan, Sadhana Sargam</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/mitwa.html">
-
-    <h3>🎵 Mitwa</h3>
-
-    <p>Kabhi Alvida Naa Kehna (2006) · Shafqat Amanat Ali, Shankar Mahadevan</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
-    </div>
-
-<div class="song-card" data-genre="romantic">
-
-  <a href="songs/iktara.html">
-
-    <h3>🎵 Iktara (Ooorey Manva Tu)</h3>
-
-    <p>Wake Up Sid (2011) · Amitabh Bhattacharya, Kavita Seth, Tochi Raina</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
-    </div>
-
-<div class="song-card" data-genre="romantic">
-
-  <a href="songs/o-mere-dil-ke-chain.html">
-
-    <h3>🎵 O Mere Dil Ke Chain</h3>
-
-    <p>Mere Jeevan Saathi (1972) · Kishore Kumar</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/roop-tera-mastana.html">
+    <h3>🎵 Roop Tera Mastana</h3>
+    <p>Aradhana (1969) · Kishore Kumar</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/pal-pal-pal.html">
-
-    <h3>🎵 Pal Pal Pal</h3>
-
-    <p>Lage Raho Munna Bhai (2006) · Shreya Ghoshal & Sonu Nigam</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/tera-mujhse.html">
+    <h3>🎵 Tera Mujhse Hai Pehle Ka Naata</h3>
+    <p>Aa Gale Lag Ja (1973) · Kishore Kumar, Poornima</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/pehla-nasha.html">
-
-    <h3>🎵 Pehla Nasha</h3>
-
-    <p>Jo Jeeta Wohi Sikandar (1992) · Udit Narayan, Sadhana Sargam</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/tum-se-hi.html">
+    <h3>🎵 Tum Se Hi</h3>
+    <p>Jab We Met (2007) · Mohit Chauhan</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/roop-tera-mastana.html">
-
-    <h3>🎵 Roop Tera Mastana</h3>
-
-    <p>Aradhana (1969) · Kishore Kumar</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/ye-raaten-ye-mausam.html">
+    <h3>🎵 Ye Raaten, Ye Mausam</h3>
+    <p>Dilli ka Thug (1958) · Kishore Kumar & Asha Bhonsle</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/tera-mujhse.html">
-
-    <h3>🎵 Tera Mujhse Hai Pehle Ka Naata</h3>
-
-    <p>Aa Gale Lag Ja (1973) · Kishore Kumar, Poornima</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
-</div>
-
-<div class="song-card" data-genre="romantic">
-
-  <a href="songs/tum-se-hi.html">
-
-    <h3>🎵 Tum Se Hi</h3>
-
-    <p>Jab We Met (2007) · Mohit Chauhan</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
-</div>
-
-<div class="song-card" data-genre="romantic">
-
-  <a href="songs/ye-raaten-ye-mausam.html">
-
-    <h3>🎵 Ye Raaten, Ye Mausam</h3>
-
-    <p>Dilli ka Thug (1958) · Kishore Kumar & Asha Bhonsle</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
-</div>
-
-<div class="song-card" data-genre="romantic">
-
-  <a href="songs/zara-zara.html">
-
-    <h3>🎵 Zara Zara</h3>
-
-    <p>Rehna Hai Tere Dil Mein (2001) · Bombay Jayashree</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/zara-zara.html">
+    <h3>🎵 Zara Zara</h3>
+    <p>Rehna Hai Tere Dil Mein (2001) · Bombay Jayashree</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="devotional">
-
-  <a href="songs/gananayaka.html">
-
-    <h3>🎵 Shree Ganeshay Dheemahi</h3>
-
-    <p>Traditional · Shankar Mahadevan</p>
-
-    <span class="genre-badge devotional">Devotional</span>
-
-  </a>
-
+  <a href="songs/gananayaka.html">
+    <h3>🎵 Shree Ganeshay Dheemahi</h3>
+    <p>Traditional · Shankar Mahadevan</p>
+    <span class="genre-badge devotional">Devotional</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="devotional">
-
-  <a href="songs/aye-malik-tere-bande-hum.html">
-
-    <h3>🎵 Aye Malik Tere Bande Hum</h3>
-
-    <p>Do Ankhen Barah Haath (1957) · Lata Mangeshkar</p>
-
-    <span class="genre-badge devotional">Devotional</span>
-
-  </a>
-
+  <a href="songs/aye-malik-tere-bande-hum.html">
+    <h3>🎵 Aye Malik Tere Bande Hum</h3>
+    <p>Do Ankhen Barah Haath (1957) · Lata Mangeshkar</p>
+    <span class="genre-badge devotional">Devotional</span>
+  </a>
 </div>
 
-    <div class="song-card" data-genre="sad">
-
-  <a href="songs/ajeeb-dastaan-hai-ye.html">
-
-    <h3>🎵 Ajeeb Dastaan Hai Ye</h3>
-
-    <p>Dil Apna Aur Preet Parai (1960) · Lata Mangeshkar</p>
-
-    <span class="genre-badge sad">Sad</span>
-
-  </a>
-
+    <div class="song-card" data-genre="sad">
+  <a href="songs/ajeeb-dastaan-hai-ye.html">
+    <h3>🎵 Ajeeb Dastaan Hai Ye</h3>
+    <p>Dil Apna Aur Preet Parai (1960) · Lata Mangeshkar</p>
+    <span class="genre-badge sad">Sad</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="sad">
-
-  <a href="songs/bheegi-bheegi.html">
-
-    <h3>🎵 Bheegi Bheegi Si Hai Raatein</h3>
-
-    <p>Gangster (2006) · James</p>
-
-    <span class="genre-badge sad">Sad</span>
-
-  </a>
-
+  <a href="songs/bheegi-bheegi.html">
+    <h3>🎵 Bheegi Bheegi Si Hai Raatein</h3>
+    <p>Gangster (2006) · James</p>
+    <span class="genre-badge sad">Sad</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="sad">
-
-  <a href="songs/kyun-na-bole-mo-se.html">
-
-    <h3>🎵 Kyun Na Bole Mo Se Mohan Kyun</h3>
-
-    <p>Ra.One (2011) · Nandini Srikhar</p>
-
-    <span class="genre-badge sad">Sad</span>
-
-  </a>
-
+  <a href="songs/kyun-na-bole-mo-se.html">
+    <h3>🎵 Kyun Na Bole Mo Se Mohan Kyun</h3>
+    <p>Ra.One (2011) · Nandini Srikhar</p>
+    <span class="genre-badge sad">Sad</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="patriotic">
-
-  <a href="songs/jana-gana-mana.html">
-
-    <h3>Jana Gana Mana</h3>
-
-    <p>National Anthem · Rabindranath Tagore</p>
-
-    <span class="genre-badge patriotic">Patriotic</span>
-
-  </a>
-
+  <a href="songs/jana-gana-mana.html">
+    <h3>Jana Gana Mana</h3>
+    <p>National Anthem · Rabindranath Tagore</p>
+    <span class="genre-badge patriotic">Patriotic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="patriotic">
+    <a href="songs/vande-mataram.html">
+      <h3>Vande Mataram</h3>
+      <p>National Song of India · Patriotic</p>
+    <span class="genre-badge patriotic">Patriotic</span>
+    </a>
+  </div>
 
-    <a href="songs/vande-mataram.html">
-
-      <h3>Vande Mataram</h3>
-
-      <p>National Song of India · Patriotic</p>
-
-    <span class="genre-badge patriotic">Patriotic</span>
-
-    </a>
-
-  </div>
-
-    <div class="song-card" data-genre="rabindra">
-
-  <a href="songs/ekla-chalo-re.html">
-
-    <h3>Ekla Chalo Re</h3>
-
-    <p>Rabindra Sangeet · Rabindranath Tagore</p>
-
-    <span class="genre-badge rabindra">Rabindra Sangeet</span>
-
-  </a>
-
+    <div class="song-card" data-genre="rabindra">
+  <a href="songs/ekla-chalo-re.html">
+    <h3>Ekla Chalo Re</h3>
+    <p>Rabindra Sangeet · Rabindranath Tagore</p>
+    <span class="genre-badge rabindra">Rabindra Sangeet</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/jugraafiyaa.html">
-
-    <h3>🎵 Jugraafiyaa</h3>
-
-    <p>Super 30 (2019) · Udit Narayan & Shreya Ghoshal</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/jugraafiyaa.html">
+    <h3>🎵 Jugraafiyaa</h3>
+    <p>Super 30 (2019) · Udit Narayan & Shreya Ghoshal</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="sad">
-
-  <a href="songs/kisi-ki-muskurahaton.html">
-
-    <h3>🎵 Kisi Ki Muskurahaton Pe Ho Nisar</h3>
-
-    <p>Anari (1959) · Mukesh</p>
-
-    <span class="genre-badge sad">Sad</span>
-
-  </a>
-
+  <a href="songs/kisi-ki-muskurahaton.html">
+    <h3>🎵 Kisi Ki Muskurahaton Pe Ho Nisar</h3>
+    <p>Anari (1959) · Mukesh</p>
+    <span class="genre-badge sad">Sad</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/jeene-laga-hoon.html">
-
-    <h3>🎵 Jeene Laga Hoon</h3>
-
-    <p>Ramaiya Vastavaiya (2013) · Atif Aslam, Shreya Ghoshal</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/jeene-laga-hoon.html">
+    <h3>🎵 Jeene Laga Hoon</h3>
+    <p>Ramaiya Vastavaiya (2013) · Atif Aslam, Shreya Ghoshal</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="sad">
-
-  <a href="songs/main-rahoon-ya-na-rahoon.html">
-
-    <h3>🎵 Main Rahoon Ya Na Rahoon</h3>
-
-    <p>Ramaiya Vastavaiya · Armaan Malik</p>
-
-    <span class="genre-badge sad">Sad</span>
-
-  </a>
-
+  <a href="songs/main-rahoon-ya-na-rahoon.html">
+    <h3>🎵 Main Rahoon Ya Na Rahoon</h3>
+    <p>Ramaiya Vastavaiya · Armaan Malik</p>
+    <span class="genre-badge sad">Sad</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="devotional">
-
-  <a href="songs/namo-namo.html">
-
-    <h3>🎵 Namo Namo</h3>
-
-    <p>Kedarnath (2018) · Amit Trivedi</p>
-
-    <span class="genre-badge devotional">Devotional</span>
-
-  </a>
-
+  <a href="songs/namo-namo.html">
+    <h3>🎵 Namo Namo</h3>
+    <p>Kedarnath (2018) · Amit Trivedi</p>
+    <span class="genre-badge devotional">Devotional</span>
+  </a>
 </div>
 
- <div class="song-card" data-genre="romantic">
+ <div class="song-card" data-genre="romantic">
+    <a href="songs/tum-hi-ho.html">
+      <h3>🎵 Tum Hi Ho</h3>
+        <p>Aashiqui 2 (2013) · Arijit Singh</p>
+     <span class="genre-badge romantic">Romantic</span>
+   </a>
+  </div>
 
-    <a href="songs/tum-hi-ho.html">
-
-      <h3>🎵 Tum Hi Ho</h3>
-
-        <p>Aashiqui 2 (2013) · Arijit Singh</p>
-
-     <span class="genre-badge romantic">Romantic</span>
-
-   </a>
-
-  </div>
-
-  <div class="song-card" data-genre="romantic">
-
-  <a href="songs/mere-liye-tum-kaafi-ho.html">
-
-    <h3>🎵 Mere Liye Tum Kaafi Ho</h3>
-
-    <p>Shubh Mangal Zyada Saavdhan (2020) · Ayushmann Khurrana</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <div class="song-card" data-genre="romantic">
+  <a href="songs/mere-liye-tum-kaafi-ho.html">
+    <h3>🎵 Mere Liye Tum Kaafi Ho</h3>
+    <p>Shubh Mangal Zyada Saavdhan (2020) · Ayushmann Khurrana</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="sad">
-
-  <a href="songs/kaun-tujhe.html">
-
-    <h3>🎵 Kaun Tujhe</h3>
-
-    <p>M.S. Dhoni – The Untold Story (2016) · Palak Muchhal</p>
-
-    <span class="genre-badge sad">Sad</span>
-
-  </a>
-
+  <a href="songs/kaun-tujhe.html">
+    <h3>🎵 Kaun Tujhe</h3>
+    <p>M.S. Dhoni – The Untold Story (2016) · Palak Muchhal</p>
+    <span class="genre-badge sad">Sad</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="devotional">
-
-  <a href="songs/ashi-chik-motyachi-maal.html">
-
-    <h3>Ashi Chik Motyachi Maal</h3>
-
-    <p>Ganpati Top 13 · Vaishali Samant</p>
-
-    <span class="genre-badge devotional">Devotional</span>
-
-  </a>
-
+  <a href="songs/ashi-chik-motyachi-maal.html">
+    <h3>Ashi Chik Motyachi Maal</h3>
+    <p>Ganpati Top 13 · Vaishali Samant</p>
+    <span class="genre-badge devotional">Devotional</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="devotional">
-
-  <a href="songs/pratham-tula-vandito.html">
-
-    <h3>Pratham Tula Vandito</h3>
-
-    <p>Ashtavinayak · Sachin Pilgaonkar, Vandana Pandit</p>
-
-    <span class="genre-badge devotional">Devotional</span>
-
-  </a>
-
+  <a href="songs/pratham-tula-vandito.html">
+    <h3>Pratham Tula Vandito</h3>
+    <p>Ashtavinayak · Sachin Pilgaonkar, Vandana Pandit</p>
+    <span class="genre-badge devotional">Devotional</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/mala-ved-lagle-premache.html">
-
-    <h3>Mala Ved Lagle Premache</h3>
-
-    <p>Time Pass · Swapnil & Ketaki</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/mala-ved-lagle-premache.html">
+    <h3>Mala Ved Lagle Premache</h3>
+    <p>Time Pass · Swapnil & Ketaki</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/swapna-chalun-aaley.html">
-
-    <h3>Swapna Chalun Aaley</h3>
-
-    <p>Classmates · Sonu Nigam & Sayali Pankaj</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/swapna-chalun-aaley.html">
+    <h3>Swapna Chalun Aaley</h3>
+    <p>Classmates · Sonu Nigam & Sayali Pankaj</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 <div class="song-card" data-genre="romantic">
-
-  <a href="songs/kuch-kuch-hota-hai.html">
-
-    <h3>Kuch Kuch Hota Hai</h3>
-
-    <p>Kuch Kuch Hota Hai · Udit Narayan & Alka Yagnik</p>
-
-    <span class="genre-badge romantic">Romantic</span>
-
-  </a>
-
+  <a href="songs/kuch-kuch-hota-hai.html">
+    <h3>Kuch Kuch Hota Hai</h3>
+    <p>Kuch Kuch Hota Hai · Udit Narayan & Alka Yagnik</p>
+    <span class="genre-badge romantic">Romantic</span>
+  </a>
 </div>
 
 
-
-     <!-- Add more song cards here -->
-
-
-
-
-
-</section>
-
-    <div id="pagination" class="pagination"></div>
-
-
-
-
-
-   </main>
-
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  // STEP 1: Remove 🎵 emojis BEFORE sorting
-
-  const titles = document.querySelectorAll('.song-card h3');
-
-  titles.forEach(title => {
-
-    title.innerText = title.innerText.replace(/🎵\s*/g, '');
-
-  });
-
-
-
-  // STEP 2: Sort alphabetically AFTER emoji removal
-
-  const list = document.getElementById('songList');
-
-  const cards = Array.from(list.getElementsByClassName('song-card'));
-
-
-
-  cards.sort((a, b) => {
-
-    const titleA = a.querySelector('h3').innerText.toLowerCase();
-
-    const titleB = b.querySelector('h3').innerText.toLowerCase();
-
-    return titleA.localeCompare(titleB);
-
-  });
-
-
-
-  cards.forEach(card => list.appendChild(card));
-
-
-
-  // STEP 3: Enable search
-
-  document.getElementById('searchBar').addEventListener('input', function () {
-
-    const filter = this.value.toLowerCase();
-
-    cards.forEach(card => {
-
-      const title = card.querySelector('h3').innerText.toLowerCase();
-
-      card.style.display = title.includes(filter) ? 'block' : 'none';
-
-    });
-
-  });
-
-});
-
-  function filterByGenre() {
-
-  const selectedGenre = document.getElementById('genreFilter').value;
-
-  const cards = document.querySelectorAll('.song-card');
-
-
-
-  cards.forEach(card => {
-
-    const genre = card.getAttribute('data-genre');
-
-    const matches = selectedGenre === 'all' || genre === selectedGenre;
-
-    card.style.display = matches ? 'block' : 'none';
-
-  });
-
-}
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  const cards = Array.from(document.querySelectorAll('.song-card'));
-
-  const itemsPerPage = 14;
-
-  const pagination = document.getElementById('pagination');
-
-
-
-  let currentPage = 1;
-
-
-
-  function renderPage(page) {
-
-    const start = (page - 1) * itemsPerPage;
-
-    const end = start + itemsPerPage;
-
-
-
-    cards.forEach((card, i) => {
-
-      card.style.display = i >= start && i < end ? 'block' : 'none';
-
-    });
-
-
-
-    renderPagination(page);
-
-  }
-
-
-
-  function renderPagination(activePage) {
-
-    const totalPages = Math.ceil(cards.length / itemsPerPage);
-
-    pagination.innerHTML = '';
-
-
-
-    for (let i = 1; i <= totalPages; i++) {
-
-      const btn = document.createElement('button');
-
-      btn.textContent = i;
-
-      btn.className = i === activePage ? 'active' : '';
-
-      btn.onclick = () => {
-
-        currentPage = i;
-
-        renderPage(currentPage);
-
-      };
-
-      pagination.appendChild(btn);
-
-    }
-
-  }
-
-
-
-  renderPage(currentPage);
-
-});
-
-
-
-
-
-</script>
-
+      <!-- 🔹 Keep adding your other song cards here -->
+    </section>
+
+    <!-- ✅ Pagination -->
+    <div id="pagination" class="pagination"></div>
+  </main>
+
+  <!-- ✅ Footer -->
+  <footer class="footer">
+    <p>© 2025 Sargam Collection. All Rights Reserved.</p>
+    <p>
+      <a href="about.html">About</a> | 
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <!-- ✅ Scripts -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Remove 🎵 before sorting
+    const titles = document.querySelectorAll('.song-card h3');
+    titles.forEach(title => {
+      title.innerText = title.innerText.replace(/🎵\s*/g, '');
+    });
+
+    // Sort alphabetically
+    const list = document.getElementById('songList');
+    const cards = Array.from(list.getElementsByClassName('song-card'));
+    cards.sort((a, b) => {
+      const titleA = a.querySelector('h3').innerText.toLowerCase();
+      const titleB = b.querySelector('h3').innerText.toLowerCase();
+      return titleA.localeCompare(titleB);
+    });
+    cards.forEach(card => list.appendChild(card));
+
+    // Search
+    document.getElementById('searchBar').addEventListener('input', function () {
+      const filter = this.value.toLowerCase();
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(filter) ? 'block' : 'none';
+      });
+    });
+
+    // Pagination
+    const itemsPerPage = 14;
+    const pagination = document.getElementById('pagination');
+    let currentPage = 1;
+
+    function renderPage(page) {
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      cards.forEach((card, i) => {
+        card.style.display = i >= start && i < end ? 'block' : 'none';
+      });
+      renderPagination(page);
+    }
+
+    function renderPagination(activePage) {
+      const totalPages = Math.ceil(cards.length / itemsPerPage);
+      pagination.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = i === activePage ? 'active' : '';
+        btn.onclick = () => {
+          currentPage = i;
+          renderPage(currentPage);
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    renderPage(currentPage);
+  });
+
+  // Genre filter
+  function filterByGenre() {
+    const selected = document.getElementById('genreFilter').value;
+    const cards = document.querySelectorAll('.song-card');
+    cards.forEach(card => {
+      const genre = card.getAttribute('data-genre');
+      card.style.display = (selected === 'all' || genre === selected) ? 'block' : 'none';
+    });
+  }
+  </script>
+
+</body>
+</html>
