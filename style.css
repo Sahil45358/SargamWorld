@@ -372,17 +372,22 @@ pre {
 }
 
 .support-btn {
+  position: fixed;        /* keeps it in one place */
+  right: 20px;            /* distance from right edge */
+  bottom: 20px;           /* distance from bottom edge */
   background: #ffdf80;
   color: #240b36 !important;
   padding: 6px 12px;
   border-radius: 20px;
   font-weight: bold;
+  z-index: 1000;          /* makes sure it stays above other elements */
 }
 
 .support-btn:hover {
   background: white;
   color: #c31432 !important;
 }
+
 
 /* Hamburger for mobile */
 .hamburger {
