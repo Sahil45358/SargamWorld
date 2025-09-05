@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SurSargam – Harmonium</title>
+  <title>SargamWorld – Harmonium</title>
   <link rel="stylesheet" href="style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -198,10 +198,24 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎹 SurSargam – Harmonium</h1>
-    <p>Click and hold the keys to play (C2–B4)</p>
-  </header>
+ <header>
+  <nav class="navbar">
+    <div class="logo">🎶 SargamWorld</div>
+    <div class="hamburger">☰</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="raaginfo.html">Raags</a></li>
+      <li><a href="taalinfo.html">Taals</a></li>
+      <li><a href="music-theory.html">Music Theory</a></li>
+      <li><a href="harmonium.html" class="active">Harmonium</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <h1>🎹 Harmonium Simulator</h1>
+
+</header>
+
 
 <div id="scaleRaagSelector">
   <div class="dropdown">
@@ -272,7 +286,11 @@
  <div id="harmonium"></div>
   <p><a href="index.html">⬅️ Back to Home</a></p>
 
-  <footer>SurSargam • Harmonium Simulator with Wood Texture & Sustain</footer>
+ <footer>
+  <p>&copy; SargamWorld • Harmonium Simulator </p>
+  <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a></p>
+</footer>
+
 
   
  <script>
@@ -672,12 +690,20 @@ window.addEventListener('click', function (e) {
     document.getElementById('raags-options').classList.remove('show');
   }
 });
+  // Hamburger
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
 
-
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
 
    
 </script>
 
+<a href="support.html" class="support-btn">☕ Support Us</a>
 
 </body>
 </html>
