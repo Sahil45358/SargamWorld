@@ -2,25 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sargam Collection 🎶</title>
+  <title>SargamWorld 🎶</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- ✅ Navbar -->
   <nav class="navbar">
-    <div class="logo">🎶 Sargam Collection</div>
+  <div class="nav-container">
+    <a href="index.html" class="logo">🎶 SargamWorld</a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="tools.html">Tools</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html" class="support-btn">☕ Support Us</a></li>
     </ul>
-  </nav>
+    <div class="hamburger">☰</div>
+  </div>
+</nav>
 
   <!-- ✅ Hero -->
   <header class="hero">
-    <h1>Welcome to Sargam Collection</h1>
+    <h1>Welcome to SargamWorld</h1>
     <p>Explore Hindi songs with detailed Sargam notations</p>
   </header>
 
@@ -458,6 +462,17 @@
     });
   }
   </script>
+  // Hamburger 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
+</script>
 
 </body>
 </html>
