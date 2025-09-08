@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>About – SargamWorld</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css"> <!-- Reuse your same style.css -->
-   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png">
-   
+  <title>About — SargamWorld</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <style>
     :root {
       --accent: #800000;
@@ -28,9 +25,13 @@
       color: var(--text);
       line-height: 1.45;
     }
-    .container { max-width: var(--container-w); margin: 0 auto; padding: 20px; }
+    .container {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-    /* 🌐 Navbar */
+    /* Navbar */
     .site-header {
       background: var(--accent);
       color: #fff;
@@ -47,34 +48,43 @@
       justify-content:space-between;
       padding:12px 20px;
     }
-
-    /* Brand + tagline */
     .brand-wrap {
       display: flex;
       flex-direction: column;
       line-height: 1.2;
     }
-    .brand { 
-      color: #fff; 
-      font-weight:700; 
-      text-decoration:none; 
-      font-size:1.1rem; 
+    .brand {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.1rem;
     }
     .tagline {
       font-size: 0.75rem;
       font-weight: 400;
-      color: #f3e8e8; /* subtle, lighter than white */
+      color: #f3e8e8;
       margin-top: 2px;
     }
 
-    /* Navigation links */
-    .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
-    .nav-links a.active { background: rgba(255,255,255,0.15); }
-    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; text-decoration:none; }
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .nav-links a:hover, .nav-links a:focus {
+      background: rgba(255,255,255,0.08);
+    }
+    .nav-links a.active {
+      background: rgba(255,255,255,0.15);
+    }
 
-    /* Hamburger */
     .hamburger {
       display: none;
       cursor: pointer;
@@ -82,7 +92,6 @@
       color: #fff;
     }
 
-    /* 📱 Mobile Nav */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -94,36 +103,79 @@
         padding: 15px;
         border-radius: 8px;
       }
-      .nav-links.show { display: flex; }
-      .hamburger { display: block; }
+      .nav-links.show {
+        display: flex;
+      }
+      .hamburger {
+        display: block;
+      }
     }
-     </style>
+
+    /* Hero section */
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .hero p {
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Content sections */
+    section {
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    p {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- 🌐 Navbar -->
-  <nav class="navbar">
-    <div>
-      <span class="logo">🎵 SargamWorld</span><br>
-      
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a class="brand" href="index.html">🎶 SargamWorld</a>
+        <span class="tagline">Learn · Practice · Explore</span>
+      </div>
+      <div class="hamburger">☰</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tools.html">Learning Tools</a></li>
+          <li><a class="active" href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="raaginfo.html">Raags</a></li>
-      <li><a href="taalinfo.html">Taal Info</a></li>
-      <li><a href="music-theory.html">Music Theory</a></li>
-      <li><a href="harmonium.html">Harmonium</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="hamburger">☰</div>
-  </nav>
-
-  <!-- 🌟 Header -->
-  <header>
-    <h1>About SargamWorld</h1>
-    <p>Discover our mission, story, and vision for making Indian Classical Music accessible worldwide.</p>
   </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="hero">
+      <h1>About SargamWorld</h1>
+    <p>Discover our mission, story, and vision for making Indian Classical Music accessible worldwide.</p>
 
   <main>
     <section>
@@ -152,25 +204,21 @@
 
   </main>
 
-  <!-- 📌 Footer -->
-  <footer>
-    <p>🎶 SargamWorld • Explore Raags & Indian Classical Music</p>
-  
+  <!-- Footer -->
+  <footer class="site-footer">
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
   </footer>
 
-  <!-- 🌟 Floating Support Button -->
-  <a href="support.html" class="support-btn">☕ Support Us</a>
-
-  <!-- 🍔 Mobile Nav Toggle -->
+  <!-- JS for Hamburger -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const hamburger = document.querySelector(".hamburger");
       const navLinks = document.querySelector(".nav-links");
+
       hamburger.addEventListener("click", () => {
         navLinks.classList.toggle("show");
       });
     });
   </script>
-
 </body>
 </html>
