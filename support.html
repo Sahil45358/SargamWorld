@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SargamWorld – Support Us</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3eee8;
+      color: #333;
+      text-align: center;
+      padding: 0;
+    }
+
+    header, footer {
+      background: #240b36;
+      color: white;
+      padding: 1rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #240b36, #c31432);
+      padding: 10px 20px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar .nav-links li a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .navbar .nav-links li a:hover,
+    .navbar .nav-links li a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5em;
+    }
+
+    @media (max-width: 768px) {
+      .navbar .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #240b36;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      .navbar .nav-links.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2em;
+      color: #240b36;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: 20px auto;
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .support-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px 0;
+      gap: 20px;
+    }
+
+    .support-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 350px;
+      width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .support-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .support-card h2 {
+      color: #c31432;
+      margin-bottom: 10px;
+    }
+
+    .support-card p {
+      margin: 10px 0;
+      font-size: 1em;
+      color: #333;
+    }
+
+    .support-card a, .upi-id {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #ffdf80;
+      color: #240b36;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .support-card a:hover {
+      background: white;
+      color: #c31432;
+    }
+
+    .upi-id {
+      background: #240b36;
+      color: #ffdf80;
+      font-family: monospace;
+      cursor: default;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      background: #240b36;
+      color: white;
+    }
+
+    footer a {
+      color: #ffdf80;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">🎶 SargamWorld</div>
+    <div class="hamburger">☰</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="raaginfo.html">Raags</a></li>
+      <li><a href="taalinfo.html">Taals</a></li>
+      <li><a href="music-theory.html">Music Theory</a></li>
+      <li><a href="harmonium.html">Harmonium</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html" class="active">Support</a></li>
+    </ul>
+  </nav>
+  <h1>☕ Support SargamWorld</h1>
+</header>
+
+<div class="intro">
+  <p>Your support helps us keep SargamWorld free and continuously improving! You can contribute in the way that’s most convenient for you — whether you’re in India or anywhere in the world.</p>
+</div>
+
+<div class="support-section">
+
+  <!-- UPI Section -->
+  <div class="support-card">
+    <h2>🇮🇳 Support via UPI</h2>
+    <p>Quick and easy for Indian users.</p>
+    <div class="upi-id">yourupiid@upi</div>
+    <p>Scan a QR code with your UPI app or use the ID above.</p>
+  </div>
+
+  <!-- Buy Me a Coffee -->
+  <div class="support-card">
+    <h2> Support via Buy Me a Coffee</h2>
+    <p>One-time or recurring donations for international supporters.</p>
+    <a href="https://www.buymeacoffee.com/yourusername" target="_blank">☕ Buy Me a Coffee</a>
+  </div>
+
+  <!-- PayPal Section -->
+  <div class="support-card">
+    <h2> Support via PayPal</h2>
+    <p>Send donations directly using PayPal.</p>
+    <a href="https://paypal.me/yourusername" target="_blank">💳 Donate via PayPal</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; SargamWorld • All Rights Reserved</p>
+  <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a></p>
+</footer>
+
+<script>
+  // Hamburger toggle
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+  });
+</script>
+
+</body>
+</html>
