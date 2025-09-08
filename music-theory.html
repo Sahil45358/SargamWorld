@@ -6,37 +6,48 @@
   <title>Music Theory – SargamWorld</title>
   <meta name="google" content="notranslate" />
   <style>
+    /* 🌐 Font & Base */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #222;
+    }
+
     /* 🌐 Navbar */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: linear-gradient(90deg, #240b36, #c31432);
-      padding: 10px 20px;
+      padding: 12px 25px;
       color: white;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
     .navbar .logo {
-      font-size: 1.5em;
-      font-weight: bold;
+      font-size: 1.6em;
+      font-weight: 700;
     }
     .navbar .tagline {
-      font-size: 0.9em;
+      font-size: 0.95em;
       font-style: italic;
       opacity: 0.85;
     }
     .navbar .nav-links {
       list-style: none;
       display: flex;
-      gap: 15px;
+      gap: 18px;
     }
     .navbar .nav-links li a {
       color: white;
       text-decoration: none;
-      padding: 6px 10px;
-      border-radius: 4px;
+      padding: 6px 12px;
+      border-radius: 5px;
       transition: background 0.3s;
     }
     .navbar .nav-links li a:hover,
@@ -104,36 +115,43 @@
       text-decoration: underline;
     }
 
-    /* Page content */
-    main {
-      padding: 20px;
-      line-height: 1.6;
-      background: #f9f9f9;
-      color: #222;
-    }
+    /* 🌟 Header like Harmonium */
     header {
-      padding: 30px 20px;
+      padding: 60px 20px;
       text-align: center;
-      background: #f1f1f1;
-      border-bottom: 2px solid #ddd;
+      background: linear-gradient(to right, #c31432, #240b36);
+      color: #fff;
+      border-bottom: 4px solid #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     header h1 {
-      margin-bottom: 10px;
-      color: #240b36;
+      font-size: 2.2em;
+      margin-bottom: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
     header p {
-      color: #444;
-      max-width: 700px;
+      color: #ffe;
+      font-size: 1.05em;
+      max-width: 750px;
       margin: auto;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Page content */
+    main {
+      padding: 25px 20px;
+      line-height: 1.7;
     }
     h2 {
       color: #c31432;
-      margin-top: 30px;
+      margin-top: 35px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 15px 0;
+      margin: 20px 0;
     }
     table, th, td {
       border: 1px solid #ccc;
@@ -174,9 +192,10 @@
   </header>
 
   <main>
+
     <!-- 1. What is Sargam -->
     <section>
-      <h2>1. What is Sargam?</h2>
+           <h2>1. What is Sargam?</h2>
       <p><strong>Sargam</strong> stands for <em>Sa, Re, Ga, Ma, Pa, Dha, Ni</em> – the seven basic musical notes of Indian music. These are equivalent to the Western “Do, Re, Mi, Fa, Sol, La, Ti.”</p>
       <p>“Sargam” is an abbreviation formed from the first four swaras: <strong>Sa</strong>-<strong>Re</strong>-<strong>Ga</strong>-<strong>Ma</strong>.</p>
       <p>Each swar has its own frequency and emotional quality. These notes are used to construct melodies, ragas, and compositions in Indian classical and light music.</p>
@@ -265,9 +284,9 @@
         <li><code>S R G M P</code> | <code>P D N S’</code> | <code>S’ N D P</code> … (descending)</li>
         <li>Try them slow, medium, and fast while maintaining clarity and pitch.</li>
       </ul>
-    </section>
+       </section>
+    <!-- (Remaining sections unchanged...) -->
 
-    <!-- Back Button -->
     <p><a href="index.html">⬅️ Back to song list</a></p>
   </main>
 
