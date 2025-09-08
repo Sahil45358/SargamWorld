@@ -350,7 +350,7 @@ pre {
 
 .nav-links {
   list-style: none;
-  display: flex;
+  display: flex;          /* ✅ Default for desktop */
   gap: 1.2rem;
 }
 
@@ -372,22 +372,21 @@ pre {
 }
 
 .support-btn {
-  position: fixed;        /* keeps it in one place */
-  right: 20px;            /* distance from right edge */
-  bottom: 20px;           /* distance from bottom edge */
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
   background: #ffdf80;
   color: #240b36 !important;
   padding: 6px 12px;
   border-radius: 20px;
   font-weight: bold;
-  z-index: 1000;          /* makes sure it stays above other elements */
+  z-index: 1000;
 }
 
 .support-btn:hover {
   background: white;
   color: #c31432 !important;
 }
-
 
 /* Hamburger for mobile */
 .hamburger {
@@ -399,7 +398,7 @@ pre {
 
 @media (max-width: 768px) {
   .nav-links {
-    display: none;
+    display: none;         /* 🔹 Hide menu by default */
     flex-direction: column;
     background: #240b36;
     position: absolute;
@@ -410,7 +409,7 @@ pre {
   }
 
   .nav-links.show {
-    display: flex;
+    display: flex;         /* 🔹 Show only when .show is added via JS */
   }
 
   .hamburger {
