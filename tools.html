@@ -44,7 +44,27 @@
       justify-content:space-between;
       padding:12px 20px;
     }
-    .brand { color: #fff; font-weight:700; text-decoration:none; font-size:1.1rem; }
+
+    /* Brand + tagline */
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand { 
+      color: #fff; 
+      font-weight:700; 
+      text-decoration:none; 
+      font-size:1.1rem; 
+    }
+    .tagline {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #f3e8e8; /* subtle, lighter than white */
+      margin-top: 2px;
+    }
+
+    /* Navigation links */
     .nav-links { display:flex; gap:10px; list-style:none; }
     .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
@@ -142,8 +162,16 @@
   <!-- Header -->
   <header class="site-header">
     <div class="nav-inner">
-      <a class="brand" href="index.html">🎶 SargamWorld</a>
+      <!-- Brand + tagline -->
+      <div class="brand-wrap">
+        <a class="brand" href="index.html">🎶 SargamWorld</a>
+        <span class="tagline">Learn · Practice · Explore</span>
+      </div>
+
+      <!-- Hamburger -->
       <div class="hamburger">☰</div>
+
+      <!-- Navigation -->
       <nav>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
