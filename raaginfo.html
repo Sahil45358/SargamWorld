@@ -2,84 +2,268 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Raag Information – SurSargam</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Raag Information – SargamWorld</title>
+  <meta name="google" content="notranslate" />
   <style>
+    /* 🌐 Font & Base */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
     body {
-      background: linear-gradient(to right, #240b36, #c31432);
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
-      padding: 1rem;
+      padding: 0;
+      background: #f9f9f9;
+      color: #222;
     }
-    h1 {
+
+/* 🌐 Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #240b36, #c31432);
+  padding: 10px 20px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* 🔹 Default: Desktop (links always visible) */
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links li a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.navbar .nav-links li a:hover,
+.navbar .nav-links li a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+/* 📱 Mobile Nav (overrides desktop) */
+@media (max-width: 768px) {
+  .navbar .nav-links {
+    display: none; /* 🔹 Hidden by default */
+    flex-direction: column;
+    background: #240b36;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .navbar .nav-links.show {
+    display: flex; /* 🔹 Show only when toggled */
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+
+    /* 🌟 Header */
+    header {
+      padding: 60px 20px;
       text-align: center;
+      background: linear-gradient(to right, #c31432, #240b36);
+      color: #fff;
+      border-bottom: 4px solid #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    header h1 {
+      font-size: 2.2em;
+      margin-bottom: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    header p {
+      color: #ffe;
+      font-size: 1.05em;
+      max-width: 750px;
+      margin: auto;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Page content */
+    main {
+      padding: 25px 20px;
+    }
+
     .controls {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin: 20px 0;
     }
     .controls input, .controls select {
-      padding: 0.5rem;
-      border-radius: 5px;
-      border: none;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 1rem;
     }
+
     .raag-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      padding: 2rem;
+      margin-top: 20px;
     }
     .raag-card {
-      background: rgba(255, 255, 255, 0.08);
+      background: #fff;
+      color: #240b36;
       border-radius: 12px;
       padding: 1.5rem;
       text-align: center;
-      box-shadow: 0 0 8px #000;
-      transition: transform 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-weight: 500;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .raag-card:hover {
       transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
       cursor: pointer;
     }
     a {
-      color: white;
       text-decoration: none;
     }
+
     .back-button {
       text-align: center;
       margin-top: 2rem;
+    }
+    .back-button a {
+      color: #c31432;
+      font-weight: bold;
+    }
+
+    /* 📌 Footer */
+    footer {
+      background: #240b36;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    footer a {
+      color: #ffdf80;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 🌟 Floating Support Button */
+    .support-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      background: #ffdf80;
+      color: #240b36 !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    .support-btn:hover {
+      background: white;
+      color: #c31432 !important;
     }
   </style>
 </head>
 <body>
 
-  <h1>Explore Raags</h1>
+ <!-- 🌐 Navbar -->
+  <nav class="navbar">
+    <div>
+      <span class="logo">🎵 SargamWorld</span><br>
+      <span class="tagline">Explore Indian Classical Music</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="raaginfo.html" class="active">Raags</a></li>
+      <li><a href="taalinfo.html">Taal Info</a></li>
+      <li><a href="music-theory.html">Music Theory</a></li>
+      <li><a href="harmonium.html">Harmonium</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="hamburger">☰</div>
+  </nav>
 
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search Raag..." />
-    <select id="timeFilter">
-      <option value="">All Times</option>
-      <option value="morning">Morning</option>
-      <option value="afternoon">Afternoon</option>
-      <option value="evening">Evening</option>
-      <option value="night">Night</option>
-    </select>
-  </div>
+  <!-- 🌟 Header -->
+  <header>
+    <h1>Explore Raags – Indian Classical Music</h1>
+    <p>Search and learn about different Raags, their moods, timings, and notes. Click any Raag to explore more.</p>
+  </header>
 
-  <div class="raag-container" id="raagContainer">
-    <!-- Cards will be populated here -->
-  </div>
+  <main>
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search Raag..." />
+      <select id="timeFilter">
+        <option value="">All Times</option>
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="evening">Evening</option>
+        <option value="night">Night</option>
+      </select>
+    </div>
 
-  <div class="back-button">
-    <a href="harmonium.html">🎹 Jump to Harmonium</a>
-  </div>
+    <div class="raag-container" id="raagContainer">
+      <!-- Cards populated by JS -->
+    </div>
+
+    <div class="back-button">
+      <a href="harmonium.html">🎹 Jump to Harmonium</a>
+    </div>
+  </main>
+
+  <!-- 📌 Footer -->
+  <footer>
+    <p>🎶 SargamWorld • Explore Raags & Indian Classical Music</p>
+    <p><a href="support.html">Support Us</a></p>
+  </footer>
+
+  <!-- 🌟 Floating Support Button -->
+  <a href="support.html" class="support-btn">☕ Support Us</a>
 
   <script>
+    // Hamburger
+    document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
+    
     const raags = [
       { name: 'Bageshree', file: 'bageshree.html', time: 'night' },
       { name: 'Bhairav', file: 'bhairav.html', time: 'morning' },
