@@ -156,6 +156,23 @@
       font-family: monospace;
       cursor: default;
     }
+    
+.support-card-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: #ffdf80;   /* same as other buttons */
+  color: #240b36;        /* same text color */
+  border-radius: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+}
+
+.support-card-link:hover {
+  background: white;
+  color: #c31432;
+}
 
     footer {
       text-align: center;
@@ -197,27 +214,25 @@
 
 <div class="support-section">
 
-  <!-- UPI Section -->
-  <div class="support-card">
-    <h2>🇮🇳 Support via UPI</h2>
-    <p>Quick and easy for Indian users.</p>
-    <div class="upi-id">yourupiid@upi</div>
-    <p>Scan a QR code with your UPI app or use the ID above.</p>
-  </div>
+ <!-- UPI Section -->
+<div class="support-card">
+  <h2>🇮🇳 Support via UPI</h2>
+  <p>Quick and easy for Indian users.</p>
+  <a href="upi://pay?pa=sahilwagh453@oksbi&pn=SargamWorld&cu=INR" class="support-card-link"> Pay via UPI</a>
+  <p style="margin-top: 8px; font-size: 0.9em; color: #555;">Or use UPI ID: <strong>sahilwagh453@oksbi</strong></p>
+</div>
 
-  <!-- Buy Me a Coffee -->
-  <div class="support-card">
-    <h2> Support via Buy Me a Coffee</h2>
-    
-    <a href="https://www.buymeacoffee.com/yourusername" target="_blank">☕ Buy Me a Coffee</a>
-  </div>
+<!-- Buy Me a Coffee -->
+<div class="support-card">
+  <h2>☕ Support via Buy Me a Coffee</h2>
+  <a href="https://www.buymeacoffee.com/yourusername" target="_blank">Buy Me a Coffee</a>
+</div>
 
-  <!-- PayPal Section -->
-  <div class="support-card">
-    <h2> Support via PayPal</h2>
-    
-    <a href="https://paypal.me/yourusername" target="_blank">💳 Donate via PayPal</a>
-  </div>
+<!-- PayPal Section -->
+<div class="support-card">
+  <h2>💳 Support via PayPal</h2>
+  <a href="https://paypal.me/yourusername" target="_blank">Donate via PayPal</a>
+</div>
 
 </div>
 
