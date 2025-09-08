@@ -2,165 +2,163 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Learn Taals – SargamWorld</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     /* Body & Main */
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #240b36, #c31432);
-    color: white;
-    line-height: 1.8;
-  }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #240b36, #c31432);
+      color: white;
+      line-height: 1.8;
+    }
 
-  main {
-    padding: 2rem;
-    max-width: 900px;
-    margin: auto;
-    background: rgba(0,0,0,0.5); /* Dark background behind content */
-    border-radius: 12px;
-  }
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      background: rgba(0,0,0,0.5);
+      border-radius: 12px;
+    }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #ffe082; /* Highlight the title */
-  }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ffe082;
+    }
 
-  ul {
-    margin-top: 0.5rem;
-    padding-left: 1.5rem;
-  }
+    ul {
+      margin-top: 0.5rem;
+      padding-left: 1.5rem;
+    }
 
-  li {
-    margin: 0.3rem 0;
-  }
+    li {
+      margin: 0.3rem 0;
+    }
 
-  strong {
-    color: #ffe082;
-  }
+    strong {
+      color: #ffe082;
+    }
 
-  /* Taal Link */
-  .taal-link {
-    display: inline-block;
-    margin-top: 2rem;
-    padding: 0.8rem 1.5rem;
-    background-color: rgba(0,0,0,0.7); /* Darker so text is visible */
-    border-radius: 8px;
-    color: #ffe082;
-    text-decoration: none;
-    font-weight: bold;
-    border: 2px solid #ffe082;
-    transition: background 0.3s;
-  }
-  .taal-link:hover {
-    background-color: rgba(255,224,130,0.9);
-    color: #240b36;
-  }
+    /* Taal Link */
+    .taal-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background-color: rgba(0,0,0,0.7);
+      border-radius: 8px;
+      color: #ffe082;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid #ffe082;
+      transition: background 0.3s;
+    }
+    .taal-link:hover {
+      background-color: rgba(255,224,130,0.9);
+      color: #240b36;
+    }
 
-/* 🌐 Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #240b36, #c31432);
-  padding: 10px 20px;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+    /* 🌐 Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #240b36, #c31432);
+      padding: 10px 20px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-.navbar .logo {
-  font-size: 1.5em;
-  font-weight: bold;
-}
+    .navbar .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
 
-/* 🔹 Default: Desktop (links always visible) */
-.navbar .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-}
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
 
-.navbar .nav-links li a {
-  color: white;
-  text-decoration: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
+    .navbar .nav-links li a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
 
-.navbar .nav-links li a:hover,
-.navbar .nav-links li a.active {
-  background: rgba(255, 255, 255, 0.2);
-}
+    .navbar .nav-links li a:hover,
+    .navbar .nav-links li a.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
 
-.hamburger {
-  display: none;
-  cursor: pointer;
-  font-size: 1.5em;
-}
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.8em;
+    }
 
-/* 📱 Mobile Nav (overrides desktop) */
-@media (max-width: 768px) {
-  .navbar .nav-links {
-    display: none; /* 🔹 Hidden by default */
-    flex-direction: column;
-    background: #240b36;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    padding: 15px;
-    border-radius: 10px;
-  }
+    /* 📱 Mobile Nav */
+    @media (max-width: 768px) {
+      .navbar .nav-links {
+        display: none; /* Hide by default */
+        flex-direction: column;
+        background: #240b36;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        width: 200px;
+      }
+      .navbar .nav-links.show {
+        display: flex;
+      }
+      .hamburger {
+        display: block; /* Show hamburger only on mobile */
+      }
+    }
 
-  .navbar .nav-links.show {
-    display: flex; /* 🔹 Show only when toggled */
-  }
+    /* 🌟 Support Us Button */
+    .support-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      background: #ffdf80;
+      color: #240b36 !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+    .support-btn:hover {
+      background: white;
+      color: #c31432 !important;
+    }
 
-  .hamburger {
-    display: block;
-  }
-}
-
-
-  /* 🌟 Support Us Button */
-  .support-btn {
-    position: fixed;
-    right: 20px;
-    bottom: 80px;
-    background: #ffdf80;
-    color: #240b36 !important;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-  }
-  .support-btn:hover {
-    background: white;
-    color: #c31432 !important;
-  }
-
-  /* 📌 Footer */
-  footer {
-    background: #240b36;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-  }
-  footer a {
-    color: #ffdf80;
-    text-decoration: none;
-  }
-  footer a:hover {
-    text-decoration: underline;
-  }
+    /* 📌 Footer */
+    footer {
+      background: #240b36;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    footer a {
+      color: #ffdf80;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -218,16 +216,15 @@
   </footer>
 
   <script>
-// Hamburger
-document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
+    // Hamburger toggle
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
 
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
-});
-
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
   </script>
 
 </body>
