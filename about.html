@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>About – SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css"> <!-- Reuse your same style.css -->
+   <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+  <!-- 🌐 Navbar -->
+  <nav class="navbar">
+    <div>
+      <span class="logo">🎵 SargamWorld</span><br>
+      <span class="tagline">Explore Indian Classical Music</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="raaginfo.html">Raags</a></li>
+      <li><a href="taalinfo.html">Taal Info</a></li>
+      <li><a href="music-theory.html">Music Theory</a></li>
+      <li><a href="harmonium.html">Harmonium</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="hamburger">☰</div>
+  </nav>
+
+  <!-- 🌟 Header -->
+  <header>
+    <h1>About SargamWorld</h1>
+    <p>Discover our mission, story, and vision for making Indian Classical Music accessible worldwide.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2> Our Mission</h2>
+      <p>
+        At SargamWorld, our mission is to preserve and share the beauty of Indian classical music,  
+        providing easy-to-follow notations, theory, and resources for learners of all levels.
+      </p>
+    </section>
+
+    <section>
+      <h2> Our Story</h2>
+      <p>
+        What started as a small passion project grew into a platform for enthusiasts around the globe.  
+        From raags to taals, our collection continues to expand with the goal of supporting learners and teachers alike.
+      </p>
+    </section>
+
+    <section>
+      <h2> Vision</h2>
+      <p>
+        We envision building a community where music lovers can not only explore notations  
+        but also connect with experts and each other to keep traditions alive in the digital age.
+      </p>
+    </section>
+  </main>
+
+  <!-- 📌 Footer -->
+  <footer>
+    <p>🎶 SargamWorld • Explore Raags & Indian Classical Music</p>
+    <p><a href="support.html">Support Us</a></p>
+  </footer>
+
+  <!-- 🌟 Floating Support Button -->
+  <a href="support.html" class="support-btn">☕ Support Us</a>
+
+  <!-- 🍔 Mobile Nav Toggle -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
+  </script>
+
+</body>
+</html>
