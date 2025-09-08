@@ -17,68 +17,72 @@
       color: #222;
     }
 
-    /* 🌐 Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #240b36, #c31432);
-      padding: 12px 25px;
-      color: white;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .navbar .logo {
-      font-size: 1.6em;
-      font-weight: 700;
-    }
-    .navbar .tagline {
-      font-size: 0.95em;
-      font-style: italic;
-      opacity: 0.85;
-    }
-    .navbar .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 18px;
-    }
-    .navbar .nav-links li a {
-      color: white;
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    .navbar .nav-links li a:hover,
-    .navbar .nav-links li a.active {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      font-size: 1.5em;
-    }
+ /* 🌐 Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #240b36, #c31432);
+  padding: 10px 20px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-    /* 📱 Mobile Nav */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: #240b36;
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        padding: 15px;
-        border-radius: 10px;
-      }
-      .nav-links.show {
-        display: flex;
-      }
-      .hamburger {
-        display: block;
-      }
-    }
+.navbar .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* 🔹 Default: Desktop (links always visible) */
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links li a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.navbar .nav-links li a:hover,
+.navbar .nav-links li a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+/* 📱 Mobile Nav (overrides desktop) */
+@media (max-width: 768px) {
+  .navbar .nav-links {
+    display: none; /* 🔹 Hidden by default */
+    flex-direction: column;
+    background: #240b36;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .navbar .nav-links.show {
+    display: flex; /* 🔹 Show only when toggled */
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
 
     /* 🌟 Support Us Button */
     .support-btn {
