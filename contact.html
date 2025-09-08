@@ -1,83 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us – SargamWorld</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Contact — SargamWorld</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="SARGAMWORLD.png" />
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
     }
-    header {
-      background: #4a148c;
-      color: #fff;
-      padding: 1rem;
+    .contact-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(16,24,40,0.1);
+    }
+    .contact-card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+    .contact-card p {
+      margin: 6px 0;
+      color: var(--muted);
+    }
+    .contact-card a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Small intro */
+    .contact-intro {
       text-align: center;
-    }
-    main {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    h2 {
-      color: #4a148c;
-      margin-top: 2rem;
-    }
-    p {
-      line-height: 1.7;
-    }
-    .contact-info {
-      background: #fff;
-      padding: 1.5rem;
-      margin-top: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .contact-info p {
-      margin: 0.8rem 0;
-    }
-    .highlight {
-      font-weight: bold;
-      color: #4a148c;
-    }
-    footer {
-      text-align: center;
-      background: #eee;
-      padding: 1rem;
-      margin-top: 3rem;
+      margin: 20px auto 30px;
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Contact Us</h1>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a class="brand" href="index.html">🎶 SargamWorld</a>
+        <span class="tagline">Learn · Practice · Explore</span>
+      </div>
+      <div class="hamburger">☰</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tools.html">Learning Tools</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a class="active" href="contact.html">Contact</a></li>
+          <li><a class="support-btn" href="support.html">☕ Support</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main>
-    <p>
-      We’d love to hear from you! Whether you have questions about music notations, 
-      suggestions for improvement, or just want to say hello — feel free to reach out.  
-      Music grows best when shared, and your feedback helps us make SargamWorld better every day.
-    </p>
 
-    <div class="contact-info">
-      <h2>📩 Get in Touch</h2>
-      <p><span class="highlight">Email:</span> sargam.world453@gmail.com</p>
+  <!-- Main -->
+  <main class="container">
+    <section class="hero">
+      <h1>Contact Us</h1>
+      <p class="contact-intro">
+        We’d love to hear from you! Whether you have suggestions, questions about raags and taals,
+        or just want to say hello, your feedback helps us improve SargamWorld every day.
+      </p>
+    </section>
 
-    </div>
+    <!-- Contact grid -->
+    <section class="contact-grid">
+      <div class="contact-card">
+        <h3>📧 Email</h3>
+        <p>For general queries & feedback:</p>
+        <p><a href="mailto:sargam.world453@gmail.com">sargam.world453@gmail.com</a></p>
+      </div>
 
-    <div class="contact-info">
-      <h2> Connect with Us</h2>
-      <p>We’ll soon be available on social media platforms to make learning and sharing easier. Stay tuned for updates!</p>
-    </div>
+      <div class="contact-card">
+        <h3>☕ Support Us</h3>
+        <p>Help us grow and keep resources free:</p>
+        <p><a href="https://www.buymeacoffee.com/sargamworld" target="_blank">Buy me a coffee</a></p>
+        <p><a href="upi://pay?pa=sahilwagh453@oksbi&pn=SargamWorld&cu=INR">UPI: sahilwagh453@oksbi</a></p>
+      </div>
+
+
+    </section>
   </main>
-  <footer>
-    <p>&copy; 2025 SargamWorld. All rights reserved.</p>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
   </footer>
+
+  <!-- JS for Hamburger -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
+  </script>
 </body>
 </html>
