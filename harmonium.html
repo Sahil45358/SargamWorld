@@ -195,7 +195,7 @@
   padding: 10px;
 }
 
- /* 🌐 Navbar */
+/* 🌐 Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -213,6 +213,7 @@
   font-weight: bold;
 }
 
+/* 🔹 Default: Desktop (links always visible) */
 .navbar .nav-links {
   list-style: none;
   display: flex;
@@ -238,11 +239,10 @@
   font-size: 1.5em;
 }
 
-
-/* 📱 Mobile Nav */
+/* 📱 Mobile Nav (overrides desktop) */
 @media (max-width: 768px) {
-  .nav-links {
-    display: none; /* 🔹 Hide by default */
+  .navbar .nav-links {
+    display: none; /* 🔹 Hidden by default */
     flex-direction: column;
     background: #240b36;
     position: absolute;
@@ -251,13 +251,16 @@
     padding: 15px;
     border-radius: 10px;
   }
-  .nav-links.show {
-    display: flex; /* 🔹 Only show when 'show' class is added */
+
+  .navbar .nav-links.show {
+    display: flex; /* 🔹 Show only when toggled */
   }
+
   .hamburger {
     display: block;
   }
 }
+
 
 
   /* 🌟 Support Us Button */
