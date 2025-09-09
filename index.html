@@ -71,9 +71,9 @@
       padding: 120px 20px 80px 20px;
       text-align: center;
       overflow: hidden;
-      transition: background 0.5s ease;
       background: linear-gradient(120deg, #0f0f12, #200a0a, #300a0a);
       background-size: 600% 600%;
+      transition: background 0.5s ease;
       animation: gradientShift 15s ease infinite;
     }
     @keyframes gradientShift {
@@ -158,6 +158,7 @@
       font-size: 0.9rem;
       color: #aaa;
     }
+
   </style>
 </head>
 <body>
@@ -255,7 +256,7 @@
     }, { threshold: 0.2 });
     cards.forEach(card => observer.observe(card));
 
-    // Scroll effects: dark → light, parallax, scale
+    // Scroll effects: body, hero gradient shift, cards
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
@@ -273,7 +274,17 @@
       hero.querySelector('h1').style.color = fraction>0.5?'#222':'#f3f3f3';
       hero.querySelector('p').style.color = fraction>0.5?'#222':'#f3f3f3';
 
-      // Cards
+      // Hero gradient shift
+      const angle = 120 + fraction*30;
+      const offsetX = fraction*50;
+      const offsetY = fraction*30;
+      hero.style.background = `linear-gradient(${angle}deg, 
+        rgb(${15+15*fraction},15,18), 
+        rgb(${32+20*fraction},10,10), 
+        rgb(${48+20*fraction},10,10))`;
+      hero.style.backgroundPosition = `${offsetX}% ${offsetY}%`;
+
+      // Cards dark → light & parallax
       cards.forEach(card=>{
         card.style.background=`rgba(${28+227*fraction},${28+227*fraction},${38+217*fraction},1)`;
         card.style.color=fraction>0.5?'#222':'#f3f3f3';
