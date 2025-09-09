@@ -352,98 +352,73 @@ pre {
   border-bottom: 2px solid #ff9999;
   padding-bottom: 0.5rem;
 }
-/* Navbar */
-.navbar {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  background: linear-gradient(90deg, #240b36, #c31432);
-  padding: 0.8rem 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  z-index: 1000;
-}
+   /* 🌐 Navbar */
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+    }
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    /* Brand + tagline */
+    .brand-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand { 
+      color: #fff; 
+      font-weight:700; 
+      text-decoration:none; 
+      font-size:1.1rem; 
+    }
+    .tagline {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #f3e8e8; /* subtle, lighter than white */
+      margin-top: 2px;
+    }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-}
+    /* Navigation links */
+    .nav-links { display:flex; gap:10px; list-style:none; }
+    .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
+    .nav-links a.active { background: rgba(255,255,255,0.15); }
+    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; text-decoration:none; }
 
-.nav-links {
-  list-style: none;
-  display: flex;          /* ✅ Default for desktop */
-  gap: 1.2rem;
-}
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: #fff;
+    }
 
-.nav-links li a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s, border-bottom 0.3s;
-  padding-bottom: 4px;
-}
-
-.nav-links li a:hover {
-  color: #ffdf80;
-  border-bottom: 2px solid #ffdf80;
-}
-
-.nav-links .active {
-  border-bottom: 2px solid white;
-}
-
-.support-btn {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  background: #ffdf80;
-  color: #240b36 !important;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  z-index: 1000;
-}
-
-.support-btn:hover {
-  background: white;
-  color: #c31432 !important;
-}
-
-/* Hamburger for mobile */
-.hamburger {
-  display: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: white;
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;         /* 🔹 Hide menu by default */
-    flex-direction: column;
-    background: #240b36;
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-
-  .nav-links.show {
-    display: flex;         /* 🔹 Show only when .show is added via JS */
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
+    /* 📱 Mobile Nav */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--accent);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; }
+    }
       </style>
 <main>
 
@@ -801,12 +776,8 @@ pre {
   </main>
 
   <!-- ✅ Footer -->
-  <footer class="footer">
-    <p>© 2025 SargamWorld. All Rights Reserved.</p>
-    <p>
-      <a href="about.html">About</a> | 
-      <a href="contact.html">Contact</a>
-    </p>
+  <footer class="site-footer">
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
   </footer>
   <!-- ✅ Scripts -->
 <script>
