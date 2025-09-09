@@ -47,7 +47,12 @@
       justify-content:space-between;
       padding:12px 20px;
     }
-    .brand-wrap { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-wrap {
+  display: flex;
+  flex-direction: row;   /* put logo + text in a row */
+  align-items: center;   /* vertically center tagline */
+  gap: 10px;             /* spacing between logo and text */
+}
     .brand { color: #fff; font-weight:700; font-size:1.2rem; }
     .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
     .nav-links { display:flex; gap:10px; list-style:none; }
@@ -200,7 +205,7 @@
 }
 
 .logo img {
-  height: 70px;  /* adjust logo size */
+  height: 100px;  /* adjust logo size */
 }
 
 @media (max-width: 768px) {
