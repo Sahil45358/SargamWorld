@@ -190,6 +190,25 @@
       }
     }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.logo img {
+  height: 40px;  /* adjust logo size */
+}
+
+@media (max-width: 768px) {
+  .logo span {
+    display: none; /* ✅ hides text on mobile */
+  }
+}
+    
     /* Footer */
     footer {
       background: #151525;
@@ -207,10 +226,13 @@
   <!-- Navbar -->
   <header class="site-header">
     <div class="nav-inner">
-      <div class="brand-wrap">
-        <a href="index.html" class="brand">SargamWorld</a>
-        <span class="tagline">Explore • Learn • Practice</span>
-      </div>
+     <div class="brand-wrap">
+  <a href="index.html" class="logo">
+    <img src="LOGO.png" alt="SargamWorld Logo">
+    <span>SargamWorld</span>
+  </a>
+  <span class="tagline">Explore • Learn • Practice</span>
+</div>
       <div class="hamburger" onclick="toggleMenu()">☰</div>
      <ul class="nav-links" id="navLinks">
   <li><a href="index.html" class="active">Home</a></li>
