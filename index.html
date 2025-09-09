@@ -6,13 +6,18 @@
   <title>SargamWorld — Learn, Explore, Practice</title>
   <style>
     :root {
-      --accent: #6a5acd; /* purple-blue */
-      --bg-dark: #0f0f1a;
-      --bg-card: #1b1b2f;
-      --text-light: #f5f5f5;
+      --accent: #800000;
+      --accent-dark: #9b1717;
+      --bg-dark: #0f0f12;
+      --bg-card: #1c1c26;
+      --text-light: #f3f3f3;
+      --text-muted: #aaa;
+      --radius: 12px;
       --container-w: 1100px;
+      --transition: 0.3s ease;
     }
 
+    /* Global Styles */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -20,12 +25,13 @@
       color: var(--text-light);
       overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
 
     /* Navbar */
     .site-header {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -39,13 +45,13 @@
       padding:12px 20px;
     }
     .brand-wrap { display: flex; flex-direction: column; line-height: 1.2; }
-    .brand { color: #fff; font-weight:700; text-decoration:none; font-size:1.2rem; }
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
     .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
     .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
     .nav-links a.active { background: rgba(255,255,255,0.15); }
-    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; text-decoration:none; }
+    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; }
     .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
     @media (max-width: 768px) {
       .nav-links {
@@ -63,40 +69,27 @@
 
     /* Hero Section */
     .hero {
-      background: linear-gradient(to right, #0f0f1a, #1c1c2b);
-      padding: 100px 20px;
+      background: linear-gradient(to right, #0f0f12, #1b1b26);
+      padding: 120px 20px 80px 20px;
       text-align: center;
     }
     .hero h1 {
       font-size: 3rem;
       margin-bottom: 15px;
-      color: #fff;
+      color: var(--accent);
       opacity: 0;
       transform: translateY(30px);
       transition: all 1s ease;
     }
     .hero p {
       font-size: 1.2rem;
-      color: #ccc;
-      margin-bottom: 25px;
+      color: var(--text-muted);
+      margin-bottom: 0;
       opacity: 0;
       transform: translateY(30px);
       transition: all 1s ease 0.3s;
     }
-    .hero .cta {
-      background: var(--accent);
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1s ease 0.6s;
-      display: inline-block;
-    }
-    .hero .cta:hover { background: #5847c2; }
-    .hero.show h1, .hero.show p, .hero.show .cta {
+    .hero.show h1, .hero.show p {
       opacity: 1;
       transform: translateY(0);
     }
@@ -112,41 +105,35 @@
     .feature-card {
       display: flex;
       background: var(--bg-card);
-      border-radius: 16px;
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       opacity: 0;
       transform: translateY(40px);
-      transition: all 1s ease;
+      transition: all 0.8s ease;
     }
-    .feature-card.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .feature-card.show { opacity: 1; transform: translateY(0); }
     .feature-text {
       flex: 1;
       padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .feature-text h2 { margin-top: 0; color: #fff; }
-    .feature-text p { color: #bbb; }
-    .feature-img {
-      flex: 1;
-      position: relative;
-    }
+    .feature-text h2 { margin-top: 0; color: var(--accent); }
+    .feature-text p { color: var(--text-muted); line-height: 1.5; }
+    .feature-img { flex: 1; position: relative; overflow: hidden; }
     .feature-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
-      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+      transition: transform var(--transition);
     }
+    .feature-card:hover .feature-img img { transform: scale(1.05); }
+
     @media (max-width: 768px) {
       .feature-card { flex-direction: column; }
-      .feature-img img {
-        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
-        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
-      }
     }
 
     /* Footer */
@@ -156,8 +143,9 @@
       padding: 20px;
       margin-top: 50px;
       font-size: 0.9rem;
-      color: #aaa;
+      color: var(--text-muted);
     }
+
   </style>
 </head>
 <body>
@@ -185,7 +173,6 @@
   <section class="hero" id="hero">
     <h1>Welcome to SargamWorld</h1>
     <p>Master Indian Classical Music — learn notations, practice with tools, and explore ragas.</p>
-    <a href="songs.html" class="cta">🎵 Explore Songs</a>
   </section>
 
   <!-- Features -->
@@ -229,18 +216,18 @@
       document.getElementById('navLinks').classList.toggle('show');
     }
 
-    // Animate hero when page loads
+    // Animate hero
     window.addEventListener('load', () => {
       document.getElementById('hero').classList.add('show');
     });
 
-    // Animate cards on scroll
+    // Animate feature cards on scroll
     const cards = document.querySelectorAll('.feature-card');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
-          observer.unobserve(entry.target); // animate only once
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.2 });
