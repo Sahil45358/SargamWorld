@@ -2,294 +2,250 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SargamWorld – Learn Music Easily</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SargamWorld — Learn, Explore, Practice</title>
   <style>
+    :root {
+      --accent: #6a5acd; /* purple-blue */
+      --bg-dark: #0f0f1a;
+      --bg-card: #1b1b2f;
+      --text-light: #f5f5f5;
+      --container-w: 1100px;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #f9f6f1;
-      color: #333;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      overflow-x: hidden;
     }
 
     /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #240b36, #c31432);
-      padding: 10px 20px;
-      color: white;
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    .navbar .logo {
-      font-size: 1.5em;
-      font-weight: bold;
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
     }
-    .navbar .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-    }
-    .navbar .nav-links li a {
-      color: white;
-      text-decoration: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-    .navbar .nav-links li a:hover,
-    .navbar .nav-links li a.active {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      font-size: 1.5em;
-    }
+    .brand-wrap { display: flex; flex-direction: column; line-height: 1.2; }
+    .brand { color: #fff; font-weight:700; text-decoration:none; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
+    .nav-links { display:flex; gap:10px; list-style:none; }
+    .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
+    .nav-links a.active { background: rgba(255,255,255,0.15); }
+    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; text-decoration:none; }
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
     @media (max-width: 768px) {
-      .navbar .nav-links {
+      .nav-links {
         display: none;
         flex-direction: column;
-        background: #240b36;
+        background: var(--accent);
         position: absolute;
-        top: 60px;
-        right: 20px;
+        top: 60px; right: 20px;
         padding: 15px;
-        border-radius: 10px;
+        border-radius: 8px;
       }
-      .navbar .nav-links.show {
-        display: flex;
-      }
-      .hamburger {
-        display: block;
-      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; }
     }
 
     /* Hero Section */
     .hero {
+      background: linear-gradient(to right, #0f0f1a, #1c1c2b);
+      padding: 100px 20px;
       text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(135deg, #f3eee8, #fff);
     }
     .hero h1 {
-      font-size: 2.5em;
-      color: #c31432;
+      font-size: 3rem;
       margin-bottom: 15px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
     }
     .hero p {
-      font-size: 1.2em;
-      color: #444;
-      max-width: 700px;
-      margin: 0 auto 20px;
-      line-height: 1.6;
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease 0.3s;
     }
-    .hero a {
-      padding: 10px 18px;
-      background: #240b36;
+    .hero .cta {
+      background: var(--accent);
       color: #fff;
-      border-radius: 6px;
+      padding: 12px 24px;
+      border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
-      transition: background 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease 0.6s;
+      display: inline-block;
     }
-    .hero a:hover {
-      background: #c31432;
+    .hero .cta:hover { background: #5847c2; }
+    .hero.show h1, .hero.show p, .hero.show .cta {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Features Section */
+    /* Feature Cards */
     .features {
-      text-align: center;
-      padding: 50px 20px;
-    }
-    .features h2 {
-      font-size: 2em;
-      margin-bottom: 30px;
-      color: #240b36;
+      max-width: var(--container-w);
+      margin: 50px auto;
+      display: grid;
+      gap: 30px;
+      padding: 0 20px;
     }
     .feature-card {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fff;
-      border-radius: 15px;
+      background: var(--bg-card);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      margin: 20px auto;
-      max-width: 1000px;
-      transition: transform 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
     }
-    .feature-card:hover {
-      transform: translateY(-6px);
+    .feature-card.show {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .card-text {
+    .feature-text {
       flex: 1;
       padding: 30px;
-      text-align: left;
     }
-    .card-text h3 {
-      margin: 0;
-      color: #c31432;
-    }
-    .card-text p {
-      margin: 15px 0;
-      color: #333;
-      line-height: 1.5;
-    }
-    .card-text a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 14px;
-      background: #240b36;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .card-text a:hover {
-      background: #c31432;
-    }
-    .card-image {
+    .feature-text h2 { margin-top: 0; color: #fff; }
+    .feature-text p { color: #bbb; }
+    .feature-img {
       flex: 1;
       position: relative;
-      overflow: hidden;
     }
-    .card-image img {
+    .feature-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* fade/blend left edge */
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);
-      -webkit-mask-repeat: no-repeat;
-      -webkit-mask-size: cover;
-      mask-image: linear-gradient(to right, transparent 0%, black 15%);
-      mask-repeat: no-repeat;
-      mask-size: cover;
+      display: block;
+      mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
     }
     @media (max-width: 768px) {
-      .feature-card {
-        flex-direction: column;
-        text-align: center;
-      }
-      .card-text {
-        padding: 20px;
-        text-align: center;
-      }
-      .card-image img {
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
-        mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+      .feature-card { flex-direction: column; }
+      .feature-img img {
+        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
       }
     }
 
     /* Footer */
     footer {
+      background: #151525;
       text-align: center;
       padding: 20px;
-      margin-top: 40px;
-      background: #240b36;
-      color: white;
-    }
-    footer a {
-      color: #ffdf80;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">🎶 SargamWorld</div>
-    <div class="hamburger">☰</div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="songs.html">Songs</a></li>
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html">Support</a></li>
-    </ul>
-  </nav>
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a href="index.html" class="brand">SargamWorld</a>
+        <span class="tagline">Explore • Learn • Practice</span>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="support.html" class="support-btn">Support</a></li>
+      </ul>
+    </div>
+  </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
+  <!-- Hero -->
+  <section class="hero" id="hero">
     <h1>Welcome to SargamWorld</h1>
-    <p>Your free hub for learning Indian classical music and songs.  
-       Practice with tools, explore raags, master taals, and discover notations — all in one place.</p>
-    <a href="songs.html">🎵 Start Learning</a>
+    <p>Master Indian Classical Music — learn notations, practice with tools, and explore ragas.</p>
+    <a href="songs.html" class="cta">🎵 Explore Songs</a>
   </section>
 
-  <!-- Features Section -->
+  <!-- Features -->
   <section class="features">
-    <h2>🎼 Explore Our Tools & Features</h2>
-
     <div class="feature-card">
-      <div class="card-text">
-        <h3>🎹 Harmonium Simulator</h3>
-        <p>Practice your sargam and songs on a realistic virtual harmonium.</p>
-        <a href="tools.html#harmonium">Try Now →</a>
+      <div class="feature-text">
+        <h2>🎶 Song Library</h2>
+        <p>Browse notations and lyrics, filter by genre, and find your favorite compositions with ease.</p>
       </div>
-      <div class="card-image">
-        <img src="images/harmonium.jpg" alt="Harmonium Simulator">
+      <div class="feature-img">
+        <img src="https://picsum.photos/600/400?random=1" alt="Songs">
       </div>
     </div>
-
     <div class="feature-card">
-      <div class="card-text">
-        <h3>🎶 Raag Explorer</h3>
-        <p>Learn different raags, their notes, and compositions with ease.</p>
-        <a href="tools.html#raag">Explore →</a>
+      <div class="feature-text">
+        <h2>🛠️ Learning Tools</h2>
+        <p>Practice with our interactive harmonium simulator, taal trainer, raag explorer, and more.</p>
       </div>
-      <div class="card-image">
-        <img src="images/raag.jpg" alt="Raag Explorer">
+      <div class="feature-img">
+        <img src="https://picsum.photos/600/400?random=2" alt="Tools">
       </div>
     </div>
-
     <div class="feature-card">
-      <div class="card-text">
-        <h3>🥁 Taal Trainer</h3>
-        <p>Master rhythm by practicing with taal cycles and beats.</p>
-        <a href="tools.html#taal">Start Practicing →</a>
+      <div class="feature-text">
+        <h2>🌟 Explore & Grow</h2>
+        <p>Dive into the world of Sargam — connect tradition with modern learning, anytime, anywhere.</p>
       </div>
-      <div class="card-image">
-        <img src="images/taal.jpg" alt="Taal Trainer">
-      </div>
-    </div>
-
-    <div class="feature-card">
-      <div class="card-text">
-        <h3>🎵 Song Notations</h3>
-        <p>Access notations of your favorite songs with sargam and lyrics.</p>
-        <a href="songs.html">Browse Songs →</a>
-      </div>
-      <div class="card-image">
-        <img src="images/songs.jpg" alt="Song Notations">
+      <div class="feature-img">
+        <img src="https://picsum.photos/600/400?random=3" alt="Explore">
       </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; SargamWorld • All Rights Reserved</p>
-    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a></p>
+    © 2025 SargamWorld. All rights reserved.
   </footer>
 
   <script>
-    // Hamburger toggle
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.querySelector(".hamburger");
-      const navLinks = document.querySelector(".nav-links");
-      hamburger.addEventListener("click", () => {
-        navLinks.classList.toggle("show");
-      });
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+
+    // Animate hero when page loads
+    window.addEventListener('load', () => {
+      document.getElementById('hero').classList.add('show');
     });
+
+    // Animate cards on scroll
+    const cards = document.querySelectorAll('.feature-card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target); // animate only once
+        }
+      });
+    }, { threshold: 0.2 });
+
+    cards.forEach(card => observer.observe(card));
   </script>
 </body>
 </html>
