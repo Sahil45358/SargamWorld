@@ -17,13 +17,13 @@
       --transition: 0.3s ease;
     }
 
-    /* Global Styles */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: var(--bg-dark);
       color: var(--text-light);
       overflow-x: hidden;
+      transition: background 0.5s ease;
     }
     a { text-decoration: none; color: inherit; }
 
@@ -48,10 +48,15 @@
     .brand { color: #fff; font-weight:700; font-size:1.2rem; }
     .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
     .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a {
+      color:#fff;
+      padding:8px 12px;
+      border-radius:8px;
+      font-weight:600;
+      transition: var(--transition);
+    }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
     .nav-links a.active { background: rgba(255,255,255,0.15); }
-    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; }
     .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
     @media (max-width: 768px) {
       .nav-links {
@@ -69,25 +74,14 @@
 
     /* Hero Section */
     .hero {
-      background: linear-gradient(to right, #0f0f12, #1b1b26);
       padding: 120px 20px 80px 20px;
       text-align: center;
+      transition: background 0.5s ease;
     }
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: var(--accent);
+    .hero h1, .hero p {
       opacity: 0;
       transform: translateY(30px);
-      transition: all 1s ease;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 0;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 1s ease 0.3s;
+      transition: color 0.5s ease, transform 1s ease, opacity 1s ease 0.3s;
     }
     .hero.show h1, .hero.show p {
       opacity: 1;
@@ -104,13 +98,12 @@
     }
     .feature-card {
       display: flex;
-      background: var(--bg-card);
       border-radius: var(--radius);
       overflow: hidden;
       box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       opacity: 0;
       transform: translateY(40px);
-      transition: all 0.8s ease;
+      transition: all 0.8s ease, background 0.5s ease, color 0.5s ease;
     }
     .feature-card.show { opacity: 1; transform: translateY(0); }
     .feature-text {
@@ -121,14 +114,14 @@
       justify-content: center;
     }
     .feature-text h2 { margin-top: 0; color: var(--accent); }
-    .feature-text p { color: var(--text-muted); line-height: 1.5; }
+    .feature-text p { line-height: 1.5; }
     .feature-img { flex: 1; position: relative; overflow: hidden; }
     .feature-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform var(--transition);
+      transition: transform 0.3s ease, filter 0.5s ease;
     }
     .feature-card:hover .feature-img img { transform: scale(1.05); }
 
@@ -145,7 +138,6 @@
       font-size: 0.9rem;
       color: var(--text-muted);
     }
-
   </style>
 </head>
 <body>
@@ -164,7 +156,7 @@
         <li><a href="tools.html">Tools</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="support.html" class="support-btn">Support</a></li>
+        <li><a href="support.html">Support</a></li>
       </ul>
     </div>
   </header>
@@ -183,7 +175,7 @@
         <p>Browse notations and lyrics, filter by genre, and find your favorite compositions with ease.</p>
       </div>
       <div class="feature-img">
-        <img src="https://picsum.photos/600/400?random=1" alt="Songs">
+        <img src="your-image-1.jpg" alt="Songs">
       </div>
     </div>
     <div class="feature-card">
@@ -192,7 +184,7 @@
         <p>Practice with our interactive harmonium simulator, taal trainer, raag explorer, and more.</p>
       </div>
       <div class="feature-img">
-        <img src="https://picsum.photos/600/400?random=2" alt="Tools">
+        <img src="your-image-2.jpg" alt="Tools">
       </div>
     </div>
     <div class="feature-card">
@@ -201,7 +193,7 @@
         <p>Dive into the world of Sargam — connect tradition with modern learning, anytime, anywhere.</p>
       </div>
       <div class="feature-img">
-        <img src="https://picsum.photos/600/400?random=3" alt="Explore">
+        <img src="your-image-3.jpg" alt="Explore">
       </div>
     </div>
   </section>
@@ -231,8 +223,69 @@
         }
       });
     }, { threshold: 0.2 });
-
     cards.forEach(card => observer.observe(card));
+
+    // Scroll effect: dark-to-light + hero gradient + image parallax + brightness/saturation
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const fraction = Math.min(scrollTop / maxScroll, 1);
+
+      // Body background
+      const bodyStart = [15,15,18], bodyEnd = [243,238,232];
+      const r = bodyStart[0] + (bodyEnd[0]-bodyStart[0])*fraction;
+      const g = bodyStart[1] + (bodyEnd[1]-bodyStart[1])*fraction;
+      const b = bodyStart[2] + (bodyEnd[2]-bodyStart[2])*fraction;
+      document.body.style.background = `rgb(${r},${g},${b})`;
+
+      // Hero gradient
+      const hero = document.getElementById('hero');
+      const startTop = [15,15,18], startBottom = [27,27,38];
+      const endTop = [230,230,245], endBottom = [255,255,255];
+
+      const topR = startTop[0] + (endTop[0]-startTop[0])*fraction;
+      const topG = startTop[1] + (endTop[1]-startTop[1])*fraction;
+      const topB = startTop[2] + (endTop[2]-startTop[2])*fraction;
+
+      const bottomR = startBottom[0] + (endBottom[0]-startBottom[0])*fraction;
+      const bottomG = startBottom[1] + (endBottom[1]-startBottom[1])*fraction;
+      const bottomB = startBottom[2] + (endBottom[2]-startBottom[2])*fraction;
+
+      hero.style.background = `linear-gradient(to bottom, rgb(${topR},${topG},${topB}), rgb(${bottomR},${bottomG},${bottomB}))`;
+
+      // Hero text color
+      const heroTextColor = fraction > 0.5 ? '#222' : '#f3f3f3';
+      hero.querySelector('h1').style.color = heroTextColor;
+      hero.querySelector('p').style.color = heroTextColor;
+
+      // Feature cards
+      cards.forEach(card => {
+        const cardStart = [28,28,38], cardEnd = [255,255,255];
+        const cr = cardStart[0] + (cardEnd[0]-cardStart[0])*fraction;
+        const cg = cardStart[1] + (cardEnd[1]-cardStart[1])*fraction;
+        const cb = cardStart[2] + (cardEnd[2]-cardStart[2])*fraction;
+        card.style.background = `linear-gradient(to bottom, rgb(${cr},${cg},${cb}), rgb(${cr+10},${cg+10},${cb+10}))`;
+        card.style.color = fraction > 0.5 ? '#222' : '#f3f3f3';
+
+        // Feature images brightness/saturation
+        const img = card.querySelector('img');
+        const brightness = 0.5 + 0.5 * fraction;
+        const saturation = 0.7 + 0.3 * fraction;
+        img.style.filter = `brightness(${brightness}) saturate(${saturation})`;
+
+        // Parallax effect
+        const cardRect = card.getBoundingClientRect();
+        const offset = cardRect.top / window.innerHeight;
+        const translateY = Math.min(offset * 20, 20);
+        img.style.transform = `translateY(${translateY}px) scale(1.05)`;
+      });
+
+      // Navbar links
+      const navLinks = document.querySelectorAll('.nav-links a');
+      navLinks.forEach(link => {
+        link.style.color = fraction > 0.5 ? '#222' : '#fff';
+      });
+    });
   </script>
 </body>
 </html>
