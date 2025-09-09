@@ -6,10 +6,9 @@
   <title>SargamWorld — Learn, Explore, Practice</title>
   <style>
     :root {
-      --accent: #800000;
-      --accent-dark: #9b1717;
+      --accent: #800000;  /* navbar and brand color */
       --bg-dark: #0f0f12;
-      --bg-card: #1c1c26;
+      --bg-card-dark: #1c1c26;
       --text-light: #f3f3f3;
       --text-muted: #aaa;
       --radius: 12px;
@@ -49,15 +48,8 @@
     .brand { color: #fff; font-weight:700; font-size:1.2rem; }
     .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
     .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a {
-      color:#fff;
-      padding:8px 12px;
-      border-radius:8px;
-      font-weight:600;
-      transition: var(--transition);
-    }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
-    .nav-links a.active { background: rgba(255,255,255,0.15); }
     .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
     @media (max-width: 768px) {
       .nav-links {
@@ -80,6 +72,14 @@
       text-align: center;
       overflow: hidden;
       transition: background 0.5s ease;
+      background: linear-gradient(120deg, #0f0f12, #200a0a, #300a0a);
+      background-size: 600% 600%;
+      animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
     }
     .hero h1, .hero p {
       opacity: 0;
@@ -122,6 +122,8 @@
       opacity: 0;
       transform: translateY(40px) scale(1);
       transition: all 0.8s ease, background 0.5s ease, color 0.5s ease, transform 0.5s ease;
+      background: var(--bg-card-dark);
+      color: var(--text-light);
     }
     .feature-card.show { opacity: 1; transform: translateY(0) scale(1); }
     .feature-text {
@@ -131,8 +133,8 @@
       flex-direction: column;
       justify-content: center;
     }
-    .feature-text h2 { margin-top: 0; color: var(--accent); transition: color 0.5s ease; }
-    .feature-text p { line-height: 1.5; }
+    .feature-text h2 { margin-top: 0; color: #ff5555; transition: color 0.5s ease; }
+    .feature-text p { line-height: 1.5; color: #aaa; }
     .feature-img { flex: 1; position: relative; overflow: hidden; }
     .feature-img img {
       width: 100%;
@@ -154,7 +156,7 @@
       padding: 20px;
       margin-top: 50px;
       font-size: 0.9rem;
-      color: var(--text-muted);
+      color: #aaa;
     }
   </style>
 </head>
@@ -222,24 +224,21 @@
   </footer>
 
   <script>
-    // Hamburger menu
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
 
-    // Animate hero
+    // Animate hero & add floating notes
     window.addEventListener('load', () => {
-      document.getElementById('hero').classList.add('show');
-
-      // Add floating notes
       const hero = document.getElementById('hero');
+      hero.classList.add('show');
       for(let i=0;i<15;i++){
         const note = document.createElement('div');
         note.className='note';
         note.style.left=Math.random()*100+'%';
         note.style.fontSize=(Math.random()*20+12)+'px';
         note.style.animationDuration=(Math.random()*6+4)+'s';
-        note.innerText = '🎵';
+        note.innerText='🎵';
         hero.appendChild(note);
       }
     });
@@ -256,7 +255,7 @@
     }, { threshold: 0.2 });
     cards.forEach(card => observer.observe(card));
 
-    // Scroll effects: dark to light, parallax, scale
+    // Scroll effects: dark → light, parallax, scale
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
@@ -271,11 +270,10 @@
 
       // Hero text color
       const hero = document.getElementById('hero');
-      const heroColor = fraction>0.5?'#222':'#f3f3f3';
-      hero.querySelector('h1').style.color=heroColor;
-      hero.querySelector('p').style.color=heroColor;
+      hero.querySelector('h1').style.color = fraction>0.5?'#222':'#f3f3f3';
+      hero.querySelector('p').style.color = fraction>0.5?'#222':'#f3f3f3';
 
-      // Card background & text
+      // Cards
       cards.forEach(card=>{
         card.style.background=`rgba(${28+227*fraction},${28+227*fraction},${38+217*fraction},1)`;
         card.style.color=fraction>0.5?'#222':'#f3f3f3';
