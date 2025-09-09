@@ -124,6 +124,7 @@
       transition: all 0.8s ease, background 0.5s ease, color 0.5s ease, transform 0.5s ease;
       background: var(--bg-card-dark);
       color: var(--text-light);
+      height: 300px; /* fixed height for equal cards */
     }
     .feature-card.show { opacity: 1; transform: translateY(0) scale(1); }
     .feature-text {
@@ -136,19 +137,32 @@
     .feature-text h2 { margin-top: 0; color: #ff5555; transition: color 0.5s ease; }
     .feature-text p { line-height: 1.5; color: #aaa; }
     .feature-img { flex: 1; position: relative; overflow: hidden; }
+
+    /* Image adjustments */
     .feature-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-       object-position: center bottom; /* show the lower half of the image */
-  display: block;
       display: block;
       transition: transform 0.3s ease, filter 0.5s ease;
+      /* Blend left edge for smooth transition */
+      mask-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1));
+      -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1));
+      mask-repeat: no-repeat;
+      -webkit-mask-repeat: no-repeat;
+      mask-size: 100% 100%;
+      -webkit-mask-size: 100% 100%;
     }
+    /* Harmonium lower half only */
+    .feature-img img.harmonium {
+      object-position: center bottom; 
+    }
+
     .feature-card:hover .feature-img img { transform: scale(1.05); }
 
     @media (max-width: 768px) {
-      .feature-card { flex-direction: column; }
+      .feature-card { flex-direction: column; height: auto; }
+      .feature-img img { mask-image: none; -webkit-mask-image: none; }
     }
 
     /* Footer */
@@ -207,7 +221,7 @@
         <p>Practice with our interactive harmonium simulator, taal trainer, raag explorer, and more.</p>
       </div>
       <div class="feature-img">
-        <img src="harmonium.jpg" alt="Tools">
+        <img src="harmonium.jpg" alt="Tools" class="harmonium">
       </div>
     </div>
     <div class="feature-card">
