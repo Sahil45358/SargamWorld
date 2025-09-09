@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SargamWorld — Learn, Explore, Practice</title>
   <style>
     :root {
@@ -17,6 +17,7 @@
       --transition: 0.3s ease;
     }
 
+    /* Global Styles */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -74,18 +75,35 @@
 
     /* Hero Section */
     .hero {
+      position: relative;
       padding: 120px 20px 80px 20px;
       text-align: center;
+      overflow: hidden;
       transition: background 0.5s ease;
     }
     .hero h1, .hero p {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(30px) scale(1);
       transition: color 0.5s ease, transform 1s ease, opacity 1s ease 0.3s;
     }
     .hero.show h1, .hero.show p {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+    }
+
+    /* Floating Notes */
+    .note {
+      position: absolute;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.5);
+      user-select: none;
+      pointer-events: none;
+      animation: float 8s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
 
     /* Feature Cards */
@@ -102,10 +120,10 @@
       overflow: hidden;
       box-shadow: 0 6px 20px rgba(0,0,0,0.5);
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease, background 0.5s ease, color 0.5s ease;
+      transform: translateY(40px) scale(1);
+      transition: all 0.8s ease, background 0.5s ease, color 0.5s ease, transform 0.5s ease;
     }
-    .feature-card.show { opacity: 1; transform: translateY(0); }
+    .feature-card.show { opacity: 1; transform: translateY(0) scale(1); }
     .feature-text {
       flex: 1;
       padding: 30px;
@@ -113,7 +131,7 @@
       flex-direction: column;
       justify-content: center;
     }
-    .feature-text h2 { margin-top: 0; color: var(--accent); }
+    .feature-text h2 { margin-top: 0; color: var(--accent); transition: color 0.5s ease; }
     .feature-text p { line-height: 1.5; }
     .feature-img { flex: 1; position: relative; overflow: hidden; }
     .feature-img img {
@@ -167,12 +185,12 @@
     <p>Master Indian Classical Music — learn notations, practice with tools, and explore ragas.</p>
   </section>
 
-  <!-- Features -->
+  <!-- Feature Cards -->
   <section class="features">
     <div class="feature-card">
       <div class="feature-text">
         <h2>🎶 Song Library</h2>
-        <p>Browse notations and lyrics, filter by genre, and find your favorite compositions with ease.</p>
+        <p>Browse notations and lyrics, filter by genre, and find your favorite compositions.</p>
       </div>
       <div class="feature-img">
         <img src="your-image-1.jpg" alt="Songs">
@@ -190,7 +208,7 @@
     <div class="feature-card">
       <div class="feature-text">
         <h2>🌟 Explore & Grow</h2>
-        <p>Dive into the world of Sargam — connect tradition with modern learning, anytime, anywhere.</p>
+        <p>Dive into Sargam — connect tradition with modern learning, anytime, anywhere.</p>
       </div>
       <div class="feature-img">
         <img src="your-image-3.jpg" alt="Explore">
@@ -204,6 +222,7 @@
   </footer>
 
   <script>
+    // Hamburger menu
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
@@ -211,13 +230,25 @@
     // Animate hero
     window.addEventListener('load', () => {
       document.getElementById('hero').classList.add('show');
+
+      // Add floating notes
+      const hero = document.getElementById('hero');
+      for(let i=0;i<15;i++){
+        const note = document.createElement('div');
+        note.className='note';
+        note.style.left=Math.random()*100+'%';
+        note.style.fontSize=(Math.random()*20+12)+'px';
+        note.style.animationDuration=(Math.random()*6+4)+'s';
+        note.innerText = '🎵';
+        hero.appendChild(note);
+      }
     });
 
     // Animate feature cards on scroll
     const cards = document.querySelectorAll('.feature-card');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
           entry.target.classList.add('show');
           observer.unobserve(entry.target);
         }
@@ -225,65 +256,36 @@
     }, { threshold: 0.2 });
     cards.forEach(card => observer.observe(card));
 
-    // Scroll effect: dark-to-light + hero gradient + image parallax + brightness/saturation
+    // Scroll effects: dark to light, parallax, scale
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const fraction = Math.min(scrollTop / maxScroll, 1);
+      const fraction = Math.min(scrollTop/maxScroll,1);
 
-      // Body background
-      const bodyStart = [15,15,18], bodyEnd = [243,238,232];
-      const r = bodyStart[0] + (bodyEnd[0]-bodyStart[0])*fraction;
-      const g = bodyStart[1] + (bodyEnd[1]-bodyStart[1])*fraction;
-      const b = bodyStart[2] + (bodyEnd[2]-bodyStart[2])*fraction;
-      document.body.style.background = `rgb(${r},${g},${b})`;
-
-      // Hero gradient
-      const hero = document.getElementById('hero');
-      const startTop = [15,15,18], startBottom = [27,27,38];
-      const endTop = [230,230,245], endBottom = [255,255,255];
-
-      const topR = startTop[0] + (endTop[0]-startTop[0])*fraction;
-      const topG = startTop[1] + (endTop[1]-startTop[1])*fraction;
-      const topB = startTop[2] + (endTop[2]-startTop[2])*fraction;
-
-      const bottomR = startBottom[0] + (endBottom[0]-startBottom[0])*fraction;
-      const bottomG = startBottom[1] + (endBottom[1]-startBottom[1])*fraction;
-      const bottomB = startBottom[2] + (endBottom[2]-startBottom[2])*fraction;
-
-      hero.style.background = `linear-gradient(to bottom, rgb(${topR},${topG},${topB}), rgb(${bottomR},${bottomG},${bottomB}))`;
+      // Body background dark → light
+      const start=[15,15,18], end=[243,238,232];
+      const r=start[0]+(end[0]-start[0])*fraction;
+      const g=start[1]+(end[1]-start[1])*fraction;
+      const b=start[2]+(end[2]-start[2])*fraction;
+      document.body.style.background=`rgb(${r},${g},${b})`;
 
       // Hero text color
-      const heroTextColor = fraction > 0.5 ? '#222' : '#f3f3f3';
-      hero.querySelector('h1').style.color = heroTextColor;
-      hero.querySelector('p').style.color = heroTextColor;
+      const hero = document.getElementById('hero');
+      const heroColor = fraction>0.5?'#222':'#f3f3f3';
+      hero.querySelector('h1').style.color=heroColor;
+      hero.querySelector('p').style.color=heroColor;
 
-      // Feature cards
-      cards.forEach(card => {
-        const cardStart = [28,28,38], cardEnd = [255,255,255];
-        const cr = cardStart[0] + (cardEnd[0]-cardStart[0])*fraction;
-        const cg = cardStart[1] + (cardEnd[1]-cardStart[1])*fraction;
-        const cb = cardStart[2] + (cardEnd[2]-cardStart[2])*fraction;
-        card.style.background = `linear-gradient(to bottom, rgb(${cr},${cg},${cb}), rgb(${cr+10},${cg+10},${cb+10}))`;
-        card.style.color = fraction > 0.5 ? '#222' : '#f3f3f3';
-
-        // Feature images brightness/saturation
-        const img = card.querySelector('img');
-        const brightness = 0.5 + 0.5 * fraction;
-        const saturation = 0.7 + 0.3 * fraction;
-        img.style.filter = `brightness(${brightness}) saturate(${saturation})`;
-
-        // Parallax effect
-        const cardRect = card.getBoundingClientRect();
-        const offset = cardRect.top / window.innerHeight;
-        const translateY = Math.min(offset * 20, 20);
-        img.style.transform = `translateY(${translateY}px) scale(1.05)`;
-      });
-
-      // Navbar links
-      const navLinks = document.querySelectorAll('.nav-links a');
-      navLinks.forEach(link => {
-        link.style.color = fraction > 0.5 ? '#222' : '#fff';
+      // Card background & text
+      cards.forEach(card=>{
+        card.style.background=`rgba(${28+227*fraction},${28+227*fraction},${38+217*fraction},1)`;
+        card.style.color=fraction>0.5?'#222':'#f3f3f3';
+        const heading=card.querySelector('h2');
+        heading.style.color=fraction>0.5?'#800000':'#ff5555';
+        card.style.transform=`translateY(0) scale(${1+0.02*fraction})`;
+        const img=card.querySelector('img');
+        img.style.filter=`brightness(${0.5+0.5*fraction}) saturate(${0.7+0.3*fraction})`;
+        const rect=card.getBoundingClientRect();
+        img.style.transform=`translateY(${Math.min(rect.top/window.innerHeight*20,20)}px) scale(1.05)`;
       });
     });
   </script>
