@@ -333,6 +333,20 @@ pre {
   cursor: pointer;
 }
 
+    /* Make language filter look like genre filter */
+#languageFilter {
+  margin: 10px 0;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+    #languageFilter:hover {
+  background-color: #f0f0f0;
+  border-color: #b0b0b0;
+}
 /* =====================
    Pagination
 ===================== */
@@ -468,6 +482,7 @@ pre {
   <option value="hindi">Hindi</option>
   <option value="marathi">Marathi</option>
   <option value="english">English</option>
+  <option value="bengali">Bengali</option>
 </select>
 
     </section>
@@ -875,26 +890,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Search
-  document.getElementById('searchBar').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    filteredCards = cards.filter(card =>
-      card.innerText.toLowerCase().includes(filter)
-    );
-    currentPage = 1;
-    renderPage(currentPage);
+  function applyFilters() {
+  const searchValue = document.getElementById("searchBar").value.toLowerCase();
+  const selectedGenre = document.getElementById("genreFilter").value;
+  const selectedLanguage = document.getElementById("languageFilter").value;
+
+  filteredCards = cards.filter(card => {
+    const title = card.querySelector("h3").innerText.toLowerCase();
+    const genre = card.getAttribute("data-genre");
+    const languages = card.getAttribute("data-language").split(" ");
+
+    const matchesSearch = title.includes(searchValue);
+    const matchesGenre = selectedGenre === "all" || genre === selectedGenre;
+    const matchesLanguage = selectedLanguage === "all" || languages.includes(selectedLanguage);
+
+    return matchesSearch && matchesGenre && matchesLanguage;
   });
 
-  // Genre filter
-  document.getElementById('genreFilter').addEventListener('change', function () {
-    const selected = this.value;
-    filteredCards = cards.filter(card => {
-      const genre = card.getAttribute('data-genre');
-      return selected === 'all' || genre === selected;
-    });
-    currentPage = 1;
-    renderPage(currentPage);
-  });
+  currentPage = 1;
+  renderPage(currentPage);
+}
+
+// Attach unified filter to all inputs
+document.getElementById("searchBar").addEventListener("input", applyFilters);
+document.getElementById("genreFilter").addEventListener("change", applyFilters);
+document.getElementById("languageFilter").addEventListener("change", applyFilters);
+
 
   // Initial load
   renderPage(currentPage);
@@ -912,33 +933,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
-<script>
-function filterSongs() {
-  const searchValue = document.getElementById("searchBar").value.toLowerCase();
-  const selectedGenre = document.getElementById("genreFilter").value;
-  const selectedLanguage = document.getElementById("languageFilter").value;
-  const songs = document.querySelectorAll(".song-card");
 
-  songs.forEach(song => {
-    const title = song.querySelector("h3").innerText.toLowerCase();
-    const genre = song.getAttribute("data-genre");
-    const language = song.getAttribute("data-language");
-
-    const matchesSearch = title.includes(searchValue);
-    const matchesGenre = (selectedGenre === "all" || genre === selectedGenre);
-    const matchesLanguage = (selectedLanguage === "all" || song.getAttribute("data-language").split(" ").includes(selectedLanguage));
-
-    if (matchesSearch && matchesGenre && matchesLanguage) {
-      song.style.display = "block";
-    } else {
-      song.style.display = "none";
-    }
-  });
-}
-
-// ✅ Live search
-document.getElementById("searchBar").addEventListener("input", filterSongs);
-</script>
 
 
 </body>
