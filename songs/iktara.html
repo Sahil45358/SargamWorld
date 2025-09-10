@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <title>Iktara – Full Sargam</title>
   <link rel="stylesheet" href="../style.css"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <meta name="google" content="notranslate"/>
 </head>
 <body>
@@ -29,6 +30,21 @@
       </ul>
     </section>
 
+     <section class="video-section">
+    <h2> Watch on YouTube</h2>
+    <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/akjdj6iHttY" 
+        title="Iktara YouTube Video" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+    
     <section>
       <h2>Lyrics & Sargam</h2>
       <pre class="notranslate">
@@ -88,11 +104,62 @@
       </pre>
     </section>
 
-    <p><a href="../index.html">⬅️ Back to song list</a></p>
+    <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
-  <footer>
-    <p>🎶 Full Hindi swar notation for “Iktara.” No komal swars present in the song.</p>
-  </footer>
+  <footer class="site-footer">
+  <small>
+    © 2025 SargamWorld — All rights reserved. 
+    <a href="privacy.html">Privacy</a> · 
+    <a href="terms.html">Terms</a> · 
+    <a href="support.html">Support Us </a>
+  </small>
+</footer>
+
+<style>
+  .video-section {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  color: #5a5a5a;
+  font-size: 0.9rem;
+  background-color: #f3eee8;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
+}
+
+.site-footer a {
+  color: #c31432;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+</style>
 </body>
 </html>
