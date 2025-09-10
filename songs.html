@@ -56,27 +56,7 @@
     a { color: #c31432; text-decoration: none; font-weight: bold; }
     a:hover { text-decoration: underline; }
 
-/* =====================
-   Header
-===================== */
 
-header {
-  background: linear-gradient(to right, #240b36, #c31432);
-  color: white;
-  padding: 2rem 1rem;
-  text-align: center;
-}
-
-header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  margin: 0 0 0.5rem;
-}
-
-header p {
-  font-size: 1.1rem;
-  color: #f4f4f4;
-}
 
 /* =====================
    Main Content
@@ -885,16 +865,11 @@ document.getElementById("languageFilter").addEventListener("change", applyFilter
 });
 
 // Hamburger (mobile menu)
-document.addEventListener('DOMContentLoaded', () => {
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
-
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('show');
-    });
-  }
-});
+ document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
+  });
 </script>
 
 
