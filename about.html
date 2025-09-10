@@ -141,7 +141,25 @@
       color: var(--text);
       line-height: 1.6;
     }
+    
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
 
+.logo img {
+  height: 120px;  /* adjust logo size */
+}
+
+@media (max-width: 768px) {
+  .logo span {
+    display: none; /* ✅ hides text on mobile */
+  }
+}
     /* Footer */
     .site-footer {
       text-align: center;
@@ -157,13 +175,18 @@
   <header class="site-header">
     <div class="nav-inner">
       <div class="brand-wrap">
-        <a class="brand" href="index.html">🎶 SargamWorld</a>
-        <span class="tagline">Learn · Practice · Explore</span>
+          <a href="index.html" class="logo">
+    <img src="LOGO.png" alt="SargamWorld Logo">
+         <span>SargamWorld</span>
+  </a>
+  <span class="tagline">Explore • Learn • Practice</span>
+</div>
       </div>
       <div class="hamburger">☰</div>
       <nav>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
+          <li><a href="songs.html">Song</a></li>
           <li><a href="tools.html">Learning Tools</a></li>
           <li><a class="active" href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
