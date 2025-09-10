@@ -6,27 +6,26 @@
   <title>Support — SargamWorld</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
-    :root {
-      --accent: #800000;
+   :root {
+      --accent: #800000;  /* navbar and brand color */
       --radius: 12px;
       --container-w: 1100px;
       --transition: 0.3s ease;
     }
 
+    /* Global Styles */
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f3eee8;
-      color: #222;
+      background: #f3eee8;  /* light background */
+      color: #222;           /* dark text */
       line-height: 1.6;
       margin: 0;
     }
-
     .container {
       max-width: var(--container-w);
       margin: 0 auto;
       padding: 40px 20px;
     }
-
     a { text-decoration: none; color: inherit; }
 
     /* Navbar */
@@ -46,23 +45,20 @@
       justify-content:space-between;
       padding:12px 20px;
     }
-
     .brand-wrap {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 10px;
     }
-    .brand-wrap img { height: 50px; }
-    .brand-wrap span { color: #fff; font-weight:700; font-size:1.2rem; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; }
-
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
     .nav-links { display:flex; gap:10px; list-style:none; }
     .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
     .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
-
     .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
+
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -81,6 +77,11 @@
     .hero { text-align: center; margin-bottom: 30px; }
     .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
     .hero p { max-width: 720px; margin: 0 auto; color: #5a5a5a; line-height: 1.6; }
+
+    /* Sections */
+    h1, h2 { color: var(--accent); margin-bottom: 10px; }
+    p { color: #222; margin-bottom: 20px; line-height: 1.6; }
+
 
     /* Support Cards */
     .support-section {
@@ -115,7 +116,7 @@
     }
     .support-card a:hover { background: white; color: var(--accent); }
 
-    /* Footer */
+      /* Footer */
     .site-footer {
       text-align: center;
       padding: 20px;
@@ -123,20 +124,23 @@
       font-size: 0.9rem;
       margin-top: 40px;
     }
-    .site-footer a { color: #800000; text-decoration: none; }
-    .site-footer a:hover { text-decoration: underline; }
+
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .logo img { height: 120px; }
+    @media (max-width: 768px) { .logo span { display: none; } }
+    
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
+ <!-- Navbar -->
   <header class="site-header">
     <div class="nav-inner">
-      <div class="brand-wrap">
-        <a href="index.html"><img src="LOGO.png" alt="SargamWorld Logo"></a>
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
         <span>SargamWorld</span>
-        <span class="tagline">Explore • Learn • Practice</span>
-      </div>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
       <div class="hamburger">☰</div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -171,15 +175,17 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <p>&copy; 2025 SargamWorld — All rights reserved.</p>
-    <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
   </footer>
 
   <!-- JS Hamburger -->
-  <script>
+ <script>
     const hamburger = document.querySelector(".hamburger");
     const navLinks = document.querySelector(".nav-links");
-    hamburger.addEventListener("click", () => { navLinks.classList.toggle("show"); });
+
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
   </script>
 
 </body>
