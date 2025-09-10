@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — SargamWorld</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
     :root {
-      --accent: #800000;
-      --accent-dark: #9b1717;
-      --bg: #f3eee8;
-      --text: #222;
-      --muted: #5a5a5a;
-      --card-bg: #ffffff;
+      --accent: #800000;  /* navbar and brand color */
       --radius: 12px;
       --container-w: 1100px;
+      --transition: 0.3s ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Global Styles */
     body {
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.45;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3eee8;  /* light background */
+      color: #222;           /* dark text */
+      line-height: 1.6;
+      margin: 0;
     }
-    .container { max-width: var(--container-w); margin: 0 auto; padding: 20px; }
+    .container {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    a { text-decoration: none; color: inherit; }
 
-    /* 🌐 Navbar */
+    /* Navbar */
     .site-header {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -44,56 +45,44 @@
       justify-content:space-between;
       padding:12px 20px;
     }
-
-    /* Brand + tagline */
     .brand-wrap {
       display: flex;
-      flex-direction: column;
-      line-height: 1.2;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
     }
-    .brand { 
-      color: #fff; 
-      font-weight:700; 
-      text-decoration:none; 
-      font-size:1.1rem; 
-    }
-    .tagline {
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: #f3e8e8; /* subtle, lighter than white */
-      margin-top: 2px;
-    }
-
-    /* Navigation links */
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
     .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.08); }
-    .nav-links a.active { background: rgba(255,255,255,0.15); }
-    .support-btn { background:#fff; color:var(--accent); padding:8px 12px; border-radius:8px; font-weight:700; text-decoration:none; }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      font-size: 1.6rem;
-      color: #fff;
-    }
-
-    /* 📱 Mobile Nav */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
         flex-direction: column;
         background: var(--accent);
         position: absolute;
-        top: 60px;
-        right: 20px;
+        top: 60px; right: 20px;
         padding: 15px;
         border-radius: 8px;
       }
       .nav-links.show { display: flex; }
       .hamburger { display: block; }
     }
+
+    /* Hero */
+    .hero { text-align: center; margin-bottom: 30px; }
+    .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
+    .hero p { max-width: 720px; margin: 0 auto; color: #5a5a5a; line-height: 1.6; }
+
+    /* Sections */
+    h1, h2 { color: var(--accent); margin-bottom: 10px; }
+    p { color: #222; margin-bottom: 20px; line-height: 1.6; }
+
+    /* Contact Cards */
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -101,7 +90,7 @@
       margin-top: 24px;
     }
     .contact-card {
-      background: var(--card-bg);
+      background: #fff;
       border-radius: var(--radius);
       padding: 20px;
       border: 1px solid rgba(0,0,0,0.05);
@@ -112,65 +101,57 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 28px rgba(16,24,40,0.1);
     }
-    .contact-card h3 {
-      margin: 0 0 10px;
-      color: var(--accent);
-    }
-    .contact-card p {
-      margin: 6px 0;
-      color: var(--muted);
-    }
-    .contact-card a {
-      color: var(--accent);
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .contact-card a:hover {
-      text-decoration: underline;
+    .contact-card h3 { color: var(--accent); margin: 0 0 10px; }
+    .contact-card p { margin: 6px 0; color: #5a5a5a; }
+    .contact-card a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      color: #5a5a5a;
+      font-size: 0.9rem;
+      margin-top: 40px;
     }
 
-    /* Small intro */
-    .contact-intro {
-      text-align: center;
-      margin: 20px auto 30px;
-      max-width: 720px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .logo img { height: 120px; }
+    @media (max-width: 768px) { .logo span { display: none; } }
   </style>
 </head>
 <body>
-  <!-- Header -->
+
+  <!-- Navbar -->
   <header class="site-header">
     <div class="nav-inner">
-      <div class="brand-wrap">
-        <a class="brand" href="index.html">🎶 SargamWorld</a>
-        <span class="tagline">Learn · Practice · Explore</span>
-      </div>
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
       <div class="hamburger">☰</div>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="tools.html">Learning Tools</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a class="active" href="contact.html">Contact</a></li>
-
-        </ul>
-      </nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Main Content -->
   <main class="container">
     <section class="hero">
       <h1>Contact Us</h1>
-      <p class="contact-intro">
+      <p>
         We’d love to hear from you! Whether you have suggestions, questions about raags and taals,
         or just want to say hello, your feedback helps us improve SargamWorld every day.
       </p>
     </section>
 
-    <!-- Contact grid -->
     <section class="contact-grid">
       <div class="contact-card">
         <h3>📧 Email</h3>
@@ -184,8 +165,6 @@
         <p><a href="https://www.buymeacoffee.com/sargamworld" target="_blank">Buy me a coffee</a></p>
         <p><a href="upi://pay?pa=sahilwagh453@oksbi&pn=SargamWorld&cu=INR">Support us through UPI</a></p>
       </div>
-
-
     </section>
   </main>
 
@@ -194,15 +173,13 @@
     <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
   </footer>
 
-  <!-- JS for Hamburger -->
+  <!-- JS Hamburger -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.querySelector(".hamburger");
-      const navLinks = document.querySelector(".nav-links");
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
 
-      hamburger.addEventListener("click", () => {
-        navLinks.classList.toggle("show");
-      });
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
     });
   </script>
 </body>
