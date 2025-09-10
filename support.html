@@ -2,138 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SargamWorld – Support Us</title>
-  <link rel="stylesheet" href="style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <style>
+    :root {
+      --accent: #800000;
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: #f3eee8;
-      color: #333;
-      text-align: center;
-      padding: 0;
+      color: #222;
+      line-height: 1.6;
     }
 
-    header, footer {
-      background: #240b36;
-      color: white;
-      padding: 1rem;
+    .container {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      padding: 40px 20px;
     }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #240b36, #c31432);
-      padding: 10px 20px;
-      color: white;
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar */
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-
-    .navbar .logo {
-      font-size: 1.5em;
-      font-weight: bold;
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
     }
-
-    .navbar .nav-links {
-      list-style: none;
+    .brand-wrap {
       display: flex;
-      gap: 15px;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
     }
-
-    .navbar .nav-links li a {
-      color: white;
-      text-decoration: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-
-    .navbar .nav-links li a:hover,
-    .navbar .nav-links li a.active {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      font-size: 1.5em;
-    }
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
+    .nav-links { display:flex; gap:10px; list-style:none; }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255,255,255,0.15); }
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
     @media (max-width: 768px) {
-      .navbar .nav-links {
+      .nav-links {
         display: none;
         flex-direction: column;
-        background: #240b36;
+        background: var(--accent);
         position: absolute;
-        top: 60px;
-        right: 20px;
+        top: 60px; right: 20px;
         padding: 15px;
-        border-radius: 10px;
+        border-radius: 8px;
       }
-
-      .navbar .nav-links.show {
-        display: flex;
-      }
-
-      .hamburger {
-        display: block;
-      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; }
     }
 
     h1 {
-  margin-top: 20px;
-  font-size: 2em;
-  color: #c31432; /* Changed from #f3eee8 to deep red for visibility */
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Optional: subtle shadow for depth */
-}
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
 
     .intro {
       max-width: 700px;
-      margin: 20px auto;
+      margin: 0 auto 40px;
       font-size: 1.1em;
-      line-height: 1.6;
+      text-align: center;
+      color: #5a5a5a;
     }
 
     .support-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 30px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
+      justify-items: center;
     }
 
     .support-card {
       background: #fff;
-      border-radius: 12px;
+      border-radius: var(--radius);
       padding: 20px;
+      width: 100%;
       max-width: 350px;
-      width: 90%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      text-align: center;
+      box-shadow: 0 6px 20px rgba(16,24,40,0.06);
       transition: transform 0.2s;
+      text-align: center;
     }
 
-    .support-card:hover {
-      transform: translateY(-5px);
-    }
+    .support-card:hover { transform: translateY(-4px); }
 
-    .support-card h2 {
-      color: #c31432;
-      margin-bottom: 10px;
-    }
-
-    .support-card p {
-      margin: 10px 0;
-      font-size: 1em;
-      color: #333;
-    }
-
-    .support-card a, .upi-id {
+    .support-card h2 { color: var(--accent); margin-bottom: 10px; }
+    .support-card p { color: #5a5a5a; margin-bottom: 10px; }
+    .support-card a {
       display: inline-block;
       margin-top: 10px;
       padding: 10px 16px;
@@ -144,107 +121,71 @@
       text-decoration: none;
       transition: background 0.3s, color 0.3s;
     }
+    .support-card a:hover { background: white; color: var(--accent); }
 
-    .support-card a:hover {
-      background: white;
-      color: #c31432;
-    }
-
-    .upi-id {
-      background: #240b36;
-      color: #ffdf80;
-      font-family: monospace;
-      cursor: default;
-    }
-    
-.support-card-link {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 16px;
-  background: #ffdf80;   /* same as other buttons */
-  color: #240b36;        /* same text color */
-  border-radius: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background 0.3s, color 0.3s;
-}
-
-.support-card-link:hover {
-  background: white;
-  color: #c31432;
-}
-
-    footer {
+    /* Footer */
+    .site-footer {
       text-align: center;
       padding: 20px;
+      color: #5a5a5a;
+      font-size: 0.9rem;
       margin-top: 40px;
-      background: #240b36;
-      color: white;
     }
-
-    footer a {
-      color: #ffdf80;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
+    .site-footer a { color: #800000; text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
-<header>
-  <nav class="navbar">
-    <div class="logo">🎶 SargamWorld</div>
-    <div class="hamburger">☰</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html" class="active">Support</a></li>
-    </ul>
-  </nav>
-  <h1>☕ Support SargamWorld</h1>
-</header>
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a href="index.html" class="brand">🎶 SargamWorld</a>
+        <span class="tagline">Explore • Learn • Practice</span>
+      </div>
+      <div class="hamburger">☰</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="support.html" class="active">Support</a></li>
+      </ul>
+    </div>
+  </header>
 
-<div class="intro">
-  <p>Your support helps us keep SargamWorld free and continuously improving! You can contribute in the way that’s most convenient for you</p>
-</div>
+  <main class="container">
+    <h1> Support SargamWorld</h1>
+    <p class="intro">Your support helps us keep SargamWorld free and continuously improving! Choose a method below to contribute.</p>
 
-<div class="support-section">
+    <section class="support-section">
+      <div class="support-card">
+        <h2>🇮🇳 Support via UPI</h2>
+        <a href="upi://pay?pa=sahilwagh453@oksbi&pn=SargamWorld&cu=INR">Pay via UPI</a>
+        <p style="font-size: 0.9em; color:#555;">UPI ID: sahilwagh453@oksbi</p>
+      </div>
 
- <!-- UPI Section -->
-<div class="support-card">
-  <h2>🇮🇳 Support via UPI</h2>
-  <a href="upi://pay?pa=sahilwagh453@oksbi&pn=SargamWorld&cu=INR" class="support-card-link"> Pay via UPI</a>
-  <p style="margin-top: 8px; font-size: 0.9em; color: #555;"></p>
-</div>
+      <div class="support-card">
+        <h2>☕ Support via Buy Me a Coffee</h2>
+        <a href="https://www.buymeacoffee.com/sargamworld" target="_blank">Buy Me a Coffee</a>
+      </div>
+    </section>
+  </main>
 
-<!-- Buy Me a Coffee -->
-<div class="support-card">
-  <h2>☕ Support via Buy Me a Coffee</h2>
-  <a href="https://www.buymeacoffee.com/sargamworld" target="_blank">Buy Me a Coffee</a>
-</div>
+  <footer class="site-footer">
+    <p>&copy; 2025 SargamWorld — All rights reserved.</p>
+    <p><a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a></p>
+  </footer>
 
-</div>
-
-<footer>
-  <p>&copy; SargamWorld • All Rights Reserved</p>
-  <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a></p>
-</footer>
-
-<script>
-  // Hamburger toggle
-  document.addEventListener("DOMContentLoaded", () => {
+  <script>
     const hamburger = document.querySelector(".hamburger");
     const navLinks = document.querySelector(".nav-links");
 
     hamburger.addEventListener("click", () => {
       navLinks.classList.toggle("show");
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
