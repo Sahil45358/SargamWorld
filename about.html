@@ -133,29 +133,26 @@
 <body>
 
   <!-- Header -->
-  <header class="site-header">
-    <div class="nav-inner">
-      <div class="brand-wrap">
-          <a href="index.html" class="logo">
-    <img src="LOGO.png" alt="SargamWorld Logo">
-         <span>SargamWorld</span>
-  </a>
-  <span class="tagline">Explore • Learn • Practice</span>
-</div>
-      </div>
-      <div class="hamburger">☰</div>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="songs.html">Song</a></li>
-          <li><a href="tools.html">Learning Tools</a></li>
-          <li><a class="active" href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="support.html">Support</a></li>
-        </ul>
-      </nav>
+ <header class="site-header">
+  <div class="nav-inner">
+    <div class="brand-wrap">
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
     </div>
-  </header>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="songs.html">Songs</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+  </div>
+</header>
 
   <!-- Main Content -->
   <main class="container">
