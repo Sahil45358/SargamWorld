@@ -11,50 +11,54 @@
 <body>
 
 
- <!-- Navbar (same as contact.html) -->
-<header class="site-header">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <img src="LOGO.png" alt="SargamWorld Logo">
-      <span>SargamWorld</span>
-    </a>
-    <span class="tagline">Explore • Learn • Practice</span>
-    <div class="hamburger" aria-label="Menu toggle">☰</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="songs.html" class="active">Songs</a></li>
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html">Support</a></li>
-      <li><a href="support.html" class="support-btn">☕ Support Us</a></li>
-    </ul>
-  </div>
-</header>
+ <!-- Navbar -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
+      <div class="hamburger">☰</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="support.html">Support</a></li>
+            <li><a href="support.html" class="support-btn">☕ Support Us</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  
 
   
 <style>
-:root {
-  --accent: #800000;
-  --bg: #f3eee8;
-  --text: #222;
-  --muted: #5a5a5a;
-  --card-bg: #ffffff;
-  --radius: 12px;
-  --container-w: 1100px;
-  --transition: 0.3s ease; /* Added for navbar pop */
-}
+    :root {
+      --accent: #800000;  /* navbar and brand color */
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
+    }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3eee8;  /* light background */
+      color: #222;           /* dark text */
+      line-height: 1.6;
+      margin: 0;
+    }
+    .container {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    a { text-decoration: none; color: inherit; }
 
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
-  line-height: 1.45;
-}
-a { color: #c31432; text-decoration: none; font-weight: bold; }
-a:hover { text-decoration: none; }
+
 
 /* =====================
    Main Content
@@ -317,64 +321,50 @@ pre {
 /* =====================
    Navbar (fixed)
 ===================== */
-.site-header {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-.nav-inner {
-  max-width: var(--container-w);
-  margin: 0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 20px;  /* same height as contact.html */
-}
-.brand-wrap {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-}
-.brand { color: #fff; font-weight:700; font-size:1.2rem; }
-.tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
-.nav-links { display:flex; gap:10px; list-style:none; }
-.nav-links a {
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none; /* stop underline from global */
-}
+  /* Navbar */
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+    }
+    .brand-wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
+    .nav-links { display:flex; gap:10px; list-style:none; }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
-.nav-links a:hover,
-.nav-links a:focus {
-  background: rgba(255,255,255,0.1);
-  text-decoration: none; /* prevent underline */
-}
-.nav-links a.active {
-  background: rgba(255, 255, 255, 0.15); /* same highlight as contact.html */
-}
-.hamburger {
-  display: none;
-  cursor: pointer;
-  font-size: 1.6rem;
-  color: #fff;
-}
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: var(--accent);
-    position: absolute;
-    top: 60px; right: 20px;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  .nav-links.show { display: flex; }
-  .hamburger { display: block; }
-}
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--accent);
+        position: absolute;
+        top: 60px; right: 20px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; }
+    }
 </style>
 
 <main>
