@@ -3,35 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SargamWorld — Learn, Explore, Practice</title>
-   <link rel="icon" type="image/png" href="favicon.png" />
+  <title>About — SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <style>
- :root {
-      --accent: #800000;  /* navbar and brand color */
-      --bg-dark: #0f0f12;
-      --bg-card-dark: #1c1c26;
-      --text-light: #f3f3f3;
-      --text-muted: #aaa;
+    :root {
+      --accent: #800000;
+      --bg: #f3eee8;
+      --text: #222;
+      --muted: #5a5a5a;
       --radius: 12px;
       --container-w: 1100px;
       --transition: 0.3s ease;
     }
 
     /* Global Styles */
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f3eee8;  /* light background */
-  color: #222;           /* dark text */
-  line-height: 1.6;
-}
-    .container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
     a { text-decoration: none; color: inherit; }
+    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
 
- /* Navbar */
+    /* Navbar */
     .site-header {
       background: var(--accent);
       color: #fff;
@@ -40,29 +36,32 @@
       top: 0;
       z-index: 1000;
     }
-    .nav-links a.active {
-  background: rgba(255, 255, 255, 0.15);
-}
     .nav-inner {
       max-width: var(--container-w);
       margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
     }
-.brand-wrap {
-  display: flex;
-  flex-direction: row;   /* put logo + text in a row */
-  align-items: center;   /* vertically center tagline */
-  gap: 10px;             /* spacing between logo and text */
-}
-      .brand { color: #fff; font-weight:700; font-size:1.2rem; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
+    .brand-wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; }
+
     .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a {
+      color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition);
+    }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255,255,255,0.15); }
+
     .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
+
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -76,132 +75,101 @@
       .nav-links.show { display: flex; }
       .hamburger { display: block; }
     }
-    /* Hero section */
-    .hero {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .hero h1 {
-      font-size: 2rem;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    .hero p {
-      color: var(--muted);
-      max-width: 720px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
 
-    /* Content sections */
-    section {
-      margin-bottom: 30px;
-    }
-h1, h2 {
-  color: #800000;
-  margin-bottom: 10px;
-}
-p {
-  color: #222;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #fff;
-}
+    /* Hero & Content */
+    .hero { text-align: center; margin-bottom: 30px; }
+    .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
+    .hero p { color: var(--muted); max-width: 720px; margin: 0 auto; line-height: 1.6; }
 
-.logo img {
-  height: 120px;  /* adjust logo size */
-}
+    section { margin-bottom: 30px; }
+    h1,h2 { color: var(--accent); margin-bottom: 10px; }
+    p { color: var(--text); margin-bottom: 20px; line-height: 1.6; }
 
-@media (max-width: 768px) {
-  .logo span {
-    display: none; /* ✅ hides text on mobile */
-  }
-}
+    /* Logo */
+    .logo { display: flex; align-items: center; gap: 8px; font-weight:700; font-size:1.2rem; color:#fff; }
+    .logo img { height: 120px; }
+    @media (max-width: 768px) { .logo span { display: none; } }
+
     /* Footer */
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;  /* muted text */
-  font-size: 0.9rem;
-  margin-top: 40px;
-}
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
   </style>
 </head>
 <body>
 
   <!-- Header -->
- <header class="site-header">
-  <div class="nav-inner">
-    <div class="brand-wrap">
-      <a href="index.html" class="logo">
-        <img src="LOGO.png" alt="SargamWorld Logo">
-        <span>SargamWorld</span>
-      </a>
-      <span class="tagline">Explore • Learn • Practice</span>
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a href="index.html" class="logo">
+          <img src="LOGO.png" alt="SargamWorld Logo">
+          <span>SargamWorld</span>
+        </a>
+        <span class="tagline">Explore • Learn • Practice</span>
+      </div>
+
+      <div class="hamburger">☰</div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
     </div>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="songs.html">Songs</a></li>
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html">Support</a></li>
-    </ul>
-  </div>
-</header>
+  </header>
 
   <!-- Main Content -->
   <main class="container">
     <section class="hero">
-     
-  <main>
- 
- <section>
-      <h2> About Author</h2>
-     <p>
-    Hi, I’m Sahil. Music has been a part of my life for the past four years, and along the way,
-       I’ve fallen in love with playing fingerstyle guitar and the harmonium. I created <strong>SargamWorld</strong>
-       as a free space for music enthusiasts like me, especially beginners, to explore the world of 
-       Indian classical music and instrument playing. I hope this platform becomes a small step for 
-       you to connect and fall in love with the beauty of Indian music.
-  </p>
+      <h1>About SargamWorld</h1>
+      <p>Discover our mission and story for making Indian Music accessible worldwide.</p>
     </section>
-    
+
     <section>
-      <h2> My Mission</h2>
+      <h2>About Author</h2>
       <p>
-    My goal is simple: to make learning music easier, more enjoyable, and accessible to everyone,
+        Hi, I’m Sahil. Music has been a part of my life for the past four years, and along the way,
+        I’ve fallen in love with playing fingerstyle guitar and the harmonium. I created <strong>SargamWorld</strong>
+        as a free space for music enthusiasts like me, especially beginners, to explore the world of 
+        Indian classical music and instrument playing. I hope this platform becomes a small step for 
+        you to connect and fall in love with the beauty of Indian music.
+      </p>
+    </section>
+
+    <section>
+      <h2>My Mission</h2>
+      <p>
+        My goal is simple: to make learning music easier, more enjoyable, and accessible to everyone,
         whether you’re just starting out or already on an advanced journey.
         With <strong>SargamWorld</strong>, I’m trying to blend the beauty of tradition
         with the ease of modern tools, sharing notations, practice guides, and little resources
         that make learning music feel simple and fun, no matter where you are.
-       And we’re just getting started! I’ll keep bringing in new stuff to learn
+        And we’re just getting started! I’ll keep bringing in new stuff to learn
         and explore, so your musical journey always feels fresh and exciting.
-
-  </p>
-    </section>
-
-    <section>
-      <h2> My Story</h2>
-      <p>
-         This platform began as a personal notebook of notations and musical ideas, something 
-      created simply to help in daily practice. But as I shared with friends and professionals, 
-       it grew into something bigger. What started as a small personal 
-      effort has now become <strong>SargamWorld</strong>, a space where learners, teachers, 
-      and enthusiasts can explore the beauty of raags, taals, and theory together. 
-      It’s built with the same passion I feel whenever I sit down with my instruments 
-      or listen to a classical performance.
       </p>
     </section>
 
+    <section>
+      <h2>My Story</h2>
+      <p>
+        This platform began as a personal notebook of notations and musical ideas, something 
+        created simply to help in daily practice. But as I shared with friends and professionals, 
+        it grew into something bigger. What started as a small personal 
+        effort has now become <strong>SargamWorld</strong>, a space where learners, teachers, 
+        and enthusiasts can explore the beauty of raags, taals, and theory together. 
+        It’s built with the same passion I feel whenever I sit down with my instruments 
+        or listen to a classical performance.
+      </p>
+    </section>
   </main>
 
   <!-- Footer -->
@@ -213,15 +181,13 @@ p {
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const hamburger = document.querySelector(".hamburger");
-      const navLinks = document.querySelector(".nav-links");
+      const navLinks = document.getElementById("navLinks");
 
       hamburger.addEventListener("click", () => {
         navLinks.classList.toggle("show");
       });
     });
-      function toggleMenu() {
-    document.getElementById('navLinks').classList.toggle('show');
-  }
   </script>
+
 </body>
 </html>
