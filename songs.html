@@ -342,15 +342,15 @@ pre {
 .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
 .nav-links { display:flex; gap:10px; list-style:none; }
 .nav-links a {
-  color:#fff;
-  padding:8px 12px;
-  border-radius:8px;
-  font-weight:600;
-  transition: var(--transition); /* smooth pop */
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none; /* stop underline from global */
 }
+
 .nav-links a:hover,
 .nav-links a:focus {
   background: rgba(255,255,255,0.1);
+  text-decoration: none; /* prevent underline */
 }
 .nav-links a.active {
   background: rgba(255, 255, 255, 0.15); /* same highlight as contact.html */
