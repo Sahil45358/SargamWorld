@@ -33,36 +33,33 @@
 </header>
 
   
-  <style>
+<style>
+:root {
+  --accent: #800000;
+  --bg: #f3eee8;
+  --text: #222;
+  --muted: #5a5a5a;
+  --card-bg: #ffffff;
+  --radius: 12px;
+  --container-w: 1100px;
+  --transition: 0.3s ease; /* Added for navbar pop */
+}
 
- :root {
-      --accent: #800000;
-      --bg: #f3eee8;
-      --text: #222;
-      --muted: #5a5a5a;
-      --card-bg: #ffffff;
-      --radius: 12px;
-      --container-w: 1100px;
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+}
 
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-
-    a { color: #c31432; text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-
-
+a { color: #c31432; text-decoration: none; font-weight: bold; }
+a:hover { text-decoration: underline; }
 
 /* =====================
    Main Content
 ===================== */
-
 main {
   max-width: var(--container-w);
   margin: 2rem auto;
@@ -72,11 +69,9 @@ main {
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-
 /* =====================
    Typography
 ===================== */
-
 h2 {
   border-left: 5px solid #c31432;
   padding-left: 10px;
@@ -84,18 +79,12 @@ h2 {
   color: #c31432;
   margin-top: 2rem;
 }
-
 p, ul, li {
   font-size: 1rem;
   line-height: 1.7;
   margin-bottom: 1rem;
 }
-
-ul {
-  list-style: disc;
-  padding-left: 1.5rem;
-}
-
+ul { list-style: disc; padding-left: 1.5rem; }
 code {
   background-color: #f4f4f4;
   padding: 3px 6px;
@@ -106,19 +95,16 @@ code {
 /* =====================
    Tables
 ===================== */
-
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0;
 }
-
 table th, table td {
   border: 1px solid #ccc;
   padding: 0.75rem;
   text-align: left;
 }
-
 table th {
   background-color: #fce4ec;
   color: #880e4f;
@@ -127,31 +113,26 @@ table th {
 /* =====================
    Footer
 ===================== */
-    /* Footer */
-    .site-footer {
-      text-align: center;
-      padding: 20px;
-      color: #5a5a5a;
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
-
-    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
-    .logo img { height: 120px; }
-    @media (max-width: 768px) { .logo span { display: none; } }
-
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  color: #5a5a5a;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+.logo img { height: 120px; }
+@media (max-width: 768px) { .logo span { display: none; } }
 
 /* =====================
    Song List Page
 ===================== */
-
 .song-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
 }
-
 .song-card {
   background-color: #fff;
   border: 1px solid #e0e0e0;
@@ -162,18 +143,15 @@ table th {
   transition: transform 0.2s, box-shadow 0.2s;
   text-align: left;
 }
-
 .song-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
-
 .song-card h3 {
   margin: 0 0 6px;
   font-size: 1.1rem;
   color: #2c3e50;
 }
-
 .song-card p {
   margin: 0;
   color: #555;
@@ -183,7 +161,6 @@ table th {
 /* =====================
    Preformatted Sargam
 ===================== */
-
 pre {
   background: #f7f7f7;
   padding: 1rem;
@@ -197,7 +174,6 @@ pre {
 /* =====================
    Swar Explanation Box
 ===================== */
-
 .learning-swar {
   background: #fcf8f0;
   padding: 1.5rem;
@@ -205,7 +181,6 @@ pre {
   margin-bottom: 2rem;
   border-radius: 5px;
 }
-
 .learning-swar h2 {
   margin-top: 0;
   color: #c31432;
@@ -214,7 +189,6 @@ pre {
 /* =====================
    Genre Badges
 ===================== */
-
 .genre-badge {
   display: inline-block;
   margin-top: 10px;
@@ -228,31 +202,26 @@ pre {
   background: linear-gradient(to right, #fdfbfb, #ebedee);
   color: #333;
 }
-
 .genre-badge.romantic {
   border-color: #e91e63;
   background: linear-gradient(to right, #fce4ec, #f8bbd0);
   color: #880e4f;
 }
-
 .genre-badge.devotional {
   border-color: #4caf50;
   background: linear-gradient(to right, #e8f5e9, #c8e6c9);
   color: #1b5e20;
 }
-
 .genre-badge.sad {
   border-color: #9c27b0;
   background: linear-gradient(to right, #f3e5f5, #e1bee7);
   color: #4a148c;
 }
-
 .genre-badge.patriotic {
   border-color: #ef6c00;
   background: linear-gradient(to right, #fff3e0, #ffe0b2);
   color: #e65100;
 }
-
 .genre-badge.rabindra {
   border-color: #3f51b5;
   background: linear-gradient(to right, #e8eaf6, #c5cae9);
@@ -262,7 +231,6 @@ pre {
 /* =====================
    Filters & Search
 ===================== */
-
 #searchBar {
   padding: 8px;
   width: 60%;
@@ -271,12 +239,7 @@ pre {
   border-radius: 5px;
   font-size: 1rem;
 }
-
-#azFilter {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
+#azFilter { text-align: center; margin-bottom: 10px; }
 #azFilter button {
   margin: 2px;
   padding: 5px 10px;
@@ -285,11 +248,7 @@ pre {
   cursor: pointer;
   border-radius: 4px;
 }
-
-#azFilter button:hover {
-  background: #ccc;
-}
-
+#azFilter button:hover { background: #ccc; }
 #genreFilter {
   margin: 10px 0;
   padding: 8px 12px;
@@ -299,8 +258,7 @@ pre {
   background-color: #f9f9f9;
   cursor: pointer;
 }
-
-    /* Make language filter look like genre filter */
+/* Make language filter look like genre filter */
 #languageFilter {
   margin: 10px 0;
   padding: 8px 12px;
@@ -310,19 +268,18 @@ pre {
   background-color: #f9f9f9;
   cursor: pointer;
 }
-    #languageFilter:hover {
+#languageFilter:hover {
   background-color: #f0f0f0;
   border-color: #b0b0b0;
 }
+
 /* =====================
    Pagination
 ===================== */
-
 .pagination {
   text-align: center;
   margin: 20px 0;
 }
-
 .pagination button {
   padding: 6px 12px;
   margin: 0 4px;
@@ -330,7 +287,6 @@ pre {
   background-color: #fff;
   cursor: pointer;
 }
-
 .pagination button.active {
   background-color: #333;
   color: #fff;
@@ -340,7 +296,6 @@ pre {
 /* =====================
    Additional Layout
 ===================== */
-
 .card-row {
   display: flex;
   justify-content: center;
@@ -350,7 +305,6 @@ pre {
   margin: 40px auto;
   max-width: 1200px;
 }
-
 .section-heading {
   text-align: center;
   color: #ffe6e6;
@@ -360,52 +314,70 @@ pre {
   border-bottom: 2px solid #ff9999;
   padding-bottom: 0.5rem;
 }
-   /* Navbar */
-    .site-header {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .nav-inner {
-      max-width: var(--container-w);
-      margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 20px;
-    }
-    .brand-wrap {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
-    .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
-    .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
-    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: var(--accent);
-        position: absolute;
-        top: 60px; right: 20px;
-        padding: 15px;
-        border-radius: 8px;
-      }
-      .nav-links.show { display: flex; }
-      .hamburger { display: block; }
-    }
+/* =====================
+   Navbar (fixed)
+===================== */
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 20px;  /* same height as contact.html */
+}
+.brand-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.brand { color: #fff; font-weight:700; font-size:1.2rem; }
+.tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
+.nav-links { display:flex; gap:10px; list-style:none; }
+.nav-links a {
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+  transition: var(--transition); /* smooth pop */
+}
+.nav-links a:hover,
+.nav-links a:focus {
+  background: rgba(255,255,255,0.1);
+}
+.nav-links a.active {
+  background: rgba(255, 255, 255, 0.15); /* same highlight as contact.html */
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: var(--accent);
+    position: absolute;
+    top: 60px; right: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .nav-links.show { display: flex; }
+  .hamburger { display: block; }
+}
+</style>
 
-      </style>
 <main>
 
     <!-- ✅ Search & Filter -->
