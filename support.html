@@ -133,6 +133,9 @@
     }
     .site-footer a { color: #800000; text-decoration: none; }
     .site-footer a:hover { text-decoration: underline; }
+     .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .logo img { height: 120px; }
+    @media (max-width: 768px) { .logo span { display: none; } }
   </style>
 </head>
 <body>
@@ -140,8 +143,10 @@
   <!-- Navbar -->
   <header class="site-header">
     <div class="nav-inner">
-      <div class="brand-wrap">
-        <a href="index.html" class="brand">🎶 SargamWorld</a>
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
         <span class="tagline">Explore • Learn • Practice</span>
       </div>
       <div class="hamburger">☰</div>
