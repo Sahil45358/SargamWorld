@@ -49,10 +49,11 @@
       padding:12px 20px;
     }
     .brand-wrap {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
-    }
+  display: flex;
+  flex-direction: row;   /* put logo + text in a row */
+  align-items: center;   /* vertically center tagline */
+  gap: 10px;             /* spacing between logo and text */
+}
     .brand {
       color: #fff;
       font-weight: 700;
@@ -178,19 +179,34 @@
     <p>Discover our mission and story for making Indian Music accessible worldwide.</p>
 
   <main>
+ 
+ <section>
+      <h2> About Author</h2>
+     <p>
+    Hi, I’m Sahil. Music has been a part of my life for the past four years, and along the way,
+       I’ve fallen in love with playing fingerstyle guitar and the harmonium. I created <strong>SargamWorld</strong>
+       as a free space for music enthusiasts like me, especially beginners, to explore the world of 
+       Indian classical music and instrument playing. I hope this platform becomes a small step for 
+       you to connect and fall in love with the beauty of Indian music.
+  </p>
+    </section>
+    
     <section>
-      <h2> Our Mission</h2>
+      <h2> My Mission</h2>
       <p>
-             At <strong>SargamWorld</strong>, we believe that music is more than notes on a page; 
-      It’s a language of emotion and culture. Our mission is to make Indian music 
-      easy to learn, understand, and enjoy, even for someone just starting their journey. 
-      We aim to bridge the gap between tradition and technology by providing clear notations, 
-      guides, and resources that anyone can access, anywhere in the world.
-      </p>
+    My goal is simple: to make learning music easier, more enjoyable, and accessible to everyone,
+        whether you’re just starting out or already on an advanced journey.
+        With <strong>SargamWorld</strong>, I’m trying to blend the beauty of tradition
+        with the ease of modern tools, sharing notations, practice guides, and little resources
+        that make learning music feel simple and fun, no matter where you are.
+       And we’re just getting started! I’ll keep bringing in new stuff to learn
+        and explore, so your musical journey always feels fresh and exciting.
+
+  </p>
     </section>
 
     <section>
-      <h2> Our Story</h2>
+      <h2> My Story</h2>
       <p>
          This platform began as a personal notebook of notations and musical ideas, something 
       created simply to help in daily practice. But as I shared with friends and professionals, 
