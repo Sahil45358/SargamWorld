@@ -11,32 +11,31 @@
 <body>
 
 
-  <!-- Navbar -->
-  <header class="site-header">
-    <div class="nav-inner">
-      <a href="index.html" class="logo">
-        <img src="LOGO.png" alt="SargamWorld Logo">
-        <span>SargamWorld</span>
-      </a>
-      <span class="tagline">Explore • Learn • Practice</span>
-      <div class="hamburger">☰</div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="songs.html" class="active">Songs</a></li>
-        <li><a href="tools.html">Tools</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="support.html">Support</a></li>
-         <li><a href="support.html" class="support-btn">☕ Support Us</a></li>
-      </ul>
-    </div>
-  </header>
+ <!-- Navbar (same as contact.html) -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="LOGO.png" alt="SargamWorld Logo">
+      <span>SargamWorld</span>
+    </a>
+    <span class="tagline">Explore • Learn • Practice</span>
+    <div class="hamburger" aria-label="Menu toggle">☰</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="songs.html" class="active">Songs</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html" class="support-btn">☕ Support Us</a></li>
+    </ul>
+  </div>
+</header>
+
   
   <style>
 
-        :root {
+ :root {
       --accent: #800000;
-      --accent-dark: #9b1717;
       --bg: #f3eee8;
       --text: #222;
       --muted: #5a5a5a;
@@ -46,34 +45,16 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background: var(--bg);
+      font-family: 'Open Sans', sans-serif;
+      background-color: var(--bg);
       color: var(--text);
       line-height: 1.45;
     }
-    .container { max-width: var(--container-w); margin: 0 auto; padding: 20px; }
-    
-    /* =====================
-   Global Styles
-===================== */
 
-body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  background-color: #fff8f0;
-  color: #333;
-}
-
-a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-a:hover {
-  text-decoration: underline;
-}
+    a { color: #c31432; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
 
 /* =====================
    Header
