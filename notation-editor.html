@@ -45,69 +45,69 @@
     .hero p { max-width:720px; margin:0 auto; color:#5a5a5a; line-height:1.6; }
 
     /* Editor */
-    #notation-editor {
-      width:100%; min-height:300px; border:1px solid rgba(0,0,0,0.2); border-radius:var(--radius);
-      padding:12px; font-size:1.5rem; background:#fff; overflow:auto;
+    #editor {
+      width:100%;
+      min-height:300px;
+      border:1px solid rgba(0,0,0,0.2);
+      border-radius:var(--radius);
+      padding:12px;
+      font-size:1.5rem;
+      background:#fff;
+      overflow:auto;
       font-family: 'ome_bhatkhande_hindi', monospace;
-      white-space: pre-wrap; word-wrap: break-word;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
+
     /* Keyboard container */
-.keyboard {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 20px 0;
-  justify-content: center;
-}
+    .keyboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 20px 0;
+      justify-content: center;
+    }
 
-/* Sections inside keyboard */
-.keyboard-section {
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: var(--radius);
-  padding: 10px;
-  margin: 5px;
-  min-width: 220px;
-  background: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+    /* Sections inside keyboard */
+    .keyboard-section {
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: var(--radius);
+      padding: 10px;
+      margin: 5px;
+      min-width: 220px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
 
-/* Section title */
-.keyboard-section h4 {
-  margin: 0 0 6px 0;
-  font-size: 0.9rem;
-  color: var(--accent);
-  text-align: center;
-}
+    .keyboard-section h4 {
+      margin: 0 0 6px 0;
+      font-size: 0.9rem;
+      color: var(--accent);
+      text-align: center;
+    }
 
-/* Buttons inside keyboard */
-.keyboard button {
-  padding: 8px 12px;
-  margin: 3px;
-  border: none;
-  border-radius: 6px;
-  background: #f3f3f3;
-  color: #222;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s ease;
-}
+    .keyboard button {
+      padding: 8px 12px;
+      margin: 3px;
+      border: none;
+      border-radius: 6px;
+      background: #f3f3f3;
+      color: #222;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
 
-.keyboard button:hover {
-  background: var(--accent);
-  color: #fff;
-}
+    .keyboard button:hover {
+      background: var(--accent);
+      color: #fff;
+    }
 
-/* Responsive layout for mobile */
-@media (max-width: 768px) {
-  .keyboard {
-    flex-direction: column;
-    align-items: center;
-  }
-  .keyboard-section {
-    min-width: 90%;
-  }
-}
-    /* Footer */
+    @media (max-width: 768px) {
+      .keyboard { flex-direction: column; align-items: center; }
+      .keyboard-section { min-width: 90%; }
+    }
+
     .site-footer { text-align:center; padding:20px; color:#5a5a5a; font-size:0.9rem; margin-top:40px; }
   </style>
 
@@ -116,7 +116,6 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <header class="site-header">
   <div class="nav-inner">
     <a href="index.html" class="logo">
@@ -141,171 +140,129 @@
     <p>Type your composition using the Bhatkhande keyboard below and download as PDF.</p>
   </section>
 
-  <div>
-    <div id="editor" contenteditable="true"
-     style="
-        border:1px solid #ccc;
-        padding:15px;
-        min-height:200px;
-        font-size:1.5rem;
-        font-family:'Segoe UI', 'ome-bhatkhande-hindi', monospace;
-        white-space: pre-wrap;
-        background:#fff;
-        color:#222;
-        overflow-wrap: break-word;
-     ">
-</div>
+  <div id="editor" contenteditable="true"></div>
 
-   <div class="keyboard">
+  <div class="keyboard">
+    <!-- Swars -->
+    <div class="keyboard-section">
+      <h4>Swars</h4>
+      <button data-key="s">Sa (s)</button>
+      <button data-key="r">Re (r)</button>
+      <button data-key="R">Komal Re (R)</button>
+      <button data-key="g">Ga (g)</button>
+      <button data-key="G">Komal Ga (G)</button>
+      <button data-key="m">Ma (m)</button>
+      <button data-key="M">Teevra Ma (M)</button>
+      <button data-key="p">Pa (p)</button>
+      <button data-key="d">Dha (d)</button>
+      <button data-key="D">Komal Dha (D)</button>
+      <button data-key="n">Ni (n)</button>
+      <button data-key="N">Komal Ni (N)</button>
+    </div>
 
-  <!-- Swars -->
-  <div class="keyboard-section">
-    <h4>Swars</h4>
-    <button data-key="s">Sa (s)</button>
-    <button data-key="r">Re (r)</button>
-    <button data-key="R">Komal Re (R)</button>
-    <button data-key="g">Ga (g)</button>
-    <button data-key="G">Komal Ga (G)</button>
-    <button data-key="m">Ma (m)</button>
-    <button data-key="M">Teevra Ma (M)</button>
-    <button data-key="p">Pa (p)</button>
-    <button data-key="d">Dha (d)</button>
-    <button data-key="D">Komal Dha (D)</button>
-    <button data-key="n">Ni (n)</button>
-    <button data-key="N">Komal Ni (N)</button>
+    <!-- Octaves -->
+    <div class="keyboard-section">
+      <h4>Octaves</h4>
+      <button data-key="su">Taar Sa (su)</button>
+      <button data-key="Nl">Mandra Komal Ni (Nl)</button>
+      <button data-key="Mu">Taar Teevra Ma (Mu)</button>
+    </div>
+
+    <!-- Chhand -->
+    <div class="keyboard-section">
+      <h4>Chhand</h4>
+      <button data-key="@">Dugun (2)</button>
+      <button data-key="#">Tigun (3)</button>
+      <button data-key="$">Chaugun (4)</button>
+      <button data-key="%">Pachgun (5)</button>
+      <button data-key="^">Chhatgun (6)</button>
+      <button data-key="&">Satgun (7)</button>
+      <button data-key="*">Athgun (8)</button>
+      <button data-key="`">Lower Chaugun (4)</button>
+      <button data-key="!">Lower Chhatgun (6)</button>
+      <button data-key="~">Lower Athgun (8)</button>
+    </div>
+
+    <!-- Meend -->
+    <div class="keyboard-section">
+      <h4>Meend</h4>
+      <button data-key="q">Start (q)</button>
+      <button data-key="w">Continue (w)</button>
+      <button data-key="e">End (e)</button>
+      <button data-key="Q">Ghaseet Start (Q)</button>
+      <button data-key="W">Stroke (W)</button>
+      <button data-key="E">Ghaseet End (E)</button>
+    </div>
+
+    <!-- Murki -->
+    <div class="keyboard-section">
+      <h4>Murki</h4>
+      <button data-key="(">( Start</button>
+      <button data-key=")">) End</button>
+    </div>
+
+    <!-- Mizrab -->
+    <div class="keyboard-section">
+      <h4>Mizrab</h4>
+      <button data-key=";">Da (;)</button>
+      <button data-key="'">Ra (')</button>
+      <button data-key="[">Daa ([)</button>
+      <button data-key="]">Raa (])</button>
+      <button data-key="\\">Dir (\)</button>
+      <button data-key="-">Khali (-)</button>
+    </div>
+
+    <!-- Controls -->
+    <div class="keyboard-section">
+      <h4>Controls</h4>
+      <button onclick="clearEditor()">Clear</button>
+    </div>
   </div>
 
-  <!-- Octaves -->
-  <div class="keyboard-section">
-    <h4>Octaves</h4>
-    <button data-key="su">Taar Sa (su)</button>
-    <button data-key="Nl">Mandra Komal Ni (Nl)</button>
-    <button data-key="Mu">Taar Teevra Ma (Mu)</button>
-  </div>
-
-  <!-- Chhand -->
-  <div class="keyboard-section">
-    <h4>Chhand</h4>
-    <button data-key="@">Dugun (2)</button>
-    <button data-key="#">Tigun (3)</button>
-    <button data-key="$">Chaugun (4)</button>
-    <button data-key="%">Pachgun (5)</button>
-    <button data-key="^">Chhatgun (6)</button>
-    <button data-key="&">Satgun (7)</button>
-    <button data-key="*">Athgun (8)</button>
-    <button data-key="`">Lower Chaugun (4)</button>
-    <button data-key="!">Lower Chhatgun (6)</button>
-    <button data-key="~">Lower Athgun (8)</button>
-  </div>
-
-  <!-- Meend -->
-  <div class="keyboard-section">
-    <h4>Meend</h4>
-    <button data-key="q">Start (q)</button>
-    <button data-key="w">Continue (w)</button>
-    <button data-key="e">End (e)</button>
-    <button data-key="Q">Ghaseet Start (Q)</button>
-    <button data-key="W">Stroke (W)</button>
-    <button data-key="E">Ghaseet End (E)</button>
-  </div>
-
-  <!-- Murki -->
-  <div class="keyboard-section">
-    <h4>Murki</h4>
-    <button data-key="(">( Start</button>
-    <button data-key=")">) End</button>
-  </div>
-
-  <!-- Mizrab -->
-  <div class="keyboard-section">
-    <h4>Mizrab</h4>
-    <button data-key=";">Da (;)</button>
-    <button data-key="'">Ra (')</button>
-    <button data-key="[">Daa ([)</button>
-    <button data-key="]">Raa (])</button>
-    <button data-key="\\">Dir (\)</button>
-    <button data-key="-">Khali (-)</button>
-  </div>
-
-  <!-- Controls -->
-  <div class="keyboard-section">
-    <h4>Controls</h4>
-    <button onclick="clearEditor()">Clear</button>
-  </div>
-
-</div>
-<button id="downloadPDF" style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">
-  Download PDF
-</button>
-  </div>
+  <button id="downloadPDF" style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">
+    Download PDF
+  </button>
 </main>
 
 <footer class="site-footer">
   <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
 </footer>
 
+<!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
   // Navbar toggle
-    const hamburger = document.querySelector(".hamburger");
-    const navLinks = document.querySelector(".nav-links");
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
+  hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
 
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.toggle("show");
+  // Keyboard input
+  const buttons = document.querySelectorAll('.keyboard button');
+  const editor = document.getElementById('editor');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-key');
+      if(key) editor.innerText += key;
+      editor.focus();
     });
-
-    // Bhatkhande keyboard input
-    const buttons = document.querySelectorAll('.keyboard button');
-    const editor = document.getElementById('editor');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-key');
-        if(key) {
-          editor.innerText += key;
-          editor.focus();
-        }
-      });
-    });
-  function clearEditor(){ editor.innerText = ""; }
-
-  // Function to generate PDF
-  document.getElementById('downloadPDF').addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Get the text from editor
-    const content = document.getElementById('editor').innerText || "";
-
-    // Add custom Bhatkhande font (web font)
-    const fontUrl = "https://omenad.github.io/fonts/ome-bhatkhande-hindi/ome_bhatkhande_hindi.woff";
-    
-    // Load the font into jsPDF
-    fetch(fontUrl)
-      .then(res => res.arrayBuffer())
-      .then(fontData => {
-        doc.addFileToVFS("OmeBhatkhande.ttf", fontData);
-        doc.addFont("OmeBhatkhande.ttf", "OmeBhatkhande", "normal");
-        doc.setFont("OmeBhatkhande");
-
-        // Add content to PDF
-        doc.setFontSize(16);
-        doc.text(content, 20, 30);
-
-        // Save PDF
-        doc.save("Bhatkhande-Composition.pdf");
-      })
-      .catch(err => {
-        alert("Error loading font. PDF cannot be generated.");
-        console.error(err);
-      });
   });
 
-  // Optional: clear editor
-  function clearEditor() {
-    document.getElementById('editor').innerText = "";
-  }
-</script>
+  function clearEditor() { editor.innerText = ""; }
 
+  // PDF download using html2canvas
+  document.getElementById('downloadPDF').addEventListener('click', () => {
+    html2canvas(editor).then(canvas => {
+      const { jsPDF } = window.jspdf;
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p','pt','a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save("Bhatkhande-Composition.pdf");
+    });
+  });
+</script>
 </body>
 </html>
