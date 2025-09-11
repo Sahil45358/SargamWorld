@@ -116,22 +116,31 @@
     .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
     .hero p { max-width: 720px; margin: 0 auto; color: var(--muted); line-height: 1.6; }
 
-    /* === EDITOR === */
-    #editor {
-      width: 100%;
-      min-height: 300px;
-      border: 1px solid rgba(0,0,0,0.2);
-      border-radius: var(--radius);
-      padding: 12px;
-      font-size: 1.5rem;
-      background: #fff;
-      font-family: 'ome_bhatkhande_hindi', monospace;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow: auto;
-      margin-bottom: 20px;
-    }
+  /* Editor adjustments */
+#editor {
+  width: 100%;
+  max-width: 800px;   /* ✅ limit maximum width on PC */
+  min-width: 300px;   /* ✅ minimum width so it doesn't shrink too small on mobile */
+  margin: 0 auto 20px auto; /* center the editor */
+  min-height: 200px;  /* slightly smaller height */
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: var(--radius);
+  padding: 12px;
+  font-size: 1.2rem;  /* slightly smaller text for better fit */
+  background: #fff;
+  font-family: 'ome_bhatkhande_hindi', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: auto;
+}
 
+/* Optional: even smaller on very small screens */
+@media (max-width: 480px) {
+  #editor {
+    font-size: 1rem;
+    min-height: 150px;
+  }
+}
     /* === KEYBOARD BUTTONS === */
     .keyboard button {
       background: #800000;
