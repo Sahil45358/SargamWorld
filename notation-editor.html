@@ -370,21 +370,39 @@
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.getAttribute('data-key');
-      if(key) editor.innerText += key;
+      if (key) editor.innerText += key;
       editor.focus();
     });
   });
 
-  function clearEditor() { editor.innerText = ""; }
+  function clearEditor() {
+    editor.innerText = "";
+  }
+
+  // Utility: convert ArrayBuffer → Base64
+  function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const chunkSize = 0x8000; // process in chunks
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      let chunk = bytes.subarray(i, i + chunkSize);
+      binary += String.fromCharCode.apply(null, chunk);
+    }
+    return window.btoa(binary);
+  }
 
   // Multi-page PDF download
   document.getElementById('downloadPDF').addEventListener('click', async () => {
+    const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
+
+    // Load and embed the Bhatkhande font
     const fontUrl = "https://omenad.github.io/fonts/ome-bhatkhande-hindi/ome_bhatkhande_hindi.woff";
     const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
+    const fontBase64 = arrayBufferToBase64(fontBuffer);
 
-    doc.addFileToVFS("OmeBhatkhande.ttf", fontBuffer);
-    doc.addFont("OmeBhatkhande.ttf", "OmeBhatkhande", "normal");
+    doc.addFileToVFS("OmeBhatkhande.woff", fontBase64);
+    doc.addFont("OmeBhatkhande.woff", "OmeBhatkhande", "normal");
     doc.setFont("OmeBhatkhande");
     doc.setFontSize(16);
 
