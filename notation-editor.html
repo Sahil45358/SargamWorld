@@ -118,8 +118,8 @@
 
   /* Editor adjustments */
 #editor {
-  width: 100%;
-  max-width: 800px;   /* ✅ limit maximum width on PC */
+  width: 80%;
+  max-width: 720px;   /* ✅ limit maximum width on PC */
   min-width: 300px;   /* ✅ minimum width so it doesn't shrink too small on mobile */
   margin: 0 auto 20px auto; /* center the editor */
   min-height: 200px;  /* slightly smaller height */
@@ -132,6 +132,7 @@
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow: auto;
+  margin: 0 auto 20px;  /* center editor horizontally */
 }
 
 /* Optional: even smaller on very small screens */
@@ -143,22 +144,34 @@
 }
     /* === KEYBOARD BUTTONS === */
     .keyboard button {
-      background: #800000;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 12px;
-      margin: 3px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.2s ease;
-    }
+  width: 60px;           /* fixed width */
+  height: 40px;          /* fixed height */
+  display: flex;         /* center text */
+  align-items: center;   /* vertical center */
+  justify-content: center; /* horizontal center */
+  padding: 0;            /* remove default padding */
+  font-size: 1rem;
+  background: #800000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
 
     .keyboard button:hover {
       background: #9b1717;
       color: #fff;
     }
-
+@media (max-width: 768px) {
+  .keyboard button {
+    width: 45px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+}
     .keyboard-section button {
       background: #800000;
       color: #fff;
