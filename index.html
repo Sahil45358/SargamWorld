@@ -33,7 +33,7 @@
       background: var(--accent);
       color: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
+      position: relative;
       top: 0;
       z-index: 1000;
     }
@@ -209,11 +209,18 @@
   height: 120px;  /* adjust logo size */
 }
 
-@media (max-width: 768px) {
-  .logo span {
-    display: none; /* ✅ hides text on mobile */
-  }
+/* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
 }
+
+/* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+/* Keep the tagline visible on mobile (you said you wanted it kept) */
+.tagline { display: inline-block; }
     
     /* Footer */
     footer {
