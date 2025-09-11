@@ -167,6 +167,39 @@
       background: #9b1717;
     }
 
+/* === Keyboard container & sections === */
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;               
+  justify-content: center;  
+  margin: 20px auto;       
+}
+
+.keyboard-section {
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;   
+  min-width: 180px;          
+}
+
+@media (max-width: 768px) {
+  .keyboard-section {
+    min-width: 140px;
+    padding: 8px;
+  }
+
+  .keyboard button {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+    
     /* === FOOTER === */
     .site-footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.9rem; margin-top: 40px; }
 
