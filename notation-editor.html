@@ -143,14 +143,17 @@
   }
 }
     /* === KEYBOARD BUTTONS === */
-    .keyboard button {
-  width: 60px;           /* fixed width */
-  height: 40px;          /* fixed height */
-  display: flex;         /* center text */
-  align-items: center;   /* vertical center */
-  justify-content: center; /* horizontal center */
-  padding: 0;            /* remove default padding */
-  font-size: 1rem;
+ .keyboard button {
+  width: 60px;           /* same width */
+  height: 40px;          /* same height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;          /* smaller padding to fit text */
+  font-size: 0.75rem;    /* smaller font for longer labels */
+  text-align: center;
+  line-height: 1.1;
+  word-wrap: break-word; /* allow breaking text into multiple lines */
   background: #800000;
   color: #fff;
   border: none;
@@ -161,15 +164,16 @@
   transition: 0.2s ease;
 }
 
+
     .keyboard button:hover {
       background: #9b1717;
       color: #fff;
     }
-@media (max-width: 768px) {
+@media(min-width: 1025px) {
   .keyboard button {
-    width: 45px;
-    height: 35px;
-    font-size: 0.9rem;
+    width: 70px;
+    height: 45px;
+    font-size: 0.8rem;
   }
 }
     .keyboard-section button {
@@ -210,6 +214,13 @@
   .keyboard button {
     padding: 6px 10px;
     font-size: 0.9rem;
+  }
+
+@media (max-width: 768px) {
+  .keyboard button {
+    width: 45px;
+    height: 35px;
+    font-size: 0.65rem;
   }
 }
     
