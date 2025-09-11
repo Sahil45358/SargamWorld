@@ -33,18 +33,19 @@
       background: var(--accent);
       color: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
+      position: relative;
       top: 0;
       z-index: 1000;
     }
-    .nav-inner {
-      max-width: var(--container-w);
-      margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 20px;
-    }
+                .nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;  /* align logo + tagline to left */
+  gap: 12px;                    /* spacing between logo & tagline */
+  padding:12px 20px;
+}
     .brand-wrap {
       display: flex;
       flex-direction: row;
@@ -65,7 +66,7 @@
         flex-direction: column;
         background: var(--accent);
         position: absolute;
-        top: 60px; right: 20px;
+        top: 100px; right: 20px;
         padding: 15px;
         border-radius: 8px;
       }
@@ -108,9 +109,30 @@
       margin-top: 40px;
     }
 
-    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+   .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
     .logo img { height: 120px; }
-    @media (max-width: 768px) { .logo span { display: none; } }
+   /* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
+}
+
+/* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+/* Keep the tagline visible on mobile (you said you wanted it kept) */
+.tagline {
+  display: inline-block;
+  white-space: nowrap;      /* keep tagline on one line */
+  overflow: hidden;         /* prevent overflow */
+  text-overflow: ellipsis;  /* add "…" if space is too small */
+}
+    @media (max-width: 768px) {
+  .tagline {
+    font-size: 0.7rem; /* 👈 slightly smaller on mobile */
+  }
+}
   </style>
 </head>
 <body>
