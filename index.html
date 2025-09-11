@@ -40,14 +40,15 @@
     .nav-links a.active {
   background: rgba(255, 255, 255, 0.15);
 }
-    .nav-inner {
-      max-width: var(--container-w);
-      margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 20px;
-    }
+       .nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;  /* align logo + tagline to left */
+  gap: 12px;                    /* spacing between logo & tagline */
+  padding:12px 20px;
+}
 .brand-wrap {
   display: flex;
   flex-direction: row;   /* put logo + text in a row */
@@ -220,7 +221,17 @@
 }
 
 /* Keep the tagline visible on mobile (you said you wanted it kept) */
-.tagline { display: inline-block; }
+.tagline {
+  display: inline-block;
+  white-space: nowrap;      /* keep tagline on one line */
+  overflow: hidden;         /* prevent overflow */
+  text-overflow: ellipsis;  /* add "…" if space is too small */
+}
+    @media (max-width: 768px) {
+  .tagline {
+    font-size: 0.7rem; /* 👈 slightly smaller on mobile */
+  }
+}
     
     /* Footer */
     footer {
