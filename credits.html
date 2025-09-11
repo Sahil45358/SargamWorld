@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credits — SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    :root {
+      --accent: #800000;
+      --bg: #f3eee8;
+      --text: #222;
+      --muted: #5a5a5a;
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
+
+    /* Navbar */
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1000;
+    }
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding:12px 20px;
+    }
+    .brand-wrap { display: flex; align-items: center; gap: 10px; }
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; }
+
+    .nav-links { display:flex; gap:10px; list-style:none; margin-left: auto; }
+    .nav-links a {
+      color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition);
+    }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255,255,255,0.15); }
+
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--accent);
+        position: absolute;
+        top: 100px; right: 20px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; position: relative; z-index: 1100; }
+    }
+
+    /* Logo */
+    .logo { display: flex; align-items: center; gap: 8px; font-weight:700; font-size:1.2rem; color:#fff; }
+    .logo img { height: 120px; }
+    @media (pointer: coarse) { .logo span { display: none !important; } }
+    @media (max-width: 1024px) { .logo span { display: none !important; } }
+
+    /* Keep tagline on mobile */
+    .tagline {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (max-width: 768px) {
+      .tagline { font-size: 0.7rem; }
+    }
+
+    /* Page content */
+    h1, h2 { color: var(--accent); margin-bottom: 10px; }
+    p, li { margin-bottom: 10px; }
+    ul { padding-left: 20px; }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 40px;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a href="index.html" class="logo">
+          <img src="LOGO.png" alt="SargamWorld Logo">
+          <span>SargamWorld</span>
+        </a>
+        <span class="tagline">Explore • Learn • Practice</span>
+      </div>
+
+      <div class="hamburger">☰</div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container">
+    <h1>Credits & Attributions</h1>
+    <p><strong>SargamWorld</strong> is built with the help of many free and open resources. I deeply appreciate the creators whose work made this project possible.</p>
+
+    <section>
+      <h2>Fonts & Styles</h2>
+      <ul>
+        <li><strong>Bhatkhande font</strong> — from <a href="https://omenad.github.io/" target="_blank">Omenad</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Logos & Graphics</h2>
+      <ul>
+        <li><strong>Logo</strong> — created using <a href="https://looka.com" target="_blank">Looka</a> and edited in <a href="https://canva.com" target="_blank">Canva</a></li>
+        <li><strong>Mic image (Home tab)</strong> — from <a href="https://hdqwalls.com/microphone-dark-background-4k-5k-wallpaper" target="_blank">HDQWalls</a></li>
+        <li><strong>Harmonium image (Home tab)</strong> — from <a href="https://in.pinterest.com/pin/115967759149230114/" target="_blank">Pinterest</a></li>
+        <li><strong>Raj Kapoor image (Home tab)</strong> — from <a href="https://www.floweraura.com/blog/valentine-outfit-ideas-inspired-retro-bollywood?srsltid=AfmBOoozuglaFBwuGuFYV5eh1MHUWkfPIzTTOkh_jbnOU6JRrCELWkbt" target="_blank">FlowerAura Blog</a></li>
+       <li><strong>Harmonium background</strong> — from <a href="https://www.wallpaperflare.com/blue-surface-advertisement-advertising-background-billboard-wallpaper-zwvvd" target="_blank">Wallpaper Flare </a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Audio Resources</h2>
+      <ul>
+        <li><strong>Harmonium key sounds</strong> — from <a href="https://freesound.org/people/cabled_mess/packs/29512/" target="_blank">Freesound (cabled_mess)</a></li>
+      
+      </ul>
+    </section>
+
+    <section>
+      <h2>Special Thanks</h2>
+      <p>
+        I would like to express my gratitude to my friends, my mentor and my parents for their valuable ideas, feedback, and encouragement throughout the making of this project.  
+        Their support has been a big part of shaping <strong>SargamWorld</strong>.
+      </p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
+  </footer>
+
+  <!-- JS for Hamburger -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.getElementById("navLinks");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
+  </script>
+</body>
+</html>
