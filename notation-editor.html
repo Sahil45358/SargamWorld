@@ -125,44 +125,34 @@
       margin-bottom: 20px;
     }
 
-    /* === KEYBOARD === */
-    .keyboard {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 20px 0;
-      justify-content: center;
-    }
-    .keyboard-section {
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: var(--radius);
-      padding: 10px;
-      margin: 5px;
-      min-width: 220px;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    .keyboard-section h4 {
-      margin: 0 0 6px 0;
-      font-size: 0.9rem;
-      color: var(--accent);
-      text-align: center;
-    }
-    .keyboard button {
-      padding: 8px 12px;
-      margin: 3px;
-      border: none;
-      border-radius: 6px;
-      background: #f3f3f3;
-      color: #222;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.2s ease;
-    }
-    .keyboard button:hover {
-      background: var(--accent);
-      color: #fff;
-    }
+ /* Keyboard buttons - default */
+.keyboard button {
+  background: #800000;     /* ✅ red background */
+  color: #fff;             /* white text */
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* Hover effect */
+.keyboard button:hover {
+  background: #9b1717;     /* slightly darker red */
+  color: #fff;
+}
+
+/* Control buttons (Clear) */
+.keyboard-section button {
+  background: #800000;
+  color: #fff;
+}
+
+.keyboard-section button:hover {
+  background: #9b1717;
+}
 
     /* === FOOTER === */
     .site-footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.9rem; margin-top: 40px; }
@@ -308,18 +298,36 @@
 
   function clearEditor() { editor.innerText = ""; }
 
-  // PDF download
-  document.getElementById('downloadPDF').addEventListener('click', () => {
-    html2canvas(editor).then(canvas => {
-      const { jsPDF } = window.jspdf;
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p','pt','a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save("Bhatkhande-Composition.pdf");
-    });
+// Multi-page PDF
+document.getElementById('downloadPDF').addEventListener('click', async () => {
+  const doc = new jsPDF();
+  const fontUrl = "https://omenad.github.io/fonts/ome-bhatkhande-hindi/ome_bhatkhande_hindi.woff";
+  const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
+
+  doc.addFileToVFS("OmeBhatkhande.ttf", fontBuffer);
+  doc.addFont("OmeBhatkhande.ttf", "OmeBhatkhande", "normal");
+  doc.setFont("OmeBhatkhande");
+  doc.setFontSize(16);
+
+  const text = editor.innerText || "";
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15;
+  const lineHeight = 10;
+  let y = margin;
+
+  const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - 2 * margin);
+
+  lines.forEach((line, i) => {
+    if (y + lineHeight > pageHeight - margin) {
+      doc.addPage();
+      y = margin;
+    }
+    doc.text(line, margin, y);
+    y += lineHeight;
   });
+
+  doc.save("Bhatkhande-Composition.pdf");
+});
 </script>
 
 </body>
