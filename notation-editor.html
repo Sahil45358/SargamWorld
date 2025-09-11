@@ -142,7 +142,19 @@
   </section>
 
   <div>
-    <div id="editor" contenteditable="true" style="border:1px solid #ccc; padding:10px; min-height:200px;"></div>
+    <div id="editor" contenteditable="true"
+     style="
+        border:1px solid #ccc;
+        padding:15px;
+        min-height:200px;
+        font-size:1.5rem;
+        font-family:'Segoe UI', 'ome-bhatkhande-hindi', monospace;
+        white-space: pre-wrap;
+        background:#fff;
+        color:#222;
+        overflow-wrap: break-word;
+     ">
+</div>
 
    <div class="keyboard">
 
@@ -222,9 +234,7 @@
   </div>
 
 </div>
-<button id="downloadPDF">Download PDF</button>
-
-    <button onclick="downloadPDF()" style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">Download PDF</button>
+<button id="downloadPDF()" style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;"">Download PDF</button>
   </div>
 </main>
 
@@ -235,17 +245,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
   // Navbar toggle
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
-  hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
 
-  // Keyboard input
-  const editor = document.getElementById("notation-editor");
-  document.querySelectorAll("#keyboard button[data-key]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      editor.innerText += btn.getAttribute("data-key");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
     });
-  });
+
+    // Bhatkhande keyboard input
+    const buttons = document.querySelectorAll('.keyboard button');
+    const editor = document.getElementById('editor');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-key');
+        if(key) {
+          editor.innerText += key;
+          editor.focus();
+        }
+      });
+    });
   function clearEditor(){ editor.innerText = ""; }
 
   // Function to generate PDF
