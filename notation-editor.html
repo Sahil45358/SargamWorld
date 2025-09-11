@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notation Editor — SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Omenad Bhatkhande Hindi font for notation -->
+  <link rel="stylesheet" href="https://webfonts.omenad.net/fonts.css">
+
+  <style>
+    :root {
+      --accent: #800000;
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3eee8;
+      color: #222;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* Navbar (same as tools.html) */
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding:12px 20px;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .logo img { height: 120px; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
+    .nav-links { display:flex; gap:10px; list-style:none; }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--accent);
+        position: absolute;
+        top: 100px; right: 20px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; }
+    }
+
+    /* Main container */
+    .container {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .hero { text-align: center; margin-bottom: 30px; }
+    .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
+    .hero p { max-width: 720px; margin: 0 auto; color: #5a5a5a; line-height: 1.6; }
+
+    /* Editor area */
+    #notation-editor {
+      border: 1px solid #ccc;
+      min-height: 300px;
+      padding: 15px;
+      font-family: 'ome-bhatkhande-hindi', sans-serif;
+      font-size: 24px;
+      background: #fff;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    /* Keyboard buttons */
+    .keyboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .keyboard button {
+      padding: 10px 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .keyboard button:hover {
+      background: #9b1717;
+    }
+
+    /* Footer (same as tools.html) */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      color: #5a5a5a;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
+      <div class="hamburger">☰</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="songs.html">Songs</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="hero">
+      <h1>Bhatkhande Notation Editor</h1>
+      <p>Type your music compositions using Bhatkhande notation and see them in proper style.</p>
+    </section>
+
+    <!-- Notation Editor Area -->
+    <div id="notation-editor" contenteditable="true"></div>
+
+    <!-- Custom Keyboard -->
+    <div class="keyboard">
+      <!-- Shuddh Notes -->
+      <button onclick="insertSymbol('s')">Sa</button>
+      <button onclick="insertSymbol('r')">Re</button>
+      <button onclick="insertSymbol('g')">Ga</button>
+      <button onclick="insertSymbol('m')">Ma</button>
+      <button onclick="insertSymbol('p')">Pa</button>
+      <button onclick="insertSymbol('d')">Dha</button>
+      <button onclick="insertSymbol('n')">Ni</button>
+
+      <!-- Variant Notes -->
+      <button onclick="insertSymbol('R')">Komal Re</button>
+      <button onclick="insertSymbol('G')">Komal Ga</button>
+      <button onclick="insertSymbol('M')">Teevra Ma</button>
+      <button onclick="insertSymbol('D')">Komal Dha</button>
+      <button onclick="insertSymbol('N')">Komal Ni</button>
+
+      <!-- Octaves -->
+      <button onclick="insertSymbol('u')">Taar</button>
+      <button onclick="insertSymbol('l')">Mandra</button>
+
+      <!-- Chhand -->
+      <button onclick="insertSymbol('@')">2-note</button>
+      <button onclick="insertSymbol('#')">3-note</button>
+      <button onclick="insertSymbol('$')">4-note</button>
+      <button onclick="insertSymbol('%')">5-note</button>
+
+      <!-- Meend -->
+      <button onclick="insertSymbol('q')">Meend Start</button>
+      <button onclick="insertSymbol('w')">Meend Continue</button>
+      <button onclick="insertSymbol('e')">Meend End</button>
+      <button onclick="insertSymbol('W')">Meend Stroke</button>
+
+      <!-- Misc -->
+      <button onclick="insertSymbol('x')">Sam</button>
+      <button onclick="insertSymbol('-')">Khali</button>
+      <button onclick="insertSymbol('(')">(Murki</button>
+      <button onclick="insertSymbol(')')">)</button>
+    </div>
+
+    <button onclick="clearEditor()" style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer;">Clear Editor</button>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+
+    function insertSymbol(symbol) {
+      const editor = document.getElementById('notation-editor');
+      editor.innerText += symbol;
+      editor.focus();
+    }
+
+    function clearEditor() {
+      document.getElementById('notation-editor').innerText = '';
+    }
+  </script>
+
+</body>
+</html>
