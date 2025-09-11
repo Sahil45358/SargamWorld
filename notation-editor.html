@@ -7,7 +7,11 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
     :root {
+     :root {
       --accent: #800000;
+      --bg: #f3eee8;
+      --text: #222;
+      --muted: #5a5a5a;
       --radius: 12px;
       --container-w: 1100px;
       --transition: 0.3s ease;
@@ -24,7 +28,15 @@
 
     /* Navbar */
     .site-header { background: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: relative; z-index: 1000; }
-    .nav-inner { max-width: var(--container-w); margin:0 auto; display:flex; align-items:center; justify-content:flex-start; gap:12px; padding:12px 20px; }
+        .nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;  /* align logo + tagline to left */
+  gap: 12px;                    /* spacing between logo & tagline */
+  padding:12px 20px;
+}
     .logo { display:flex; align-items:center; gap:8px; font-weight:700; font-size:1.2rem; color:#fff; }
     .logo img { height:120px; }
     .tagline { font-size:0.8rem; font-weight:400; color:#f3e8e8; margin-top:2px; }
@@ -33,11 +45,19 @@
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
     .nav-links a.active { background: rgba(255,255,255,0.15); }
     .hamburger { display:none; cursor:pointer; font-size:1.6rem; color:#fff; }
-    @media (max-width:768px) {
-      .nav-links { display:none; flex-direction:column; background:var(--accent); position:absolute; top:100px; right:20px; padding:15px; border-radius:8px; }
-      .nav-links.show { display:flex; }
-      .hamburger { display:block; }
-    }
+      @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--accent);
+        position: absolute;
+        top: 100px; right: 20px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; position: relative; z-index: 1100; } /* ✅ keep hamburger above menu */
+}
 
     /* Hero */
     .hero { text-align:center; margin-bottom:30px; }
@@ -103,11 +123,32 @@
       color: #fff;
     }
 
-    @media (max-width: 768px) {
-      .keyboard { flex-direction: column; align-items: center; }
-      .keyboard-section { min-width: 90%; }
-    }
+    /* Logo */
+ .logo { display: flex; align-items: center; gap: 8px; font-weight:700; font-size:1.2rem; color:#fff; }
+.logo img { height: 120px; }
 
+/* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
+}
+
+/* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+/* Keep the tagline visible on mobile (you said you wanted it kept) */
+.tagline {
+  display: inline-block;
+  white-space: nowrap;      /* keep tagline on one line */
+  overflow: hidden;         /* prevent overflow */
+  text-overflow: ellipsis;  /* add "…" if space is too small */
+}
+    @media (max-width: 768px) {
+  .tagline {
+    font-size: 0.7rem; /* 👈 slightly smaller on mobile */
+  }
+}
     .site-footer { text-align:center; padding:20px; color:#5a5a5a; font-size:0.9rem; margin-top:40px; }
   </style>
 
