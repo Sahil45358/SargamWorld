@@ -239,7 +239,31 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-  
+  @font-face {
+  font-family: 'OmeBhatkhandeHindi';
+  src: url('fonts/OmeBhatkhandeHindi.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'OmeBhatkhandePunjabi';
+  src: url('fonts/OmeBhatkhandePunjabi.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'OmeBhatkhandeBangla';
+  src: url('fonts/OmeBhatkhandeBangla.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'OmeBhatkhandeEnglish';
+  src: url('fonts/OmeBhatkhandeEnglish.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'OmeSwarlipi';
+  src: url('fonts/OmeSwarlipi.ttf') format('truetype');
+}
+
   </style>
 
   <!-- Bhatkhande Web Font -->
@@ -469,7 +493,7 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.style.background = "var(--accent)";
     editor.classList.remove("notation-active");
     fontSelector.disabled = true; // disable dropdown
-    editor.style.fontFamily = "'Segoe UI', sans-serif"; // reset to normal typing
+    editor.style.fontFamily = "inherit"; // back to normal keyboard font
   }
 });
 
