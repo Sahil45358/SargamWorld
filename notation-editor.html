@@ -417,60 +417,16 @@
 
 <script>
 
-  const fontMap = {
+ const fontMap = {
   "OmeBhatkhandeHindi": "OmeBhatkhandeHindi.ttf",
   "OmeBhatkhandePunjabi": "OmeBhatkhandePunjabi.ttf",
   "OmeBhatkhandeBangla": "OmeBhatkhandeBangla.ttf",
   "OmeBhatkhandeEnglish": "OmeBhatkhandeEnglish.ttf",
   "OmeSwarlipi": "OmeSwarlipi.ttf"
 };
-  
-  // Navbar toggle
-  document.addEventListener("DOMContentLoaded", () => {
-    const hamburger = document.querySelector(".hamburger");
-    const navLinks = document.getElementById("navLinks");
-    hamburger.addEventListener("click", () => navLinks.classList.toggle("show"));
-  });
 
-  // Keyboard input
-  const buttons = document.querySelectorAll('.keyboard button');
-
- buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (!notationMode) {
-      alert("Turn ON Notation Mode to use these keys.");
-      return;
-    }
-
-    const key = btn.getAttribute('data-key');
-    if (key) {
-      editor.innerText += key;
-      editor.focus();
-    }
-  });
-});
-
-
-  function clearEditor() {
-    editor.innerText = "";
-  }
-
-  // Utility: convert ArrayBuffer → Base64
-  function arrayBufferToBase64(buffer) {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    const chunkSize = 0x8000; // process in chunks
-    for (let i = 0; i < bytes.length; i += chunkSize) {
-      let chunk = bytes.subarray(i, i + chunkSize);
-      binary += String.fromCharCode.apply(null, chunk);
-    }
-    return window.btoa(binary);
-  }
-
-
-// Toggle notation mode
-let notationMode = false;   // start OFF
-let selectedFont = "";      // default none
+let notationMode = false;
+let selectedFont = "";
 
 const editor = document.getElementById("editor");
 const fontSelector = document.getElementById("fontSelector");
@@ -489,7 +445,6 @@ toggleBtn.addEventListener("click", () => {
     editor.classList.add("notation-active");
     fontSelector.disabled = false; // enable dropdown
 
-    // apply selected font if already chosen
     if (selectedFont) {
       editor.style.fontFamily = selectedFont;
     }
@@ -497,60 +452,39 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.innerText = "Notation Mode: OFF";
     toggleBtn.style.background = "var(--accent)";
     editor.classList.remove("notation-active");
-    fontSelector.disabled = true; // disable dropdown
-    editor.style.fontFamily = "inherit"; // back to normal keyboard font
+    fontSelector.disabled = true;
+    editor.style.fontFamily = "inherit"; // back to normal
   }
 });
 
-  notationToggle.addEventListener("change", () => {
-  if (notationToggle.checked) {
-    const selectedFont = fontSelector.value;
-    editor.style.fontFamily = selectedFont;  // ✅ live in text box
-  } else {
-    editor.style.fontFamily = "inherit"; // back to normal text
-  }
-});
-
-// When user changes dropdown
-// Also update when user changes dropdown while ON
+// Handle font dropdown change
 fontSelector.addEventListener("change", () => {
-  if (notationToggle.checked) {
-    editor.style.fontFamily = fontSelector.value; // ✅ apply new font instantly
+  selectedFont = fontSelector.value;
+
+  if (notationMode && selectedFont) {
+    editor.style.fontFamily = selectedFont;
+    document.getElementById("fontHint").style.display = "inline";
+    document.getElementById("currentFontName").textContent = selectedFont;
   }
 });
 
-notationToggle.addEventListener("change", () => {
-  const hint = document.getElementById("fontHint");
-  const currentFont = document.getElementById("currentFontName");
-
-  if (notationToggle.checked) {
-    editor.style.fontFamily = fontSelector.value;
-    hint.style.display = "inline";
-    currentFont.textContent = fontSelector.value;
-  } else {
-    editor.style.fontFamily = "inherit";
-    hint.style.display = "none";
-  }
-});
-
-  
-  // Multi-page PDF download
+// PDF download
 document.getElementById('downloadPDF').addEventListener('click', async () => {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-if (notationMode && selectedFont) {
-  const fontFile = fontMap[selectedFont]; // get correct .ttf file
-  const fontUrl = `fonts/${fontFile}`;
-  const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
-  const fontBase64 = arrayBufferToBase64(fontBuffer);
+  if (notationMode && selectedFont) {
+    const fontFile = fontMap[selectedFont];
+    const fontUrl = `fonts/${fontFile}`;
+    const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
+    const fontBase64 = arrayBufferToBase64(fontBuffer);
 
-  doc.addFileToVFS(fontFile, fontBase64);
-  doc.addFont(fontFile, "CustomFont", "normal");
-  doc.setFont("CustomFont");
-} else {
-  doc.setFont("Times", "normal");
-}
+    doc.addFileToVFS(fontFile, fontBase64);
+    doc.addFont(fontFile, "CustomFont", "normal");
+    doc.setFont("CustomFont");
+  } else {
+    doc.setFont("Times", "normal");
+  }
 
   doc.setFontSize(16);
 
@@ -572,6 +506,19 @@ if (notationMode && selectedFont) {
 
   doc.save("Composition.pdf");
 });
+
+// Utility: ArrayBuffer → Base64
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    let chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode.apply(null, chunk);
+  }
+  return window.btoa(binary);
+}
+
 </script>
 
 </body>
