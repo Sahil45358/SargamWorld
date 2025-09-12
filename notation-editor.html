@@ -483,55 +483,59 @@ function clearEditor() {
   editor.innerHTML = "";
 }
 
-// === PDF download ===
 document.getElementById("downloadPDF").addEventListener("click", async () => {
+  const tempEditor = editor.cloneNode(true);
+
+  // Optional: white background and padding for PDF
+  tempEditor.style.background = "#ffffff";
+  tempEditor.style.padding = "20px";
+  tempEditor.style.width = editor.scrollWidth + "px";
+
+  // Render editor as canvas
+  const canvas = await html2canvas(tempEditor, {
+    scale: 2,          // higher resolution for clarity
+    useCORS: true,     // allow cross-origin images if needed
+    backgroundColor: "#ffffff"
+  });
+
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.setFontSize(16);
-  const margin = 20;
-  let y = margin;
-  const lineHeight = 10;
+  const pdf = new jsPDF("p", "pt", "a4");
 
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = editor.innerHTML;
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
 
-  for (const node of tempDiv.childNodes) {
-    const text = node.textContent.trim();
-    if (!text) continue;
+  const imgWidth = pdfWidth - 40; // 20pt margin each side
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    if (node.nodeType === 1 && node.style && node.style.fontFamily) {
-      const fam = node.style.fontFamily;
-      if (fontMap[fam]) {
-        const fontFile = fontMap[fam];
-        const fontUrl = `fonts/${fontFile}`;
-        const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
-        const fontBase64 = arrayBufferToBase64(fontBuffer);
-        doc.addFileToVFS(fontFile, fontBase64);
-        doc.addFont(fontFile, "CustomFont", "normal");
-        doc.setFont("CustomFont");
-      }
-    } else {
-      doc.setFont("Times", "normal");
+  // Total number of pages
+  const totalPages = Math.ceil(imgHeight / pdfHeight);
+
+  for (let page = 0; page < totalPages; page++) {
+    const sourceY = (canvas.height / totalPages) * page;
+    const pageCanvas = document.createElement("canvas");
+    pageCanvas.width = canvas.width;
+    pageCanvas.height = canvas.height / totalPages;
+
+    const ctx = pageCanvas.getContext("2d");
+    ctx.drawImage(
+      canvas,
+      0, sourceY, canvas.width, canvas.height / totalPages,
+      0, 0, canvas.width, canvas.height / totalPages
+    );
+
+    const imgData = pageCanvas.toDataURL("image/png");
+
+    const pageImgHeight = pdfHeight; // fit height exactly
+    pdf.addImage(imgData, "PNG", 20, 20, imgWidth, pageImgHeight);
+
+    if (page < totalPages - 1) {
+      pdf.addPage();
     }
-
-    doc.text(text, margin, y);
-    y += lineHeight;
   }
 
-  doc.save("Composition.pdf");
+  pdf.save("Composition.pdf");
 });
 
-// Utility: ArrayBuffer → Base64
-function arrayBufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const chunkSize = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    let chunk = bytes.subarray(i, i + chunkSize);
-    binary += String.fromCharCode.apply(null, chunk);
-  }
-  return window.btoa(binary);
-}
 
 </script>
 
