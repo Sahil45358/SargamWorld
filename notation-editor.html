@@ -489,45 +489,42 @@ function insertAtCaret(node) {
   sel.addRange(range);
 }
 
+  editor.focus();
+
+const range = document.createRange();
+const sel = window.getSelection();
+range.selectNodeContents(editor);
+range.collapse(false); // move caret to end
+sel.removeAllRanges();
+sel.addRange(range);
 
 // PDF download
 document.getElementById('downloadPDF').addEventListener('click', async () => {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  if (notationMode && selectedFont) {
-    const fontFile = fontMap[selectedFont];
-    const fontUrl = `fonts/${fontFile}`;
-    const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
-    const fontBase64 = arrayBufferToBase64(fontBuffer);
-
-    doc.addFileToVFS(fontFile, fontBase64);
-    doc.addFont(fontFile, "CustomFont", "normal");
-    doc.setFont("CustomFont");
-  } else {
-    doc.setFont("Times", "normal");
-  }
-
+  // Default font setup
+  doc.setFont("Times", "normal");
   doc.setFontSize(16);
 
-const textHtml = editor.innerHTML;
+  // Extract plain text only (fallback so English works)
+  const plainText = editor.innerText.trim();
 
-// Simple handling: replace spans with font markers
-const tempDiv = document.createElement("div");
-tempDiv.innerHTML = textHtml;
-
-for (const span of tempDiv.querySelectorAll("span")) {
-  const fam = span.style.fontFamily;
-  if (fam && fontMap[fam]) {
-    const fontFile = fontMap[fam];
-    // ensure you’ve added the font with addFileToVFS + addFont earlier
-    doc.setFont("CustomFont"); 
-  } else {
-    doc.setFont("Times", "normal");
+  if (!plainText) {
+    alert("Editor is empty!");
+    return;
   }
-  doc.text(span.textContent, margin, y);
-  y += lineHeight;
-}
+
+  // Add margins + line height
+  const margin = 20;
+  let y = margin;
+  const lineHeight = 8;
+
+  // Split into lines and draw
+  plainText.split("\n").forEach(line => {
+    doc.text(line, margin, y);
+    y += lineHeight;
+  });
 
   doc.save("Composition.pdf");
 });
