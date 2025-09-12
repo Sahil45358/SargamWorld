@@ -416,8 +416,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
-
- const fontMap = {
+const fontMap = {
   "OmeBhatkhandeHindi": "OmeBhatkhandeHindi.ttf",
   "OmeBhatkhandePunjabi": "OmeBhatkhandePunjabi.ttf",
   "OmeBhatkhandeBangla": "OmeBhatkhandeBangla.ttf",
@@ -442,91 +441,72 @@ toggleBtn.addEventListener("click", () => {
   if (notationMode) {
     toggleBtn.innerText = "Notation Mode: ON";
     toggleBtn.style.background = "#228B22"; // green
-    editor.classList.add("notation-active");
-    fontSelector.disabled = false; // enable dropdown
-
-    if (selectedFont) {
-      editor.style.fontFamily = selectedFont;
-    }
+    fontSelector.disabled = false; 
+    if (selectedFont) editor.style.fontFamily = selectedFont;
   } else {
     toggleBtn.innerText = "Notation Mode: OFF";
     toggleBtn.style.background = "var(--accent)";
-    editor.classList.remove("notation-active");
     fontSelector.disabled = true;
-    editor.style.fontFamily = "inherit"; // back to normal
+    editor.style.fontFamily = "inherit";
   }
 });
 
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const key = btn.getAttribute('data-key');
-    if (key) insertAtCaret(key);
-  });
-});
-  
-// Handle font dropdown change
-
+// Handle font dropdown
 fontSelector.addEventListener("change", () => {
   selectedFont = fontSelector.value;
-  document.getElementById("fontHint").style.display = notationMode && selectedFont ? "inline" : "none";
+  document.getElementById("fontHint").style.display =
+    notationMode && selectedFont ? "inline" : "none";
   document.getElementById("currentFontName").textContent = selectedFont;
-});
-
-// Capture key presses when in notation mode
-editor.addEventListener("keypress", (e) => {
   if (notationMode && selectedFont) {
-    e.preventDefault(); // stop normal typing
-    const span = document.createElement("span");
-    span.style.fontFamily = selectedFont;
-    span.textContent = e.key;
-    insertAtCaret(span);
+    editor.style.fontFamily = selectedFont;
   }
 });
 
-// Utility: insert text or node at caret
+// Insert at caret (span-aware)
 function insertAtCaret(content) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
+  let node;
   if (typeof content === "string") {
-    // Button clicked → insert text with current font if in notation mode
     if (notationMode && selectedFont) {
-      const span = document.createElement("span");
-      span.style.fontFamily = selectedFont;
-      span.textContent = content;
-      range.insertNode(span);
+      node = document.createElement("span");
+      node.style.fontFamily = selectedFont;
+      node.textContent = content;
     } else {
-      range.insertNode(document.createTextNode(content));
+      node = document.createTextNode(content);
     }
   } else {
-    // Already a node (span from keypress)
-    range.insertNode(content);
+    node = content;
   }
 
-  // Move caret after inserted node
-  range.collapse(false);
+  range.insertNode(node);
+
+  // Move caret after
+  range.setStartAfter(node);
+  range.setEndAfter(node);
   sel.removeAllRanges();
   sel.addRange(range);
 
-  editor.focus(); // keep typing in editor
+  editor.focus();
 }
 
-// Handle virtual keyboard buttons
+// Virtual keyboard → use mousedown so focus isn’t lost
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
 buttons.forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.preventDefault(); // prevent button stealing focus
+  btn.addEventListener("mousedown", (e) => {
+    e.preventDefault(); 
     const key = btn.getAttribute("data-key");
     insertAtCaret(key);
   });
 });
 
-// Capture key presses in editor when notation mode is ON
+// Normal typing in notation mode
 editor.addEventListener("keypress", (e) => {
   if (notationMode && selectedFont) {
-    e.preventDefault(); // stop default typing
+    e.preventDefault();
     const span = document.createElement("span");
     span.style.fontFamily = selectedFont;
     span.textContent = e.key;
@@ -534,34 +514,42 @@ editor.addEventListener("keypress", (e) => {
   }
 });
 
-  
-// PDF download
-document.getElementById('downloadPDF').addEventListener('click', async () => {
+// === PDF download ===
+document.getElementById("downloadPDF").addEventListener("click", async () => {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Default font setup
-  doc.setFont("Times", "normal");
   doc.setFontSize(16);
-
-  // Extract plain text only (fallback so English works)
-  const plainText = editor.innerText.trim();
-
-  if (!plainText) {
-    alert("Editor is empty!");
-    return;
-  }
-
-  // Add margins + line height
   const margin = 20;
   let y = margin;
-  const lineHeight = 8;
+  const lineHeight = 10;
 
-  // Split into lines and draw
-  plainText.split("\n").forEach(line => {
-    doc.text(line, margin, y);
+  // parse HTML with spans so notation fonts survive
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = editor.innerHTML;
+
+  for (const node of tempDiv.childNodes) {
+    let text = node.textContent.trim();
+    if (!text) continue;
+
+    if (node.nodeType === 1 && node.style && node.style.fontFamily) {
+      const fam = node.style.fontFamily;
+      if (fontMap[fam]) {
+        const fontFile = fontMap[fam];
+        const fontUrl = `fonts/${fontFile}`;
+        const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
+        const fontBase64 = arrayBufferToBase64(fontBuffer);
+        doc.addFileToVFS(fontFile, fontBase64);
+        doc.addFont(fontFile, "CustomFont", "normal");
+        doc.setFont("CustomFont");
+      }
+    } else {
+      doc.setFont("Times", "normal");
+    }
+
+    doc.text(text, margin, y);
     y += lineHeight;
-  });
+  }
 
   doc.save("Composition.pdf");
 });
@@ -577,8 +565,8 @@ function arrayBufferToBase64(buffer) {
   }
   return window.btoa(binary);
 }
-
 </script>
+
 
 </body>
 </html>
