@@ -301,7 +301,10 @@
 </div>
 
   
-  <div id="editor" contenteditable="true"></div>
+ <div id="editor" contenteditable="true" style="width:500px; height:300px; border:1px solid #ccc; padding:10px;">
+  Type your composition here...
+</div>
+
 
   <div class="keyboard">
     <!-- Swars -->
@@ -485,20 +488,14 @@ function clearEditor() {
 
   // DownloadPDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
-  const tempEditor = editor.cloneNode(true);
+  const editorElement = document.getElementById("editor");
 
-  // Style for PDF rendering
-  tempEditor.style.background = "#ffffff";
-  tempEditor.style.padding = "20px";
-  tempEditor.style.width = editor.scrollWidth + "px";
+  // Render editor as canvas
+  const canvas = await html2canvas(editorElement, { scale: 2, backgroundColor: "#ffffff" });
 
-  // Render editor to canvas
-  const canvas = await html2canvas(tempEditor, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: "#ffffff"
-  });
+  const imgData = canvas.toDataURL("image/png");
 
+  // Access jsPDF from UMD
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
@@ -509,42 +506,22 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  // If content fits on one page
-  if (imgHeight <= pdfHeight - 2 * margin) {
-    pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, margin, imgWidth, imgHeight);
-  } else {
-    // Multiple pages
-    let remainingHeight = canvas.height;
-    let pageCanvasHeight = Math.floor((canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
+  let remainingHeight = imgHeight;
+  let position = margin;
 
-    let yOffset = 0;
+  while (remainingHeight > 0) {
+    const pageHeight = Math.min(remainingHeight, pdfHeight - 2 * margin);
+    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
 
-    while (remainingHeight > 0) {
-      const pageCanvas = document.createElement("canvas");
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = pageCanvasHeight;
-
-      const ctx = pageCanvas.getContext("2d");
-      ctx.drawImage(
-        canvas,
-        0, yOffset, canvas.width, pageCanvasHeight, // source
-        0, 0, canvas.width, pageCanvasHeight        // destination
-      );
-
-      const pageImgData = pageCanvas.toDataURL("image/png");
-      pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
-
-      yOffset += pageCanvasHeight;
-      remainingHeight -= pageCanvasHeight;
-
-      if (remainingHeight > 0) pdf.addPage();
+    remainingHeight -= pdfHeight - 2 * margin;
+    if (remainingHeight > 0) {
+      pdf.addPage();
+      position = margin;
     }
   }
 
   pdf.save("Composition.pdf");
 });
-
-
 </script>
 
 
