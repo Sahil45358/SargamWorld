@@ -483,18 +483,19 @@ function clearEditor() {
   editor.innerHTML = "";
 }
 
+  // DownloadPDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const tempEditor = editor.cloneNode(true);
 
-  // Optional: white background and padding for PDF
+  // Style for PDF rendering
   tempEditor.style.background = "#ffffff";
   tempEditor.style.padding = "20px";
   tempEditor.style.width = editor.scrollWidth + "px";
 
-  // Render editor as canvas
+  // Render editor to canvas
   const canvas = await html2canvas(tempEditor, {
-    scale: 2,          // higher resolution for clarity
-    useCORS: true,     // allow cross-origin images if needed
+    scale: 2,
+    useCORS: true,
     backgroundColor: "#ffffff"
   });
 
@@ -503,33 +504,40 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
 
   const pdfWidth = pdf.internal.pageSize.getWidth();
   const pdfHeight = pdf.internal.pageSize.getHeight();
+  const margin = 20;
 
-  const imgWidth = pdfWidth - 40; // 20pt margin each side
+  const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  // Total number of pages
-  const totalPages = Math.ceil(imgHeight / pdfHeight);
+  // If content fits on one page
+  if (imgHeight <= pdfHeight - 2 * margin) {
+    pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, margin, imgWidth, imgHeight);
+  } else {
+    // Multiple pages
+    let remainingHeight = canvas.height;
+    let pageCanvasHeight = Math.floor((canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
 
-  for (let page = 0; page < totalPages; page++) {
-    const sourceY = (canvas.height / totalPages) * page;
-    const pageCanvas = document.createElement("canvas");
-    pageCanvas.width = canvas.width;
-    pageCanvas.height = canvas.height / totalPages;
+    let yOffset = 0;
 
-    const ctx = pageCanvas.getContext("2d");
-    ctx.drawImage(
-      canvas,
-      0, sourceY, canvas.width, canvas.height / totalPages,
-      0, 0, canvas.width, canvas.height / totalPages
-    );
+    while (remainingHeight > 0) {
+      const pageCanvas = document.createElement("canvas");
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pageCanvasHeight;
 
-    const imgData = pageCanvas.toDataURL("image/png");
+      const ctx = pageCanvas.getContext("2d");
+      ctx.drawImage(
+        canvas,
+        0, yOffset, canvas.width, pageCanvasHeight, // source
+        0, 0, canvas.width, pageCanvasHeight        // destination
+      );
 
-    const pageImgHeight = pdfHeight; // fit height exactly
-    pdf.addImage(imgData, "PNG", 20, 20, imgWidth, pageImgHeight);
+      const pageImgData = pageCanvas.toDataURL("image/png");
+      pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
 
-    if (page < totalPages - 1) {
-      pdf.addPage();
+      yOffset += pageCanvasHeight;
+      remainingHeight -= pageCanvasHeight;
+
+      if (remainingHeight > 0) pdf.addPage();
     }
   }
 
