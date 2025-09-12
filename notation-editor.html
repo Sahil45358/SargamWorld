@@ -234,6 +234,11 @@
   border: 2px solid var(--accent);
   background: #fffbe7;
 }
+
+  #fontSelector:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
   
   </style>
 
@@ -391,13 +396,21 @@
   // Keyboard input
   const buttons = document.querySelectorAll('.keyboard button');
   const editor = document.getElementById('editor');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const key = btn.getAttribute('data-key');
-      if (key) editor.innerText += key;
+ buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!notationMode) {
+      alert("Turn ON Notation Mode to use these keys.");
+      return;
+    }
+
+    const key = btn.getAttribute('data-key');
+    if (key) {
+      editor.innerText += key;
       editor.focus();
-    });
+    }
   });
+});
+
 
   function clearEditor() {
     editor.innerText = "";
@@ -427,10 +440,17 @@ document.getElementById("toggleNotation").addEventListener("click", () => {
     btn.innerText = "Notation Mode: ON";
     btn.style.background = "#228B22"; // green highlight
     editor.classList.add("notation-active");
+
+    if (selectedFont) {
+      editor.style.fontFamily = selectedFont.replace(".ttf", "");
+    }
   } else {
     btn.innerText = "Notation Mode: OFF";
     btn.style.background = "var(--accent)";
     editor.classList.remove("notation-active");
+
+    // back to normal typing font
+    editor.style.fontFamily = "'Segoe UI', sans-serif";
   }
 });
 
@@ -441,6 +461,34 @@ document.getElementById("fontSelector").addEventListener("change", (e) => {
     editor.style.fontFamily = selectedFont.replace(".ttf", ""); 
   } else {
     editor.style.fontFamily = "'Segoe UI', sans-serif";
+  }
+});
+
+  const fontSelector = document.getElementById("fontSelector");
+
+// Disable by default
+fontSelector.disabled = true;
+
+document.getElementById("toggleNotation").addEventListener("click", () => {
+  notationMode = !notationMode;
+  const btn = document.getElementById("toggleNotation");
+
+  if (notationMode) {
+    btn.innerText = "Notation Mode: ON";
+    btn.style.background = "#228B22"; // green
+    editor.classList.add("notation-active");
+
+    fontSelector.disabled = false; // ✅ enable dropdown
+    if (selectedFont) {
+      editor.style.fontFamily = selectedFont.replace(".ttf", "");
+    }
+  } else {
+    btn.innerText = "Notation Mode: OFF";
+    btn.style.background = "var(--accent)";
+    editor.classList.remove("notation-active");
+
+    fontSelector.disabled = true; // ✅ disable dropdown
+    editor.style.fontFamily = "'Segoe UI', sans-serif"; // normal font
   }
 });
 
