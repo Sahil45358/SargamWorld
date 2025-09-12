@@ -491,19 +491,18 @@ function clearEditor() {
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
-  // Clone editor to ensure all content is captured
-  const editorClone = editorElement.cloneNode(true);
-  editorClone.style.background = "#ffffff";
-  editorClone.style.padding = "20px";
-  editorClone.style.width = editorElement.scrollWidth + "px";
-  editorClone.style.height = editorElement.scrollHeight + "px"; // full height
-  editorClone.style.overflow = "visible";
+  // Clone editor to capture full content including tall Meend
+  const clone = editorElement.cloneNode(true);
+  clone.style.background = "#ffffff";
+  clone.style.padding = "20px";
+  clone.style.width = editorElement.scrollWidth + "px";
+  clone.style.height = editorElement.scrollHeight + "px"; // full height
+  clone.style.overflow = "visible";
+  clone.style.boxSizing = "border-box";
 
-  // Render to canvas
-  const canvas = await html2canvas(editorClone, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
-  const imgData = canvas.toDataURL("image/png");
+  // Render to high-res canvas
+  const canvas = await html2canvas(clone, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
 
-  // Correct way to access jsPDF in UMD build
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
@@ -514,7 +513,7 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  // Multi-page handling
+  // Multi-page slicing
   let remainingHeight = canvas.height;
   let sourceY = 0;
 
@@ -524,6 +523,7 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
       (canvas.height * (pdfHeight - 2 * margin)) / imgHeight
     );
 
+    // Create temporary canvas for the current page slice
     const pageCanvas = document.createElement("canvas");
     pageCanvas.width = canvas.width;
     pageCanvas.height = pageCanvasHeight;
@@ -537,6 +537,7 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
 
     const pageImgData = pageCanvas.toDataURL("image/png");
     const pageImgHeight = (pageCanvasHeight * imgWidth) / canvas.width;
+
     pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, pageImgHeight);
 
     remainingHeight -= pageCanvasHeight;
