@@ -116,6 +116,8 @@
     .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
     .hero p { max-width: 720px; margin: 0 auto; color: var(--muted); line-height: 1.6; }
 
+
+    
   /* Editor adjustments */
 #editor {
   width: 80%;
@@ -228,6 +230,11 @@
     /* === FOOTER === */
     .site-footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.9rem; margin-top: 40px; }
 
+.notation-active {
+  border: 2px solid var(--accent);
+  background: #fffbe7;
+}
+  
   </style>
 
   <!-- Bhatkhande Web Font -->
@@ -264,6 +271,23 @@
     <p>Type your composition using the Bhatkhande keyboard below and download as PDF.</p>
   </section>
 
+<div style="text-align:center; margin:20px;">
+  <button id="toggleNotation"
+          style="padding:8px 14px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer;">
+    Notation Mode: OFF
+  </button>
+
+  <select id="fontSelector" style="padding:8px; border-radius:6px; margin-left:10px;">
+    <option value="">-- Select Font --</option>
+    <option value="OmeBhatkhandeHindi.ttf">Bhatkhande Hindi</option>
+    <option value="OmeBhatkhandePunjabi.ttf">Bhatkhande Punjabi</option>
+    <option value="OmeBhatkhandeBangla.ttf">Bhatkhande Bangla</option>
+    <option value="OmeBhatkhandeEnglish.ttf">Bhatkhande English</option>
+    <option value="OmeSwarlipi.ttf">Ome Swarlipi</option>
+  </select>
+</div>
+
+  
   <div id="editor" contenteditable="true"></div>
 
   <div class="keyboard">
@@ -391,39 +415,74 @@
     return window.btoa(binary);
   }
 
-  // Multi-page PDF download
-  document.getElementById('downloadPDF').addEventListener('click', async () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+let notationMode = false;
+let selectedFont = "";
 
-    // Load and embed the Bhatkhande font
-    const fontUrl = "https://omenad.github.io/fonts/ome-bhatkhande-hindi/ome_bhatkhande_hindi.woff";
+// Toggle notation mode
+document.getElementById("toggleNotation").addEventListener("click", () => {
+  notationMode = !notationMode;
+  const btn = document.getElementById("toggleNotation");
+
+  if (notationMode) {
+    btn.innerText = "Notation Mode: ON";
+    btn.style.background = "#228B22"; // green highlight
+    editor.classList.add("notation-active");
+  } else {
+    btn.innerText = "Notation Mode: OFF";
+    btn.style.background = "var(--accent)";
+    editor.classList.remove("notation-active");
+  }
+});
+
+// Track font selection
+document.getElementById("fontSelector").addEventListener("change", (e) => {
+  selectedFont = e.target.value;
+  if (notationMode && selectedFont) {
+    editor.style.fontFamily = selectedFont.replace(".ttf", ""); 
+  } else {
+    editor.style.fontFamily = "'Segoe UI', sans-serif";
+  }
+});
+
+  
+  // Multi-page PDF download
+document.getElementById('downloadPDF').addEventListener('click', async () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  if (notationMode && selectedFont) {
+    // Load from your local fonts folder
+    const fontUrl = `fonts/${selectedFont}`;
     const fontBuffer = await fetch(fontUrl).then(r => r.arrayBuffer());
     const fontBase64 = arrayBufferToBase64(fontBuffer);
 
-    doc.addFileToVFS("OmeBhatkhande.woff", fontBase64);
-    doc.addFont("OmeBhatkhande.woff", "OmeBhatkhande", "normal");
-    doc.setFont("OmeBhatkhande");
-    doc.setFontSize(16);
+    doc.addFileToVFS(selectedFont, fontBase64);
+    doc.addFont(selectedFont, "CustomFont", "normal");
+    doc.setFont("CustomFont");
+  } else {
+    doc.setFont("Times", "normal");
+  }
 
-    const text = editor.innerText || "";
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 15;
-    const lineHeight = 10;
-    let y = margin;
+  doc.setFontSize(16);
 
-    const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - 2 * margin);
-    lines.forEach((line) => {
-      if (y + lineHeight > pageHeight - margin) {
-        doc.addPage();
-        y = margin;
-      }
-      doc.text(line, margin, y);
-      y += lineHeight;
-    });
+  const text = editor.innerText || "";
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15;
+  const lineHeight = 10;
+  let y = margin;
 
-    doc.save("Bhatkhande-Composition.pdf");
+  const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - 2 * margin);
+  lines.forEach((line) => {
+    if (y + lineHeight > pageHeight - margin) {
+      doc.addPage();
+      y = margin;
+    }
+    doc.text(line, margin, y);
+    y += lineHeight;
   });
+
+  doc.save("Composition.pdf");
+});
 </script>
 
 </body>
