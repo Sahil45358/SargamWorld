@@ -130,7 +130,7 @@
   padding: 12px;
   font-size: 1.2rem;  /* slightly smaller text for better fit */
   background: #fff;
-  font-family: 'ome_bhatkhande_hindi', monospace;
+  font-family: 'Segoe UI', sans-serif; /* default typing */
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow: auto;
@@ -386,6 +386,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
+  
+  let notationMode = false;   // start OFF
+let selectedFont = "";      // default none
+  
   // Navbar toggle
   document.addEventListener("DOMContentLoaded", () => {
     const hamburger = document.querySelector(".hamburger");
@@ -428,29 +432,41 @@
     return window.btoa(binary);
   }
 
-let notationMode = false;
-let selectedFont = "";
 
 // Toggle notation mode
-document.getElementById("toggleNotation").addEventListener("click", () => {
+const editor = document.getElementById("editor");
+const fontSelector = document.getElementById("fontSelector");
+const toggleBtn = document.getElementById("toggleNotation");
+
+fontSelector.disabled = true; // disabled by default
+
+toggleBtn.addEventListener("click", () => {
   notationMode = !notationMode;
-  const btn = document.getElementById("toggleNotation");
 
   if (notationMode) {
-    btn.innerText = "Notation Mode: ON";
-    btn.style.background = "#228B22"; // green highlight
-    editor.classList.add("notation-active");
+    toggleBtn.innerText = "Notation Mode: ON";
+    toggleBtn.style.background = "#228B22"; // green
+    fontSelector.disabled = false; // enable dropdown
 
+    // apply selected font if chosen
     if (selectedFont) {
-      editor.style.fontFamily = selectedFont.replace(".ttf", "");
+      editor.style.fontFamily = selectedFont;
     }
   } else {
-    btn.innerText = "Notation Mode: OFF";
-    btn.style.background = "var(--accent)";
-    editor.classList.remove("notation-active");
+    toggleBtn.innerText = "Notation Mode: OFF";
+    toggleBtn.style.background = "var(--accent)";
+    fontSelector.disabled = true;
 
-    // back to normal typing font
+    // reset to normal English typing
     editor.style.fontFamily = "'Segoe UI', sans-serif";
+  }
+});
+
+// When user changes dropdown
+fontSelector.addEventListener("change", (e) => {
+  selectedFont = e.target.value;
+  if (notationMode) {
+    editor.style.fontFamily = selectedFont;
   }
 });
 
