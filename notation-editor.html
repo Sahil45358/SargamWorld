@@ -442,14 +442,18 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.innerText = "Notation Mode: ON";
     toggleBtn.style.background = "#228B22"; // green
     fontSelector.disabled = false; 
-    if (selectedFont) editor.style.fontFamily = selectedFont;
+
+    if (selectedFont) {
+      editor.style.fontFamily = selectedFont;  // ✅ apply font globally
+    }
   } else {
     toggleBtn.innerText = "Notation Mode: OFF";
     toggleBtn.style.background = "var(--accent)";
     fontSelector.disabled = true;
-    editor.style.fontFamily = "inherit";
+    editor.style.fontFamily = "'Segoe UI', sans-serif"; // reset
   }
 });
+
 
 // Handle font dropdown
 fontSelector.addEventListener("change", () => {
@@ -457,10 +461,12 @@ fontSelector.addEventListener("change", () => {
   document.getElementById("fontHint").style.display =
     notationMode && selectedFont ? "inline" : "none";
   document.getElementById("currentFontName").textContent = selectedFont;
+
   if (notationMode && selectedFont) {
-    editor.style.fontFamily = selectedFont;
+    editor.style.fontFamily = selectedFont;  // ✅ keep editor in chosen font
   }
 });
+
 
 // Utility: insert text or node at caret
 function insertAtCaret(content) {
