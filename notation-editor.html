@@ -462,46 +462,52 @@ fontSelector.addEventListener("change", () => {
   }
 });
 
-// Insert at caret (span-aware)
+// Utility: insert text or node at caret
 function insertAtCaret(content) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
-  let node;
   if (typeof content === "string") {
     if (notationMode && selectedFont) {
-      node = document.createElement("span");
-      node.style.fontFamily = selectedFont;
-      node.textContent = content;
+      // 👇 Wrap in span with the notation font
+      const span = document.createElement("span");
+      span.style.fontFamily = selectedFont;
+      span.textContent = content;
+      range.insertNode(span);
     } else {
-      node = document.createTextNode(content);
+      range.insertNode(document.createTextNode(content));
     }
   } else {
-    node = content;
+    // Already a node (span from keypress)
+    range.insertNode(content);
   }
 
-  range.insertNode(node);
-
-  // Move caret after
-  range.setStartAfter(node);
-  range.setEndAfter(node);
+  // Move caret after inserted node
+  range.collapse(false);
   sel.removeAllRanges();
   sel.addRange(range);
-
   editor.focus();
 }
 
-// Virtual keyboard → use mousedown so focus isn’t lost
+// Handle virtual keyboard buttons
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
 buttons.forEach(btn => {
-  btn.addEventListener("mousedown", (e) => {
-    e.preventDefault(); 
+  btn.addEventListener("click", (e) => {
+    e.preventDefault(); // don’t lose caret
     const key = btn.getAttribute("data-key");
-    insertAtCaret(key);
+    if (notationMode && selectedFont) {
+      const span = document.createElement("span");
+      span.style.fontFamily = selectedFont;
+      span.textContent = key;
+      insertAtCaret(span);
+    } else {
+      insertAtCaret(key);
+    }
   });
 });
+
 
 // Normal typing in notation mode
 editor.addEventListener("keypress", (e) => {
