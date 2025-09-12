@@ -419,32 +419,26 @@ toggleBtn.addEventListener("click", () => {
 
   if (notationMode) {
     toggleBtn.innerText = "Notation Mode: ON";
-    toggleBtn.style.background = "#228B22"; // green
-    fontSelector.disabled = false; 
+    toggleBtn.style.background = "#228B22";
+    fontSelector.disabled = false;
 
     if (selectedFont) {
-    editor.style.fontFamily = `'${selectedFont}', 'Segoe UI', sans-serif`;
-
+      editor.style.fontFamily = `'${selectedFont}', sans-serif`;
     }
   } else {
     toggleBtn.innerText = "Notation Mode: OFF";
     toggleBtn.style.background = "var(--accent)";
     fontSelector.disabled = true;
-   editor.style.fontFamily = `'${selectedFont}', 'Segoe UI', sans-serif`;
-
+    editor.style.fontFamily = "inherit";
+  }
 });
 
 
-// Handle font dropdown
+// Font change
 fontSelector.addEventListener("change", () => {
   selectedFont = fontSelector.value;
-  document.getElementById("fontHint").style.display =
-    notationMode && selectedFont ? "inline" : "none";
-  document.getElementById("currentFontName").textContent = selectedFont;
-
   if (notationMode && selectedFont) {
-   editor.style.fontFamily = `'${selectedFont}', 'Segoe UI', sans-serif`;
-
+    editor.style.fontFamily = `'${selectedFont}', sans-serif`;
   }
 });
 
@@ -479,22 +473,23 @@ function insertAtCaret(content) {
 }
 
 // Handle virtual keyboard buttons
+// Virtual keyboard buttons
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
 buttons.forEach(btn => {
   btn.addEventListener("click", (e) => {
-    e.preventDefault(); // don’t lose caret
+    e.preventDefault();
+    editor.focus();
     const key = btn.getAttribute("data-key");
-    if (notationMode && selectedFont) {
-      const span = document.createElement("span");
-      span.style.fontFamily = selectedFont;
-      span.textContent = key;
-      insertAtCaret(span);
-    } else {
-      insertAtCaret(key);
+
+    // modern way:
+    const sel = window.getSelection();
+    if (sel.rangeCount) {
+      sel.getRangeAt(0).deleteContents();
+      sel.getRangeAt(0).insertNode(document.createTextNode(key));
+      sel.collapseToEnd();
     }
   });
 });
-
 
 // Normal typing in notation mode
 editor.addEventListener("keypress", (e) => {
