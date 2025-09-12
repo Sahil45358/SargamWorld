@@ -457,6 +457,13 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const key = btn.getAttribute('data-key');
+    if (key) insertAtCaret(key);
+  });
+});
+  
 // Handle font dropdown change
 
 fontSelector.addEventListener("change", () => {
@@ -477,27 +484,22 @@ editor.addEventListener("keypress", (e) => {
 });
 
 // Utility: insert span at caret
-function insertAtCaret(node) {
+function insertAtCaret(text) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
   range.deleteContents();
-  range.insertNode(node);
-  range.setStartAfter(node);
-  range.setEndAfter(node);
+  range.insertNode(document.createTextNode(text));
+
+  // Move caret after inserted text
+  range.setStartAfter(range.endContainer);
+  range.setEndAfter(range.endContainer);
   sel.removeAllRanges();
   sel.addRange(range);
+
+  editor.focus(); // keep focus in editor
 }
-
-  editor.focus();
-
-const range = document.createRange();
-const sel = window.getSelection();
-range.selectNodeContents(editor);
-range.collapse(false); // move caret to end
-sel.removeAllRanges();
-sel.addRange(range);
-
+  
 // PDF download
 document.getElementById('downloadPDF').addEventListener('click', async () => {
   const { jsPDF } = window.jspdf;
