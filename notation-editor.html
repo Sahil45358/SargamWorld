@@ -133,9 +133,10 @@
   font-family: 'Segoe UI', sans-serif; /* default typing */
   white-space: pre-wrap;
   word-wrap: break-word;
-  overflow: auto;
+  overflow: visible;
   margin: 0 auto 20px;  /* center editor horizontally */
   scroll-behavior: smooth;
+  height: auto;
 }
 
 /* Optional: even smaller on very small screens */
@@ -488,10 +489,24 @@ function clearEditor() {
 
   // Download PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
-  const editorElement = document.getElementById("editor");
+  const editorClone = editor.cloneNode(true);
 
-  // Render editor as canvas
-  const canvas = await html2canvas(editorElement, { scale: 2, backgroundColor: "#ffffff" });
+  // Ensure full height including Meend overflow
+  editorClone.style.background = "#ffffff";
+  editorClone.style.padding = "20px";
+  editorClone.style.width = editor.scrollWidth + "px";
+  editorClone.style.height = editor.scrollHeight + "px"; // full content height
+  editorClone.style.overflow = "visible";               // show tall elements
+  editorClone.style.boxSizing = "border-box";
+
+  // Render the cloned editor to canvas
+  const canvas = await html2canvas(editorClone, {
+    scale: 2,              // high resolution
+    backgroundColor: "#ffffff",
+    useCORS: true
+  });
+
+  const imgData = canvas.toDataURL("image/png");
 
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
@@ -507,25 +522,29 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   let sourceY = 0;
 
   while (remainingHeight > 0) {
-    // Calculate the height in the source canvas for this page
-    const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
+    // Calculate slice height for this page
+    const pageCanvasHeight = Math.min(
+      remainingHeight,
+      (canvas.height * (pdfHeight - 2 * margin)) / imgHeight
+    );
 
-    // Create temporary canvas for this page
+    // Create temporary canvas for the page slice
     const pageCanvas = document.createElement("canvas");
     pageCanvas.width = canvas.width;
     pageCanvas.height = pageCanvasHeight;
     const ctx = pageCanvas.getContext("2d");
 
-    // Draw the slice from original canvas
+    // Draw the slice from the original canvas
     ctx.drawImage(
       canvas,
-      0, sourceY, canvas.width, pageCanvasHeight,  // source
-      0, 0, canvas.width, pageCanvasHeight         // destination
+      0, sourceY, canvas.width, pageCanvasHeight, // source
+      0, 0, canvas.width, pageCanvasHeight       // destination
     );
 
     // Add page image to PDF
     const pageImgData = pageCanvas.toDataURL("image/png");
-    pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
+    const pageImgHeight = (pageCanvasHeight * imgWidth) / canvas.width;
+    pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, pageImgHeight);
 
     remainingHeight -= pageCanvasHeight;
     sourceY += pageCanvasHeight;
@@ -535,6 +554,7 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
 
   pdf.save("Composition.pdf");
 });
+
 
 </script>
 
