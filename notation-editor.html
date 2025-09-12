@@ -483,22 +483,57 @@ editor.addEventListener("keypress", (e) => {
   }
 });
 
-// Utility: insert span at caret
-function insertAtCaret(text) {
+// Utility: insert text or node at caret
+function insertAtCaret(content) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
   range.deleteContents();
-  range.insertNode(document.createTextNode(text));
 
-  // Move caret after inserted text
-  range.setStartAfter(range.endContainer);
-  range.setEndAfter(range.endContainer);
+  if (typeof content === "string") {
+    // Button clicked → insert text with current font if in notation mode
+    if (notationMode && selectedFont) {
+      const span = document.createElement("span");
+      span.style.fontFamily = selectedFont;
+      span.textContent = content;
+      range.insertNode(span);
+    } else {
+      range.insertNode(document.createTextNode(content));
+    }
+  } else {
+    // Already a node (span from keypress)
+    range.insertNode(content);
+  }
+
+  // Move caret after inserted node
+  range.collapse(false);
   sel.removeAllRanges();
   sel.addRange(range);
 
-  editor.focus(); // keep focus in editor
+  editor.focus(); // keep typing in editor
 }
+
+// Handle virtual keyboard buttons
+const buttons = document.querySelectorAll(".keyboard button[data-key]");
+buttons.forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault(); // prevent button stealing focus
+    const key = btn.getAttribute("data-key");
+    insertAtCaret(key);
+  });
+});
+
+// Capture key presses in editor when notation mode is ON
+editor.addEventListener("keypress", (e) => {
+  if (notationMode && selectedFont) {
+    e.preventDefault(); // stop default typing
+    const span = document.createElement("span");
+    span.style.fontFamily = selectedFont;
+    span.textContent = e.key;
+    insertAtCaret(span);
+  }
+});
+
   
 // PDF download
 document.getElementById('downloadPDF').addEventListener('click', async () => {
