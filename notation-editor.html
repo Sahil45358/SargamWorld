@@ -300,6 +300,11 @@
     <p>Type your composition using the Bhatkhande keyboard below and download as PDF.</p>
   </section>
 
+<small id="fontHint" style="color:gray; display:none;">
+  Typing in <span id="currentFontName"></span> notation mode
+</small>
+
+  
 <div style="text-align:center; margin:20px;">
   <button id="toggleNotation"
           style="padding:8px 14px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer;">
@@ -497,16 +502,38 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 
-
-// When user changes dropdown
-fontSelector.addEventListener("change", (e) => {
-  selectedFont = e.target.value;
-  if (notationMode) {
-    editor.style.fontFamily = selectedFont;
+  notationToggle.addEventListener("change", () => {
+  if (notationToggle.checked) {
+    const selectedFont = fontSelector.value;
+    editor.style.fontFamily = selectedFont;  // ✅ live in text box
+  } else {
+    editor.style.fontFamily = "inherit"; // back to normal text
   }
 });
 
+// When user changes dropdown
+// Also update when user changes dropdown while ON
+fontSelector.addEventListener("change", () => {
+  if (notationToggle.checked) {
+    editor.style.fontFamily = fontSelector.value; // ✅ apply new font instantly
+  }
+});
 
+notationToggle.addEventListener("change", () => {
+  const hint = document.getElementById("fontHint");
+  const currentFont = document.getElementById("currentFontName");
+
+  if (notationToggle.checked) {
+    editor.style.fontFamily = fontSelector.value;
+    hint.style.display = "inline";
+    currentFont.textContent = fontSelector.value;
+  } else {
+    editor.style.fontFamily = "inherit";
+    hint.style.display = "none";
+  }
+});
+
+  
   // Multi-page PDF download
 document.getElementById('downloadPDF').addEventListener('click', async () => {
   const { jsPDF } = window.jspdf;
