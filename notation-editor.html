@@ -239,32 +239,7 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-  @font-face {
-  font-family: 'OmeBhatkhandeHindi';
-  src: url('fonts/OmeBhatkhandeHindi.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'OmeBhatkhandePunjabi';
-  src: url('fonts/OmeBhatkhandePunjabi.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'OmeBhatkhandeBangla';
-  src: url('fonts/OmeBhatkhandeBangla.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'OmeBhatkhandeEnglish';
-  src: url('fonts/OmeBhatkhandeEnglish.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'OmeSwarlipi';
-  src: url('fonts/OmeSwarlipi.ttf') format('truetype');
-}
-
-
+ 
 
   </style>
 
@@ -315,11 +290,12 @@
 
 <select id="fontSelector" style="padding:8px; border-radius:6px; margin-left:10px;">
   <option value="">-- Select Font --</option>
-  <option value="OmeBhatkhandeHindi">Bhatkhande Hindi</option>
-  <option value="OmeBhatkhandePunjabi">Bhatkhande Punjabi</option>
-  <option value="OmeBhatkhandeBangla">Bhatkhande Bangla</option>
-  <option value="OmeBhatkhandeEnglish">Bhatkhande English</option>
-  <option value="OmeSwarlipi">Ome Swarlipi</option>
+ <option value="ome_bhatkhande_hindi">Bhatkhande Hindi</option>
+<option value="ome_bhatkhande_punjabi">Bhatkhande Punjabi</option>
+<option value="ome_bhatkhande_bangla">Bhatkhande Bangla</option>
+<option value="ome_bhatkhande_english">Bhatkhande English</option>
+<option value="ome_swarlipi">Ome Swarlipi</option>
+
 </select>
 
 </div>
@@ -419,12 +395,13 @@
 
 <script>
 const fontMap = {
-  "OmeBhatkhandeHindi": "OmeBhatkhandeHindi.ttf",
-  "OmeBhatkhandePunjabi": "OmeBhatkhandePunjabi.ttf",
-  "OmeBhatkhandeBangla": "OmeBhatkhandeBangla.ttf",
-  "OmeBhatkhandeEnglish": "OmeBhatkhandeEnglish.ttf",
-  "OmeSwarlipi": "OmeSwarlipi.ttf"
+  "ome_bhatkhande_hindi": "OmeBhatkhandeHindi.ttf",
+  "ome_bhatkhande_punjabi": "OmeBhatkhandePunjabi.ttf",
+  "ome_bhatkhande_bangla": "OmeBhatkhandeBangla.ttf",
+  "ome_bhatkhande_english": "OmeBhatkhandeEnglish.ttf",
+  "ome_swarlipi": "OmeSwarlipi.ttf"
 };
+
 
 let notationMode = false;
 let selectedFont = "";
@@ -446,14 +423,15 @@ toggleBtn.addEventListener("click", () => {
     fontSelector.disabled = false; 
 
     if (selectedFont) {
-      editor.style.fontFamily = selectedFont;  // ✅ apply font globally
+    editor.style.fontFamily = `'${selectedFont}', 'Segoe UI', sans-serif`;
+
     }
   } else {
     toggleBtn.innerText = "Notation Mode: OFF";
     toggleBtn.style.background = "var(--accent)";
     fontSelector.disabled = true;
-    editor.style.fontFamily = "'Segoe UI', sans-serif"; // reset
-  }
+   editor.style.fontFamily = `'${selectedFont}', 'Segoe UI', sans-serif`;
+
 });
 
 
@@ -465,7 +443,8 @@ fontSelector.addEventListener("change", () => {
   document.getElementById("currentFontName").textContent = selectedFont;
 
   if (notationMode && selectedFont) {
-    editor.style.fontFamily = selectedFont;  // ✅ keep editor in chosen font
+   editor.style.fontFamily = `'${selectedFont}', 'Segoe UI', sans-serif`;
+
   }
 });
 
