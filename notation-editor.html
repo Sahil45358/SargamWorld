@@ -402,7 +402,6 @@ const fontMap = {
   "ome_swarlipi": "OmeSwarlipi.ttf"
 };
 
-
 let notationMode = false;
 let selectedFont = "";
 
@@ -421,29 +420,20 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.innerText = "Notation Mode: ON";
     toggleBtn.style.background = "#228B22";
     fontSelector.disabled = false;
-
-    if (selectedFont) {
-      editor.style.fontFamily = `'${selectedFont}', sans-serif`;
-    }
   } else {
     toggleBtn.innerText = "Notation Mode: OFF";
     toggleBtn.style.background = "var(--accent)";
     fontSelector.disabled = true;
-    editor.style.fontFamily = "inherit";
   }
 });
-
 
 // Font change
 fontSelector.addEventListener("change", () => {
   selectedFont = fontSelector.value;
-  if (notationMode && selectedFont) {
-    editor.style.fontFamily = `'${selectedFont}', sans-serif`;
-  }
+  // Do NOT change editor.style.fontFamily here
 });
 
-
-// Utility: insert text or node at caret
+// Insert text at caret (wrap only new notation in font)
 function insertAtCaret(content) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
@@ -452,7 +442,6 @@ function insertAtCaret(content) {
 
   if (typeof content === "string") {
     if (notationMode && selectedFont) {
-      // 👇 Wrap in span with the notation font
       const span = document.createElement("span");
       span.style.fontFamily = selectedFont;
       span.textContent = content;
@@ -461,18 +450,15 @@ function insertAtCaret(content) {
       range.insertNode(document.createTextNode(content));
     }
   } else {
-    // Already a node (span from keypress)
     range.insertNode(content);
   }
 
-  // Move caret after inserted node
   range.collapse(false);
   sel.removeAllRanges();
   sel.addRange(range);
   editor.focus();
 }
 
-// Handle virtual keyboard buttons
 // Virtual keyboard buttons
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
 buttons.forEach(btn => {
@@ -480,14 +466,7 @@ buttons.forEach(btn => {
     e.preventDefault();
     editor.focus();
     const key = btn.getAttribute("data-key");
-
-    // modern way:
-    const sel = window.getSelection();
-    if (sel.rangeCount) {
-      sel.getRangeAt(0).deleteContents();
-      sel.getRangeAt(0).insertNode(document.createTextNode(key));
-      sel.collapseToEnd();
-    }
+    insertAtCaret(key);
   });
 });
 
@@ -495,29 +474,29 @@ buttons.forEach(btn => {
 editor.addEventListener("keypress", (e) => {
   if (notationMode && selectedFont) {
     e.preventDefault();
-    const span = document.createElement("span");
-    span.style.fontFamily = selectedFont;
-    span.textContent = e.key;
-    insertAtCaret(span);
+    insertAtCaret(e.key);
   }
 });
+
+// Clear editor
+function clearEditor() {
+  editor.innerHTML = "";
+}
 
 // === PDF download ===
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-
   doc.setFontSize(16);
   const margin = 20;
   let y = margin;
   const lineHeight = 10;
 
-  // parse HTML with spans so notation fonts survive
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = editor.innerHTML;
 
   for (const node of tempDiv.childNodes) {
-    let text = node.textContent.trim();
+    const text = node.textContent.trim();
     if (!text) continue;
 
     if (node.nodeType === 1 && node.style && node.style.fontFamily) {
@@ -553,6 +532,7 @@ function arrayBufferToBase64(buffer) {
   }
   return window.btoa(binary);
 }
+
 </script>
 
 
