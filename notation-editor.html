@@ -133,14 +133,9 @@
   font-family: 'Segoe UI', sans-serif; /* default typing */
   white-space: pre-wrap;
   word-wrap: break-word;
-  overflow: visible;
+  overflow: auto;
   margin: 0 auto 20px;  /* center editor horizontally */
   scroll-behavior: smooth;
-  height: auto;
-  font-family: 'Noto Sans Devanagari', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-
 }
 
 /* Optional: even smaller on very small screens */
@@ -253,11 +248,6 @@
 </head>
 <body>
 
-<pre class="composition bhatkhande-hindi">
-s r g m p d n
-</pre>
-
-  
 <header class="site-header">
   <div class="nav-inner">
     <div class="brand-wrap">
@@ -298,23 +288,20 @@ s r g m p d n
     Notation Mode: OFF
   </button>
 
-<select id="fontSelector">
+<select id="fontSelector" style="padding:8px; border-radius:6px; margin-left:10px;">
   <option value="">-- Select Font --</option>
-<option value="ome_bhatkhande_hindi">Bhatkhande Hindi</option>
+ <option value="ome_bhatkhande_hindi">Bhatkhande Hindi</option>
 <option value="ome_bhatkhande_punjabi">Bhatkhande Punjabi</option>
 <option value="ome_bhatkhande_bangla">Bhatkhande Bangla</option>
 <option value="ome_bhatkhande_english">Bhatkhande English</option>
 <option value="ome_swarlipi">Ome Swarlipi</option>
-</select>
 
+</select>
 
 </div>
 
   
- <div id="editor" contenteditable="true" style="width:500px; height:300px; border:1px solid #ccc; padding:10px;">
-  Type your composition here...
-</div>
-
+  <div id="editor" contenteditable="true"></div>
 
   <div class="keyboard">
     <!-- Swars -->
@@ -407,6 +394,13 @@ s r g m p d n
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
+const fontMap = {
+  "ome_bhatkhande_hindi": "OmeBhatkhandeHindi.ttf",
+  "ome_bhatkhande_punjabi": "OmeBhatkhandePunjabi.ttf",
+  "ome_bhatkhande_bangla": "OmeBhatkhandeBangla.ttf",
+  "ome_bhatkhande_english": "OmeBhatkhandeEnglish.ttf",
+  "ome_swarlipi": "OmeSwarlipi.ttf"
+};
 
 let notationMode = false;
 let selectedFont = "";
@@ -436,9 +430,9 @@ toggleBtn.addEventListener("click", () => {
 // Font change
 fontSelector.addEventListener("change", () => {
   selectedFont = fontSelector.value;
-  // Do NOT apply font to whole editor — only new text will use it
+  // Do NOT change editor.style.fontFamily here
 });
-  
+
 // Insert text at caret (wrap only new notation in font)
 function insertAtCaret(content) {
   const sel = window.getSelection();
@@ -449,8 +443,7 @@ function insertAtCaret(content) {
   if (typeof content === "string") {
     if (notationMode && selectedFont) {
       const span = document.createElement("span");
-     span.classList.add("ome-bhatkhande-hindi");
-
+      span.style.fontFamily = selectedFont;
       span.textContent = content;
       range.insertNode(span);
     } else {
@@ -489,31 +482,16 @@ editor.addEventListener("keypress", (e) => {
 function clearEditor() {
   editor.innerHTML = "";
 }
-
 // Download PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
-  const clone = editorElement.cloneNode(true);
-  clone.style.background = "#ffffff";
-  clone.style.padding = "20px";
-  clone.style.overflow = "visible";
-  clone.style.position = "absolute";
-  clone.style.left = "-9999px";
+  // Render editor as canvas
+  const canvas = await html2canvas(editorElement, { scale: 2, backgroundColor: "#ffffff" });
 
-  document.body.appendChild(clone);
+  const imgData = canvas.toDataURL("image/png");
 
-  // ✅ Make sure fonts are loaded
-  await document.fonts.ready;
-
-  const canvas = await html2canvas(clone, {
-    scale: 2,
-    backgroundColor: "#ffffff",
-    useCORS: true
-  });
-
-  document.body.removeChild(clone);
-
+  // Access jsPDF from UMD
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
@@ -524,23 +502,45 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  let heightLeft = imgHeight;
+  let remainingHeight = imgHeight;
   let position = margin;
 
-  pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, position, imgWidth, imgHeight);
-  heightLeft -= (pdfHeight - 2 * margin);
+  while (remainingHeight > 0) {
+    const pageHeight = Math.min(remainingHeight, pdfHeight - 2 * margin);
+    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
 
-  while (heightLeft > 0) {
-    position = margin - (imgHeight - heightLeft);
-    pdf.addPage();
-    pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, position, imgWidth, imgHeight);
-    heightLeft -= (pdfHeight - 2 * margin);
+    remainingHeight -= pdfHeight - 2 * margin;
+    if (remainingHeight > 0) {
+      pdf.addPage();
+      position = margin;
+    }
   }
 
   pdf.save("Composition.pdf");
 });
-</script>
 
+// Utility: ArrayBuffer → Base64
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    let chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode.apply(null, chunk);
+  }
+  return window.btoa(binary);
+}
+  <!-- JS for Hamburger -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.getElementById("navLinks");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
+</script>
 
 </body>
 </html>
