@@ -293,11 +293,12 @@
 
 <select id="fontSelector" style="padding:8px; border-radius:6px; margin-left:10px;">
   <option value="">-- Select Font --</option>
- <option value="ome_bhatkhande_hindi">Bhatkhande Hindi</option>
-<option value="ome_bhatkhande_punjabi">Bhatkhande Punjabi</option>
-<option value="ome_bhatkhande_bangla">Bhatkhande Bangla</option>
-<option value="ome_bhatkhande_english">Bhatkhande English</option>
-<option value="ome_swarlipi">Ome Swarlipi</option>
+  <option value="ome-bhatkhande-hindi">Bhatkhande Hindi</option>
+  <option value="ome-bhatkhande-punjabi">Bhatkhande Punjabi</option>
+  <option value="ome-bhatkhande-bangla">Bhatkhande Bangla</option>
+  <option value="ome-bhatkhande-english">Bhatkhande English</option>
+  <option value="ome-swarlipi">Ome Swarlipi</option>
+</select>
 
 </select>
 
@@ -442,13 +443,14 @@ function insertAtCaret(content) {
   editor.focus();
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
+
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
   let node;
   if (notationMode && selectedFont) {
     node = document.createElement("span");
-    node.className = selectedFont;  // e.g., "ome-bhatkhande-hindi"
+    node.className = selectedFont; // <-- class from fontSelector
     node.textContent = content;
   } else {
     node = document.createTextNode(content);
