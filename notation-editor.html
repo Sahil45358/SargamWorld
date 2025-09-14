@@ -292,12 +292,14 @@
   </button>
 
 <select id="fontSelector" style="padding:8px; border-radius:6px; margin-left:10px;">
+
   <option value="">-- Select Font --</option>
   <option value="ome-bhatkhande-hindi">Bhatkhande Hindi</option>
   <option value="ome-bhatkhande-punjabi">Bhatkhande Punjabi</option>
   <option value="ome-bhatkhande-bangla">Bhatkhande Bangla</option>
   <option value="ome-bhatkhande-english">Bhatkhande English</option>
   <option value="ome-swarlipi">Ome Swarlipi</option>
+
 </select>
 
 </select>
@@ -449,8 +451,9 @@ function insertAtCaret(content) {
 
   let node;
   if (notationMode && selectedFont) {
+    // Wrap new text in a <span> with the class from webfonts
     node = document.createElement("span");
-    node.className = selectedFont; // <-- class from fontSelector
+    node.className = selectedFont;  // IMPORTANT: use class, not font-family
     node.textContent = content;
   } else {
     node = document.createTextNode(content);
@@ -467,6 +470,7 @@ function insertAtCaret(content) {
 
 
 
+
 // Virtual keyboard buttons
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
 buttons.forEach(btn => {
@@ -479,8 +483,8 @@ buttons.forEach(btn => {
 });
 
 // Normal typing in notation mode
-editor.addEventListener("keypress", (e) => {
-  if (notationMode && selectedFont) {
+editor.addEventListener("keydown", (e) => {
+  if (notationMode && selectedFont && e.key.length === 1) {
     e.preventDefault();
     insertAtCaret(e.key);
   }
