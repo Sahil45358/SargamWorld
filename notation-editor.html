@@ -136,6 +136,9 @@
   overflow: auto;
   margin: 0 auto 20px;  /* center editor horizontally */
   scroll-behavior: smooth;
+  direction: ltr;
+  text-align: left;
+}
 }
 
 /* Optional: even smaller on very small screens */
@@ -435,27 +438,29 @@ fontSelector.addEventListener("change", () => {
 
 // Insert text at caret (wrap only new notation in font)
 function insertAtCaret(content) {
-  editor.focus(); // focus editor first
+  editor.focus();
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
-  const node = document.createTextNode(content);
+  let node;
 
   if (notationMode && selectedFont) {
-    const span = document.createElement("span");
-    span.style.fontFamily = selectedFont;
-    span.textContent = content;
-    range.insertNode(span);
+    node = document.createElement("span");
+    node.style.fontFamily = selectedFont;
+    node.textContent = content;
   } else {
-    range.insertNode(node);
+    node = document.createTextNode(content);
   }
 
-  // Move cursor after inserted node
-  range.setStartAfter(range.endContainer);
+  range.insertNode(node);
+
+  // Move caret immediately after inserted node
+  range.setStartAfter(node);
   range.collapse(true);
+
   sel.removeAllRanges();
   sel.addRange(range);
 }
