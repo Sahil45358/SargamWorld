@@ -444,7 +444,7 @@ function insertAtCaret(content) {
   if (typeof content === "string") {
     if (notationMode && selectedFont) {
       const span = document.createElement("span");
-       span.style.fontFamily = `'${selectedFont}'`; // ✅ apply correct webfont
+      span.style.fontFamily = selectedFont;
       span.textContent = content;
       range.insertNode(span);
     } else {
