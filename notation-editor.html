@@ -253,6 +253,11 @@
 </head>
 <body>
 
+<pre class="composition bhatkhande-hindi">
+s r g m p d n
+</pre>
+
+  
 <header class="site-header">
   <div class="nav-inner">
     <div class="brand-wrap">
@@ -444,7 +449,8 @@ function insertAtCaret(content) {
   if (typeof content === "string") {
     if (notationMode && selectedFont) {
       const span = document.createElement("span");
-      span.style.fontFamily = selectedFont;
+     span.classList.add("ome-bhatkhande-hindi");
+
       span.textContent = content;
       range.insertNode(span);
     } else {
