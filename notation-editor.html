@@ -434,7 +434,9 @@ toggleBtn.addEventListener("click", () => {
 // Font change
 fontSelector.addEventListener("change", () => {
   selectedFont = fontSelector.value;
-  // Do NOT change editor.style.fontFamily here
+  if (notationMode && selectedFont) {
+    editor.style.fontFamily = selectedFont;
+  }
 });
 
 // Insert text at caret (wrap only new notation in font)
@@ -487,66 +489,77 @@ function clearEditor() {
   editor.innerHTML = "";
 }
 
-  // Download PDF
+// Download PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
-  // Clone editor to capture full content including tall Meend
+  // Clone editor
   const clone = editorElement.cloneNode(true);
   clone.style.background = "#ffffff";
   clone.style.padding = "20px";
-  clone.style.width = editorElement.scrollWidth + "px";
-  clone.style.height = editorElement.scrollHeight + "px"; // full height
   clone.style.overflow = "visible";
-  clone.style.boxSizing = "border-box";
+  clone.style.position = "absolute";
+  clone.style.left = "-9999px"; // hide offscreen
 
-  // Render to high-res canvas
-  const canvas = await html2canvas(clone, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
+  document.body.appendChild(clone); // ✅ attach temporarily
+
+  // Render with html2canvas
+  const canvas = await html2canvas(clone, {
+    scale: 2,
+    backgroundColor: "#ffffff",
+    useCORS: true
+  });
+
+  document.body.removeChild(clone); // ✅ remove after rendering
 
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
   const pdfWidth = pdf.internal.pageSize.getWidth();
   const pdfHeight = pdf.internal.pageSize.getHeight();
-  const margin = 20;
 
-  const imgWidth = pdfWidth - 2 * margin;
+  const imgWidth = pdfWidth - 40; // margin
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  // Multi-page slicing
-  let remainingHeight = canvas.height;
-  let sourceY = 0;
+  // If content longer than one page, scale down to fit
+  if (imgHeight < pdfHeight - 40) {
+    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 20, 20, imgWidth, imgHeight);
+  } else {
+    // Split across pages
+    let position = 0;
+    let pageHeight = (canvas.width * (pdfHeight - 40)) / imgWidth;
 
-  while (remainingHeight > 0) {
-    const pageCanvasHeight = Math.min(
-      remainingHeight,
-      (canvas.height * (pdfHeight - 2 * margin)) / imgHeight
-    );
+    while (position < canvas.height) {
+      const pageCanvas = document.createElement("canvas");
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pageHeight;
+      const ctx = pageCanvas.getContext("2d");
 
-    // Create temporary canvas for the current page slice
-    const pageCanvas = document.createElement("canvas");
-    pageCanvas.width = canvas.width;
-    pageCanvas.height = pageCanvasHeight;
-    const ctx = pageCanvas.getContext("2d");
+      ctx.drawImage(
+        canvas,
+        0, position, canvas.width, pageHeight,
+        0, 0, canvas.width, pageHeight
+      );
 
-    ctx.drawImage(
-      canvas,
-      0, sourceY, canvas.width, pageCanvasHeight,
-      0, 0, canvas.width, pageCanvasHeight
-    );
+      const pageData = pageCanvas.toDataURL("image/png");
+      const pageImgHeight = (pageCanvas.height * imgWidth) / canvas.width;
 
-    const pageImgData = pageCanvas.toDataURL("image/png");
-    const pageImgHeight = (pageCanvasHeight * imgWidth) / canvas.width;
+      pdf.addImage(pageData, "PNG", 20, 20, imgWidth, pageImgHeight);
 
-    pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, pageImgHeight);
-
-    remainingHeight -= pageCanvasHeight;
-    sourceY += pageCanvasHeight;
-
-    if (remainingHeight > 0) pdf.addPage();
+      position += pageHeight;
+      if (position < canvas.height) pdf.addPage();
+    }
   }
 
   pdf.save("Composition.pdf");
+});
+
+// Hamburger toggle
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.getElementById("navLinks");
+
+hamburger.addEventListener("click", () => {
+  navLinks.classList.toggle("show");
 });
 
 </script>
