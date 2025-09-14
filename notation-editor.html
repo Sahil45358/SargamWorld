@@ -544,16 +544,15 @@ function arrayBufferToBase64(buffer) {
   }
   return window.btoa(binary);
 }
-  <!-- JS for Hamburger -->
+// JS for Hamburger
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.getElementById("navLinks");
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.querySelector(".hamburger");
-      const navLinks = document.getElementById("navLinks");
-
-      hamburger.addEventListener("click", () => {
-        navLinks.classList.toggle("show");
-      });
-    });
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
 </script>
 
 </body>
