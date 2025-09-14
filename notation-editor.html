@@ -435,28 +435,29 @@ fontSelector.addEventListener("change", () => {
 
 // Insert text at caret (wrap only new notation in font)
 function insertAtCaret(content) {
+  editor.focus(); // focus editor first
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
+
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
-  if (typeof content === "string") {
-    if (notationMode && selectedFont) {
-      const span = document.createElement("span");
-      span.style.fontFamily = selectedFont;
-      span.textContent = content;
-      range.insertNode(span);
-    } else {
-      range.insertNode(document.createTextNode(content));
-    }
+  const node = document.createTextNode(content);
+
+  if (notationMode && selectedFont) {
+    const span = document.createElement("span");
+    span.style.fontFamily = selectedFont;
+    span.textContent = content;
+    range.insertNode(span);
   } else {
-    range.insertNode(content);
+    range.insertNode(node);
   }
 
-  range.collapse(false);
+  // Move cursor after inserted node
+  range.setStartAfter(range.endContainer);
+  range.collapse(true);
   sel.removeAllRanges();
   sel.addRange(range);
-  editor.focus();
 }
 
 // Virtual keyboard buttons
@@ -544,7 +545,7 @@ function arrayBufferToBase64(buffer) {
   return window.btoa(binary);
 }
   <!-- JS for Hamburger -->
-  <script>
+
     document.addEventListener("DOMContentLoaded", () => {
       const hamburger = document.querySelector(".hamburger");
       const navLinks = document.getElementById("navLinks");
