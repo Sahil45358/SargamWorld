@@ -137,6 +137,10 @@
   margin: 0 auto 20px;  /* center editor horizontally */
   scroll-behavior: smooth;
   height: auto;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
 }
 
 /* Optional: even smaller on very small screens */
@@ -289,15 +293,15 @@
     Notation Mode: OFF
   </button>
 
-<select id="fontSelector" style="padding:8px; border-radius:6px; margin-left:10px;">
+<select id="fontSelector">
   <option value="">-- Select Font --</option>
- <option value="ome_bhatkhande_hindi">Bhatkhande Hindi</option>
+<option value="ome_bhatkhande_hindi">Bhatkhande Hindi</option>
 <option value="ome_bhatkhande_punjabi">Bhatkhande Punjabi</option>
 <option value="ome_bhatkhande_bangla">Bhatkhande Bangla</option>
 <option value="ome_bhatkhande_english">Bhatkhande English</option>
 <option value="ome_swarlipi">Ome Swarlipi</option>
-
 </select>
+
 
 </div>
 
@@ -398,13 +402,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
-const fontMap = {
-  "ome_bhatkhande_hindi": "OmeBhatkhandeHindi.ttf",
-  "ome_bhatkhande_punjabi": "OmeBhatkhandePunjabi.ttf",
-  "ome_bhatkhande_bangla": "OmeBhatkhandeBangla.ttf",
-  "ome_bhatkhande_english": "OmeBhatkhandeEnglish.ttf",
-  "ome_swarlipi": "OmeSwarlipi.ttf"
-};
 
 let notationMode = false;
 let selectedFont = "";
@@ -447,7 +444,7 @@ function insertAtCaret(content) {
   if (typeof content === "string") {
     if (notationMode && selectedFont) {
       const span = document.createElement("span");
-      span.style.fontFamily = selectedFont;
+       span.style.fontFamily = `'${selectedFont}'`; // ✅ apply correct webfont
       span.textContent = content;
       range.insertNode(span);
     } else {
