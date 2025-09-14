@@ -437,19 +437,18 @@ fontSelector.addEventListener("change", () => {
 });
 
 // Insert text at caret (wrap only new notation in font)
+// When inserting text in notation mode
 function insertAtCaret(content) {
   editor.focus();
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
-
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
   let node;
-
   if (notationMode && selectedFont) {
     node = document.createElement("span");
-    node.style.fontFamily = selectedFont;
+    node.className = selectedFont;  // e.g., "ome-bhatkhande-hindi"
     node.textContent = content;
   } else {
     node = document.createTextNode(content);
@@ -457,13 +456,14 @@ function insertAtCaret(content) {
 
   range.insertNode(node);
 
-  // Move caret immediately after inserted node
+  // Move cursor after inserted node
   range.setStartAfter(node);
   range.collapse(true);
-
   sel.removeAllRanges();
   sel.addRange(range);
 }
+
+
 
 // Virtual keyboard buttons
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
