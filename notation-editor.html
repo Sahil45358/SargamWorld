@@ -434,11 +434,9 @@ toggleBtn.addEventListener("click", () => {
 // Font change
 fontSelector.addEventListener("change", () => {
   selectedFont = fontSelector.value;
-  if (notationMode && selectedFont) {
-    editor.style.fontFamily = selectedFont;
-  }
+  // Do NOT apply font to whole editor — only new text will use it
 });
-
+  
 // Insert text at caret (wrap only new notation in font)
 function insertAtCaret(content) {
   const sel = window.getSelection();
@@ -493,75 +491,51 @@ function clearEditor() {
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
-  // Clone editor
   const clone = editorElement.cloneNode(true);
   clone.style.background = "#ffffff";
   clone.style.padding = "20px";
   clone.style.overflow = "visible";
   clone.style.position = "absolute";
-  clone.style.left = "-9999px"; // hide offscreen
+  clone.style.left = "-9999px";
 
-  document.body.appendChild(clone); // ✅ attach temporarily
+  document.body.appendChild(clone);
 
-  // Render with html2canvas
+  // ✅ Make sure fonts are loaded
+  await document.fonts.ready;
+
   const canvas = await html2canvas(clone, {
     scale: 2,
     backgroundColor: "#ffffff",
     useCORS: true
   });
 
-  document.body.removeChild(clone); // ✅ remove after rendering
+  document.body.removeChild(clone);
 
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
   const pdfWidth = pdf.internal.pageSize.getWidth();
   const pdfHeight = pdf.internal.pageSize.getHeight();
+  const margin = 20;
 
-  const imgWidth = pdfWidth - 40; // margin
+  const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  // If content longer than one page, scale down to fit
-  if (imgHeight < pdfHeight - 40) {
-    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 20, 20, imgWidth, imgHeight);
-  } else {
-    // Split across pages
-    let position = 0;
-    let pageHeight = (canvas.width * (pdfHeight - 40)) / imgWidth;
+  let heightLeft = imgHeight;
+  let position = margin;
 
-    while (position < canvas.height) {
-      const pageCanvas = document.createElement("canvas");
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = pageHeight;
-      const ctx = pageCanvas.getContext("2d");
+  pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, position, imgWidth, imgHeight);
+  heightLeft -= (pdfHeight - 2 * margin);
 
-      ctx.drawImage(
-        canvas,
-        0, position, canvas.width, pageHeight,
-        0, 0, canvas.width, pageHeight
-      );
-
-      const pageData = pageCanvas.toDataURL("image/png");
-      const pageImgHeight = (pageCanvas.height * imgWidth) / canvas.width;
-
-      pdf.addImage(pageData, "PNG", 20, 20, imgWidth, pageImgHeight);
-
-      position += pageHeight;
-      if (position < canvas.height) pdf.addPage();
-    }
+  while (heightLeft > 0) {
+    position = margin - (imgHeight - heightLeft);
+    pdf.addPage();
+    pdf.addImage(canvas.toDataURL("image/png"), "PNG", margin, position, imgWidth, imgHeight);
+    heightLeft -= (pdfHeight - 2 * margin);
   }
 
   pdf.save("Composition.pdf");
 });
-
-// Hamburger toggle
-const hamburger = document.querySelector(".hamburger");
-const navLinks = document.getElementById("navLinks");
-
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("show");
-});
-
 </script>
 
 
