@@ -482,16 +482,12 @@ editor.addEventListener("keypress", (e) => {
 function clearEditor() {
   editor.innerHTML = "";
 }
-// Download PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
   // Render editor as canvas
   const canvas = await html2canvas(editorElement, { scale: 2, backgroundColor: "#ffffff" });
 
-  const imgData = canvas.toDataURL("image/png");
-
-  // Access jsPDF from UMD
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
@@ -502,22 +498,39 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  let remainingHeight = imgHeight;
-  let position = margin;
+  let remainingHeight = canvas.height;
+  let sourceY = 0;
 
   while (remainingHeight > 0) {
-    const pageHeight = Math.min(remainingHeight, pdfHeight - 2 * margin);
-    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+    // Calculate the height in the source canvas for this page
+    const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
 
-    remainingHeight -= pdfHeight - 2 * margin;
-    if (remainingHeight > 0) {
-      pdf.addPage();
-      position = margin;
-    }
+    // Create temporary canvas for this page
+    const pageCanvas = document.createElement("canvas");
+    pageCanvas.width = canvas.width;
+    pageCanvas.height = pageCanvasHeight;
+    const ctx = pageCanvas.getContext("2d");
+
+    // Draw the slice from original canvas
+    ctx.drawImage(
+      canvas,
+      0, sourceY, canvas.width, pageCanvasHeight,  // source
+      0, 0, canvas.width, pageCanvasHeight         // destination
+    );
+
+    // Add page image to PDF
+    const pageImgData = pageCanvas.toDataURL("image/png");
+    pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
+
+    remainingHeight -= pageCanvasHeight;
+    sourceY += pageCanvasHeight;
+
+    if (remainingHeight > 0) pdf.addPage();
   }
 
   pdf.save("Composition.pdf");
 });
+
 
 // Utility: ArrayBuffer → Base64
 function arrayBufferToBase64(buffer) {
