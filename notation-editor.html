@@ -648,17 +648,19 @@ document.addEventListener("DOMContentLoaded", function () {
   function showAdblockPopup() {
     overlay.style.display = "block";
     popup.style.display = "flex";
+    document.body.style.overflow = "hidden"; // Prevent scrolling
   }
 
   function hideAdblockPopup() {
     overlay.style.display = "none";
     popup.style.display = "none";
+    document.body.style.overflow = "auto";
   }
 
   function checkAdblock() {
     return new Promise((resolve) => {
       const bait = document.createElement("div");
-      bait.className = "ad adsbox adsbygoogle banner-ad ad-unit sponsored";
+      bait.className = "adsbox";
       bait.style.width = "1px";
       bait.style.height = "1px";
       bait.style.position = "absolute";
@@ -666,7 +668,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       document.body.appendChild(bait);
 
-      window.setTimeout(() => {
+      setTimeout(() => {
         const blocked =
           !document.body.contains(bait) ||
           bait.offsetHeight === 0 ||
@@ -689,7 +691,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Run on load + repeat
   runCheck();
   setInterval(runCheck, 5000);
 });
