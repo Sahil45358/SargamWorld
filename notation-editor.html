@@ -138,6 +138,7 @@
   direction: ltr;
   text-align: left;
   line-height: 2;       /* ⬅ added to give glyphs vertical room */
+  text-rendering: geometricPrecision;
 }
 
 
@@ -510,9 +511,10 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
 
   // Render editor as canvas
 const canvas = await html2canvas(editorElement, { 
-  scale: 2, 
+  scale: 2,
   backgroundColor: "#ffffff",
-  letterRendering: true
+  letterRendering: true,
+  foreignObjectRendering: true   // ⬅ use SVG foreignObject for accurate glyphs
 });
   
   const { jsPDF } = window.jspdf;
