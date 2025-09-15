@@ -659,38 +659,56 @@ document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById("adblock-overlay");
   const message = document.getElementById("adblock-message");
 
+  function showAdblockMessage() {
+    overlay.style.display = "block";
+    message.style.display = "flex";
+  }
+
+  function hideAdblockMessage() {
+    overlay.style.display = "none";
+    message.style.display = "none";
+  }
+
   function checkAdblock() {
-    // Create a test div with a common AdSense class
-    const testAd = document.createElement("div");
-    testAd.className = "adsbygoogle";
-    testAd.style.height = "1px";
-    document.body.appendChild(testAd);
+    return new Promise((resolve) => {
+      const bait = document.createElement("div");
+      bait.className = "ad adsbox adsbygoogle banner-ad ad-unit sponsored";
+      bait.style.width = "1px";
+      bait.style.height = "1px";
+      bait.style.position = "absolute";
+      bait.style.left = "-9999px";
 
-    setTimeout(() => {
-      const isBlocked =
-        testAd.offsetHeight === 0 ||
-        window.getComputedStyle(testAd).display === "none" ||
-        !testAd.parentNode;
+      document.body.appendChild(bait);
 
-      if (isBlocked) {
-        overlay.style.display = "block"; // dim background
-        message.style.display = "flex";  // show centered card
-      } else {
-        overlay.style.display = "none";
-        message.style.display = "none";
-      }
+      window.setTimeout(() => {
+        const blocked =
+          !document.body.contains(bait) ||
+          bait.offsetHeight === 0 ||
+          bait.offsetParent === null ||
+          window.getComputedStyle(bait).display === "none" ||
+          window.getComputedStyle(bait).visibility === "hidden";
 
-      testAd.remove();
-    }, 100);
+        document.body.removeChild(bait);
+        resolve(blocked);
+      }, 100);
+    });
+  }
+
+  async function runCheck() {
+    const isBlocked = await checkAdblock();
+    if (isBlocked) {
+      showAdblockMessage();
+    } else {
+      hideAdblockMessage();
+    }
   }
 
   // Run on load
-  checkAdblock();
+  runCheck();
 
-  // Run every 5s (in case user enables adblock later)
-  setInterval(checkAdblock, 5000);
+  // Keep checking every 5s
+  setInterval(runCheck, 5000);
 });
-  
 </script>
 
 </body>
