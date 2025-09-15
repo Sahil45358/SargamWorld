@@ -512,23 +512,33 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editor = document.getElementById("editor");
 
   try {
-    // Temporarily store original height
-    const originalHeight = editor.style.height;
-
-    // Expand editor to fit all content
-    editor.style.height = editor.scrollHeight + "px";
-
-    // Capture the entire editor content
-    const canvas = await html2canvas(editor, {
-      scale: 2,
-      backgroundColor: "#ffffff",
-      useCORS: true,
-      letterRendering: true
+    // Ask for screen capture permission
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { cursor: "never" },
+      audio: false
     });
 
-    // Restore original height
-    editor.style.height = originalHeight;
+    // Create a video element to draw the screenshot
+    const video = document.createElement("video");
+    video.srcObject = stream;
+    await video.play();
 
+    // Wait for video to be ready
+    await new Promise((resolve) => (video.onloadedmetadata = resolve));
+
+    // Draw the video frame to a canvas
+    const canvas = document.createElement("canvas");
+    canvas.width = editor.offsetWidth;
+    canvas.height = editor.scrollHeight; // full content height
+    const ctx = canvas.getContext("2d");
+
+    // Draw editor only (crop video to editor area)
+    ctx.drawImage(video, editor.offsetLeft, editor.offsetTop, editor.offsetWidth, editor.scrollHeight, 0, 0, editor.offsetWidth, editor.scrollHeight);
+
+    // Stop the stream immediately
+    stream.getTracks().forEach(track => track.stop());
+
+    // Convert canvas to image
     const imgData = canvas.toDataURL("image/png");
 
     const { jsPDF } = window.jspdf;
@@ -544,15 +554,14 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
     let remainingHeight = canvas.height;
     let sourceY = 0;
 
-    // Slice image into multiple pages if content is long
     while (remainingHeight > 0) {
       const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
       const pageCanvas = document.createElement("canvas");
       pageCanvas.width = canvas.width;
       pageCanvas.height = pageCanvasHeight;
-      const ctx = pageCanvas.getContext("2d");
+      const pageCtx = pageCanvas.getContext("2d");
 
-      ctx.drawImage(
+      pageCtx.drawImage(
         canvas,
         0, sourceY, canvas.width, pageCanvasHeight,
         0, 0, canvas.width, pageCanvasHeight
@@ -568,19 +577,12 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
     }
 
     pdf.save("Composition.pdf");
-
   } catch (err) {
-    console.error("Error capturing editor:", err);
-    alert("Failed to create PDF. Make sure fonts are loaded and try again.");
+    console.error("Error capturing screen:", err);
+    alert("Screen capture failed. Please allow permission and try again.");
   }
 });
 
-
-  } catch (err) {
-    console.error("Error creating PDF:", err);
-    alert("Failed to create PDF. Make sure all fonts are loaded and try again.");
-  }
-});
 
 // Utility: ArrayBuffer → Base64
 function arrayBufferToBase64(buffer) {
