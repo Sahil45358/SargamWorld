@@ -305,8 +305,6 @@
     <button id="adblock-close">I understand</button>
   </div>
 </div>
-
-<div id="ad-test" class="ads ad-box" style="display:none !important;"></div>
   
 <header class="site-header">
   <div class="nav-inner">
@@ -626,34 +624,41 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
-// AdBlocker
-document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById('adblock-overlay');
   const closeBtn = document.getElementById('adblock-close');
-  const adTestElement = document.getElementById('ad-test');
 
-  // Function to show the card
-  function showAdblockCard() {
-    overlay.classList.add('show');
-  }
-
-  // Function to hide the card
-  function hideAdblockCard() {
-    overlay.classList.remove('show');
-  }
-
-  // Close button listener
   if (closeBtn) {
-    closeBtn.addEventListener('click', hideAdblockCard);
+    closeBtn.addEventListener('click', () => {
+      overlay.classList.remove('show');
+    });
   }
 
-  // Your new detection logic
-  setTimeout(() => {
-    // Check if the element is hidden by an ad blocker
-    if (adTestElement && adTestElement.offsetParent === null) {
-      showAdblockCard();
-    }
-  }, 1000); // Add a small delay to ensure page elements are rendered
+  // Ad blocker detection using "ad bait"
+  function checkAdBlock() {
+    // Create an ad bait element with a common ad class
+    const adBait = document.createElement('div');
+    adBait.className = 'adsbox ad-container ad-wrapper';
+    adBait.style.cssText = 'position: absolute; top: -1000px; left: -1000px; width: 1px; height: 1px;';
+    document.body.appendChild(adBait);
+
+    // Wait a moment for the ad blocker to act
+    setTimeout(() => {
+      const adBaitStyle = window.getComputedStyle(adBait);
+
+      // Check if the element has been hidden
+      if (adBaitStyle.display === 'none' || adBaitStyle.visibility === 'hidden') {
+        // Adblocker detected! Show the message.
+        if (overlay) {
+          overlay.classList.add('show');
+        }
+      }
+
+      // Clean up the ad bait element
+      document.body.removeChild(adBait);
+    }, 100); // 100ms is usually enough
+  }
+
+  checkAdBlock();
 });
 </script>
 
