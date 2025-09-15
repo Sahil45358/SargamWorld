@@ -613,39 +613,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // AdBlocker
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   const overlay = document.getElementById("adblock-overlay");
   const message = document.getElementById("adblock-message");
 
-  function showAdblockMessage() {
-    overlay.style.display = "block";
-    message.style.display = "flex";
-  }
-
-  function hideAdblockMessage() {
-    overlay.style.display = "none";
-    message.style.display = "none";
-  }
+  function show() { overlay.style.display = "block"; message.style.display = "flex"; }
+  function hide() { overlay.style.display = "none"; message.style.display = "none"; }
 
   function checkAdblock() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const bait = document.createElement("div");
-      bait.className = "ad adsbox adsbygoogle banner-ad ad-unit sponsored";
-      bait.style.width = "1px";
-      bait.style.height = "1px";
+      bait.className = "adsbygoogle";
+      bait.style.width = "300px";
+      bait.style.height = "250px";
       bait.style.position = "absolute";
-      bait.style.left = "-9999px";
-
+      bait.style.left = "-10000px";
       document.body.appendChild(bait);
 
-      window.setTimeout(() => {
+      setTimeout(() => {
         const blocked =
           !document.body.contains(bait) ||
           bait.offsetHeight === 0 ||
-          bait.offsetParent === null ||
-          window.getComputedStyle(bait).display === "none" ||
-          window.getComputedStyle(bait).visibility === "hidden";
-
+          window.getComputedStyle(bait).display === "none";
         document.body.removeChild(bait);
         resolve(blocked);
       }, 100);
@@ -653,18 +642,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function runCheck() {
-    const isBlocked = await checkAdblock();
-    if (isBlocked) {
-      showAdblockMessage();
-    } else {
-      hideAdblockMessage();
-    }
+    if (await checkAdblock()) show(); else hide();
   }
 
-  // Run on load
   runCheck();
-
-  // Keep checking every 5s
   setInterval(runCheck, 5000);
 });
 </script>
