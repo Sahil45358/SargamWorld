@@ -655,30 +655,39 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
-  function checkAdBlocker() {
-  const bait = document.createElement("div");
-  bait.className = "adsbox";
-  bait.style.height = "1px";
-  document.body.appendChild(bait);
+ document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("adblockOverlay");
 
-  setTimeout(() => {
-    const blocked = bait.offsetHeight === 0;
-    bait.remove();
+  function checkAdblock() {
+    // Create a test div with a common AdSense class
+    const testAd = document.createElement("div");
+    testAd.className = "adsbygoogle";
+    testAd.style.height = "1px";
+    document.body.appendChild(testAd);
 
-    if (blocked) {
-      document.getElementById("adblock-message").style.display = "flex";
-      document.getElementById("adblock-overlay").style.display = "block";
-      document.body.style.overflow = "hidden";
-    } else {
-      document.getElementById("adblock-message").style.display = "none";
-      document.getElementById("adblock-overlay").style.display = "none";
-      document.body.style.overflow = "";
-    }
-  }, 200);
-}
+    // Allow render cycle, then check if blocked
+    setTimeout(() => {
+      const isBlocked =
+        testAd.offsetHeight === 0 ||      // collapsed
+        window.getComputedStyle(testAd).display === "none" || // hidden
+        !testAd.parentNode;               // removed completely
 
-document.addEventListener("DOMContentLoaded", checkAdBlocker);
-setInterval(checkAdBlocker, 5000);
+      if (isBlocked) {
+        overlay.style.display = "flex"; // Show popup
+      } else {
+        overlay.style.display = "none"; // Hide popup
+      }
+
+      testAd.remove();
+    }, 100);
+  }
+
+  // Check once on load
+  checkAdblock();
+
+  // Keep checking every 5s
+  setInterval(checkAdblock, 5000);
+});
 
   
 </script>
