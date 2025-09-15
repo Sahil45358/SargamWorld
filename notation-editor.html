@@ -511,9 +511,12 @@ function clearEditor() {
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
-  // Take a high-res screenshot of the editor
+  // Wait for all fonts to load
+  await document.fonts.ready;
+
+  // Take a screenshot of the editor
   const canvas = await html2canvas(editorElement, {
-    scale: 3,               // higher scale for sharp PDF
+    scale: 3,               // high-res image
     backgroundColor: "#ffffff",
     useCORS: true,
     letterRendering: true
@@ -529,39 +532,12 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const imgWidth = pdfWidth - 2 * margin;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-  let remainingHeight = canvas.height;
-  let sourceY = 0;
-
-  while (remainingHeight > 0) {
-    // Height in canvas corresponding to one PDF page
-    const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
-
-    // Temporary canvas for this page
-    const pageCanvas = document.createElement("canvas");
-    pageCanvas.width = canvas.width;
-    pageCanvas.height = pageCanvasHeight;
-    const ctx = pageCanvas.getContext("2d");
-
-    // Draw slice from original canvas
-    ctx.drawImage(
-      canvas,
-      0, sourceY, canvas.width, pageCanvasHeight, // source
-      0, 0, canvas.width, pageCanvasHeight        // destination
-    );
-
-    const pageImgData = pageCanvas.toDataURL("image/png");
-    pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
-
-    remainingHeight -= pageCanvasHeight;
-    sourceY += pageCanvasHeight;
-
-    if (remainingHeight > 0) pdf.addPage();
-  }
+  // Add the canvas as a single image
+  const imgData = canvas.toDataURL("image/png");
+  pdf.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
 
   pdf.save("Composition.pdf");
 });
-
-
 
 // Utility: ArrayBuffer → Base64
 function arrayBufferToBase64(buffer) {
