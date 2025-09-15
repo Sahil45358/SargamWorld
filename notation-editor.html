@@ -293,6 +293,21 @@
 </head>
 <body>
 
+<div id="adblock-overlay">
+  <div id="adblock-message">
+    <h2>AdBlock Detected</h2>
+    <p>
+      It looks like you’re using an ad blocker. Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
+    </p>
+    <p>
+      Please disable your ad blocker to continue using the site. Once disabled, refresh the page to enjoy the full experience.
+    </p>
+    <button id="adblock-close">I understand</button>
+  </div>
+</div>
+
+<div id="ad-test" class="ads ad-box" style="display:none !important;"></div>
+  
 <header class="site-header">
   <div class="nav-inner">
     <div class="brand-wrap">
@@ -611,46 +626,36 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
+// AdBlocker
 document.addEventListener("DOMContentLoaded", () => {
-  const overlay = document.getElementById('adblock-overlay');
-  const closeBtn = document.getElementById('adblock-close'); // Add a close button
-  const adTestElement = document.getElementById('ad-test');
+  const overlay = document.getElementById('adblock-overlay');
+  const closeBtn = document.getElementById('adblock-close');
+  const adTestElement = document.getElementById('ad-test');
 
-  // Function to show the card
-  function showAdblockCard() {
-    overlay.classList.add('show');
-  }
+  // Function to show the card
+  function showAdblockCard() {
+    overlay.classList.add('show');
+  }
 
-  // Function to hide the card
-  function hideAdblockCard() {
-    overlay.classList.remove('show');
-  }
+  // Function to hide the card
+  function hideAdblockCard() {
+    overlay.classList.remove('show');
+  }
 
-  // Your new detection logic
-  setTimeout(() => {
-    // Check if the element is hidden by an ad blocker
-    if (adTestElement.offsetParent === null) {
-      showAdblockCard();
-    }
-  }, 1000); // Add a small delay to ensure page elements are rendered
+  // Close button listener
+  if (closeBtn) {
+    closeBtn.addEventListener('click', hideAdblockCard);
+  }
 
-  // Close button listener
-  closeBtn.addEventListener('click', hideAdblockCard);
+  // Your new detection logic
+  setTimeout(() => {
+    // Check if the element is hidden by an ad blocker
+    if (adTestElement && adTestElement.offsetParent === null) {
+      showAdblockCard();
+    }
+  }, 1000); // Add a small delay to ensure page elements are rendered
 });
 </script>
-  <div id="adblock-overlay">
-  <div id="adblock-message">
-    <h2>AdBlock Detected</h2>
-    <p>
-      It looks like you’re using an ad blocker. Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
-    </p>
-    <p>
-      Please disable your ad blocker to continue using the site. Once disabled, refresh the page to enjoy the full experience.
-    </p>
-    <button id="adblock-close">I understand</button>
-  </div>
-</div>
-Step 4: R
-<div id="ad-test" class="ads ad-box" style="display:none !important;"></div>
+
 </body>
 </html>
