@@ -121,25 +121,25 @@
   /* Editor adjustments */
 #editor {
   width: 80%;
-  max-width: 720px;   /* ✅ limit maximum width on PC */
-  min-width: 300px;   /* ✅ minimum width so it doesn't shrink too small on mobile */
-  margin: 0 auto 20px auto; /* center the editor */
-  min-height: 200px;  /* slightly smaller height */
+  max-width: 720px;
+  min-width: 300px;
+  margin: 0 auto 20px auto;
+  min-height: 200px;
   border: 1px solid rgba(0,0,0,0.2);
   border-radius: var(--radius);
-  padding: 12px;
-  font-size: 1.2rem;  /* slightly smaller text for better fit */
+  padding: 20px 12px;   /* ⬅ increased top/bottom padding */
+  font-size: 1.2rem;
   background: #fff;
-  font-family: 'Segoe UI', sans-serif; /* default typing */
+  font-family: 'Segoe UI', sans-serif;
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow: auto;
-  margin: 0 auto 20px;  /* center editor horizontally */
   scroll-behavior: smooth;
   direction: ltr;
   text-align: left;
+  line-height: 2;       /* ⬅ added to give glyphs vertical room */
 }
-}
+
 
 /* Optional: even smaller on very small screens */
 @media (max-width: 480px) {
@@ -509,8 +509,12 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
   // Render editor as canvas
-  const canvas = await html2canvas(editorElement, { scale: 2, backgroundColor: "#ffffff" });
-
+const canvas = await html2canvas(editorElement, { 
+  scale: 2, 
+  backgroundColor: "#ffffff",
+  letterRendering: true
+});
+  
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
 
