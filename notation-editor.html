@@ -655,8 +655,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
- document.addEventListener("DOMContentLoaded", function () {
-  const overlay = document.getElementById("adblockOverlay");
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("adblock-overlay");
+  const message = document.getElementById("adblock-message");
 
   function checkAdblock() {
     // Create a test div with a common AdSense class
@@ -665,30 +666,30 @@ document.addEventListener("DOMContentLoaded", () => {
     testAd.style.height = "1px";
     document.body.appendChild(testAd);
 
-    // Allow render cycle, then check if blocked
     setTimeout(() => {
       const isBlocked =
-        testAd.offsetHeight === 0 ||      // collapsed
-        window.getComputedStyle(testAd).display === "none" || // hidden
-        !testAd.parentNode;               // removed completely
+        testAd.offsetHeight === 0 ||
+        window.getComputedStyle(testAd).display === "none" ||
+        !testAd.parentNode;
 
       if (isBlocked) {
-        overlay.style.display = "flex"; // Show popup
+        overlay.style.display = "block"; // dim background
+        message.style.display = "flex";  // show centered card
       } else {
-        overlay.style.display = "none"; // Hide popup
+        overlay.style.display = "none";
+        message.style.display = "none";
       }
 
       testAd.remove();
     }, 100);
   }
 
-  // Check once on load
+  // Run on load
   checkAdblock();
 
-  // Keep checking every 5s
+  // Run every 5s (in case user enables adblock later)
   setInterval(checkAdblock, 5000);
 });
-
   
 </script>
 
