@@ -507,36 +507,71 @@ function clearEditor() {
   editor.innerHTML = "";
 }
 
-  //PDF
+//PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
-  const editorElement = document.getElementById("editor");
+  const editor = document.getElementById("editor");
 
-  // Wait for all fonts to load
-  await document.fonts.ready;
+  try {
+    // Wait for all fonts to load
+    await document.fonts.ready;
 
-  // Take a screenshot of the editor
-  const canvas = await html2canvas(editorElement, {
-    scale: 3,               // high-res image
-    backgroundColor: "#ffffff",
-    useCORS: true,
-    letterRendering: true
-  });
+    // Temporarily expand editor to fit all content
+    const originalHeight = editor.style.height;
+    editor.style.height = editor.scrollHeight + "px";
 
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF("p", "pt", "a4");
+    // Capture editor as canvas
+    const canvas = await html2canvas(editor, {
+      scale: 3,               // high-res image
+      backgroundColor: "#ffffff",
+      useCORS: true,
+      letterRendering: true
+    });
 
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = pdf.internal.pageSize.getHeight();
-  const margin = 20;
+    // Restore original editor height
+    editor.style.height = originalHeight;
 
-  const imgWidth = pdfWidth - 2 * margin;
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "pt", "a4");
 
-  // Add the canvas as a single image
-  const imgData = canvas.toDataURL("image/png");
-  pdf.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const margin = 20;
 
-  pdf.save("Composition.pdf");
+    const imgWidth = pdfWidth - 2 * margin;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let remainingHeight = canvas.height;
+    let sourceY = 0;
+
+    // Slice into multiple pages if content is tall
+    while (remainingHeight > 0) {
+      const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
+      const pageCanvas = document.createElement("canvas");
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pageCanvasHeight;
+      const ctx = pageCanvas.getContext("2d");
+
+      ctx.drawImage(
+        canvas,
+        0, sourceY, canvas.width, pageCanvasHeight,
+        0, 0, canvas.width, pageCanvasHeight
+      );
+
+      const pageImgData = pageCanvas.toDataURL("image/png");
+      pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
+
+      remainingHeight -= pageCanvasHeight;
+      sourceY += pageCanvasHeight;
+
+      if (remainingHeight > 0) pdf.addPage();
+    }
+
+    pdf.save("Composition.pdf");
+
+  } catch (err) {
+    console.error("Error creating PDF:", err);
+    alert("Failed to create PDF. Make sure all fonts are loaded and try again.");
+  }
 });
 
 // Utility: ArrayBuffer → Base64
