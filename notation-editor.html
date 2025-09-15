@@ -630,33 +630,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // AdBlocker
 (function(){
-    const overlay = document.getElementById('adb-enabled');
+  var overlay = document.getElementById('adblock-overlay');
 
-    function showOverlay() { overlay.style.display = 'flex'; }
-    function hideOverlay() { overlay.style.display = 'none'; }
+  function adBlockDetected() {
+    overlay.style.display = 'flex';  // Show fullscreen message
+  }
 
-    // Create a bait element
-    const bait = document.createElement('div');
-    bait.className = 'adsbygoogle';
-    bait.style.height = '1px';
-    bait.style.width = '1px';
-    bait.style.position = 'absolute';
-    bait.style.top = '-1000px';
-    document.body.appendChild(bait);
+  function adBlockNotDetected() {
+    overlay.style.display = 'none';  // Hide message
+  }
 
-    setTimeout(() => {
-        const blocked = !document.body.contains(bait) || bait.offsetHeight === 0;
-        if(blocked) showOverlay();
-        else hideOverlay();
-        document.body.removeChild(bait);
-    }, 200); // small delay to let AdBlock act
+  if(typeof window.adblockDetector === 'undefined') {
+    console.warn("AdBlock detector not loaded!");
+    // fallback: hide overlay
+    adBlockNotDetected();
+  } else {
+    window.adblockDetector.init({
+      debug: false,
+      found: adBlockDetected,
+      notFound: adBlockNotDetected,
+      complete: function(result) {
+        if(result) adBlockDetected();
+        else adBlockNotDetected();
+      }
+    });
+  }
 })();
 </script>
   
-  <!-- AdBlock message overlay -->
-<div id="adb-enabled" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; display:flex; justify-content:center; align-items:center;">
-  <div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; text-align:center;">
-    <h2 style="color:#800000;">AdBlocker Detected</h2>
+<!-- Include AdBlock Detector -->
+<script src="./adblockDetector.js"></script>
+
+<!-- Fullscreen message -->
+<div id="adblock-overlay" style="
+  display:none;
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.85);
+  color:white;
+  font-size:1.5rem;
+  z-index:99999;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+">
+  <h1>AdBlock Detected</h1>
     <p>
       It looks like you’re using an ad blocker.  
       Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
@@ -665,9 +686,8 @@ document.addEventListener("DOMContentLoaded", () => {
       Please disable your ad blocker to continue using the site.  
       Once disabled, refresh the page to enjoy the full experience.
     </p>
- <button onclick="window.location.reload()" style="padding:10px 16px; background:#800000; color:#fff; border:none; border-radius:8px; cursor:pointer;">Refresh Page</button>
-  </div>
 </div>
+
 
 </body>
 </html>
