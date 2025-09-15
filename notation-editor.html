@@ -507,20 +507,19 @@ function insertAtCaret(content) {
   editor.focus();
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
-
   const range = sel.getRangeAt(0);
   range.deleteContents();
 
   let node;
-    if (notationMode && selectedFont) {
+
+  if (notationMode && selectedFont) {
     if ("qweQWE".includes(content)) {
-      // Insert SVG for Meend
+      // Insert Meend SVG WITHOUT font class
       const wrapper = document.createElement("span");
-      wrapper.className = selectedFont;
-      wrapper.innerHTML = meendSVGs[content];
+      wrapper.innerHTML = meendSVGs[content];  // NO class here
       node = wrapper;
     } else {
-      // Regular notation text
+      // Regular notation text wrapped in selected font
       node = document.createElement("span");
       node.className = selectedFont;
       node.textContent = content;
