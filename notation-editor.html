@@ -509,79 +509,63 @@ function clearEditor() {
 
 //PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
-  const editor = document.getElementById("editor");
+  const editorElement = document.getElementById("editor");
 
-  try {
-    // Ask for screen capture permission
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: { cursor: "never" },
-      audio: false
-    });
+  // Wait for all fonts to load
+  await document.fonts.ready;
 
-    // Create a video element to draw the screenshot
-    const video = document.createElement("video");
-    video.srcObject = stream;
-    await video.play();
+  // Use html2canvas to capture the editor
+  const canvas = await html2canvas(editorElement, {
+    scale: 3,               // high-res image
+    backgroundColor: "#ffffff",
+    useCORS: true,
+    letterRendering: true,
+    scrollY: -window.scrollY, // capture full content
+  });
 
-    // Wait for video to be ready
-    await new Promise((resolve) => (video.onloadedmetadata = resolve));
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "pt", "a4");
 
-    // Draw the video frame to a canvas
-    const canvas = document.createElement("canvas");
-    canvas.width = editor.offsetWidth;
-    canvas.height = editor.scrollHeight; // full content height
-    const ctx = canvas.getContext("2d");
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+  const margin = 20;
 
-    // Draw editor only (crop video to editor area)
-    ctx.drawImage(video, editor.offsetLeft, editor.offsetTop, editor.offsetWidth, editor.scrollHeight, 0, 0, editor.offsetWidth, editor.scrollHeight);
+  const imgWidth = pdfWidth - 2 * margin;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    // Stop the stream immediately
-    stream.getTracks().forEach(track => track.stop());
+  let remainingHeight = canvas.height;
+  let sourceY = 0;
 
-    // Convert canvas to image
-    const imgData = canvas.toDataURL("image/png");
+  while (remainingHeight > 0) {
+    // Calculate height for this page
+    const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
 
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF("p", "pt", "a4");
+    // Temporary canvas for this page
+    const pageCanvas = document.createElement("canvas");
+    pageCanvas.width = canvas.width;
+    pageCanvas.height = pageCanvasHeight;
+    const ctx = pageCanvas.getContext("2d");
 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const margin = 20;
+    // Draw portion of original canvas
+    ctx.drawImage(
+      canvas,
+      0, sourceY, canvas.width, pageCanvasHeight,
+      0, 0, canvas.width, pageCanvasHeight
+    );
 
-    const imgWidth = pdfWidth - 2 * margin;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    // Add page image to PDF
+    const pageImgData = pageCanvas.toDataURL("image/png");
+    pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
 
-    let remainingHeight = canvas.height;
-    let sourceY = 0;
+    remainingHeight -= pageCanvasHeight;
+    sourceY += pageCanvasHeight;
 
-    while (remainingHeight > 0) {
-      const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
-      const pageCanvas = document.createElement("canvas");
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = pageCanvasHeight;
-      const pageCtx = pageCanvas.getContext("2d");
-
-      pageCtx.drawImage(
-        canvas,
-        0, sourceY, canvas.width, pageCanvasHeight,
-        0, 0, canvas.width, pageCanvasHeight
-      );
-
-      const pageImgData = pageCanvas.toDataURL("image/png");
-      pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
-
-      remainingHeight -= pageCanvasHeight;
-      sourceY += pageCanvasHeight;
-
-      if (remainingHeight > 0) pdf.addPage();
-    }
-
-    pdf.save("Composition.pdf");
-  } catch (err) {
-    console.error("Error capturing screen:", err);
-    alert("Screen capture failed. Please allow permission and try again.");
+    if (remainingHeight > 0) pdf.addPage();
   }
+
+  pdf.save("Composition.pdf");
 });
+
 
 
 // Utility: ArrayBuffer → Base64
