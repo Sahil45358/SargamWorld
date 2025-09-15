@@ -616,37 +616,44 @@ document.addEventListener("DOMContentLoaded", function() {
   const overlay = document.getElementById("adblock-overlay");
   const message = document.getElementById("adblock-message");
 
-  function show() { overlay.style.display = "block"; message.style.display = "flex"; }
-  function hide() { overlay.style.display = "none"; message.style.display = "none"; }
+  function show() {
+    overlay.style.display = "block";
+    message.style.display = "flex";
+  }
+  function hide() {
+    overlay.style.display = "none";
+    message.style.display = "none";
+  }
 
-  async function checkAdblock() {
-    return new Promise(resolve => {
+  // Create bait element in a way that even aggressive blockers might block
+  function detectAdblock() {
+    return new Promise((resolve) => {
       const bait = document.createElement("div");
-      bait.className = "adsbygoogle";
-      bait.style.width = "1px";
+      bait.className = "ads-box"; // changed class to something that triggers blockers
       bait.style.height = "1px";
+      bait.style.width = "1px";
       bait.style.position = "absolute";
       bait.style.top = "-1000px";
       document.body.appendChild(bait);
 
-      setTimeout(() => {
-        const blocked =
-          !document.body.contains(bait) ||
-          bait.offsetHeight === 0 ||
-          window.getComputedStyle(bait).display === "none";
+      window.setTimeout(() => {
+        const blocked = !document.body.contains(bait) || bait.offsetHeight === 0;
         document.body.removeChild(bait);
         resolve(blocked);
-      }, 300);
+      }, 200); // 200ms delay to allow blockers to act
     });
   }
 
   async function runCheck() {
-    if (await checkAdblock()) show(); else hide();
+    const blocked = await detectAdblock();
+    if (blocked) show();
+    else hide();
   }
 
   runCheck();
-  setInterval(runCheck, 5000);
+  setInterval(runCheck, 5000); // re-check every 5s
 });
+
 </script>
   
 <!-- AdBlock Notice -->
