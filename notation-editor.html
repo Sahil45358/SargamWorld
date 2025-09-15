@@ -250,6 +250,25 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
+/* Meend glyphs across all notation fonts */
+.ome-bhatkhande-hindi,
+.ome-bhatkhande-punjabi,
+.ome-bhatkhande-bangla,
+.ome-swarlipi,
+.ome-bhatkhande-english {
+  /* only adjust for meend characters */
+}
+
+.ome-bhatkhande-hindi:has(> :where(:first-child):is(:not(:empty))),
+.ome-bhatkhande-punjabi:has(> :where(:first-child):is(:not(:empty))),
+.ome-bhatkhande-bangla:has(> :where(:first-child):is(:not(:empty))),
+.ome-swarlipi:has(> :where(:first-child):is(:not(:empty))),
+.ome-bhatkhande-english:has(> :where(:first-child):is(:not(:empty))) {
+  line-height: 3;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline-block;
+}
 
 
   </style>
