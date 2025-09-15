@@ -261,13 +261,12 @@
   z-index: 99998;
 }
 
-/* Centered popup */
 #adblock-message {
   display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  display: flex;
+  display: flex;              /* flex for centering */
   align-items: center;
   justify-content: center;
   z-index: 99999;
@@ -278,7 +277,7 @@
 
 #adblock-message .adblock-box {
   max-width: 480px;
-  width: 100%;
+  width: 90%;
   background: #fff;
   border-radius: 14px;
   padding: 35px 25px;
@@ -286,33 +285,6 @@
   border: 1px solid #ddd;
 }
 
-#adblock-message h2 {
-  font-size: 1.4rem;
-  color: #800000; /* your theme accent */
-  margin-bottom: 15px;
-}
-
-#adblock-message p {
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.6;
-  margin: 0 0 12px;
-}
-
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  #adblock-message .adblock-box {
-    padding: 25px 20px;
-    border-radius: 10px;
-  }
-  #adblock-message h2 {
-    font-size: 1.2rem;
-  }
-  #adblock-message p {
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-}
 
   
   </style>
@@ -640,27 +612,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
-
+<script>
 document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById("adblock-overlay");
-  const popup = document.getElementById("adblock-message");
+  const message = document.getElementById("adblock-message");
 
-  function showAdblockPopup() {
+  function showAdblockMessage() {
     overlay.style.display = "block";
-    popup.style.display = "flex";
-    document.body.style.overflow = "hidden"; // Prevent scrolling
+    message.style.display = "flex";
   }
 
-  function hideAdblockPopup() {
+  function hideAdblockMessage() {
     overlay.style.display = "none";
-    popup.style.display = "none";
-    document.body.style.overflow = "auto";
+    message.style.display = "none";
   }
 
   function checkAdblock() {
     return new Promise((resolve) => {
       const bait = document.createElement("div");
-      bait.className = "adsbox";
+      bait.className = "ad adsbox adsbygoogle banner-ad ad-unit sponsored";
       bait.style.width = "1px";
       bait.style.height = "1px";
       bait.style.position = "absolute";
@@ -668,7 +638,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       document.body.appendChild(bait);
 
-      setTimeout(() => {
+      window.setTimeout(() => {
         const blocked =
           !document.body.contains(bait) ||
           bait.offsetHeight === 0 ||
@@ -685,15 +655,19 @@ document.addEventListener("DOMContentLoaded", function () {
   async function runCheck() {
     const isBlocked = await checkAdblock();
     if (isBlocked) {
-      showAdblockPopup();
+      showAdblockMessage();
     } else {
-      hideAdblockPopup();
+      hideAdblockMessage();
     }
   }
 
+  // Run on load
   runCheck();
+
+  // Keep checking every 5s
   setInterval(runCheck, 5000);
 });
+</script>
 
 
 </script>
@@ -703,17 +677,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <div id="adblock-message">
   <div class="adblock-box">
-    <h2>Ad Blocker Detected 🚫</h2>
+    <h2>Ad Blocker Detected</h2>
     <p>
       It looks like you’re using an ad blocker.  
       Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
     </p>
     <p>
       Please disable your ad blocker to continue using the site.  
-      Once disabled, refresh the page to enjoy the full experience 
+      Once disabled, refresh the page to enjoy the full experience.
     </p>
   </div>
 </div>
-  
+
+</div>
+
 </body>
 </html>
