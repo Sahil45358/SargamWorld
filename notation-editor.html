@@ -638,37 +638,19 @@ document.addEventListener("DOMContentLoaded", () => {
   closeBtn.addEventListener('click', hideAdblockCard);
 });
 </script>
-  
-<!-- Include AdBlock Detector -->
-<script src="./adblockDetector.js"></script>
-
-<!-- Fullscreen message -->
-<div id="adblock-overlay" style="
-  display:none;
-  position:fixed;
-  top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,0.85);
-  color:white;
-  font-size:1.5rem;
-  z-index:99999;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:20px;
-">
-  <h1>AdBlock Detected</h1>
-    <p>
-      It looks like you’re using an ad blocker.  
-      Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
-    </p>
-    <p>
-      Please disable your ad blocker to continue using the site.  
-      Once disabled, refresh the page to enjoy the full experience.
-    </p>
+  <div id="adblock-overlay">
+  <div id="adblock-message">
+    <h2>AdBlock Detected</h2>
+    <p>
+      It looks like you’re using an ad blocker. Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
+    </p>
+    <p>
+      Please disable your ad blocker to continue using the site. Once disabled, refresh the page to enjoy the full experience.
+    </p>
+    <button id="adblock-close">I understand</button>
+  </div>
 </div>
-
-
+Step 4: R
+<div id="ad-test" class="ads ad-box" style="display:none !important;"></div>
 </body>
 </html>
