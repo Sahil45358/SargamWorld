@@ -249,42 +249,7 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
-#adblock-overlay {
-  /* Start by keeping it hidden and a position */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.75);
-  z-index: 99999;
-  display: none; /* Hide by default */
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-  pointer-events: none;
-}
-#adblock-overlay.show {
-  display: flex;
-  opacity: 1;
-  pointer-events: all;
-}
 
-#adblock-message {
-  background: #fff;
-  max-width: 480px;
-  width: 90%;
-  padding: 30px 20px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
-}
-#adblock-overlay.show #adblock-message {
-  transform: scale(1);
-}
 
   </style>
 
@@ -293,18 +258,6 @@
 </head>
 <body>
 
-<div id="adblock-overlay">
-  <div id="adblock-message">
-    <h2>AdBlock Detected</h2>
-    <p>
-      It looks like you’re using an ad blocker. Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
-    </p>
-    <p>
-      Please disable your ad blocker to continue using the site. Once disabled, refresh the page to enjoy the full experience.
-    </p>
-    <button id="adblock-close">I understand</button>
-  </div>
-</div>
   
 <header class="site-header">
   <div class="nav-inner">
@@ -633,34 +586,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Ad blocker detection using "ad bait"
-  function checkAdBlock() {
-    // Create an ad bait element with a common ad class
-    const adBait = document.createElement('div');
-    adBait.className = 'adsbox ad-container ad-wrapper';
-    adBait.style.cssText = 'position: absolute; top: -1000px; left: -1000px; width: 1px; height: 1px;';
-    document.body.appendChild(adBait);
-
-    // Wait a moment for the ad blocker to act
-    setTimeout(() => {
-      const adBaitStyle = window.getComputedStyle(adBait);
-
-      // Check if the element has been hidden
-      if (adBaitStyle.display === 'none' || adBaitStyle.visibility === 'hidden') {
-        // Adblocker detected! Show the message.
-        if (overlay) {
-          overlay.classList.add('show');
-        }
-      }
-
-      // Clean up the ad bait element
-      document.body.removeChild(adBait);
-    }, 100); // 100ms is usually enough
-  }
 
   checkAdBlock();
 });
 </script>
-
+  
+<script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
+<div class="commonninja_component pid-bf197859-7990-487e-9ccf-7f7f2052ecc0"></div>
+  
 </body>
 </html>
+
