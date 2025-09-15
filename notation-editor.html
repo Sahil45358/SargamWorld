@@ -512,23 +512,24 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editor = document.getElementById("editor");
 
   try {
-    // Wait for all fonts to load
-    await document.fonts.ready;
-
-    // Temporarily expand editor to fit all content
+    // Temporarily store original height
     const originalHeight = editor.style.height;
+
+    // Expand editor to fit all content
     editor.style.height = editor.scrollHeight + "px";
 
-    // Capture editor as canvas
+    // Capture the entire editor content
     const canvas = await html2canvas(editor, {
-      scale: 3,               // high-res image
+      scale: 2,
       backgroundColor: "#ffffff",
       useCORS: true,
       letterRendering: true
     });
 
-    // Restore original editor height
+    // Restore original height
     editor.style.height = originalHeight;
+
+    const imgData = canvas.toDataURL("image/png");
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "pt", "a4");
@@ -543,7 +544,7 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
     let remainingHeight = canvas.height;
     let sourceY = 0;
 
-    // Slice into multiple pages if content is tall
+    // Slice image into multiple pages if content is long
     while (remainingHeight > 0) {
       const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
       const pageCanvas = document.createElement("canvas");
@@ -567,6 +568,13 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
     }
 
     pdf.save("Composition.pdf");
+
+  } catch (err) {
+    console.error("Error capturing editor:", err);
+    alert("Failed to create PDF. Make sure fonts are loaded and try again.");
+  }
+});
+
 
   } catch (err) {
     console.error("Error creating PDF:", err);
