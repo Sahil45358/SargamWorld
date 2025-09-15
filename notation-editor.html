@@ -141,16 +141,47 @@
   text-rendering: optimizeLegibility;
 }
 
-    /* Give extra headroom to all q, w, e, Q, W, E inside editor */
-#editor span {
-  display: inline-block;
-}
+/* Meend glyphs across ALL fonts */
+#editor span.ome-bhatkhande-hindi[data-symbol="q"],
+#editor span.ome-bhatkhande-hindi[data-symbol="w"],
+#editor span.ome-bhatkhande-hindi[data-symbol="e"],
+#editor span.ome-bhatkhande-hindi[data-symbol="Q"],
+#editor span.ome-bhatkhande-hindi[data-symbol="W"],
+#editor span.ome-bhatkhande-hindi[data-symbol="E"],
 
-#editor span:where(:is(:not(:empty))) {
+#editor span.ome-bhatkhande-punjabi[data-symbol="q"],
+#editor span.ome-bhatkhande-punjabi[data-symbol="w"],
+#editor span.ome-bhatkhande-punjabi[data-symbol="e"],
+#editor span.ome-bhatkhande-punjabi[data-symbol="Q"],
+#editor span.ome-bhatkhande-punjabi[data-symbol="W"],
+#editor span.ome-bhatkhande-punjabi[data-symbol="E"],
+
+#editor span.ome-bhatkhande-bangla[data-symbol="q"],
+#editor span.ome-bhatkhande-bangla[data-symbol="w"],
+#editor span.ome-bhatkhande-bangla[data-symbol="e"],
+#editor span.ome-bhatkhande-bangla[data-symbol="Q"],
+#editor span.ome-bhatkhande-bangla[data-symbol="W"],
+#editor span.ome-bhatkhande-bangla[data-symbol="E"],
+
+#editor span.ome-bhatkhande-english[data-symbol="q"],
+#editor span.ome-bhatkhande-english[data-symbol="w"],
+#editor span.ome-bhatkhande-english[data-symbol="e"],
+#editor span.ome-bhatkhande-english[data-symbol="Q"],
+#editor span.ome-bhatkhande-english[data-symbol="W"],
+#editor span.ome-bhatkhande-english[data-symbol="E"],
+
+#editor span.ome-swarlipi[data-symbol="q"],
+#editor span.ome-swarlipi[data-symbol="w"],
+#editor span.ome-swarlipi[data-symbol="e"],
+#editor span.ome-swarlipi[data-symbol="Q"],
+#editor span.ome-swarlipi[data-symbol="W"],
+#editor span.ome-swarlipi[data-symbol="E"] {
+  display: inline-block;
   line-height: 3;
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 
 
 /* Optional: even smaller on very small screens */
