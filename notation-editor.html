@@ -138,7 +138,7 @@
   direction: ltr;
   text-align: left;
   line-height: 2;       /* ⬅ added to give glyphs vertical room */
-  text-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
 }
 
 
@@ -514,7 +514,7 @@ const canvas = await html2canvas(editorElement, {
   scale: 2,
   backgroundColor: "#ffffff",
   letterRendering: true,
-  foreignObjectRendering: true   // ⬅ use SVG foreignObject for accurate glyphs
+  useCORS: true   // allow Omenad fonts to render
 });
   
   const { jsPDF } = window.jspdf;
