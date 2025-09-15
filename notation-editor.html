@@ -248,6 +248,72 @@
   #editor span.ome-bhatkhande-bangla { font-family: 'ome_bhatkhande_bangla'; }
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
+
+
+/* Overlay background */
+#adblock-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(5px);
+  z-index: 99998;
+}
+
+/* Centered popup */
+#adblock-message {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  text-align: center;
+  padding: 15px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+#adblock-message .adblock-box {
+  max-width: 480px;
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  padding: 35px 25px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  border: 1px solid #ddd;
+}
+
+#adblock-message h2 {
+  font-size: 1.4rem;
+  color: #800000; /* your theme accent */
+  margin-bottom: 15px;
+}
+
+#adblock-message p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  #adblock-message .adblock-box {
+    padding: 25px 20px;
+    border-radius: 10px;
+  }
+  #adblock-message h2 {
+    font-size: 1.2rem;
+  }
+  #adblock-message p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
   
   </style>
 
@@ -279,6 +345,24 @@
   </div>
 </header>
 
+<!-- AdBlock Notice -->
+<div id="adblock-overlay"></div>
+
+<div id="adblock-message">
+  <div class="adblock-box">
+    <h2>Ad Blocker Detected 🚫</h2>
+    <p>
+      It looks like you’re using an ad blocker.  
+      Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
+    </p>
+    <p>
+      Please disable your ad blocker to continue using the site.  
+      Once disabled, refresh the page to enjoy the full experience 🙏
+    </p>
+  </div>
+</div>
+
+  
 <main class="container">
   <section class="hero">
     <h1>Bhatkhande Notation Editor</h1>
@@ -304,8 +388,6 @@
   <option value="ome-bhatkhande-bangla">Bhatkhande Bangla</option>
   <option value="ome-bhatkhande-english">Bhatkhande English</option>
   <option value="ome-swarlipi">Ome Swarlipi</option>
-
-</select>
 
 </select>
 
@@ -571,6 +653,34 @@ document.addEventListener("DOMContentLoaded", () => {
     navLinks.classList.toggle("show");
   });
 });
+
+  // AdBlocker
+  function checkAdBlocker() {
+  const bait = document.createElement("div");
+  bait.className = "adsbox";
+  bait.style.height = "1px";
+  document.body.appendChild(bait);
+
+  setTimeout(() => {
+    const blocked = bait.offsetHeight === 0;
+    bait.remove();
+
+    if (blocked) {
+      document.getElementById("adblock-message").style.display = "flex";
+      document.getElementById("adblock-overlay").style.display = "block";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.getElementById("adblock-message").style.display = "none";
+      document.getElementById("adblock-overlay").style.display = "none";
+      document.body.style.overflow = "";
+    }
+  }, 200);
+}
+
+document.addEventListener("DOMContentLoaded", checkAdBlocker);
+setInterval(checkAdBlocker, 5000);
+
+  
 </script>
 
 </body>
