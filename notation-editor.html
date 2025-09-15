@@ -138,6 +138,7 @@
   scroll-behavior: smooth;
   direction: ltr;
   text-align: left;
+   line-height: 2.5;
 }
 
 
@@ -248,19 +249,6 @@
   #editor span.ome-bhatkhande-bangla { font-family: 'ome_bhatkhande_bangla'; }
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
-
-/* Target only Meend characters */
-#editor span[data-symbol="q"],
-#editor span[data-symbol="w"],
-#editor span[data-symbol="e"],
-#editor span[data-symbol="Q"],
-#editor span[data-symbol="W"],
-#editor span[data-symbol="E"] {
-  display: inline-block;
-  line-height: 2.5;   /* increase vertical space */
-  vertical-align: bottom; /* align with baseline */
-}
-
 
   </style>
 
@@ -518,11 +506,18 @@ editor.addEventListener("keydown", (e) => {
 function clearEditor() {
   editor.innerHTML = "";
 }
+
+  //PDF
 document.getElementById("downloadPDF").addEventListener("click", async () => {
   const editorElement = document.getElementById("editor");
 
-  // Render editor as canvas
-  const canvas = await html2canvas(editorElement, { scale: 2, backgroundColor: "#ffffff" });
+  // Take a high-res screenshot of the editor
+  const canvas = await html2canvas(editorElement, {
+    scale: 3,               // higher scale for sharp PDF
+    backgroundColor: "#ffffff",
+    useCORS: true,
+    letterRendering: true
+  });
 
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "pt", "a4");
@@ -538,23 +533,22 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
   let sourceY = 0;
 
   while (remainingHeight > 0) {
-    // Calculate the height in the source canvas for this page
+    // Height in canvas corresponding to one PDF page
     const pageCanvasHeight = Math.min(remainingHeight, (canvas.height * (pdfHeight - 2 * margin)) / imgHeight);
 
-    // Create temporary canvas for this page
+    // Temporary canvas for this page
     const pageCanvas = document.createElement("canvas");
     pageCanvas.width = canvas.width;
     pageCanvas.height = pageCanvasHeight;
     const ctx = pageCanvas.getContext("2d");
 
-    // Draw the slice from original canvas
+    // Draw slice from original canvas
     ctx.drawImage(
       canvas,
-      0, sourceY, canvas.width, pageCanvasHeight,  // source
-      0, 0, canvas.width, pageCanvasHeight         // destination
+      0, sourceY, canvas.width, pageCanvasHeight, // source
+      0, 0, canvas.width, pageCanvasHeight        // destination
     );
 
-    // Add page image to PDF
     const pageImgData = pageCanvas.toDataURL("image/png");
     pdf.addImage(pageImgData, "PNG", margin, margin, imgWidth, (pageCanvasHeight * imgWidth) / canvas.width);
 
@@ -566,6 +560,7 @@ document.getElementById("downloadPDF").addEventListener("click", async () => {
 
   pdf.save("Composition.pdf");
 });
+
 
 
 // Utility: ArrayBuffer → Base64
