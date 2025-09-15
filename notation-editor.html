@@ -292,25 +292,14 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
-/* Meend glyphs across all notation fonts */
-.ome-bhatkhande-hindi,
-.ome-bhatkhande-punjabi,
-.ome-bhatkhande-bangla,
-.ome-swarlipi,
-.ome-bhatkhande-english {
-  /* only adjust for meend characters */
+#editor .meend-glyph {
+  display: inline-block;
+  vertical-align: bottom; /* aligns with baseline */
+  margin: 0 2px;          /* small spacing */
+  height: 1em;            /* scales with font size */
+  width: auto;
 }
 
-.ome-bhatkhande-hindi:has(> :where(:first-child):is(:not(:empty))),
-.ome-bhatkhande-punjabi:has(> :where(:first-child):is(:not(:empty))),
-.ome-bhatkhande-bangla:has(> :where(:first-child):is(:not(:empty))),
-.ome-swarlipi:has(> :where(:first-child):is(:not(:empty))),
-.ome-bhatkhande-english:has(> :where(:first-child):is(:not(:empty))) {
-  line-height: 3;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  display: inline-block;
-}
 
 
   </style>
@@ -523,11 +512,19 @@ function insertAtCaret(content) {
   range.deleteContents();
 
   let node;
-  if (notationMode && selectedFont) {
-    // Wrap new text in a <span> with the class from webfonts
-    node = document.createElement("span");
-    node.className = selectedFont;  // IMPORTANT: use class, not font-family
-    node.textContent = content;
+    if (notationMode && selectedFont) {
+    if ("qweQWE".includes(content)) {
+      // Insert SVG for Meend
+      const wrapper = document.createElement("span");
+      wrapper.className = selectedFont;
+      wrapper.innerHTML = meendSVGs[content];
+      node = wrapper;
+    } else {
+      // Regular notation text
+      node = document.createElement("span");
+      node.className = selectedFont;
+      node.textContent = content;
+    }
   } else {
     node = document.createTextNode(content);
   }
@@ -542,6 +539,14 @@ function insertAtCaret(content) {
 }
 
 
+const meendSVGs = {
+  "q": `<svg class="meend-glyph" xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40"><path d="M2,30 C5,10 15,10 18,30" stroke="#000" stroke-width="2" fill="none"/></svg>`,
+  "w": `<svg class="meend-glyph" xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40"><path d="M2,32 C6,12 14,12 18,32" stroke="#000" stroke-width="2" fill="none"/></svg>`,
+  "e": `<svg class="meend-glyph" xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40"><path d="M2,28 C5,8 15,8 18,28" stroke="#000" stroke-width="2" fill="none"/></svg>`,
+  "Q": `<svg class="meend-glyph" xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40"><path d="M2,30 C5,5 15,5 18,30" stroke="#000" stroke-width="2" fill="none"/></svg>`,
+  "W": `<svg class="meend-glyph" xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40"><path d="M2,32 C5,6 15,6 18,32" stroke="#000" stroke-width="2" fill="none"/></svg>`,
+  "E": `<svg class="meend-glyph" xmlns="http://www.w3.org/2000/svg" width="20" height="40" viewBox="0 0 20 40"><path d="M2,28 C5,4 15,4 18,28" stroke="#000" stroke-width="2" fill="none"/></svg>`
+};
 
 
 // Virtual keyboard buttons
