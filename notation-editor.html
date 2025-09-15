@@ -249,61 +249,43 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
- /* Fullscreen overlay */
-  #adblock-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.75);
-    z-index: 99999;
-    display: none; /* hidden by default */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: all; /* blocks clicks behind */
-  }
+#adblock-overlay {
+  /* Start by keeping it hidden and a position */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  z-index: 99999;
+  display: none; /* Hide by default */
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+#adblock-overlay.show {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
 
-  /* Modal box */
-  #adblock-message {
-    background: #fff;
-    max-width: 480px;
-    width: 90%;
-    padding: 30px 20px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  }
+#adblock-message {
+  background: #fff;
+  max-width: 480px;
+  width: 90%;
+  padding: 30px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+#adblock-overlay.show #adblock-message {
+  transform: scale(1);
+}
 
-  #adblock-message h2 {
-    margin-bottom: 15px;
-    color: #800000;
-  }
-
-  #adblock-message p {
-    font-size: 1rem;
-    color: #333;
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-
-  #adblock-message button {
-    background: #800000;
-    color: #fff;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-
-  #adblock-message button:hover {
-    background: #9b1717;
-  }
-
-  
   </style>
 
   <!-- Bhatkhande Web Font -->
@@ -629,33 +611,32 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
-(function(){
-  var overlay = document.getElementById('adblock-overlay');
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById('adblock-overlay');
+  const closeBtn = document.getElementById('adblock-close'); // Add a close button
+  const adTestElement = document.getElementById('ad-test');
 
-  function adBlockDetected() {
-    overlay.style.display = 'flex';  // Show fullscreen message
-  }
+  // Function to show the card
+  function showAdblockCard() {
+    overlay.classList.add('show');
+  }
 
-  function adBlockNotDetected() {
-    overlay.style.display = 'none';  // Hide message
-  }
+  // Function to hide the card
+  function hideAdblockCard() {
+    overlay.classList.remove('show');
+  }
 
-  if(typeof window.adblockDetector === 'undefined') {
-    console.warn("AdBlock detector not loaded!");
-    // fallback: hide overlay
-    adBlockNotDetected();
-  } else {
-    window.adblockDetector.init({
-      debug: false,
-      found: adBlockDetected,
-      notFound: adBlockNotDetected,
-      complete: function(result) {
-        if(result) adBlockDetected();
-        else adBlockNotDetected();
-      }
-    });
-  }
-})();
+  // Your new detection logic
+  setTimeout(() => {
+    // Check if the element is hidden by an ad blocker
+    if (adTestElement.offsetParent === null) {
+      showAdblockCard();
+    }
+  }, 1000); // Add a small delay to ensure page elements are rendered
+
+  // Close button listener
+  closeBtn.addEventListener('click', hideAdblockCard);
+});
 </script>
   
 <!-- Include AdBlock Detector -->
