@@ -141,6 +141,17 @@
   text-rendering: optimizeLegibility;
 }
 
+    /* Give extra headroom to all q, w, e, Q, W, E inside editor */
+#editor span {
+  display: inline-block;
+}
+
+#editor span:where(:is(:not(:empty))) {
+  line-height: 3;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 
 /* Optional: even smaller on very small screens */
 @media (max-width: 480px) {
