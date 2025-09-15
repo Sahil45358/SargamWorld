@@ -345,22 +345,7 @@
   </div>
 </header>
 
-<!-- AdBlock Notice -->
-<div id="adblock-overlay"></div>
 
-<div id="adblock-message">
-  <div class="adblock-box">
-    <h2>Ad Blocker Detected 🚫</h2>
-    <p>
-      It looks like you’re using an ad blocker.  
-      Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
-    </p>
-    <p>
-      Please disable your ad blocker to continue using the site.  
-      Once disabled, refresh the page to enjoy the full experience 🙏
-    </p>
-  </div>
-</div>
 
   
 <main class="container">
@@ -655,18 +640,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   // AdBlocker
+
 document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById("adblock-overlay");
-  const message = document.getElementById("adblock-message");
+  const popup = document.getElementById("adblock-popup");
 
-  function showAdblockMessage() {
+  function showAdblockPopup() {
     overlay.style.display = "block";
-    message.style.display = "flex";
+    popup.style.display = "flex";
   }
 
-  function hideAdblockMessage() {
+  function hideAdblockPopup() {
     overlay.style.display = "none";
-    message.style.display = "none";
+    popup.style.display = "none";
   }
 
   function checkAdblock() {
@@ -697,19 +683,36 @@ document.addEventListener("DOMContentLoaded", function () {
   async function runCheck() {
     const isBlocked = await checkAdblock();
     if (isBlocked) {
-      showAdblockMessage();
+      showAdblockPopup();
     } else {
-      hideAdblockMessage();
+      hideAdblockPopup();
     }
   }
 
-  // Run on load
+  // Run on load + repeat
   runCheck();
-
-  // Keep checking every 5s
   setInterval(runCheck, 5000);
 });
-</script>
 
+
+</script>
+  
+<!-- AdBlock Notice -->
+<div id="adblock-overlay"></div>
+
+<div id="adblock-message">
+  <div class="adblock-box">
+    <h2>Ad Blocker Detected 🚫</h2>
+    <p>
+      It looks like you’re using an ad blocker.  
+      Some important features and musical notation fonts on <strong>SargamWorld</strong> will not load properly while it is active.
+    </p>
+    <p>
+      Please disable your ad blocker to continue using the site.  
+      Once disabled, refresh the page to enjoy the full experience 
+    </p>
+  </div>
+</div>
+  
 </body>
 </html>
