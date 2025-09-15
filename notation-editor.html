@@ -630,32 +630,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // AdBlocker
 (function(){
-    var enabledEl = document.getElementById('adb-enabled');
-    var disabledEl = document.getElementById('adb-not-enabled');
+    const overlay = document.getElementById('adb-enabled');
 
-    function adBlockDetected() {
-        enabledEl.style.display = 'flex'; // show overlay
-        disabledEl.style.display = 'none';
-    }
-    function adBlockNotDetected() {
-        disabledEl.style.display = 'block';
-        enabledEl.style.display = 'none';
-    }
+    function showOverlay() { overlay.style.display = 'flex'; }
+    function hideOverlay() { overlay.style.display = 'none'; }
 
-    if(typeof window.adblockDetector === 'undefined') {
-        adBlockDetected();
-    } else {
-        window.adblockDetector.init({
-            debug: true,
-            found: function(){
-                adBlockDetected();
-            },
-            notFound: function(){
-                adBlockNotDetected();
-            }
-        });
-    }
-}());
+    // Create a bait element
+    const bait = document.createElement('div');
+    bait.className = 'adsbygoogle';
+    bait.style.height = '1px';
+    bait.style.width = '1px';
+    bait.style.position = 'absolute';
+    bait.style.top = '-1000px';
+    document.body.appendChild(bait);
+
+    setTimeout(() => {
+        const blocked = !document.body.contains(bait) || bait.offsetHeight === 0;
+        if(blocked) showOverlay();
+        else hideOverlay();
+        document.body.removeChild(bait);
+    }, 200); // small delay to let AdBlock act
+})();
 </script>
   
   <!-- AdBlock message overlay -->
