@@ -484,7 +484,7 @@ fontSelector.addEventListener("change", () => {
 });
 
 // Insert text at caret (wrap only new notation in font)
-// Insert text at caret (handles notation + meend)
+// When inserting text in notation mode
 function insertAtCaret(content) {
   editor.focus();
   const sel = window.getSelection();
@@ -494,53 +494,49 @@ function insertAtCaret(content) {
 
   let node;
 
-  // === If it's a meend character ===
-  if (meendMap[content]) {
-    const prevNode = range.startContainer;
+  // If it's a meend, insert an image
+if (meendMap[content]) {
+  // Wrap previous character + meend together
+  const prevNode = range.startContainer;
+  
+  if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
+    // Take the last character out
+    const lastChar = prevNode.textContent.slice(-1);
+    prevNode.textContent = prevNode.textContent.slice(0, -1);
 
-    if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
-      // Grab the last character
-      const lastChar = prevNode.textContent.slice(-1);
-      prevNode.textContent = prevNode.textContent.slice(0, -1);
+    // Create wrapper span
+    const wrapper = document.createElement("span");
+    wrapper.className = "meend-wrapper";
+    wrapper.textContent = lastChar;
 
-      const wrapper = document.createElement("span");
-      wrapper.className = "meend-wrapper";
+    // Create meend image
+    const img = document.createElement("img");
+    img.src = meendMap[content];
+    img.alt = content;
+    img.className = "meend-symbol";
 
-      // Letter span with selected font
-      const charSpan = document.createElement("span");
-      charSpan.textContent = lastChar;
-      if (notationMode && selectedFont) charSpan.className = selectedFont;
+    // Append inside wrapper
+    wrapper.appendChild(img);
 
-      // Meend image
-      const img = document.createElement("img");
-      img.src = meendMap[content];
-      img.alt = content;
-      img.className = "meend-symbol";
-
-      wrapper.appendChild(charSpan);
-      wrapper.appendChild(img);
-      node = wrapper;
-    } else {
-      // fallback: insert image alone
-      node = document.createElement("img");
-      node.src = meendMap[content];
-      node.alt = content;
-      node.className = "meend-symbol";
-      node.style.width = "1em";
-      node.style.height = "0.6em";
-      node.style.verticalAlign = "bottom";
-    }
-  } 
-  // === Normal notation character ===
+    node = wrapper;
+  } else {
+    // Fallback: just insert image if no prev char
+    node = document.createElement("img");
+    node.src = meendMap[content];
+    node.alt = content;
+    node.className = "meend-symbol";
+  }
+}
   else if (notationMode && selectedFont) {
     node = document.createElement("span");
     node.className = selectedFont;
     node.textContent = content;
   } 
-  // === Regular typing outside notation mode ===
   else {
     node = document.createTextNode(content);
   }
+
+ range.insertNode(node);
 
   // Move cursor after inserted node
   range.setStartAfter(node);
@@ -659,6 +655,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+
   
 <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
 <div class="commonninja_component pid-bf197859-7990-487e-9ccf-7f7f2052ecc0"></div>
