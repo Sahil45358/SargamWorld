@@ -250,6 +250,13 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
+.meend-img {
+  height: 1em;          /* same as text size */
+  vertical-align: top;  /* makes it sit higher like in your font */
+  margin-top: -0.3em;   /* adjust this value until it matches your textbox */
+}
+
+  
   </style>
 
   <!-- Bhatkhande Web Font -->
@@ -416,6 +423,15 @@ const fontMap = {
   "ome_swarlipi": "OmeSwarlipi.ttf"
 };
 
+// Map of meend characters to images
+const meendMap = {
+  "q": "meends/q.png",
+  "w": "meends/w.png",
+  "e": "meends/e.png",
+  "Q": "meends/Q..png",
+  "W": "meends/W..png",
+  "E": "meends/E..png"
+};
 
   
 let notationMode = false;
@@ -459,19 +475,24 @@ function insertAtCaret(content) {
   range.deleteContents();
 
   let node;
-  if (notationMode && selectedFont) {
+
+  // If it's a meend, insert an image
+  if (meendMap[content]) {
+    node = document.createElement("img");
+    node.src = meendMap[content];
+    node.alt = content;
+    node.className = "meend-symbol"; // style via CSS
+  } 
+  else if (notationMode && selectedFont) {
     node = document.createElement("span");
     node.className = selectedFont;
     node.textContent = content;
-
-    // Mark Meend symbols with a data attribute
-    if ("qweQWE".includes(content)) {
-      node.setAttribute("data-symbol", content);
-    }
-  } else {
+  } 
+  else {
     node = document.createTextNode(content);
   }
-  range.insertNode(node);
+
+ range.insertNode(node);
 
   // Move cursor after inserted node
   range.setStartAfter(node);
