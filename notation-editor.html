@@ -253,24 +253,26 @@
 .meend-wrapper {
   display: inline-block;
   position: relative;
-  text-align: center;
-  vertical-align: middle;
-  min-width: 1.2em;
+  vertical-align: baseline;
+  /* Add padding to make space for the meend above the note */
+  padding-top: 0.8em; /* adjust to fit your image */
 }
 
 .meend-symbol {
-  display: block;
-  margin: 0 auto;
-  height: 0.9em;      /* adjust as needed */
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -90%);
+  height: 0.6em;        /* scales with font size */
   width: auto;
-  position: static;   /* not absolute if stacked */
+  display: inline;
+  pointer-events: none; /* don't interfere with caret */
 }
 
 .meend-note {
-  display: block;
-  min-height: 1.3em;
+  display: inline;
   font-size: 1em;
-  line-height: 1.3;
+  line-height: 1;
 }
   
   </style>
@@ -488,9 +490,8 @@ function insertAtCaret(content) {
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
 
-  // 1. If it's a meend, insert wrapper with image and empty note slot
+  // 1. If it's a meend, insert wrapper with image and empty note slot (inline, no <br>)
   if (meendMap[content]) {
-    // Create wrapper
     let wrapper = document.createElement("span");
     wrapper.className = "meend-wrapper";
 
@@ -506,16 +507,15 @@ function insertAtCaret(content) {
     noteSpan.className = "meend-note";
     noteSpan.innerHTML = "&nbsp;"; // visually keep height
 
-    // Arrange: image above, note below
+    // Arrange: image above, note below (no <br>)
     wrapper.appendChild(img);
-    wrapper.appendChild(document.createElement("br"));
     wrapper.appendChild(noteSpan);
 
     // Insert wrapper at caret
     range.deleteContents();
     range.insertNode(wrapper);
 
-    // Move caret **inside** the empty note span
+    // Move caret **inside** the empty note span for next input
     sel.removeAllRanges();
     const newRange = document.createRange();
     newRange.selectNodeContents(noteSpan);
@@ -532,7 +532,6 @@ function insertAtCaret(content) {
     sel.anchorNode.parentElement.classList.contains("meend-note")
   ) {
     let noteSpan = sel.anchorNode.parentElement;
-    // If in notation mode and font selected, use span
     if (notationMode && selectedFont) {
       node = document.createElement("span");
       node.className = selectedFont;
@@ -547,7 +546,6 @@ function insertAtCaret(content) {
     if (wrapper) {
       let after = document.createTextNode('\u200B'); // zero-width space
       wrapper.parentNode.insertBefore(after, wrapper.nextSibling);
-      // Place caret after
       sel.removeAllRanges();
       let newRange = document.createRange();
       newRange.setStartAfter(wrapper);
@@ -574,6 +572,8 @@ function insertAtCaret(content) {
   sel.removeAllRanges();
   sel.addRange(range);
 }
+
+  
 // Virtual keyboard buttons
 const buttons = document.querySelectorAll(".keyboard button[data-key]");
 buttons.forEach(btn => {
