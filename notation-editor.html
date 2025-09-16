@@ -250,12 +250,23 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
-.meend-img {
-  height: 1em;          /* same as text size */
-  vertical-align: top;  /* makes it sit higher like in your font */
-  margin-top: -0.3em;   /* adjust this value until it matches your textbox */
+.meend-symbol {
+  height: 0.6em;           /* smaller than text */
+  vertical-align: super;   /* lift it above text baseline */
+  margin-left: -0.3em;     /* overlap slightly with previous letter */
 }
 
+.meend-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.meend-wrapper .meend-symbol {
+  position: absolute;
+  top: -0.8em;       /* lift above letter */
+  left: 0;
+  height: 0.6em;
+}
   
   </style>
 
@@ -477,12 +488,38 @@ function insertAtCaret(content) {
   let node;
 
   // If it's a meend, insert an image
-  if (meendMap[content]) {
+if (meendMap[content]) {
+  // Wrap previous character + meend together
+  const prevNode = range.startContainer;
+  
+  if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
+    // Take the last character out
+    const lastChar = prevNode.textContent.slice(-1);
+    prevNode.textContent = prevNode.textContent.slice(0, -1);
+
+    // Create wrapper span
+    const wrapper = document.createElement("span");
+    wrapper.className = "meend-wrapper";
+    wrapper.textContent = lastChar;
+
+    // Create meend image
+    const img = document.createElement("img");
+    img.src = meendMap[content];
+    img.alt = content;
+    img.className = "meend-symbol";
+
+    // Append inside wrapper
+    wrapper.appendChild(img);
+
+    node = wrapper;
+  } else {
+    // Fallback: just insert image if no prev char
     node = document.createElement("img");
     node.src = meendMap[content];
     node.alt = content;
-    node.className = "meend-symbol"; // style via CSS
-  } 
+    node.className = "meend-symbol";
+  }
+}
   else if (notationMode && selectedFont) {
     node = document.createElement("span");
     node.className = selectedFont;
