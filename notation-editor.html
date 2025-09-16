@@ -254,16 +254,16 @@
   display: inline-block;
   position: relative;
   vertical-align: baseline;
-  padding-top: 0.6em; /* Adjust as needed to match your image and font size */
+  padding-top: 14px; /* match or slightly exceed image height */
 }
 
 .meend-symbol {
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translate(-50%, -100%); /* 100% = exactly above note */
-  height: 0.6em;
-  max-height: 14px;
+  transform: translate(-50%, 0);
+  height: 12px;
+  max-height: 12px;
   width: auto;
   object-fit: contain;
   user-select: none;
@@ -272,11 +272,14 @@
 
 @media (max-width: 600px) {
   .meend-symbol {
-    height: 0.5em;
+    height: 10px;
     max-height: 10px;
   }
+  .meend-wrapper {
+    padding-top: 10px;
+  }
 }
-  
+
 .meend-note {
   display: inline;
   font-size: 1em;
