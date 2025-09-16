@@ -463,31 +463,36 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Insert text at caret
-  function insertAtCaret(content) {
-    editor.focus();
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
+function insertAtCaret(content) {
+  editor.focus();
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
 
-    const range = sel.getRangeAt(0);
-    range.deleteContents();
+  const range = sel.getRangeAt(0);
+  range.deleteContents();
 
-    let node;
-    if (notationMode && selectedFont) {
-      node = document.createElement("span");
-      node.className = selectedFont;
-      node.textContent = content;
-    } else {
-      node = document.createTextNode(content);
-    }
-
-    range.insertNode(node);
-
-    // Move cursor after inserted node
-    range.setStartAfter(node);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
+  let node;
+  if (notationMode && selectedFont) {
+    node = document.createElement("span");
+    node.className = selectedFont;
+    node.textContent = content;
+  } else {
+    node = document.createTextNode(content);
   }
+
+  range.insertNode(node);
+
+  // ✅ Create a new range after the inserted node
+  const newRange = document.createRange();
+  newRange.setStartAfter(node);
+  newRange.setEndAfter(node);
+
+  sel.removeAllRanges();
+  sel.addRange(newRange);
+
+  // ✅ Ensure editor is still focused
+  editor.focus();
+}
 
   // Normal typing
   editor.addEventListener("keydown", (e) => {
