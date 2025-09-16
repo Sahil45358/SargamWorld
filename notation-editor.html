@@ -119,6 +119,26 @@
 
     
   /* Editor adjustments */
+#editor {
+  width: 80%;
+  max-width: 720px;   /* ✅ limit maximum width on PC */
+  min-width: 300px;   /* ✅ minimum width so it doesn't shrink too small on mobile */
+  margin: 0 auto 20px auto; /* center the editor */
+  min-height: 200px;  /* slightly smaller height */
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: var(--radius);
+  padding: 12px;
+  font-size: 1.2rem;  /* slightly smaller text for better fit */
+  background: #fff;
+  font-family: 'Segoe UI', sans-serif; /* default typing */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: auto;
+  margin: 0 auto 20px;  /* center editor horizontally */
+  scroll-behavior: smooth;
+  direction: ltr;
+  text-align: left;
+}
 
 
 /* Optional: even smaller on very small screens */
