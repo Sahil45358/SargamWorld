@@ -459,21 +459,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // INSERT TEXT AT CARET - FIXED FOR DESKTOP
   function insertAtCaret(content) {
-    editor.focus(); // Ensure editor is focused
+    console.log("1. Function called. Notation Mode:", notationMode, "Selected Font:", selectedFont); // DEBUG
+    editor.focus();
 
     const sel = window.getSelection();
+    console.log("2. Selection rangeCount:", sel.rangeCount); // DEBUG
+
     if (sel.rangeCount === 0) {
-        // If no selection, just append the content to the end
+        console.log("3a. No selection found. Appending content."); // DEBUG
         appendContent(content);
         return;
     }
 
     const range = sel.getRangeAt(0);
+    console.log("3b. Range found. commonAncestorContainer:", range.commonAncestorContainer); // DEBUG
+
     // Check if the selection is within the editor
     if (!editor.contains(range.commonAncestorContainer)) {
+        console.log("4. Selection is NOT inside editor. Appending content."); // DEBUG
         appendContent(content);
         return;
     }
+    console.log("5. Selection is valid. Preparing to insert:", content); // DEBUG
 
     range.deleteContents();
 
@@ -482,24 +489,25 @@ document.addEventListener("DOMContentLoaded", () => {
         node = document.createElement("span");
         node.className = selectedFont;
         node.textContent = content;
+        console.log("6. Creating SPAN with class:", selectedFont); // DEBUG
     } else {
         node = document.createTextNode(content);
+        console.log("6. Creating TEXT node"); // DEBUG
     }
 
     range.insertNode(node);
+    console.log("7. Node inserted into DOM."); // DEBUG
 
     // Move the cursor to after the inserted node
     const newRange = document.createRange();
     newRange.setStartAfter(node);
-    newRange.collapse(true); // Collapse the range to the end point
+    newRange.collapse(true);
 
     sel.removeAllRanges();
     sel.addRange(newRange);
-
-    // Ensure editor maintains focus
     editor.focus();
+    console.log("8. Cursor moved and focus set. Operation complete.\n---"); // DEBUG
   }
-
    // Helper function to append content if selection is lost - FIXED VERSION
   function appendContent(content) {
     let node;
