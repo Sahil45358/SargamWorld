@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bhatkhande Notation — SargamWorld</title>
   <link rel="icon" type="image/png" href="favicon.png" />
+
   <style>
+    /* === THEME VARIABLES === */
     :root {
-      --accent: #800000;
+      --accent: #800000;      /* red theme */
       --bg: #f3eee8;
       --text: #222;
       --muted: #5a5a5a;
@@ -15,51 +17,84 @@
       --container-w: 1100px;
       --transition: 0.3s ease;
     }
-    * { box-sizing: border-box; margin:0; padding:0; }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text);
+      margin: 0;
       line-height: 1.6;
     }
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
 
-    /* Navbar */
+    a { text-decoration: none; color: inherit; }
+
+    /* === NAVBAR === */
     .site-header {
       background: var(--accent);
       color: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       position: relative;
-      top: 0;
       z-index: 1000;
     }
+
     .nav-inner {
       max-width: var(--container-w);
       margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content: flex-start;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* logo left, links right */
       gap: 12px;
-      padding:12px 20px;
+      padding: 12px 20px;
+      flex-wrap: wrap; /* allows wrapping on smaller screens */
     }
+
     .brand-wrap {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 10px;
+      flex-shrink: 0; /* prevent shrinking on PC */
     }
+
     .logo { display: flex; align-items: center; gap: 8px; font-weight:700; font-size:1.2rem; color:#fff; }
     .logo img { height: 120px; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; }
-    .nav-links { display:flex; gap:10px; list-style:none; }
+
+    .tagline {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #f3e8e8;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      list-style: none;
+      margin-left: auto; /* push links to the right */
+    }
+
     .nav-links a {
       color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition);
     }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
     .nav-links a.active { background: rgba(255,255,255,0.15); }
-    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: #fff;
+    }
+
+    @media (pointer: coarse) {
+      .logo span { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      .logo span { display: none !important; }
+    }
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -72,160 +107,129 @@
       }
       .nav-links.show { display: flex; }
       .hamburger { display: block; position: relative; z-index: 1100; }
+      .tagline { font-size: 0.7rem; }
+      .nav-links { margin-left: 0; }
     }
 
-    /* Hide SargamWorld text on mobile/tablet */
-    @media (pointer: coarse) { .logo span { display: none !important; } }
-    @media (max-width: 1024px) { .logo span { display: none !important; } }
-
-    .tagline {
-      display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    @media (max-width: 768px) { .tagline { font-size: 0.7rem; } }
-
-    /* Hero & Content */
+    /* === HERO === */
     .hero { text-align: center; margin-bottom: 30px; }
     .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
-    .hero p { color: var(--muted); max-width: 720px; margin: 0 auto; line-height: 1.6; }
+    .hero p { max-width: 720px; margin: 0 auto; color: var(--muted); line-height: 1.6; }
 
-   /* Editor styling */
+
+    
+  /* Editor adjustments */
 #editor {
-  width: 100%;
-  max-width: 720px;
-  min-width: 0;
-  margin: 0 auto 20px auto;
-  min-height: 200px;
+  width: 80%;
+  max-width: 720px;   /* ✅ limit maximum width on PC */
+  min-width: 300px;   /* ✅ minimum width so it doesn't shrink too small on mobile */
+  margin: 0 auto 20px auto; /* center the editor */
+  min-height: 200px;  /* slightly smaller height */
   border: 1px solid rgba(0,0,0,0.2);
   border-radius: var(--radius);
   padding: 12px;
-  font-size: 0.95rem;   /* 👈 slightly smaller */
+  font-size: 1.2rem;  /* slightly smaller text for better fit */
   background: #fff;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', sans-serif; /* default typing */
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow: auto;
-  text-align: left;
-  box-sizing: border-box;
+  margin: 0 auto 20px;  /* center editor horizontally */
   scroll-behavior: smooth;
+  direction: ltr;
+  text-align: left;
 }
-@media (max-width: 768px) {
-  #editor { font-size: 0.9rem; }
-}
-@media (max-width: 480px) {
-  #editor { font-size: 0.85rem; }
 }
 
-/* Keyboard styling */
-.keyboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px;
-  justify-items: center;
-  margin: 18px auto 12px auto;
-  max-width: 100%;
+/* Optional: even smaller on very small screens */
+@media (max-width: 480px) {
+  #editor {
+    font-size: 1rem;
+    min-height: 150px;
+  }
 }
-.keyboard-section {
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: var(--radius);
-  padding: 8px;
-  background: #fff;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 140px;
-  margin-bottom: 8px;
-  width: 100%;
-  text-align: center;
-}
-.keyboard-section h4 {
-  margin-bottom: 6px;
-  color: var(--accent);
-  font-size: 1rem;
-  font-weight: 600;
-}
-.keyboard-section button {
-  min-width: 40px;
-  margin: 4px;
-}
-.keyboard button {
-  min-width: 36px;   /* 👈 allow flexibility */
-  height: 34px;
+    /* === KEYBOARD BUTTONS === */
+ .keyboard button {
+  width: 60px;           /* same width */
+  height: 40px;          /* same height */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
-  font-size: 0.75rem;
-  background: var(--accent);
+  padding: 2px;          /* smaller padding to fit text */
+  font-size: 0.75rem;    /* smaller font for longer labels */
+  text-align: center;
+  line-height: 1.1;
+  word-wrap: break-word; /* allow breaking text into multiple lines */
+  background: #800000;
   color: #fff;
   border: none;
   border-radius: 6px;
-  margin: 2px;
+  margin: 3px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: 0.2s ease;
 }
-.keyboard button:hover { background: #9b1717; }
+
+
+    .keyboard button:hover {
+      background: #9b1717;
+      color: #fff;
+    }
+@media(min-width: 1025px) {
+  .keyboard button {
+    width: 70px;
+    height: 45px;
+    font-size: 0.8rem;
+  }
+}
+    .keyboard-section button {
+      background: #800000;
+      color: #fff;
+    }
+    .keyboard-section button:hover {
+      background: #9b1717;
+    }
+
+/* === Keyboard container & sections === */
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;               
+  justify-content: center;  
+  margin: 20px auto;       
+}
+
+.keyboard-section {
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;   
+  min-width: 180px;          
+}
 
 @media (max-width: 768px) {
-  .keyboard {
-    grid-template-columns: 1fr; /* 👈 stack neatly on mobile */
-    gap: 10px;
-  }
   .keyboard-section {
-    min-width: 0;
-    width: 100%;
-    padding: 6px;
+    min-width: 140px;
+    padding: 8px;
   }
+
   .keyboard button {
-    height: 30px;
-    font-size: 0.68rem;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+
+@media (max-width: 768px) {
+  .keyboard button {
+    width: 45px;
+    height: 35px;
+    font-size: 0.65rem;
   }
 }
-
-/* Controls */
-#toggleNotation, #downloadPDF, #fontSelector {
-  margin: 5px 2px;
-}
-#toggleNotation {
-  padding:8px 14px;
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  border-radius:var(--radius);
-  font-weight:600;
-  cursor:pointer;
-  transition: background var(--transition);
-}
-#downloadPDF {
-  padding:10px 16px;
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  border-radius:var(--radius);
-  font-weight:600;
-  cursor:pointer;
-  margin-top:10px;
-  transition: background var(--transition);
-}
-#fontSelector {
-  padding:8px;
-  border-radius:6px;
-  margin-left:10px;
-  font-size:1rem;
-}
-#fontSelector:disabled { opacity: 0.55; cursor: not-allowed; }
-
-    /* Notation font classes (editor + PDF) */
-    #editor .ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi', sans-serif; }
-    #editor .ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi', sans-serif; }
-    #editor .ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla', sans-serif; }
-    #editor .ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish', sans-serif; }
-    #editor .ome-swarlipi { font-family: 'OmeSwarlipi', sans-serif; }
-
+  
     /* Footer */
     .site-footer {
       text-align: center;
@@ -235,6 +239,22 @@
       margin-top: 40px;
       background: none;
     }
+  
+.notation-active {
+  border: 2px solid var(--accent);
+  background: #fffbe7;
+}
+
+  #fontSelector:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+  #editor span.ome-bhatkhande-hindi { font-family: 'ome_bhatkhande_hindi'; }
+  #editor span.ome-bhatkhande-punjabi { font-family: 'ome_bhatkhande_punjabi'; }
+  #editor span.ome-bhatkhande-bangla { font-family: 'ome_bhatkhande_bangla'; }
+  #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
+  #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
     @font-face {
   font-family: 'OmeBhatkhandeHindi';
@@ -256,17 +276,7 @@
   font-family: 'OmeSwarlipi';
   src: url('fonts/OmeSwarlipi.ttf') format('truetype');
 }
-.ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi', sans-serif; }
-.ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi', sans-serif; }
-.ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla', sans-serif; }
-.ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish', sans-serif; }
-.ome-swarlipi { font-family: 'OmeSwarlipi', sans-serif; }
 
-    #editor .ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi', sans-serif; }
-    #editor .ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi', sans-serif; }
-    #editor .ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla', sans-serif; }
-    #editor .ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish', sans-serif; }
-    #editor .ome-swarlipi { font-family: 'OmeSwarlipi', sans-serif; }
   </style>
 </head>
 <body>
@@ -559,9 +569,24 @@ function exportPDF() {
 
   doc.save("bhatkhande_notation.pdf");
 }
-</script>
+  
+// JS for Hamburger
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.getElementById("navLinks");
 
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
+
+  
 </script>
+  
+  <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
+<div class="commonninja_component pid-bf197859-7990-487e-9ccf-7f7f2052ecc0"></div>
+  
+
 </body>
 </html>
 
