@@ -484,7 +484,7 @@ fontSelector.addEventListener("change", () => {
 });
 
 // Insert text at caret (wrap only new notation in font)
-  // If it's a meend, insert an image
+// Insert text at caret (handles notation + meend)
 function insertAtCaret(content) {
   editor.focus();
   const sel = window.getSelection();
@@ -494,55 +494,53 @@ function insertAtCaret(content) {
 
   let node;
 
-  // If it's a meend, insert an image
+  // === If it's a meend character ===
   if (meendMap[content]) {
     const prevNode = range.startContainer;
 
-    // If previous character exists, wrap it with meend
     if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
+      // Grab the last character
       const lastChar = prevNode.textContent.slice(-1);
       prevNode.textContent = prevNode.textContent.slice(0, -1);
 
       const wrapper = document.createElement("span");
       wrapper.className = "meend-wrapper";
-      wrapper.style.display = "inline-flex";     // important for alignment
-      wrapper.style.alignItems = "flex-end";     // vertically aligns letter and image
-      wrapper.style.position = "relative";
 
+      // Letter span with selected font
       const charSpan = document.createElement("span");
       charSpan.textContent = lastChar;
+      if (notationMode && selectedFont) charSpan.className = selectedFont;
 
+      // Meend image
       const img = document.createElement("img");
       img.src = meendMap[content];
       img.alt = content;
       img.className = "meend-symbol";
-      img.style.width = "1em";       // scales with font
-      img.style.height = "0.6em";
-      img.style.marginLeft = "0.05em";
-      img.style.marginBottom = "0.1em";
 
       wrapper.appendChild(charSpan);
       wrapper.appendChild(img);
       node = wrapper;
     } else {
-      // fallback: just insert image if no previous char
+      // fallback: insert image alone
       node = document.createElement("img");
       node.src = meendMap[content];
       node.alt = content;
+      node.className = "meend-symbol";
       node.style.width = "1em";
       node.style.height = "0.6em";
       node.style.verticalAlign = "bottom";
     }
   } 
+  // === Normal notation character ===
   else if (notationMode && selectedFont) {
     node = document.createElement("span");
     node.className = selectedFont;
     node.textContent = content;
   } 
+  // === Regular typing outside notation mode ===
   else {
     node = document.createTextNode(content);
   }
-
 
   // Move cursor after inserted node
   range.setStartAfter(node);
