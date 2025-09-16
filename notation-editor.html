@@ -306,7 +306,9 @@ editor.addEventListener("keydown", (e) => {
   if (notationMode && selectedFont && e.key.length === 1) {
     e.preventDefault();
     insertAtCaret(e.key);
+    return;
   }
+  // Normal typing when Notation Mode is OFF
 });
 
 // Clear editor
