@@ -251,11 +251,21 @@
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
 .meend-symbol {
-  height: 0.6em;           /* smaller than text */
-  vertical-align: super;   /* lift it above text baseline */
-  margin-left: -0.3em;     /* overlap slightly with previous letter */
+  position: absolute;
+  top: -0.9em;   /* try deeper above */
+  left: 0;
+  height: 0.5em;
+  width: auto;
 }
+.meend-symbol[data-symbol="q"] { top: -0.7em; }
+.meend-symbol[data-symbol="w"] { top: -0.8em; }
+.meend-symbol[data-symbol="e"] { top: -0.9em; }
 
+.meend-symbol[data-symbol="Q"] { top: -1.0em; }
+.meend-symbol[data-symbol="W"] { top: -1.1em; }
+.meend-symbol[data-symbol="E"] { top: -1.2em; }
+
+  
 .meend-wrapper {
   position: relative;
   display: inline-block;
