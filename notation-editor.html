@@ -263,12 +263,21 @@
   left: 50%;
   top: 0;
   transform: translate(-50%, -90%);
-  height: 0.6em;        /* scales with font size */
+  height: 1em;
+  max-height: 18px;
   width: auto;
   display: inline;
-  pointer-events: none; /* don't interfere with caret */
+  user-select: none;
+  pointer-events: none;
 }
 
+@media (max-width: 600px) {
+  .meend-symbol {
+    height: 0.8em;
+    max-height: 14px;
+  }
+}
+  
 .meend-note {
   display: inline;
   font-size: 1em;
@@ -515,7 +524,7 @@ function insertAtCaret(content) {
     range.deleteContents();
     range.insertNode(wrapper);
 
-    // Move caret **inside** the empty note span for next input
+    // Move caret inside the empty note span
     sel.removeAllRanges();
     const newRange = document.createRange();
     newRange.selectNodeContents(noteSpan);
@@ -541,11 +550,9 @@ function insertAtCaret(content) {
     } else {
       noteSpan.textContent = content;
     }
-    // Move caret after the whole meend-wrapper
+    // Move caret after the whole meend-wrapper (no zero-width space needed)
     let wrapper = noteSpan.closest('.meend-wrapper');
     if (wrapper) {
-      let after = document.createTextNode('\u200B'); // zero-width space
-      wrapper.parentNode.insertBefore(after, wrapper.nextSibling);
       sel.removeAllRanges();
       let newRange = document.createRange();
       newRange.setStartAfter(wrapper);
