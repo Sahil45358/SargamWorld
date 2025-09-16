@@ -251,40 +251,43 @@
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
 .meend-wrapper {
-  display: inline-block;
+  display: inline-flex;   /* Use flex for tighter, baseline-aligned layout */
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 1.7em;          /* Forces a consistent block for meend+note */
+  vertical-align: middle;
+  white-space: nowrap;    /* Prevents line break between meend and its note */
   position: relative;
-  vertical-align: bottom;
-  padding-top: 14px; /* match or slightly exceed image height */
-    white-space: nowrap;
 }
 
 .meend-symbol {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translate(-50%, 0);
-  height: 12px;
-  max-height: 12px;
+  height: 12px;           /* Fixed, small size */
   width: auto;
   object-fit: contain;
   user-select: none;
   pointer-events: none;
-}
-
-@media (max-width: 600px) {
-  .meend-symbol {
-    height: 10px;
-    max-height: 10px;
-  }
-  .meend-wrapper {
-    padding-top: 10px;
-  }
+  margin-bottom: 0.05em;  /* Slight separation from note */
 }
 
 .meend-note {
-  display: inline;
+  display: block;         /* Now always under the image */
   font-size: 1em;
-  line-height: 1;
+  line-height: 1.1;
+  text-align: center;
+}
+
+  @media (max-width: 600px) {
+  #editor {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  .meend-symbol {
+    height: 10px;
+  }
+  .meend-wrapper {
+    height: 1.4em;
+  }
 }
   
   </style>
