@@ -487,16 +487,6 @@ function insertAtCaret(content) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
-  range.deleteContents();
-
-  let node;
-
-  // If it's a meend, insert an image
- function insertAtCaret(content) {
-  editor.focus();
-  const sel = window.getSelection();
-  if (!sel.rangeCount) return;
-  const range = sel.getRangeAt(0);
 
   // 1. If it's a meend, insert wrapper with image and empty note slot
   if (meendMap[content]) {
