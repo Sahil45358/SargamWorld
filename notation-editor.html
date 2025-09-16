@@ -499,54 +499,40 @@ function insertAtCaret(content) {
 
   // If it's a meend, insert an image
 if (meendMap[content]) {
-  // Wrap previous character + meend together
-  const prevNode = range.startContainer;
-  
+  // Try to find previous character/text
+  let prevNode = range.startContainer;
+  let wrapper = document.createElement("span");
+  wrapper.className = "meend-wrapper";
+  let noteChar = '\u00A0'; // default: non-breaking space
+
+  // Try to use previous character if available
   if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
-    // Take the last character out
-    const lastChar = prevNode.textContent.slice(-1);
+    noteChar = prevNode.textContent.slice(-1);
     prevNode.textContent = prevNode.textContent.slice(0, -1);
-
-    // Create wrapper span
-    const wrapper = document.createElement("span");
-    wrapper.className = "meend-wrapper";
-    wrapper.textContent = lastChar;
-
-    // Create meend image
-    const img = document.createElement("img");
-    img.src = meendMap[content];
-    img.alt = content;
-    img.className = "meend-symbol";
-
-    // Append inside wrapper
-    wrapper.appendChild(img);
-
-    node = wrapper;
-  } else {
-    // Fallback: just insert image if no prev char
-    node = document.createElement("img");
-    node.src = meendMap[content];
-    node.alt = content;
-    node.className = "meend-symbol";
+  } else if (
+    prevNode.nodeType === Node.ELEMENT_NODE &&
+    prevNode.childNodes.length &&
+    prevNode.lastChild.nodeType === Node.TEXT_NODE &&
+    prevNode.lastChild.textContent.length > 0
+  ) {
+    // Handle case where inside a span or element
+    let textNode = prevNode.lastChild;
+    noteChar = textNode.textContent.slice(-1);
+    textNode.textContent = textNode.textContent.slice(0, -1);
   }
-}
-  else if (notationMode && selectedFont) {
-    node = document.createElement("span");
-    node.className = selectedFont;
-    node.textContent = content;
-  } 
-  else {
-    node = document.createTextNode(content);
-  }
+  // Always show the (possibly blank) note char
+  wrapper.textContent = noteChar;
 
- range.insertNode(node);
+  // Create and append meend image
+  const img = document.createElement("img");
+  img.src = meendMap[content];
+  img.alt = content;
+  img.className = "meend-symbol";
+  wrapper.appendChild(img);
 
-  // Move cursor after inserted node
-  range.setStartAfter(node);
-  range.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(range);
+  node = wrapper;
 }
+  
 
 
 
