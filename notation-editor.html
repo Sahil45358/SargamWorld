@@ -138,7 +138,7 @@
   scroll-behavior: smooth;
   direction: ltr;
   text-align: left;
-   line-height: 2.5;
+  line-height: 2;
 }
 
 
@@ -250,38 +250,28 @@
   #editor span.ome-bhatkhande-english { font-family: 'ome_bhatkhande_english'; }
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
+/* Wrapper around letter + meend */
 .meend-wrapper {
+  display: inline-flex;          /* ensures letter + meend stay on same line */
+  align-items: flex-end;         /* vertically aligns meend above letter */
   position: relative;
+}
+
+/* Meend symbol */
+.meend-wrapper .meend-symbol {
+  width: 1em;                    /* scales with text */
+  height: 0.6em;                 /* adjusts automatically */
+  margin-left: 0.05em;           /* small spacing */
+  margin-bottom: 0.1em;          /* lift above baseline */
   display: inline-block;
-  line-height: 1;          /* tighten so wrapper only fits the char */
-  vertical-align: middle;  /* align baseline with other text */
 }
 
-.meend-symbol {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%); /* center over the char */
-  top: -0.9em;   /* default lift */
-  height: 0.6em; /* relative size */
-  max-height: 16px; /* clamp for desktop */
-  width: auto;
-  pointer-events: none; /* not selectable */
-}
-
-/* Fine-tune different meend types */
-.meend-symbol[data-symbol="q"] { top: -0.7em; }
-.meend-symbol[data-symbol="w"] { top: -0.8em; }
-.meend-symbol[data-symbol="e"] { top: -0.9em; }
-
-.meend-symbol[data-symbol="Q"] { top: -1.0em; }
-.meend-symbol[data-symbol="W"] { top: -1.1em; }
-.meend-symbol[data-symbol="E"] { top: -1.2em; }
-
-/* Smaller phones: reduce image size a bit */
+/* Optional: smaller phones */
 @media (max-width: 768px) {
-  .meend-symbol {
+  .meend-wrapper .meend-symbol {
+    width: 0.9em;
     height: 0.5em;
-    max-height: 12px;
+    margin-bottom: 0.08em;
   }
 }
 
@@ -494,7 +484,7 @@ fontSelector.addEventListener("change", () => {
 });
 
 // Insert text at caret (wrap only new notation in font)
-// When inserting text in notation mode
+  // If it's a meend, insert an image
 function insertAtCaret(content) {
   editor.focus();
   const sel = window.getSelection();
@@ -505,38 +495,45 @@ function insertAtCaret(content) {
   let node;
 
   // If it's a meend, insert an image
-if (meendMap[content]) {
-  // Wrap previous character + meend together
-  const prevNode = range.startContainer;
-  
-  if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
-    // Take the last character out
-    const lastChar = prevNode.textContent.slice(-1);
-    prevNode.textContent = prevNode.textContent.slice(0, -1);
+  if (meendMap[content]) {
+    const prevNode = range.startContainer;
 
-    // Create wrapper span
-    const wrapper = document.createElement("span");
-    wrapper.className = "meend-wrapper";
-    wrapper.textContent = lastChar;
+    // If previous character exists, wrap it with meend
+    if (prevNode.nodeType === Node.TEXT_NODE && prevNode.textContent.length > 0) {
+      const lastChar = prevNode.textContent.slice(-1);
+      prevNode.textContent = prevNode.textContent.slice(0, -1);
 
-    // Create meend image
-    const img = document.createElement("img");
-    img.src = meendMap[content];
-    img.alt = content;
-    img.className = "meend-symbol";
+      const wrapper = document.createElement("span");
+      wrapper.className = "meend-wrapper";
+      wrapper.style.display = "inline-flex";     // important for alignment
+      wrapper.style.alignItems = "flex-end";     // vertically aligns letter and image
+      wrapper.style.position = "relative";
 
-    // Append inside wrapper
-    wrapper.appendChild(img);
+      const charSpan = document.createElement("span");
+      charSpan.textContent = lastChar;
 
-    node = wrapper;
-  } else {
-    // Fallback: just insert image if no prev char
-    node = document.createElement("img");
-    node.src = meendMap[content];
-    node.alt = content;
-    node.className = "meend-symbol";
-  }
-}
+      const img = document.createElement("img");
+      img.src = meendMap[content];
+      img.alt = content;
+      img.className = "meend-symbol";
+      img.style.width = "1em";       // scales with font
+      img.style.height = "0.6em";
+      img.style.marginLeft = "0.05em";
+      img.style.marginBottom = "0.1em";
+
+      wrapper.appendChild(charSpan);
+      wrapper.appendChild(img);
+      node = wrapper;
+    } else {
+      // fallback: just insert image if no previous char
+      node = document.createElement("img");
+      node.src = meendMap[content];
+      node.alt = content;
+      node.style.width = "1em";
+      node.style.height = "0.6em";
+      node.style.verticalAlign = "bottom";
+    }
+  } 
   else if (notationMode && selectedFont) {
     node = document.createElement("span");
     node.className = selectedFont;
@@ -546,7 +543,6 @@ if (meendMap[content]) {
     node = document.createTextNode(content);
   }
 
- range.insertNode(node);
 
   // Move cursor after inserted node
   range.setStartAfter(node);
