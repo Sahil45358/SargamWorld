@@ -251,37 +251,32 @@
   #editor span.ome-swarlipi { font-family: 'ome_swarlipi'; }
 
 .meend-wrapper {
-  display: inline-flex;   /* Use flex for tighter, baseline-aligned layout */
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 1.7em;          /* Forces a consistent block for meend+note */
   vertical-align: middle;
-  white-space: nowrap;    /* Prevents line break between meend and its note */
-  position: relative;
+  white-space: nowrap;    /* Keeps meend and note together */
+  height: 1.7em;          /* Consistent block size for symbol+note */
 }
 
 .meend-symbol {
-  height: 12px;           /* Fixed, small size */
+  height: 12px;           /* Fixed symbol size */
   width: auto;
   object-fit: contain;
   user-select: none;
   pointer-events: none;
-  margin-bottom: 0.05em;  /* Slight separation from note */
+  margin-bottom: 0.10em;  /* Slight space between symbol and note */
 }
 
 .meend-note {
-  display: block;         /* Now always under the image */
+  display: block;
   font-size: 1em;
   line-height: 1.1;
   text-align: center;
 }
 
-  @media (max-width: 600px) {
-  #editor {
-    font-size: 1rem;
-    line-height: 1.2;
-  }
+@media (max-width: 600px) {
   .meend-symbol {
     height: 10px;
   }
@@ -289,7 +284,6 @@
     height: 1.4em;
   }
 }
-  
   </style>
 
   <!-- Bhatkhande Web Font -->
