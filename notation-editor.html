@@ -254,27 +254,26 @@
   display: inline-block;
   position: relative;
   vertical-align: baseline;
-  /* Add padding to make space for the meend above the note */
-  padding-top: 0.8em; /* adjust to fit your image */
+  padding-top: 0.6em; /* Adjust as needed to match your image and font size */
 }
 
 .meend-symbol {
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translate(-50%, -90%);
-  height: 1em;
-  max-height: 18px;
+  transform: translate(-50%, -100%); /* 100% = exactly above note */
+  height: 0.6em;
+  max-height: 14px;
   width: auto;
-  display: inline;
+  object-fit: contain;
   user-select: none;
   pointer-events: none;
 }
 
 @media (max-width: 600px) {
   .meend-symbol {
-    height: 0.8em;
-    max-height: 14px;
+    height: 0.5em;
+    max-height: 10px;
   }
 }
   
