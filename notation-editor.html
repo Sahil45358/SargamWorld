@@ -249,11 +249,11 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-#editor span.ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi'; }
-#editor span.ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi'; }
-#editor span.ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla'; }
-#editor span.ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish'; }
-#editor span.ome-swarlipi { font-family: 'OmeSwarlipi'; }
+#editor span.ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi' !important; }
+#editor span.ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi' !important; }
+#editor span.ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla' !important; }
+#editor span.ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish' !important; }
+#editor span.ome-swarlipi { font-family: 'OmeSwarlipi' !important; }
 
     @font-face {
   font-family: 'OmeBhatkhandeHindi';
@@ -457,43 +457,87 @@ document.addEventListener("DOMContentLoaded", () => {
     editor.focus();
   });
 
-  // Insert text at caret
+  // INSERT TEXT AT CARET - FIXED FOR DESKTOP
   function insertAtCaret(content) {
-    editor.focus();
+    editor.focus(); // Ensure editor is focused
+
     const sel = window.getSelection();
-    if (!sel.rangeCount) return;
+    if (sel.rangeCount === 0) {
+        // If no selection, just append the content to the end
+        appendContent(content);
+        return;
+    }
 
     const range = sel.getRangeAt(0);
+    // Check if the selection is within the editor
+    if (!editor.contains(range.commonAncestorContainer)) {
+        appendContent(content);
+        return;
+    }
+
     range.deleteContents();
 
     let node;
     if (notationMode && selectedFont) {
-      node = document.createElement("span");
-      node.className = selectedFont;
-      node.textContent = content;
+        node = document.createElement("span");
+        node.className = selectedFont;
+        node.textContent = content;
     } else {
-      node = document.createTextNode(content);
+        node = document.createTextNode(content);
     }
 
     range.insertNode(node);
 
-    // Move cursor after inserted node
+    // Move the cursor to after the inserted node
     const newRange = document.createRange();
     newRange.setStartAfter(node);
-    newRange.setEndAfter(node);
+    newRange.collapse(true); // Collapse the range to the end point
+
     sel.removeAllRanges();
     sel.addRange(newRange);
 
+    // Ensure editor maintains focus
     editor.focus();
   }
 
-  // Attach virtual keyboard buttons (once)
+   // Helper function to append content if selection is lost - FIXED VERSION
+  function appendContent(content) {
+    let node;
+    if (notationMode && selectedFont) {
+        node = document.createElement("span");
+        node.className = selectedFont;
+        node.textContent = content;
+    } else {
+        node = document.createTextNode(content);
+    }
+    editor.appendChild(node);
+
+    // Move cursor to end after appending - FIXED LOGIC
+    const sel = window.getSelection();
+    const newRange = document.createRange();
+    
+    // Set the range to the end of the newly inserted node
+    newRange.setStartAfter(node);
+    newRange.collapse(true); // Collapse to the start of the range (which is now after the node)
+
+    sel.removeAllRanges();
+    sel.addRange(newRange);
+  }
+
+  // Attach virtual keyboard buttons (once) - IMPROVED VERSION
   const buttons = document.querySelectorAll(".keyboard button[data-key]");
   buttons.forEach(btn => {
+    // Listener for mouse/trackpad
     btn.addEventListener("mousedown", (e) => {
       e.preventDefault(); // prevent losing focus
       const key = btn.getAttribute("data-key");
       insertAtCaret(key);
+    });
+    // Listener for touch/accessibility/fallback
+    btn.addEventListener("click", (e) => {
+      e.preventDefault(); 
+      // insertAtCaret is already called by mousedown, 
+      // so this is just a safety net. No need to call it again.
     });
   });
 
