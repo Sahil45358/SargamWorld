@@ -283,8 +283,6 @@
 }
 
 #editor {
-  all: revert; /* Revert the #editor itself to its default styles (like display: block, etc.) but keep the font reset */
-  /* Now re-apply your specific editor styles */
   width: 80%;
   max-width: 720px;
   min-width: 300px;
@@ -295,6 +293,7 @@
   padding: 12px;
   font-size: 1.2rem;
   background: #fff;
+  font-family: 'Segoe UI', sans-serif; /* default for plain typing */
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow: auto;
@@ -303,13 +302,12 @@
   text-align: left;
 }
 
-/* RE-DEFINE your font classes to apply AFTER the nuclear reset above */
-#editor span.ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi' !important; }
-#editor span.ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi' !important; }
-#editor span.ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla' !important; }
-#editor span.ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish' !important; }
-#editor span.ome-swarlipi { font-family: 'OmeSwarlipi' !important; }
-  </style>
+#editor .ome-bhatkhande-hindi { font-family: 'OmeBhatkhandeHindi' !important; }
+#editor .ome-bhatkhande-punjabi { font-family: 'OmeBhatkhandePunjabi' !important; }
+#editor .ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla' !important; }
+#editor .ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish' !important; }
+#editor .ome-swarlipi { font-family: 'OmeSwarlipi' !important; }
+
 </head>
 <body>
 <header class="site-header">
