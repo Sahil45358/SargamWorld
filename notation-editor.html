@@ -623,15 +623,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Check the element's class to determine the font
           if (node.classList.contains('ome-bhatkhande-hindi')) {
-            fontFamily = fontNames['ome_bhatkhande_hindi'];
+            fontFamily = fontNames['ome-bhatkhande-hindi'];
           } else if (node.classList.contains('ome-bhatkhande-punjabi')) {
-            fontFamily = fontNames['ome_bhatkhande_punjabi'];
+            fontFamily = fontNames['ome-bhatkhande-punjabi'];
           } else if (node.classList.contains('ome-bhatkhande-bangla')) {
-            fontFamily = fontNames['ome_bhatkhande_bangla'];
+            fontFamily = fontNames['ome-bhatkhande-bangla'];
           } else if (node.classList.contains('ome-bhatkhande-english')) {
-            fontFamily = fontNames['ome_bhatkhande_english'];
+            fontFamily = fontNames['ome-bhatkhande-english'];
           } else if (node.classList.contains('ome-swarlipi')) {
-            fontFamily = fontNames['ome_swarlipi'];
+            fontFamily = fontNames['ome-swarlipi'];
           }
           // Process the text inside the element, applying the correct font
           const textLines = node.textContent.split('\n');
