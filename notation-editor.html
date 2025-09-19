@@ -559,132 +559,96 @@ document.addEventListener("DOMContentLoaded", () => {
     editor.focus();
   };
 
-   // PDF Download - FIXED VERSION
-  document.getElementById("downloadPDF").addEventListener("click", () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: "pt", format: "a4" });
+  //PDF
+document.getElementById("downloadPDF").addEventListener("click", () => {
+  const { jsPDF } = window.jspdf;
 
-    // 1. Register all notation fonts with jsPDF
-    for (const key in fontBase64s) {
-      const fontName = fontNames[key]; // e.g., "OmeBhatkhandeHindi"
-      doc.addFileToVFS(`${fontName}.ttf`, fontBase64s[key]);
-      doc.addFont(`${fontName}.ttf`, fontName, "normal");
-    }
+  // Create PDF
+  const doc = new jsPDF({
+    unit: "pt",
+    format: "a4",
+    putOnlyUsedFonts: true, // reduces PDF size
+    floatPrecision: 16
+  });
 
-    let y = 60; // Starting Y position
-    const lineHeight = 28; // Space between lines
-    const margin = 60; // Left margin
-
-    // 2. Get the editor's content and split it into lines
-    // We use innerHTML to preserve the <span> elements, then create a temporary div to parse it
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = editor.innerHTML;
-
-    // Handle lines: split by <br> and also consider block-level elements
-    const lines = [];
-    let currentLine = [];
-
-    // Function to process a node and add its content to the current line
-    function processNode(node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        // Split text node by newline characters
-        const textLines = node.textContent.split('\n');
-        if (textLines.length > 1) {
-          // If there are newlines, add the first part to the current line
-          currentLine.push({ text: textLines[0], font: 'helvetica' }); // Default font for plain text
-          // Push the current line and start new lines for the other parts
-          lines.push([...currentLine]);
-          currentLine = [];
-
-          for (let i = 1; i < textLines.length; i++) {
-            if (textLines[i] !== '') {
-              currentLine.push({ text: textLines[i], font: 'helvetica' });
-            }
-            // If it's not the last segment, push the line and reset
-            if (i < textLines.length - 1) {
-              lines.push([...currentLine]);
-              currentLine = [];
-            }
-          }
-        } else {
-          // No newlines, just add the text
-          if (node.textContent !== '') {
-            currentLine.push({ text: node.textContent, font: 'helvetica' });
-          }
-        }
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        if (node.tagName === 'BR') {
-          // <br> tag means end of the current line
-          lines.push([...currentLine]);
-          currentLine = [];
-        } else {
-          // It's an element (like a SPAN with a font class)
-          let fontFamily = 'helvetica'; // Default PDF font
-
-// Auto-detect font from class using fontNames
-for (const key in fontNames) {
-  if (node.classList.contains(key)) {
-    fontFamily = fontNames[key]; // e.g. OmeBhatkhandeHindi
-    break;
+  // 1️⃣ Register fonts
+  for (const key in fontBase64s) {
+    const fontName = fontNames[key]; // e.g., "OmeBhatkhandeHindi"
+    doc.addFileToVFS(`${fontName}.ttf`, fontBase64s[key]);
+    doc.addFont(`${fontName}.ttf`, fontName, "normal");
   }
-}
-          // Process the text inside the element, applying the correct font
-          const textLines = node.textContent.split('\n');
-          if (textLines.length > 1) {
-            currentLine.push({ text: textLines[0], font: fontFamily });
-            lines.push([...currentLine]);
-            currentLine = [];
-            for (let i = 1; i < textLines.length; i++) {
-              if (textLines[i] !== '') {
-                currentLine.push({ text: textLines[i], font: fontFamily });
-              }
-              if (i < textLines.length - 1) {
-                lines.push([...currentLine]);
-                currentLine = [];
-              }
-            }
-          } else {
-            if (node.textContent !== '') {
-              currentLine.push({ text: node.textContent, font: fontFamily });
-            }
-          }
+
+  const margin = 60;
+  const lineHeight = 28;
+  let y = margin;
+
+  // 2️⃣ Parse editor content
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = editor.innerHTML;
+
+  function processNode(node, currentFont = "helvetica") {
+    const chunks = [];
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      chunks.push({ text: node.textContent, font: currentFont });
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      let font = currentFont;
+
+      // detect notation font
+      for (const key in fontNames) {
+        if (node.classList.contains(key)) {
+          font = fontNames[key]; // must match registered font
+          break;
         }
+      }
+
+      if (node.tagName === "BR") {
+        chunks.push({ text: "\n", font });
+      } else {
+        // recursively process children
+        node.childNodes.forEach(child => {
+          chunks.push(...processNode(child, font));
+        });
       }
     }
 
-    // Process all child nodes of the temporary div
-    for (let i = 0; i < tempDiv.childNodes.length; i++) {
-      processNode(tempDiv.childNodes[i]);
-    }
-    // Push any remaining content in the currentLine after looping
-    if (currentLine.length > 0) {
-      lines.push([...currentLine]);
-    }
+    return chunks;
+  }
 
-    // 3. Draw each line to the PDF
-    lines.forEach((lineContent) => {
-      let x = margin; // Start at the left margin for each new line
+  const pdfChunks = [];
+  tempDiv.childNodes.forEach(node => {
+    pdfChunks.push(...processNode(node));
+  });
 
-      lineContent.forEach((textPart) => {
-doc.setFont(textPart.font || "helvetica", "normal");
+  // 3️⃣ Render PDF
+  let x = margin;
+  pdfChunks.forEach(chunk => {
+    const lines = chunk.text.split("\n");
+
+    lines.forEach((line, idx) => {
+      if (line !== "") {
+        doc.setFont(chunk.font, "normal");
         doc.setFontSize(14);
-        doc.text(textPart.text, x, y, { baseline: "top" });
-        // Move the X position for the next part on the same line
-        x += doc.getTextWidth(textPart.text);
-      });
+        doc.text(line, x, y, { baseline: "top" });
+        x += doc.getTextWidth(line);
+      }
 
-      // Move the Y position down for the next line
-      y += lineHeight;
-      // Simple page break - start a new page if we reach the bottom
-      if (y > doc.internal.pageSize.height - margin) {
-        doc.addPage();
-        y = margin;
+      // New line
+      if (idx < lines.length - 1) {
+        y += lineHeight;
+        x = margin;
+
+        // Page break
+        if (y > doc.internal.pageSize.height - margin) {
+          doc.addPage();
+          y = margin;
+        }
       }
     });
-
-    // 4. Save the PDF
-    doc.save("Bhatkhande_Notation.pdf");
   });
+
+  doc.save("Bhatkhande_Notation.pdf");
+});
 
   // Hamburger menu
   const hamburger = document.querySelector(".hamburger");
