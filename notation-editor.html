@@ -621,18 +621,13 @@ document.addEventListener("DOMContentLoaded", () => {
           // It's an element (like a SPAN with a font class)
           let fontFamily = 'helvetica'; // Default PDF font
 
-          // Check the element's class to determine the font
-          if (node.classList.contains('ome-bhatkhande-hindi')) {
-            fontFamily = fontNames['ome-bhatkhande-hindi'];
-          } else if (node.classList.contains('ome-bhatkhande-punjabi')) {
-            fontFamily = fontNames['ome-bhatkhande-punjabi'];
-          } else if (node.classList.contains('ome-bhatkhande-bangla')) {
-            fontFamily = fontNames['ome-bhatkhande-bangla'];
-          } else if (node.classList.contains('ome-bhatkhande-english')) {
-            fontFamily = fontNames['ome-bhatkhande-english'];
-          } else if (node.classList.contains('ome-swarlipi')) {
-            fontFamily = fontNames['ome-swarlipi'];
-          }
+// Auto-detect font from class using fontNames
+for (const key in fontNames) {
+  if (node.classList.contains(key)) {
+    fontFamily = fontNames[key]; // e.g. OmeBhatkhandeHindi
+    break;
+  }
+}
           // Process the text inside the element, applying the correct font
           const textLines = node.textContent.split('\n');
           if (textLines.length > 1) {
@@ -671,7 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let x = margin; // Start at the left margin for each new line
 
       lineContent.forEach((textPart) => {
-        doc.setFont(textPart.font, "normal");
+doc.setFont(textPart.font || "helvetica", "normal");
         doc.setFontSize(14);
         doc.text(textPart.text, x, y, { baseline: "top" });
         // Move the X position for the next part on the same line
