@@ -181,84 +181,85 @@
 .keyboard {
   display: flex;
   flex-wrap: wrap;
+  gap: 6px;               
   justify-content: center;
-  gap: 12px;
   margin: 20px auto;
 }
 
-/* Each section */
 .keyboard-section {
-  background: #fff;
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: var(--radius);
-  padding: 8px 6px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  padding: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  min-width: 180px;
+  min-width: 150px;
 }
 
-/* Section title */
 .keyboard-section h4 {
   width: 100%;
   text-align: center;
-  font-size: 0.8rem;
-  color: var(--accent);
-  margin-bottom: 6px;
-  font-weight: 600;
-  text-transform: uppercase;
+  margin: 0 0 6px 0;
+  font-size: 0.85rem;
 }
 
-/* Buttons */
 .keyboard button {
-  width: 50px;          /* smaller width for easy typing */
-  height: 40px;         /* standard height */
-  margin: 3px;
-  padding: 2px 4px;     /* enough padding */
-  font-size: 0.65rem;   /* smaller font to avoid overflow */
-  font-weight: 600;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background: var(--accent);
-  color: #fff;
+  width: auto;              
+  min-width: 50px;          
+  max-width: 70px;          
+  height: 36px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  font-size: 0.7rem;        
   text-align: center;
   line-height: 1.1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;  /* prevent text from breaking to next line */
-  transition: all 0.2s ease;
-}
-.keyboard button:hover {
-  background: #9b1717;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-/* Active notation highlight */
-.notation-active {
-  border: 2px solid var(--accent);
-  background: #fffbe7;
-  color: var(--accent);
+  word-wrap: break-word;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
+.keyboard button:hover { background: #9b1717; }
+
+/* Desktop adjustments */
+@media(min-width: 1025px) {
   .keyboard button {
-    width: 45px;
-    height: 35px;
-    font-size: 0.6rem;
+    height: 40px;
+    font-size: 0.75rem;
+    min-width: 55px;
+    max-width: 80px;
   }
 }
-@media (max-width: 480px) {
+
+/* Mobile adjustments */
+@media(max-width: 768px) {
+  .keyboard-section { min-width: 120px; padding: 6px; }
   .keyboard button {
-    width: 38px;
     height: 32px;
-    font-size: 0.55rem;
+    font-size: 0.65rem;
+    min-width: 45px;
+    max-width: 65px;
+    padding: 2px 3px;
   }
 }
+
+/* Chhand section adjustments */
+.keyboard-section.chhand button {
+  font-size: 0.6rem;       
+  white-space: normal;     
+  line-height: 1.1;        
+  min-height: 40px;        
+}
+
     
     /* Footer */
     .site-footer {
@@ -368,28 +369,28 @@
     <h4>Swars</h4>
     <button data-key="s">Sa</button>
     <button data-key="r">Re</button>
-    <button data-key="R">Ṟ</button>
+    <button data-key="R">Komal Re</button>
     <button data-key="g">Ga</button>
-    <button data-key="G">G̱</button>
+    <button data-key="G">Komal Ga</button>
     <button data-key="m">Ma</button>
-    <button data-key="M">Ṁ</button>
+    <button data-key="M">Teevra Ma</button>
     <button data-key="p">Pa</button>
     <button data-key="d">Dha</button>
-    <button data-key="D">Ḏ</button>
+    <button data-key="D">Komal Dha</button>
     <button data-key="n">Ni</button>
-    <button data-key="N">Ṉ</button>
+    <button data-key="N">Komal Ni</button>
   </div>
 
   <!-- Octaves -->
   <div class="keyboard-section">
     <h4>Octaves</h4>
-    <button data-key="su">Ṡ</button>
-    <button data-key="Nl">ṉ</button>
-    <button data-key="Mu">Ṁ</button>
+    <button data-key="su">Taar Sa</button>
+    <button data-key="Nl">Mandra Komal Ni</button>
+    <button data-key="Mu">Taar Teevra Ma</button>
   </div>
 
   <!-- Chhand -->
-  <div class="keyboard-section">
+  <div class="keyboard-section chhand">
     <h4>Chhand</h4>
     <button data-key="@">Dugun (2)</button>
     <button data-key="#">Tigun (3)</button>
@@ -409,32 +410,32 @@
     <button data-key="q">Start</button>
     <button data-key="w">Continue</button>
     <button data-key="e">End</button>
-    <button data-key="Q">GStart</button>
+    <button data-key="Q">Ghaseet Start</button>
     <button data-key="W">Stroke</button>
-    <button data-key="E">GEnd</button>
+    <button data-key="E">Ghaseet End</button>
   </div>
 
   <!-- Murki -->
   <div class="keyboard-section">
     <h4>Murki</h4>
-    <button data-key="(">(</button>
-    <button data-key=")">)</button>
+    <button data-key="(">( Start</button>
+    <button data-key=")">) End</button>
   </div>
 
   <!-- Mizrab -->
   <div class="keyboard-section">
     <h4>Mizrab</h4>
-    <button data-key=";">Da</button>
-    <button data-key="'">Ra</button>
-    <button data-key="[">Daa</button>
-    <button data-key="]">Raa</button>
-    <button data-key="\\">Dir</button>
-    <button data-key="-">Khali</button>
+    <button data-key=";">Da (;)</button>
+    <button data-key="'">Ra (')</button>
+    <button data-key="[">Daa ([)</button>
+    <button data-key="]">Raa (])</button>
+    <button data-key="\\">Dir (\)</button>
+    <button data-key="-">Khali (-)</button>
   </div>
 
   <!-- Miscellaneous -->
   <div class="keyboard-section">
-    <h4>Miscellaneous</h4>
+    <h4>Misc</h4>
     <button data-key="x">Sam</button>
     <button data-key="_">Long Dash</button>
     <button data-key=",">Comma</button>
@@ -457,11 +458,10 @@
   <div class="keyboard-section">
     <h4>Controls</h4>
     <button onclick="clearEditor()">Clear</button>
-    <a href="keyboard-help.html" style="text-decoration:none;">
-      <button>Key Help</button>
-    </a>
+    <button onclick="window.location.href='keyboard-info.html'">Key Info</button>
   </div>
 </div>
+
 
   <button id="downloadPDF"
     style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">
