@@ -149,6 +149,33 @@
   }
 }
 
+/* Floating Key Help button */
+#keyHelpBtn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1200;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: 0.3s ease;
+}
+
+#keyHelpBtn:hover {
+  background: #9b1717;
+}
+
+@media (max-width: 768px) {
+  #keyHelpBtn {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+}
     
 /* Keyboard container */
 .keyboard {
@@ -330,32 +357,35 @@
     </select>
   </div>
   <div id="editor" contenteditable="true"></div>
- <div class="keyboard">
+
+  <a href="keyboard-help.html">
+  <button id="keyHelpBtn">Key Help</button>
+</a>
+  
+<div class="keyboard">
   <!-- Swars -->
   <div class="keyboard-section">
     <h4>Swars</h4>
-    <button data-key="s">Sa (s)</button>
-    <button data-key="r">Re (r)</button>
-    <button data-key="R">Komal Re (R)</button>
-    <button data-key="g">Ga (g)</button>
-    <button data-key="G">Komal Ga (G)</button>
-    <button data-key="m">Ma (m)</button>
-    <button data-key="M">Teevra Ma (M)</button>
-    <button data-key="p">Pa (p)</button>
-    <button data-key="d">Dha (d)</button>
-    <button data-key="D">Komal Dha (D)</button>
-    <button data-key="n">Ni (n)</button>
-    <button data-key="N">Komal Ni (N)</button>
+    <button data-key="s">Sa</button>
+    <button data-key="r">Re</button>
+    <button data-key="R">Ṟ</button>
+    <button data-key="g">Ga</button>
+    <button data-key="G">G̱</button>
+    <button data-key="m">Ma</button>
+    <button data-key="M">Ṁ</button>
+    <button data-key="p">Pa</button>
+    <button data-key="d">Dha</button>
+    <button data-key="D">Ḏ</button>
+    <button data-key="n">Ni</button>
+    <button data-key="N">Ṉ</button>
   </div>
 
   <!-- Octaves -->
   <div class="keyboard-section">
     <h4>Octaves</h4>
-    <button data-key="su">Taar Sa (su)</button>
-    <button data-key="Ml">Mandra Teevra Ma (Ml)</button>
-    <button data-key="Mu">Taar Teevra Ma (Mu)</button>
-    <button data-key="Nl">Mandra Komal Ni (Nl)</button>
-    <button data-key="GU">Double Upper Flat Gha (GU)</button>
+    <button data-key="su">Ṡ</button>
+    <button data-key="Nl">ṉ</button>
+    <button data-key="Mu">Ṁ</button>
   </div>
 
   <!-- Chhand -->
@@ -376,41 +406,41 @@
   <!-- Meend -->
   <div class="keyboard-section">
     <h4>Meend</h4>
-    <button data-key="q">Start (q)</button>
-    <button data-key="w">Continue (w)</button>
-    <button data-key="e">End (e)</button>
-    <button data-key="Q">Ghaseet Start (Q)</button>
-    <button data-key="W">Stroke (W)</button>
-    <button data-key="E">Ghaseet End (E)</button>
+    <button data-key="q">Start</button>
+    <button data-key="w">Continue</button>
+    <button data-key="e">End</button>
+    <button data-key="Q">GStart</button>
+    <button data-key="W">Stroke</button>
+    <button data-key="E">GEnd</button>
   </div>
 
   <!-- Murki -->
   <div class="keyboard-section">
     <h4>Murki</h4>
-    <button data-key="(">( Start</button>
-    <button data-key=")">) End</button>
+    <button data-key="(">(</button>
+    <button data-key=")">)</button>
   </div>
 
   <!-- Mizrab -->
   <div class="keyboard-section">
     <h4>Mizrab</h4>
-    <button data-key=";">Da (;)</button>
-    <button data-key="'">Ra (')</button>
-    <button data-key="[">Daa ([)</button>
-    <button data-key="]">Raa (])</button>
-    <button data-key="\\">Dir (\)</button>
-    <button data-key="-">Khali (-)</button>
+    <button data-key=";">Da</button>
+    <button data-key="'">Ra</button>
+    <button data-key="[">Daa</button>
+    <button data-key="]">Raa</button>
+    <button data-key="\\">Dir</button>
+    <button data-key="-">Khali</button>
   </div>
 
   <!-- Miscellaneous -->
   <div class="keyboard-section">
-    <h4>Misc</h4>
-    <button data-key="x">Sam (x)</button>
-    <button data-key="_">Long Dash (_)</button>
-    <button data-key=",">Comma (,)</button>
-    <button data-key="+">Plus (+)</button>
-    <button data-key="a">Short Vertical Divider (a)</button>
-    <button data-key="A">Long Vertical Divider (A)</button>
+    <h4>Miscellaneous</h4>
+    <button data-key="x">Sam</button>
+    <button data-key="_">Long Dash</button>
+    <button data-key=",">Comma</button>
+    <button data-key="+">Plus</button>
+    <button data-key="a">Short Divider</button>
+    <button data-key="A">Long Divider</button>
     <button data-key="0">0</button>
     <button data-key="1">1</button>
     <button data-key="2">2</button>
@@ -427,6 +457,9 @@
   <div class="keyboard-section">
     <h4>Controls</h4>
     <button onclick="clearEditor()">Clear</button>
+    <a href="keyboard-help.html" style="text-decoration:none;">
+      <button>Key Help</button>
+    </a>
   </div>
 </div>
 
