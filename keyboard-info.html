@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhatkhande Keyboard Info — SargamWorld</title>
+<style>
+:root {
+  --accent: #800000;
+  --bg: #f3eee8;
+  --text: #222;
+  --muted: #5a5a5a;
+  --radius: 12px;
+  --container-w: 1100px;
+  --transition: 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+header, footer { text-align: center; padding: 12px; background: var(--accent); color: #fff; }
+
+main { max-width: var(--container-w); margin: 20px auto; padding: 0 12px; }
+
+h1 { text-align: center; color: var(--accent); }
+h2 { margin-top: 20px; color: var(--accent); }
+p { margin-bottom: 12px; color: var(--muted); }
+ul { list-style: disc inside; margin-bottom: 16px; }
+
+.back-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.back-btn:hover { background: #9b1717; }
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+th { background: #f9f5f2; }
+td { background: #fff; }
+
+/* Key style */
+.key {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin: 2px 0;
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+@media(max-width:768px) {
+  table th, table td { font-size: 0.75rem; padding: 4px 6px; }
+  .back-btn { padding: 6px 10px; font-size: 0.9rem; }
+  .key { font-size: 0.7rem; padding: 2px 4px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Bhatkhande Keyboard Guide</h1>
+</header>
+
+<main>
+  <a href="tools.html" class="back-btn">← Back to Notation Editor</a>
+
+  <p>This page explains the Bhatkhande keyboard keys and their usage. You can either use the buttons in the editor or type directly with your desktop or mobile keyboard.</p>
+
+  <h2>Swars (Notes)</h2>
+  <div class="table-container">
+    <table>
+      <tr><th>Note</th><th>Key</th><th>Explanation</th></tr>
+      <tr><td>Sa</td><td><span class="key">s</span></td><td>Natural Sa</td></tr>
+      <tr><td>Re</td><td><span class="key">r</span></td><td>Natural Re</td></tr>
+      <tr><td>Komal Re</td><td><span class="key">R</span></td><td>Flat Re</td></tr>
+      <tr><td>Ga</td><td><span class="key">g</span></td><td>Natural Ga</td></tr>
+      <tr><td>Komal Ga</td><td><span class="key">G</span></td><td>Flat Ga</td></tr>
+      <tr><td>Ma</td><td><span class="key">m</span></td><td>Natural Ma</td></tr>
+      <tr><td>Teevra Ma</td><td><span class="key">M</span></td><td>Sharp Ma</td></tr>
+      <tr><td>Pa</td><td><span class="key">p</span></td><td>Natural Pa</td></tr>
+      <tr><td>Dha</td><td><span class="key">d</span></td><td>Natural Dha</td></tr>
+      <tr><td>Komal Dha</td><td><span class="key">D</span></td><td>Flat Dha</td></tr>
+      <tr><td>Ni</td><td><span class="key">n</span></td><td>Natural Ni</td></tr>
+      <tr><td>Komal Ni</td><td><span class="key">N</span></td><td>Flat Ni</td></tr>
+    </table>
+  </div>
+
+  <h2>Chhand (Rhythmic Patterns)</h2>
+  <div class="table-container">
+    <table>
+      <tr><th>Pattern</th><th>Key</th><th>Explanation</th></tr>
+      <tr><td>Dugun (2)</td><td><span class="key">@</span></td><td>2 notes per beat</td></tr>
+      <tr><td>Tigun (3)</td><td><span class="key">#</span></td><td>3 notes per beat</td></tr>
+      <tr><td>Chaugun (4)</td><td><span class="key">$</span></td><td>4 notes per beat</td></tr>
+      <tr><td>Pachgun (5)</td><td><span class="key">%</span></td><td>5 notes per beat</td></tr>
+      <tr><td>Chhatgun (6)</td><td><span class="key">^</span></td><td>6 notes per beat</td></tr>
+      <tr><td>Satgun (7)</td><td><span class="key">&</span></td><td>7 notes per beat</td></tr>
+      <tr><td>Athgun (8)</td><td><span class="key">*</span></td><td>8 notes per beat</td></tr>
+      <tr><td>Lower Chaugun (4)</td><td><span class="key">`</span></td><td>Lower octave 4 notes</td></tr>
+      <tr><td>Lower Chhatgun (6)</td><td><span class="key">!</span></td><td>Lower octave 6 notes</td></tr>
+      <tr><td>Lower Athgun (8)</td><td><span class="key">~</span></td><td>Lower octave 8 notes</td></tr>
+    </table>
+  </div>
+
+  <h2>Meend (Glides)</h2>
+  <div class="table-container">
+    <table>
+      <tr><th>Action</th><th>Key</th></tr>
+      <tr><td>Start Meend</td><td><span class="key">q</span></td></tr>
+      <tr><td>Continue Meend</td><td><span class="key">w</span></td></tr>
+      <tr><td>End Meend</td><td><span class="key">e</span></td></tr>
+      <tr><td>Ghaseet Start</td><td><span class="key">Q</span></td></tr>
+      <tr><td>Stroke</td><td><span class="key">W</span></td></tr>
+      <tr><td>Ghaseet End</td><td><span class="key">E</span></td></tr>
+    </table>
+  </div>
+
+  <h2>Murki</h2>
+  <div class="table-container">
+    <table>
+      <tr><th>Action</th><th>Key</th></tr>
+      <tr><td>( Start</td><td><span class="key">(</span></td></tr>
+      <tr><td>) End</td><td><span class="key">)</span></td></tr>
+    </table>
+  </div>
+
+  <h2>Mizrab</h2>
+  <div class="table-container">
+    <table>
+      <tr><th>Stroke</th><th>Key</th></tr>
+      <tr><td>Da</td><td><span class="key">;</span></td></tr>
+      <tr><td>Ra</td><td><span class="key">'</span></td></tr>
+      <tr><td>Daa</td><td><span class="key">[</span></td></tr>
+      <tr><td>Raa</td><td><span class="key">]</span></td></tr>
+      <tr><td>Dir</td><td><span class="key">\</span></td></tr>
+      <tr><td>Khali</td><td><span class="key">-</span></td></tr>
+    </table>
+  </div>
+
+  <h2>Miscellaneous</h2>
+  <div class="table-container">
+    <table>
+      <tr><th>Key</th><th>Character</th></tr>
+      <tr><td><span class="key">x</span></td><td>Sam</td></tr>
+      <tr><td><span class="key">_</span></td><td>Long Dash</td></tr>
+      <tr><td><span class="key">,</span></td><td>Comma</td></tr>
+      <tr><td><span class="key">+</span></td><td>Plus</td></tr>
+      <tr><td><span class="key">a</span></td><td>Short Divider</td></tr>
+      <tr><td><span class="key">A</span></td><td>Long Divider</td></tr>
+      <tr><td><span class="key">0-9</span></td><td>Numbers</td></tr>
+    </table>
+  </div>
+
+  <p>Tip: You can also type directly using your desktop or mobile keyboard for all these notes and patterns!</p>
+</main>
+
+<footer>
+  <small>© 2025 SargamWorld — All rights reserved.</small>
+</footer>
+
+</body>
+</html>
