@@ -148,87 +148,97 @@
     min-height: 150px;
   }
 }
-    /* === KEYBOARD BUTTONS === */
- .keyboard button {
-  width: 60px;           /* same width */
-  height: 40px;          /* same height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;          /* smaller padding to fit text */
-  font-size: 0.75rem;    /* smaller font for longer labels */
-  text-align: center;
-  line-height: 1.1;
-  word-wrap: break-word; /* allow breaking text into multiple lines */
-  background: #800000;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  margin: 3px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s ease;
-}
-
-
-    .keyboard button:hover {
-      background: #9b1717;
-      color: #fff;
-    }
-@media(min-width: 1025px) {
-  .keyboard button {
-    width: 70px;
-    height: 45px;
-    font-size: 0.8rem;
-  }
-}
-    .keyboard-section button {
-      background: #800000;
-      color: #fff;
-    }
-    .keyboard-section button:hover {
-      background: #9b1717;
-    }
-
-/* === Keyboard container & sections === */
+/* Keyboard container */
 .keyboard {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;               
-  justify-content: center;  
-  margin: 20px auto;       
+  justify-content: center;
+  gap: 16px;
+  margin: 20px auto;
 }
 
+/* Each section */
 .keyboard-section {
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: var(--radius);
-  padding: 10px;
   background: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border-radius: var(--radius);
+  padding: 12px 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;   
-  min-width: 180px;          
+  justify-content: center;
+  min-width: 200px;
+  transition: transform 0.2s ease;
+}
+.keyboard-section:hover {
+  transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+/* Section title */
+.keyboard-section h4 {
+  width: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Buttons */
+.keyboard button {
+  width: 60px;
+  height: 45px;
+  margin: 4px;
+  padding: 4px 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+.keyboard button:hover {
+  background: #9b1717;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Active notation highlight */
+.notation-active {
+  border: 2px solid var(--accent);
+  background: #fffbe7;
+  color: var(--accent);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
   .keyboard-section {
-    min-width: 140px;
+    min-width: 150px;
     padding: 8px;
   }
-
   .keyboard button {
-    padding: 6px 10px;
-    font-size: 0.9rem;
+    width: 50px;
+    height: 40px;
+    font-size: 0.75rem;
+    margin: 3px;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 480px) {
+  .keyboard-section {
+    min-width: 120px;
+    padding: 6px;
+  }
   .keyboard button {
-    width: 45px;
+    width: 40px;
     height: 35px;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
 }
+
   
     /* Footer */
     .site-footer {
@@ -327,75 +337,106 @@
     </select>
   </div>
   <div id="editor" contenteditable="true"></div>
-  <div class="keyboard">
-    <!-- Swars -->
-    <div class="keyboard-section">
-      <h4>Swars</h4>
-      <button data-key="s">Sa (s)</button>
-      <button data-key="r">Re (r)</button>
-      <button data-key="R">Komal Re (R)</button>
-      <button data-key="g">Ga (g)</button>
-      <button data-key="G">Komal Ga (G)</button>
-      <button data-key="m">Ma (m)</button>
-      <button data-key="M">Teevra Ma (M)</button>
-      <button data-key="p">Pa (p)</button>
-      <button data-key="d">Dha (d)</button>
-      <button data-key="D">Komal Dha (D)</button>
-      <button data-key="n">Ni (n)</button>
-      <button data-key="N">Komal Ni (N)</button>
-    </div>
-    <!-- Octaves -->
-    <div class="keyboard-section">
-      <h4>Octaves</h4>
-      <button data-key="su">Taar Sa (su)</button>
-      <button data-key="Nl">Mandra Komal Ni (Nl)</button>
-      <button data-key="Mu">Taar Teevra Ma (Mu)</button>
-    </div>
-    <!-- Chhand -->
-    <div class="keyboard-section">
-      <h4>Chhand</h4>
-      <button data-key="@">Dugun (2)</button>
-      <button data-key="#">Tigun (3)</button>
-      <button data-key="$">Chaugun (4)</button>
-      <button data-key="%">Pachgun (5)</button>
-      <button data-key="^">Chhatgun (6)</button>
-      <button data-key="&">Satgun (7)</button>
-      <button data-key="*">Athgun (8)</button>
-      <button data-key="`">Lower Chaugun (4)</button>
-      <button data-key="!">Lower Chhatgun (6)</button>
-      <button data-key="~">Lower Athgun (8)</button>
-    </div>
-    <!-- Meend -->
-    <div class="keyboard-section">
-      <h4>Meend</h4>
-      <button data-key="q">Start (q)</button>
-      <button data-key="w">Continue (w)</button>
-      <button data-key="e">End (e)</button>
-      <button data-key="Q">Ghaseet Start (Q)</button>
-      <button data-key="W">Stroke (W)</button>
-      <button data-key="E">Ghaseet End (E)</button>
-    </div>
-    <!-- Murki -->
-    <div class="keyboard-section">
-      <h4>Murki</h4>
-      <button data-key="(">( Start</button>
-      <button data-key=")">) End</button>
-    </div>
-    <!-- Mizrab -->
-    <div class="keyboard-section">
-      <h4>Mizrab</h4>
-      <button data-key=";">Da (;)</button>
-      <button data-key="'">Ra (')</button>
-      <button data-key="[">Daa ([)</button>
-      <button data-key="]">Raa (])</button>
-      <button data-key="\\">Dir (\)</button>
-      <button data-key="-">Khali (-)</button>
-    </div>
-    <div class="keyboard-section">
-      <h4>Controls</h4>
-      <button onclick="clearEditor()">Clear</button>
-    </div>
+ <div class="keyboard">
+  <!-- Swars -->
+  <div class="keyboard-section">
+    <h4>Swars</h4>
+    <button data-key="s">Sa (s)</button>
+    <button data-key="r">Re (r)</button>
+    <button data-key="R">Komal Re (R)</button>
+    <button data-key="g">Ga (g)</button>
+    <button data-key="G">Komal Ga (G)</button>
+    <button data-key="m">Ma (m)</button>
+    <button data-key="M">Teevra Ma (M)</button>
+    <button data-key="p">Pa (p)</button>
+    <button data-key="d">Dha (d)</button>
+    <button data-key="D">Komal Dha (D)</button>
+    <button data-key="n">Ni (n)</button>
+    <button data-key="N">Komal Ni (N)</button>
   </div>
+
+  <!-- Octaves -->
+  <div class="keyboard-section">
+    <h4>Octaves</h4>
+    <button data-key="su">Taar Sa (su)</button>
+    <button data-key="Ml">Mandra Teevra Ma (Ml)</button>
+    <button data-key="Mu">Taar Teevra Ma (Mu)</button>
+    <button data-key="Nl">Mandra Komal Ni (Nl)</button>
+    <button data-key="GU">Double Upper Flat Gha (GU)</button>
+  </div>
+
+  <!-- Chhand -->
+  <div class="keyboard-section">
+    <h4>Chhand</h4>
+    <button data-key="@">Dugun (2)</button>
+    <button data-key="#">Tigun (3)</button>
+    <button data-key="$">Chaugun (4)</button>
+    <button data-key="%">Pachgun (5)</button>
+    <button data-key="^">Chhatgun (6)</button>
+    <button data-key="&">Satgun (7)</button>
+    <button data-key="*">Athgun (8)</button>
+    <button data-key="`">Lower Chaugun (4)</button>
+    <button data-key="!">Lower Chhatgun (6)</button>
+    <button data-key="~">Lower Athgun (8)</button>
+  </div>
+
+  <!-- Meend -->
+  <div class="keyboard-section">
+    <h4>Meend</h4>
+    <button data-key="q">Start (q)</button>
+    <button data-key="w">Continue (w)</button>
+    <button data-key="e">End (e)</button>
+    <button data-key="Q">Ghaseet Start (Q)</button>
+    <button data-key="W">Stroke (W)</button>
+    <button data-key="E">Ghaseet End (E)</button>
+  </div>
+
+  <!-- Murki -->
+  <div class="keyboard-section">
+    <h4>Murki</h4>
+    <button data-key="(">( Start</button>
+    <button data-key=")">) End</button>
+  </div>
+
+  <!-- Mizrab -->
+  <div class="keyboard-section">
+    <h4>Mizrab</h4>
+    <button data-key=";">Da (;)</button>
+    <button data-key="'">Ra (')</button>
+    <button data-key="[">Daa ([)</button>
+    <button data-key="]">Raa (])</button>
+    <button data-key="\\">Dir (\)</button>
+    <button data-key="-">Khali (-)</button>
+  </div>
+
+  <!-- Miscellaneous -->
+  <div class="keyboard-section">
+    <h4>Misc</h4>
+    <button data-key="x">Sam (x)</button>
+    <button data-key="_">Long Dash (_)</button>
+    <button data-key=",">Comma (,)</button>
+    <button data-key="+">Plus (+)</button>
+    <button data-key="a">Short Vertical Divider (a)</button>
+    <button data-key="A">Long Vertical Divider (A)</button>
+    <button data-key="0">0</button>
+    <button data-key="1">1</button>
+    <button data-key="2">2</button>
+    <button data-key="3">3</button>
+    <button data-key="4">4</button>
+    <button data-key="5">5</button>
+    <button data-key="6">6</button>
+    <button data-key="7">7</button>
+    <button data-key="8">8</button>
+    <button data-key="9">9</button>
+  </div>
+
+  <!-- Controls -->
+  <div class="keyboard-section">
+    <h4>Controls</h4>
+    <button onclick="clearEditor()">Clear</button>
+  </div>
+</div>
+
   <button id="downloadPDF"
     style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">
     Download PDF
