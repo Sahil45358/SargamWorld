@@ -244,6 +244,61 @@
       color: #aaa;
     }
 
+    .cookie-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 15px;
+  z-index: 9999;
+  font-family: sans-serif;
+  display: none;
+}
+
+.cookie-popup h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.cookie-popup p {
+  font-size: 0.85rem;
+}
+
+.cookie-options label {
+  display: block;
+  font-size: 0.8rem;
+  margin: 5px 0;
+}
+
+.cookie-buttons {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.cookie-buttons button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.cookie-buttons button:hover {
+  background: #9b1717;
+}
+
+/* Mobile */
+@media(max-width: 500px){
+  .cookie-popup { width: 90%; right: 5%; bottom: 10px; }
+}
+
+
   </style>
 </head>
 <body>
@@ -253,14 +308,21 @@
 <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
 <div class="commonninja_component pid-bf197859-7990-487e-9ccf-7f7f2052ecc0"></div>
 
-  <!-- Cookie Consent Popup -->
-<div id="cookieConsent" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#222; color:#fff; padding:15px; z-index:9999; text-align:center; font-family:sans-serif;">
-  We use cookies to enhance your experience and show ads. 
-  <a href="privacy.html" style="color:#4CAF50; text-decoration:underline;">Learn more</a>.
-  <button id="acceptCookies" style="margin-left:10px; padding:5px 10px; background:#4CAF50; border:none; border-radius:4px; cursor:pointer;">Accept</button>
-  <button id="declineCookies" style="margin-left:5px; padding:5px 10px; background:#f44336; border:none; border-radius:4px; cursor:pointer;">Decline</button>
+<div id="cookieConsentPopup" class="cookie-popup">
+  <h3>We use cookies</h3>
+  <p>Our website uses cookies to ensure you get the best experience. You can choose which cookies to allow.</p>
+  
+  <div class="cookie-options">
+    <label><input type="checkbox" disabled checked> Necessary (Always Active)</label>
+    <label><input type="checkbox" id="analyticsCookie"> Analytics</label>
+    <label><input type="checkbox" id="adsCookie"> Advertising / Ads</label>
+  </div>
+  
+  <div class="cookie-buttons">
+    <button id="acceptAll">Accept All</button>
+    <button id="savePreferences">Save Preferences</button>
+  </div>
 </div>
-
   
   <!-- Navbar -->
   <header class="site-header">
@@ -400,36 +462,65 @@
       });
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-  
-  function showCookieConsent() {
-    if(localStorage.getItem("cookiesAccepted") !== "true" && localStorage.getItem("cookiesDeclined") !== "true") {
-      document.getElementById("cookieConsent").style.display = "block";
-    } else if(localStorage.getItem("cookiesAccepted") === "true") {
-      loadAdsAndAnalytics();
+
+    //Cookies
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("cookieConsentPopup");
+  const acceptAll = document.getElementById("acceptAll");
+  const savePreferences = document.getElementById("savePreferences");
+  const analyticsCheckbox = document.getElementById("analyticsCookie");
+  const adsCheckbox = document.getElementById("adsCookie");
+
+  // Show popup only if preferences not set
+  if(!localStorage.getItem("cookieConsent")) {
+    popup.style.display = "block";
+  }
+
+  function loadScripts() {
+    // Analytics
+    if(localStorage.getItem("analytics") === "true") {
+      const gaScript = document.createElement("script");
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID";
+      gaScript.async = true;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'YOUR_GA_ID');
+    }
+
+    // Ads
+    if(localStorage.getItem("ads") === "true") {
+      const adsScript = document.createElement("script");
+      adsScript.setAttribute("data-ad-client","ca-pub-XXXXXX");
+      adsScript.async = true;
+      adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+      document.head.appendChild(adsScript);
     }
   }
 
-  document.getElementById("acceptCookies").addEventListener("click", () => {
-    localStorage.setItem("cookiesAccepted", "true");
-    document.getElementById("cookieConsent").style.display = "none";
-    loadAdsAndAnalytics();
+  acceptAll.addEventListener("click", () => {
+    localStorage.setItem("cookieConsent", "true");
+    localStorage.setItem("analytics", "true");
+    localStorage.setItem("ads", "true");
+    popup.style.display = "none";
+    loadScripts();
   });
 
-  document.getElementById("declineCookies").addEventListener("click", () => {
-    localStorage.setItem("cookiesDeclined", "true");
-    document.getElementById("cookieConsent").style.display = "none";
+  savePreferences.addEventListener("click", () => {
+    localStorage.setItem("cookieConsent", "true");
+    localStorage.setItem("analytics", analyticsCheckbox.checked);
+    localStorage.setItem("ads", adsCheckbox.checked);
+    popup.style.display = "none";
+    loadScripts();
   });
 
-  function loadAdsAndAnalytics() {
-    // Example: Load Google AdSense or Analytics scripts dynamically
-    // Only call this if cookiesAccepted = true
-    // For instance:
-    // const script = document.createElement('script');
-    // script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-    // script.async = true;
-    // document.body.appendChild(script);
+  // Load scripts if previously accepted
+  if(localStorage.getItem("cookieConsent") === "true") {
+    loadScripts();
   }
+});
 
   // Wait a bit for Common Ninja AdBlock detector to load
   setTimeout(showCookieConsent, 1500);
