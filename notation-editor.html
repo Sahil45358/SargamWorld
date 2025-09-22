@@ -707,39 +707,48 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
     pdfChunks.push(...processNode(node));
   });
 
-  // 3️⃣ Render PDF
-  pdfChunks.forEach(chunk => {
-    const lines = chunk.text.split("\n");
+// 3️⃣ Render PDF
+pdfChunks.forEach(chunk => {
+  const lines = chunk.text.split("\n");
 
-    lines.forEach((line, idx) => {
-      if (line.trim() !== "") {
-        doc.setFont(chunk.font, chunk.style);
-        doc.setFontSize(chunk.size);
+  lines.forEach((line, idx) => {
+    if (line.trim() !== "") {
+      doc.setFont(chunk.font, chunk.style);
+      doc.setFontSize(chunk.size);
 
-        let x = margin;
-        const pageWidth = doc.internal.pageSize.width;
-        const textWidth = doc.getTextWidth(line);
+      let x = margin;
+      const pageWidth = doc.internal.pageSize.width;
+      const textWidth = doc.getTextWidth(line);
 
-        if (chunk.align === "center") {
-          x = (pageWidth - textWidth) / 2;
-        } else if (chunk.align === "right") {
-          x = pageWidth - margin - textWidth;
-        }
-
-        doc.text(line, x, y, { baseline: "top" });
+      if (chunk.align === "center") {
+        x = (pageWidth - textWidth) / 2;
+      } else if (chunk.align === "right") {
+        x = pageWidth - margin - textWidth;
       }
 
-      // Handle line breaks
-      if (idx < lines.length - 1 || chunk.text.includes("\n")) {
-        y += lineHeight;
+      // ✅ always write the full line at once (no overlap)
+      doc.text(line, x, y, { baseline: "top" });
+    }
 
-        if (y > doc.internal.pageSize.height - margin) {
-          doc.addPage();
-          y = margin;
-        }
+    // 🔑 dynamic line height based on font size
+    const dynamicLineHeight = chunk.size * 1.4; // 1.4 is a good ratio
+
+    if (idx < lines.length - 1 || chunk.text.includes("\n")) {
+      y += dynamicLineHeight;
+
+    
+    // move down after each line
+    if (idx < lines.length - 1 || chunk.text.includes("\n")) {
+      y += lineHeight;
+
+      // Page break
+      if (y > doc.internal.pageSize.height - margin) {
+        doc.addPage();
+        y = margin;
       }
-    });
+    }
   });
+});
 
   doc.save("Bhatkhande_Notation.pdf");
 });
