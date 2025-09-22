@@ -627,7 +627,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editor.focus();
   };
 
-// PDF
+// PDF - Exact Editor Style
 document.getElementById("downloadPDF").addEventListener("click", () => {
   const { jsPDF } = window.jspdf;
 
@@ -648,13 +648,12 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
   }
 
   const margin = 60;
+  const pageWidth = doc.internal.pageSize.width;
+  let x = margin;
   let y = margin;
 
-  // 2️⃣ Parse editor content
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = editor.innerHTML;
-
-  function processNode(node, current = { font: "helvetica", size: 14, style: "normal", align: "left" }) {
+  // 2️⃣ Parse editor nodes recursively
+  function parseNode(node, current = { font: "helvetica", size: 14, style: "normal" }) {
     const chunks = [];
 
     if (node.nodeType === Node.TEXT_NODE) {
@@ -664,7 +663,7 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
     } else if (node.nodeType === Node.ELEMENT_NODE) {
       const next = { ...current };
 
-      // detect notation font
+      // detect notation font class
       for (const key in fontNames) {
         if (node.classList.contains(key)) {
           next.font = fontNames[key];
@@ -679,59 +678,60 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
       }
       if (node.style.fontWeight === "bold") next.style = "bold";
       if (node.style.fontStyle === "italic") next.style = "italic";
-      if (node.style.textAlign) next.align = node.style.textAlign;
 
-      // block-level = new line
+      // handle line breaks
       if (["BR", "DIV", "P"].includes(node.tagName)) {
         chunks.push({ ...next, text: "\n" });
       }
 
       node.childNodes.forEach(child => {
-        chunks.push(...processNode(child, next));
+        chunks.push(...parseNode(child, next));
       });
     }
 
     return chunks;
   }
 
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = editor.innerHTML;
   const pdfChunks = [];
-  tempDiv.childNodes.forEach(node => {
-    pdfChunks.push(...processNode(node));
-  });
+  tempDiv.childNodes.forEach(node => pdfChunks.push(...parseNode(node)));
 
-  // 3️⃣ Render PDF
+  // 3️⃣ Render chunks respecting line breaks and font sizes
   pdfChunks.forEach(chunk => {
-    const lines = chunk.text.split("\n");
-    lines.forEach(line => {
-      if (line.trim() !== "") {
-        doc.setFont(chunk.font, chunk.style);
-        doc.setFontSize(chunk.size);
-
-        let x = margin;
-        const pageWidth = doc.internal.pageSize.width;
-        const textWidth = doc.getTextWidth(line);
-
-        if (chunk.align === "center") x = (pageWidth - textWidth) / 2;
-        else if (chunk.align === "right") x = pageWidth - margin - textWidth;
-
-        doc.text(line, x, y, { baseline: "top" });
-      }
-
-      // Dynamic line height
+    if (chunk.text === "\n") {
       y += chunk.size * 1.4;
+      x = margin;
 
-      // Page break
       if (y > doc.internal.pageSize.height - margin) {
         doc.addPage();
         y = margin;
       }
-    });
+    } else {
+      doc.setFont(chunk.font, chunk.style);
+      doc.setFontSize(chunk.size);
+
+      // Wrap words if exceeding page width
+      const words = chunk.text.split(/(\s+)/); // keep spaces
+      words.forEach(word => {
+        const wordWidth = doc.getTextWidth(word);
+        if (x + wordWidth > pageWidth - margin) {
+          y += chunk.size * 1.4;
+          x = margin;
+          if (y > doc.internal.pageSize.height - margin) {
+            doc.addPage();
+            y = margin;
+          }
+        }
+        doc.text(word, x, y, { baseline: "top" });
+        x += wordWidth;
+      });
+    }
   });
 
   doc.save("Bhatkhande_Notation.pdf");
 });
-
-
+  
   // Hamburger menu
   const hamburger = document.querySelector(".hamburger");
   const navLinks = document.getElementById("navLinks");
