@@ -627,7 +627,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editor.focus();
   };
 
-// PDF - Exact Editor Style
+// PDF - Exact Editor Style with alignment, emojis, and proper spacing
 document.getElementById("downloadPDF").addEventListener("click", () => {
   const { jsPDF } = window.jspdf;
 
@@ -649,15 +649,16 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
 
   const margin = 60;
   const pageWidth = doc.internal.pageSize.width;
+  const pageHeight = doc.internal.pageSize.height;
   let x = margin;
   let y = margin;
 
   // 2️⃣ Parse editor nodes recursively
-  function parseNode(node, current = { font: "helvetica", size: 14, style: "normal" }) {
+  function parseNode(node, current = { font: "helvetica", size: 14, style: "normal", align: "left" }) {
     const chunks = [];
 
     if (node.nodeType === Node.TEXT_NODE) {
-      if (node.textContent.trim() !== "") {
+      if (node.textContent !== "") {
         chunks.push({ ...current, text: node.textContent });
       }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -678,8 +679,9 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
       }
       if (node.style.fontWeight === "bold") next.style = "bold";
       if (node.style.fontStyle === "italic") next.style = "italic";
+      if (node.style.textAlign) next.align = node.style.textAlign;
 
-      // handle line breaks
+      // block-level = new line
       if (["BR", "DIV", "P"].includes(node.tagName)) {
         chunks.push({ ...next, text: "\n" });
       }
@@ -697,13 +699,12 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
   const pdfChunks = [];
   tempDiv.childNodes.forEach(node => pdfChunks.push(...parseNode(node)));
 
-  // 3️⃣ Render chunks respecting line breaks and font sizes
+  // 3️⃣ Render chunks respecting alignment, line breaks, font sizes
   pdfChunks.forEach(chunk => {
     if (chunk.text === "\n") {
-      y += chunk.size * 1.4;
+      y += chunk.size * 1.5;
       x = margin;
-
-      if (y > doc.internal.pageSize.height - margin) {
+      if (y > pageHeight - margin) {
         doc.addPage();
         y = margin;
       }
@@ -711,27 +712,37 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
       doc.setFont(chunk.font, chunk.style);
       doc.setFontSize(chunk.size);
 
-      // Wrap words if exceeding page width
-      const words = chunk.text.split(/(\s+)/); // keep spaces
-      words.forEach(word => {
-        const wordWidth = doc.getTextWidth(word);
-        if (x + wordWidth > pageWidth - margin) {
-          y += chunk.size * 1.4;
+      // Split by characters to preserve special symbols & emojis
+      Array.from(chunk.text).forEach(char => {
+        const charWidth = doc.getTextWidth(char);
+
+        // Wrap if exceeds page width
+        if (x + charWidth > pageWidth - margin) {
+          y += chunk.size * 1.5;
           x = margin;
-          if (y > doc.internal.pageSize.height - margin) {
+          if (y > pageHeight - margin) {
             doc.addPage();
             y = margin;
           }
         }
-        doc.text(word, x, y, { baseline: "top" });
-        x += wordWidth;
+
+        // Compute X position based on alignment
+        let renderX = x;
+        if (chunk.align === "center") {
+          renderX = (pageWidth - doc.getTextWidth(chunk.text)) / 2;
+        } else if (chunk.align === "right") {
+          renderX = pageWidth - margin - doc.getTextWidth(chunk.text);
+        }
+
+        doc.text(char, renderX, y, { baseline: "top" });
+        x += charWidth;
       });
     }
   });
 
   doc.save("Bhatkhande_Notation.pdf");
 });
-  
+
   // Hamburger menu
   const hamburger = document.querySelector(".hamburger");
   const navLinks = document.getElementById("navLinks");
