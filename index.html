@@ -464,6 +464,8 @@
 
 
     //Cookies
+Here’s a corrected version of your cookie code:
+
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("cookieConsentPopup");
   const acceptAll = document.getElementById("acceptAll");
@@ -472,13 +474,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const adsCheckbox = document.getElementById("adsCookie");
 
   // Show popup only if preferences not set
-  if(!localStorage.getItem("cookieConsent")) {
+  if (!localStorage.getItem("cookieConsent")) {
     popup.style.display = "block";
   }
 
   function loadScripts() {
     // Analytics
-    if(localStorage.getItem("analytics") === "true") {
+    if (localStorage.getItem("analytics") === "true") {
       const gaScript = document.createElement("script");
       gaScript.src = "https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID";
       gaScript.async = true;
@@ -491,9 +493,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Ads
-    if(localStorage.getItem("ads") === "true") {
+    if (localStorage.getItem("ads") === "true") {
       const adsScript = document.createElement("script");
-      adsScript.setAttribute("data-ad-client","ca-pub-XXXXXX");
+      adsScript.setAttribute("data-ad-client", "ca-pub-XXXXXX");
       adsScript.async = true;
       adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
       document.head.appendChild(adsScript);
@@ -517,11 +519,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Load scripts if previously accepted
-  if(localStorage.getItem("cookieConsent") === "true") {
+  if (localStorage.getItem("cookieConsent") === "true") {
     loadScripts();
+    popup.style.display = "none";
   }
 });
-
   // Wait a bit for Common Ninja AdBlock detector to load
   setTimeout(showCookieConsent, 1500);
 });
