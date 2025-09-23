@@ -188,8 +188,8 @@
 
 .notation-form input[type="text"],
 .notation-form input[type="email"],
-.notation-form textarea,
-.notation-form input[type="file"] {
+.notation-form input[type="url"],
+.notation-form textarea {
   padding: 12px 15px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -201,8 +201,8 @@
 
 .notation-form input[type="text"]:focus,
 .notation-form input[type="email"]:focus,
-.notation-form textarea:focus,
-.notation-form input[type="file"]:focus {
+.notation-form input[type="url"]:focus,
+.notation-form textarea:focus {
   outline: none;
   border-color: #800000;
   box-shadow: 0 0 5px rgba(128,0,0,0.3);
@@ -210,7 +210,7 @@
 
 .notation-form textarea {
   min-height: 150px;
-  resize: vertical; /* allow vertical resize for long text */
+  resize: vertical;
 }
 
 .submit-btn {
@@ -284,40 +284,61 @@
 <section class="notation-share">
   <div class="container">
     <h2>Share Your Notations</h2>
-    <p>Have a notation for a song? Submit it here to help <strong>SargamWorld</strong> grow!</p>
+    <p>Help <strong>SargamWorld</strong> grow by sharing your song notations!</p>
 
-    <!-- Formsubmit Form -->
-    <form action="https://formsubmit.co/sargam.world453@gmail.com" method="POST" class="notation-form">
-      <!-- Redirect to thank-you page -->
-      <input type="hidden" name="_next" value="thank-you.html">
-      <!-- Disable captcha -->
-      <input type="hidden" name="_captcha" value="false">
+    <button id="toggleForm" class="submit-btn" style="background:#ffdf80; color:#240b36;">Share Your Notation</button>
 
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-      </div>
+    <div id="notationFormContainer" style="display:none; margin-top:20px;">
+      <form action="https://formsubmit.co/sargam.world453@gmail.com" method="POST" class="notation-form">
+        <input type="hidden" name="_next" value="thank-you.html">
+        <input type="hidden" name="_captcha" value="false">
 
-      <div class="form-group">
-        <label for="email">Your Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-      </div>
+        <div class="form-group">
+          <label for="name">Your Name <span style="color:#800000;">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
 
-      <div class="form-group">
-        <label for="song">Song Name</label>
-        <input type="text" id="song" name="song" placeholder="Name of the song" required>
-      </div>
+        <div class="form-group">
+          <label for="email">Your Email <span style="color:#800000;">*</span></label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
 
-      <div class="form-group">
-        <label for="notation">Paste Your Notation</label>
-        <textarea id="notation" name="notation" placeholder="Paste your notation here" required></textarea>
-      </div>
+        <div class="form-group">
+          <label for="song">Song Name <span style="color:#800000;">*</span></label>
+          <input type="text" id="song" name="song" placeholder="Name of the song" required>
+        </div>
 
-      <button type="submit" class="submit-btn">Submit Notation</button>
-    </form>
+        <div class="form-group">
+          <label for="notation">Paste Your Notation <span style="color:#800000;">*</span></label>
+          <textarea id="notation" name="notation" placeholder="Paste your notation here" required></textarea>
+        </div>
+
+        <!-- Optional Fields -->
+        <div class="form-group">
+          <label for="movie">Movie Name (optional)</label>
+          <input type="text" id="movie" name="movie" placeholder="Enter movie name">
+        </div>
+
+        <div class="form-group">
+          <label for="genre">Genre (optional)</label>
+          <input type="text" id="genre" name="genre" placeholder="Enter genre or mood">
+        </div>
+
+        <div class="form-group">
+          <label for="artist">Artist Name (optional)</label>
+          <input type="text" id="artist" name="artist" placeholder="Enter artist name">
+        </div>
+
+        <div class="form-group">
+          <label for="youtube">YouTube Link (optional)</label>
+          <input type="url" id="youtube" name="youtube" placeholder="Paste YouTube link">
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Notation</button>
+      </form>
+    </div>
   </div>
 </section>
-
   </main>
 
   <!-- Footer -->
@@ -334,6 +355,14 @@
       navLinks.classList.toggle("show");
     });
 
+ const toggleBtn = document.getElementById('toggleForm');
+  const formContainer = document.getElementById('notationFormContainer');
+
+  toggleBtn.addEventListener('click', () => {
+    formContainer.style.display = formContainer.style.display === 'none' ? 'block' : 'none';
+    toggleBtn.textContent = formContainer.style.display === 'block' ? 'Close Form' : 'Share Your Notation';
+  });
+   
     function validateForm() {
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
