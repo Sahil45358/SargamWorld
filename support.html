@@ -150,6 +150,93 @@
     font-size: 0.7rem; /* 👈 slightly smaller on mobile */
   }
 }
+
+.notation-share {
+  background: #fff;
+  padding: 60px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: 50px auto;
+}
+
+.notation-share h2 {
+  color: #800000;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.notation-share p {
+  color: #555;
+  text-align: center;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.notation-form .form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.notation-form label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.notation-form input[type="text"],
+.notation-form input[type="email"],
+.notation-form textarea,
+.notation-form input[type="file"] {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.notation-form input[type="text"]:focus,
+.notation-form input[type="email"]:focus,
+.notation-form textarea:focus,
+.notation-form input[type="file"]:focus {
+  outline: none;
+  border-color: #800000;
+  box-shadow: 0 0 5px rgba(128,0,0,0.3);
+}
+
+.notation-form textarea {
+  min-height: 150px;
+  resize: vertical; /* allow vertical resize for long text */
+}
+
+.submit-btn {
+  display: block;
+  background: #800000;
+  color: #fff;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background: #9b1717;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .notation-share {
+    padding: 40px 20px;
+  }
+}
     
   </style>
 </head>
@@ -195,18 +282,40 @@
     </section>
   </main>
 
- <section class="notation-share">
-  <h2>Share Your Notations</h2>
-  <p>If you have a notation for a song, submit it here to help SargamWorld grow!</p>
+<section class="notation-share">
+  <div class="container">
+    <h2>Share Your Notations</h2>
+    <p>If you have a notation for a song, submit it here to help SargamWorld grow!</p>
 
-  <form action="submit-notation.php" method="POST" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <input type="text" name="song" placeholder="Song Name" required>
-    <textarea name="notation" placeholder="Paste your notation here"></textarea>
-    <input type="file" name="file">
-    <button type="submit">Submit Notation</button>
-  </form>
+    <form action="submit-notation.php" method="POST" enctype="multipart/form-data" class="notation-form">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="song">Song Name</label>
+        <input type="text" id="song" name="song" placeholder="Name of the song" required>
+      </div>
+
+      <div class="form-group">
+        <label for="notation">Paste Notation</label>
+        <textarea id="notation" name="notation" placeholder="Paste your notation here" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="file">Upload File (optional)</label>
+        <input type="file" id="file" name="file" accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg">
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Notation</button>
+    </form>
+  </div>
 </section>
 
   <!-- Footer -->
