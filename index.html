@@ -299,6 +299,22 @@
   .cookie-popup { width: 90%; right: 5%; bottom: 10px; }
 }
 
+    .manage-cookies-btn {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.manage-cookies-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
 
   </style>
 </head>
@@ -385,9 +401,11 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    © 2025 SargamWorld. All rights reserved.
-  </footer>
+<footer>
+  © 2025 SargamWorld. All rights reserved.  
+  <button id="manageCookiesBtn" class="manage-cookies-btn">Manage Cookies</button>
+</footer>
+
 
   <script>
     function toggleMenu() {
@@ -541,7 +559,10 @@
   }, 1500);
 });
 
-
+document.getElementById("manageCookiesBtn").addEventListener("click", () => {
+  const popup = document.getElementById("cookieConsentPopup");
+  popup.style.display = "block";
+});
 
   </script>
 </body>
