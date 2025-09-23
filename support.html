@@ -287,13 +287,14 @@
     <h2>Share Your Notations</h2>
     <p>If you have a notation for a song, submit it here to help SargamWorld grow!</p>
 
-    <form 
-      action="https://formsubmit.co/sargam.world453@gmail.com" 
-      method="POST" 
-      enctype="multipart/form-data" 
-      class="notation-form"
-      onsubmit="return validateForm()"
-    >
+    <!-- Formsubmit Form -->
+    <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" enctype="multipart/form-data" class="notation-form">
+      
+      <!-- Hidden input for redirect -->
+      <input type="hidden" name="_next" value="thank-you.html">
+      <!-- Optional: disable captcha if you want -->
+      <input type="hidden" name="_captcha" value="false">
+
       <div class="form-group">
         <label for="name">Your Name</label>
         <input type="text" id="name" name="name" placeholder="Enter your full name" required>
@@ -319,15 +320,11 @@
         <input type="file" id="file" name="file" accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg">
       </div>
 
-      <!-- Hidden fields for Formsubmit -->
-      <input type="hidden" name="_subject" value="New Notation Submission!">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="thankyou.html">
-
       <button type="submit" class="submit-btn">Submit Notation</button>
     </form>
   </div>
 </section>
+
 
   <!-- Footer -->
   <footer class="site-footer">
