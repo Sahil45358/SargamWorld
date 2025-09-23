@@ -280,51 +280,36 @@
         <a href="https://www.buymeacoffee.com/sargamworld" target="_blank">Buy Me a Coffee</a>
       </div>
     </section>
-  </main>
 
-<section class="notation-share">
-  <div class="container">
-    <h2>Share Your Notations</h2>
-    <p>If you have a notation for a song, submit it here to help SargamWorld grow!</p>
+      <section>
+    <form action="https://formsubmit.co/sargam.world453@gmail.com" method="POST" class="notation-form">
+  <input type="hidden" name="_next" value="thank-you.html">
+  <input type="hidden" name="_captcha" value="false">
 
-    <!-- Formsubmit Form -->
-    <form action="https://formsubmit.co/sargam.world453@gmail.com" method="POST" enctype="multipart/form-data" class="notation-form">
-      
-      <!-- Hidden input for redirect -->
-      <input type="hidden" name="_next" value="thank-you.html">
-      <!-- Optional: disable captcha if you want -->
-      <input type="hidden" name="_captcha" value="false">
-
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Your Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-      </div>
-
-      <div class="form-group">
-        <label for="song">Song Name</label>
-        <input type="text" id="song" name="song" placeholder="Name of the song" required>
-      </div>
-
-      <div class="form-group">
-        <label for="notation">Paste Notation</label>
-        <textarea id="notation" name="notation" placeholder="Paste your notation here" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="file">Upload File (optional)</label>
-        <input type="file" id="file" name="file" accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg">
-      </div>
-
-      <button type="submit" class="submit-btn">Submit Notation</button>
-    </form>
+  <div class="form-group">
+    <label for="name">Your Name</label>
+    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
   </div>
-</section>
 
+  <div class="form-group">
+    <label for="email">Your Email</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="song">Song Name</label>
+    <input type="text" id="song" name="song" placeholder="Name of the song" required>
+  </div>
+
+  <div class="form-group">
+    <label for="notation">Paste Notation</label>
+    <textarea id="notation" name="notation" placeholder="Paste your notation here" required></textarea>
+  </div>
+
+  <button type="submit" class="submit-btn">Submit Notation</button>
+</form>
+  </section>
+  </main>
 
   <!-- Footer -->
   <footer class="site-footer">
