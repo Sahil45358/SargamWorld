@@ -464,35 +464,35 @@
     });
 
 
-    //Cookies
-document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("cookieConsentPopup");
   const acceptAll = document.getElementById("acceptAll");
   const savePreferences = document.getElementById("savePreferences");
   const analyticsCheckbox = document.getElementById("analyticsCookie");
   const adsCheckbox = document.getElementById("adsCookie");
 
-  // Show popup only if preferences not set
-  if (!localStorage.getItem("cookieConsent")) {
-    popup.style.display = "block";
+  // Show popup only if consent not already given
+  function showCookieConsent() {
+    if (!localStorage.getItem("cookieConsent")) popup.style.display = "block";
   }
 
+  // Load scripts based on consent
   function loadScripts() {
     // Analytics
     if (localStorage.getItem("analytics") === "true") {
       const gaScript = document.createElement("script");
-      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID";
+      gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX";
       gaScript.async = true;
       document.head.appendChild(gaScript);
 
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag(){ dataLayer.push(arguments); }
       gtag('js', new Date());
-      gtag('config', 'YOUR_GA_ID');
+      gtag('config', 'G-XXXXXXX');
     }
 
-    // Ads
-    if (localStorage.getItem("ads") === "true") {
+    // Ads (only if allowed and no AdBlock)
+    if (localStorage.getItem("ads") === "true" && window.canRunAds !== false) {
       const adsScript = document.createElement("script");
       adsScript.setAttribute("data-ad-client", "ca-pub-XXXXXX");
       adsScript.async = true;
@@ -501,6 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Accept all cookies
   acceptAll.addEventListener("click", () => {
     localStorage.setItem("cookieConsent", "true");
     localStorage.setItem("analytics", "true");
@@ -509,6 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadScripts();
   });
 
+  // Save custom preferences
   savePreferences.addEventListener("click", () => {
     localStorage.setItem("cookieConsent", "true");
     localStorage.setItem("analytics", analyticsCheckbox.checked);
@@ -517,14 +519,29 @@ document.addEventListener("DOMContentLoaded", () => {
     loadScripts();
   });
 
-  // Load scripts if previously accepted
+  // Load scripts automatically if consent already exists
   if (localStorage.getItem("cookieConsent") === "true") {
     loadScripts();
     popup.style.display = "none";
   }
+
+  // Detect AdBlock using Common Ninja
+  function checkAdBlock() {
+    if (window.canRunAds === false) {
+      adsCheckbox.disabled = true;
+      adsCheckbox.checked = false;
+      adsCheckbox.parentElement.innerHTML = 'Advertising / Ads (AdBlock detected)';
+    }
+  }
+
+  // Wait for Common Ninja detector to initialize
+  setTimeout(() => {
+    showCookieConsent();
+    checkAdBlock();
+  }, 1500);
 });
-  // Wait a bit for Common Ninja AdBlock detector to load
-  setTimeout(showCookieConsent, 1500);
+
+
 
   </script>
 </body>
