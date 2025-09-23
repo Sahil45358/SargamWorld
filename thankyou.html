@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    :root {
+      --accent: #800000;
+      --radius: 12px;
+      --container-w: 800px;
+      --transition: 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3eee8;
+      color: #222;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .thank-you-box {
+      background: #fff;
+      padding: 50px 30px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      max-width: var(--container-w);
+      width: 100%;
+      transition: transform var(--transition);
+    }
+
+    .thank-you-box:hover {
+      transform: translateY(-3px);
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #555;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    a {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    a:hover {
+      background: #9b1717;
+    }
+
+    @media (max-width: 768px) {
+      .thank-you-box {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="thank-you-box">
+    <h1>Thank You!</h1>
+    <p>Your notation has been successfully submitted. 🎵<br>
+       We’ll review it soon and keep SargamWorld growing with your contribution!</p>
+    <a href="support.html">Back to Support Page</a>
+  </div>
+</body>
+</html>
