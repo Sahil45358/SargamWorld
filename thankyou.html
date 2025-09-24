@@ -84,8 +84,21 @@
     <h1>Thank You!</h1>
     <p>Your notation has been successfully submitted<br>
        We’ll review it soon and keep SargamWorld growing with your contribution!</p>
+    <p>You will be redirected to the support page in <span id="countdown">5</span> seconds...</p>
     <a href="support.html">Back to Support Page</a>
   </div>
+
+  <script>
+    let countdown = 5;
+    const countdownEl = document.getElementById("countdown");
+    const interval = setInterval(() => {
+      countdown--;
+      countdownEl.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(interval);
+        window.location.href = "support.html";
+      }
+    }, 1000);
+  </script>
 </body>
-  
 </html>
