@@ -7,20 +7,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <link rel="icon" type="image/png" href="favicon.png" />
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: #f3eee8;
-      color: #333;
-      text-align: center;
-  padding: 0;
+    :root {
+      --accent: #800000;  /* navbar and brand color */
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
     }
 
-    header, footer {
-      background: #240b36;
-      color: white;
-      padding: 1rem;
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3eee8;  /* light background */
+      color: #222;           /* dark text */
+      line-height: 1.6;
+      margin: 0;
     }
+    .container {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    a { text-decoration: none; color: inherit; }
 
     #harmonium {
       display: flex;
