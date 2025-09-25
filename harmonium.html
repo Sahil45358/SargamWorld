@@ -846,18 +846,23 @@ window.addEventListener('click', function (e) {
 });
 
    //warning sign
-   function checkOrientation() {
+function checkOrientation() {
   const warning = document.getElementById('rotate-warning');
+
   if (window.innerWidth <= 768) { // mobile
     if (window.innerHeight > window.innerWidth) { // portrait
-      document.body.classList.add('portrait');
+      warning.style.display = "flex";      // show warning
+      document.getElementById('harmonium').style.display = "none"; // hide harmonium
     } else { // landscape
-      document.body.classList.remove('portrait');
+      warning.style.display = "none";      // hide warning
+      document.getElementById('harmonium').style.display = "flex"; // show harmonium
     }
-  } else {
-    document.body.classList.remove('portrait'); // desktop
+  } else { // desktop
+    warning.style.display = "none";        // always hide warning
+    document.getElementById('harmonium').style.display = "flex"; // show harmonium
   }
 }
+
 
 window.addEventListener('load', checkOrientation);
 window.addEventListener('resize', checkOrientation);
