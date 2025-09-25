@@ -6,113 +6,78 @@
   <title>Raag Information – SargamWorld</title>
   <meta name="google" content="notranslate" />
   <style>
-    /* 🌐 Font & Base */
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+    :root {
+      --accent: #800000; /* main brand color */
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
+    }
 
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f9f9f9;
+      background: #f3eee8;
       color: #222;
     }
 
-/* 🌐 Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, #240b36, #c31432);
-  padding: 10px 20px;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+    a { text-decoration: none; color: inherit; }
 
-.navbar .logo {
-  font-size: 1.5em;
-  font-weight: bold;
-}
+    /* 🌐 Navbar */
+    .site-header {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 12px 20px;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .logo img { height: 50px; }
+    .brand { color: #fff; font-weight: 700; font-size: 1.2rem; }
+    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
 
-/* 🔹 Default: Desktop (links always visible) */
-.navbar .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-}
+    .nav-links { display:flex; gap:10px; list-style:none; margin-left:auto; }
+    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
+    .nav-links a.active { background: rgba(255,255,255,0.2); }
+    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
-.navbar .nav-links li a {
-  color: white;
-  text-decoration: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-
-.navbar .nav-links li a:hover,
-.navbar .nav-links li a.active {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.hamburger {
-  display: none;
-  cursor: pointer;
-  font-size: 1.5em;
-}
-
-/* 📱 Mobile Nav (overrides desktop) */
-@media (max-width: 768px) {
-  .navbar .nav-links {
-    display: none; /* 🔹 Hidden by default */
-    flex-direction: column;
-    background: #240b36;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    padding: 15px;
-    border-radius: 10px;
-  }
-
-  .navbar .nav-links.show {
-    display: flex; /* 🔹 Show only when toggled */
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--accent);
+        position: absolute;
+        top: 100%;
+        right: 20px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.show { display: flex; }
+      .hamburger { display: block; }
+    }
 
     /* 🌟 Header */
     header {
-      padding: 60px 20px;
+      padding: 50px 20px;
       text-align: center;
-      background: linear-gradient(to right, #c31432, #240b36);
-      color: #fff;
-      border-bottom: 4px solid #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+      border-bottom: 2px solid #ddd;
     }
-    header h1 {
-      font-size: 2.2em;
-      margin-bottom: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    header p {
-      color: #ffe;
-      font-size: 1.05em;
-      max-width: 750px;
-      margin: auto;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
+    header h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
+    header p { color: #444; font-size: 1rem; max-width: 720px; margin: auto; line-height: 1.6; }
 
-    /* Page content */
-    main {
-      padding: 25px 20px;
-    }
-
+    /* Page Content */
+    main { max-width: var(--container-w); margin: 0 auto; padding: 25px 20px; }
     .controls {
       display: flex;
       justify-content: center;
@@ -126,7 +91,6 @@
       border: 1px solid #ccc;
       font-size: 1rem;
     }
-
     .raag-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -135,8 +99,8 @@
     }
     .raag-card {
       background: #fff;
-      color: #240b36;
-      border-radius: 12px;
+      color: var(--accent);
+      border-radius: var(--radius);
       padding: 1.5rem;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -144,38 +108,25 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .raag-card:hover {
-      transform: scale(1.05);
+      transform: translateY(-4px);
       box-shadow: 0 6px 18px rgba(0,0,0,0.15);
       cursor: pointer;
     }
-    a {
-      text-decoration: none;
-    }
-
-    .back-button {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .back-button a {
-      color: #c31432;
-      font-weight: bold;
-    }
+    .back-button { text-align: center; margin-top: 2rem; }
+    .back-button a { color: var(--accent); font-weight: bold; }
 
     /* 📌 Footer */
-    footer {
-      background: #240b36;
-      color: white;
+    .site-footer {
       text-align: center;
       padding: 20px;
+      color: #5a5a5a;
+      font-size: 0.9rem;
       margin-top: 40px;
+      background: #fff;
+      border-top: 1px solid #ddd;
     }
-    footer a {
-      color: #ffdf80;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
+    .site-footer a { color: var(--accent); text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
 
     /* 🌟 Floating Support Button */
     .support-btn {
@@ -193,18 +144,21 @@
     }
     .support-btn:hover {
       background: white;
-      color: #c31432 !important;
+      color: var(--accent) !important;
     }
   </style>
 </head>
 <body>
 
- <!-- 🌐 Navbar -->
-  <nav class="navbar">
-    <div>
-      <span class="logo">🎵 SargamWorld</span><br>
-      <span class="tagline">Explore Indian Classical Music</span>
-    </div>
+<!-- 🌐 Navbar -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="LOGO.png" alt="SargamWorld Logo">
+      <span>SargamWorld</span>
+    </a>
+    <span class="tagline">Explore • Learn • Practice</span>
+    <div class="hamburger">☰</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="raaginfo.html" class="active">Raags</a></li>
@@ -213,119 +167,108 @@
       <li><a href="harmonium.html">Harmonium</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support</a></li>
     </ul>
-    <div class="hamburger">☰</div>
-  </nav>
+  </div>
+</header>
 
-  <!-- 🌟 Header -->
-  <header>
-    <h1>Explore Raags – Indian Classical Music</h1>
-    <p>Search and learn about different Raags, their moods, timings, and notes. Click any Raag to explore more.</p>
-  </header>
+<!-- 🌟 Header -->
+<header>
+  <h1>Explore Raags – Indian Classical Music</h1>
+  <p>Search and learn about different Raags, their moods, timings, and notes. Click any Raag to explore more.</p>
+</header>
 
-  <main>
-    <div class="controls">
-      <input type="text" id="searchInput" placeholder="Search Raag..." />
-      <select id="timeFilter">
-        <option value="">All Times</option>
-        <option value="morning">Morning</option>
-        <option value="afternoon">Afternoon</option>
-        <option value="evening">Evening</option>
-        <option value="night">Night</option>
-      </select>
-    </div>
+<main>
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search Raag..." />
+    <select id="timeFilter">
+      <option value="">All Times</option>
+      <option value="morning">Morning</option>
+      <option value="afternoon">Afternoon</option>
+      <option value="evening">Evening</option>
+      <option value="night">Night</option>
+    </select>
+  </div>
 
-    <div class="raag-container" id="raagContainer">
-      <!-- Cards populated by JS -->
-    </div>
+  <div class="raag-container" id="raagContainer"></div>
 
-    <div class="back-button">
-      <a href="harmonium.html">🎹 Jump to Harmonium</a>
-    </div>
-  </main>
+  <div class="back-button">
+    <a href="harmonium.html">🎹 Jump to Harmonium</a>
+  </div>
+</main>
 
-  <!-- 📌 Footer -->
-  <footer>
-    <p>🎶 SargamWorld • Explore Raags & Indian Classical Music</p>
-    <p><a href="support.html">Support Us</a></p>
-  </footer>
+<!-- 📌 Footer -->
+<footer class="site-footer">
+  <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
+</footer>
 
-  <!-- 🌟 Floating Support Button -->
-  <a href="support.html" class="support-btn">☕ Support Us</a>
+<!-- 🌟 Floating Support Button -->
+<a href="support.html" class="support-btn">☕ Support Us</a>
 
-  <script>
-    // Hamburger
-    document.addEventListener("DOMContentLoaded", () => {
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
-
-  hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
+<script>
+  // Hamburger
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
   });
-});
-    
-    const raags = [
-      { name: 'Bageshree', file: 'bageshree.html', time: 'night' },
-      { name: 'Bhairav', file: 'bhairav.html', time: 'morning' },
-      { name: 'Bhairavi', file: 'bhairavi.html', time: 'morning' },
-      { name: 'Charukeshi', file: 'charukeshi.html', time: 'evening' },
-      { name: 'DarBari Kanada', file: 'darbari_kanada.html', time: 'night' },
-      { name: 'Desh', file: 'desh.html', time: 'evening' },
-      { name: 'Durga', file: 'durga.html', time: 'evening' },
-      { name: 'Hansdhwani', file: 'hansdhwani.html', time: 'morning' },
-      { name: 'Jaunpuri', file: 'jaunpuri.html', time: 'morning' },
-      { name: 'Jog', file: 'jog.html', time: 'night' },
-      { name: 'Jogiya', file: 'jogiya.html', time: 'morning' },
-      { name: 'Kafi', file: 'kafi.html', time: 'evening' },
-      { name: 'Kedar', file: 'kedar.html', time: 'night' },
-      { name: 'Khamaj', file: 'khamaj.html', time: 'evening' },
-      { name: 'Lalit', file: 'lalit.html', time: 'morning' },
-      { name: 'Malkauns', file: 'malkauns.html', time: 'night' },
-      { name: 'Marwa', file: 'marwa.html', time: 'evening' },
-      { name: 'Madhmad Sarang', file: 'madhmad_sarang.html', time: 'afternoon' },
-      { name: 'Miyan ki Malhar', file: 'miyan_ki_malhar.html', time: 'evening' },
-      { name: 'Multani', file: 'multani.html', time: 'afternoon' },
-      { name: 'Patdeep', file: 'patdeep.html', time: 'afternoon' },
-      { name: 'Puriya', file: 'puriya.html', time: 'evening' },
-      { name: 'Saraswati', file: 'saraswati.html', time: 'morning' },
-      { name: 'Shivranjani', file: 'shivranjani.html', time: 'night' },
-      { name: 'Shree', file: 'shree.html', time: 'evening' },
-      { name: 'Shuddha Sarang', file: 'shuddha_sarang.html', time: 'afternoon' },
-      { name: 'Todi', file: 'todi.html', time: 'morning' },
-      { name: 'Yaman', file: 'yaman.html', time: 'evening' }
-    ];
 
-    function renderRaags() {
-      const container = document.getElementById("raagContainer");
-      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-      const selectedTime = document.getElementById("timeFilter").value;
+  const raags = [
+    { name: 'Bageshree', file: 'bageshree.html', time: 'night' },
+    { name: 'Bhairav', file: 'bhairav.html', time: 'morning' },
+    { name: 'Bhairavi', file: 'bhairavi.html', time: 'morning' },
+    { name: 'Charukeshi', file: 'charukeshi.html', time: 'evening' },
+    { name: 'DarBari Kanada', file: 'darbari_kanada.html', time: 'night' },
+    { name: 'Desh', file: 'desh.html', time: 'evening' },
+    { name: 'Durga', file: 'durga.html', time: 'evening' },
+    { name: 'Hansdhwani', file: 'hansdhwani.html', time: 'morning' },
+    { name: 'Jaunpuri', file: 'jaunpuri.html', time: 'morning' },
+    { name: 'Jog', file: 'jog.html', time: 'night' },
+    { name: 'Jogiya', file: 'jogiya.html', time: 'morning' },
+    { name: 'Kafi', file: 'kafi.html', time: 'evening' },
+    { name: 'Kedar', file: 'kedar.html', time: 'night' },
+    { name: 'Khamaj', file: 'khamaj.html', time: 'evening' },
+    { name: 'Lalit', file: 'lalit.html', time: 'morning' },
+    { name: 'Malkauns', file: 'malkauns.html', time: 'night' },
+    { name: 'Marwa', file: 'marwa.html', time: 'evening' },
+    { name: 'Madhmad Sarang', file: 'madhmad_sarang.html', time: 'afternoon' },
+    { name: 'Miyan ki Malhar', file: 'miyan_ki_malhar.html', time: 'evening' },
+    { name: 'Multani', file: 'multani.html', time: 'afternoon' },
+    { name: 'Patdeep', file: 'patdeep.html', time: 'afternoon' },
+    { name: 'Puriya', file: 'puriya.html', time: 'evening' },
+    { name: 'Saraswati', file: 'saraswati.html', time: 'morning' },
+    { name: 'Shivranjani', file: 'shivranjani.html', time: 'night' },
+    { name: 'Shree', file: 'shree.html', time: 'evening' },
+    { name: 'Shuddha Sarang', file: 'shuddha_sarang.html', time: 'afternoon' },
+    { name: 'Todi', file: 'todi.html', time: 'morning' },
+    { name: 'Yaman', file: 'yaman.html', time: 'evening' }
+  ];
 
-      // Clear current cards
-      container.innerHTML = "";
+  function renderRaags() {
+    const container = document.getElementById("raagContainer");
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    const selectedTime = document.getElementById("timeFilter").value;
+    container.innerHTML = "";
+    const sortedRaags = [...raags].sort((a, b) => a.name.localeCompare(b.name));
+    sortedRaags.forEach(raag => {
+      if (
+        raag.name.toLowerCase().includes(searchTerm) &&
+        (selectedTime === "" || raag.time === selectedTime)
+      ) {
+        const card = document.createElement("a");
+        card.href = `raags/${raag.file}`;
+        card.innerHTML = `<div class="raag-card">${raag.name}</div>`;
+        container.appendChild(card);
+      }
+    });
+  }
 
-      // Sort alphabetically
-      const sortedRaags = [...raags].sort((a, b) => a.name.localeCompare(b.name));
-
-      sortedRaags.forEach(raag => {
-        if (
-          raag.name.toLowerCase().includes(searchTerm) &&
-          (selectedTime === "" || raag.time === selectedTime)
-        ) {
-          const card = document.createElement("a");
-          card.href = `raags/${raag.file}`;
-          card.innerHTML = `<div class="raag-card">${raag.name}</div>`;
-          container.appendChild(card);
-        }
-      });
-    }
-
-    // Event Listeners
-    document.getElementById("searchInput").addEventListener("input", renderRaags);
-    document.getElementById("timeFilter").addEventListener("change", renderRaags);
-
-    // Initial render
-    renderRaags();
-  </script>
+  document.getElementById("searchInput").addEventListener("input", renderRaags);
+  document.getElementById("timeFilter").addEventListener("change", renderRaags);
+  renderRaags();
+</script>
 
 </body>
 </html>
