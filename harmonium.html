@@ -97,7 +97,7 @@ a[href="index.html"] {
     }
 
     a {
-      color: white;
+      color: var(--accent);
       text-decoration: underline;
     }
 
@@ -278,7 +278,7 @@ a[href="index.html"] {
     .site-footer {
       text-align: center;
       padding: 20px;
-      color: #333;
+      color: #222;
       font-size: 0.9rem;
       margin-top: 40px;
     }
@@ -330,7 +330,13 @@ a[href="index.html"] {
 #rotate-warning .message {
   max-width: 300px;
 }
-    
+    body.portrait #harmonium {
+  display: none !important;
+}
+body.portrait #rotate-warning {
+  display: flex !important;
+}
+
   </style>
 </head>
 <body>
@@ -552,14 +558,15 @@ for (let oct = 2; oct <= 4; oct++) {
     container.appendChild(whiteKey);
 
 // Black keys
+const whiteKeyWidth = 100 / 21; // percent
 if (blackMap[pitch]) {
-      const blackNote = pitch + '#' + oct;
-      const blackKey = makeKey(blackNote, true);
-      const index = ((oct - 2) * 7 + i);
-      blackKey.style.position = 'absolute';
-      blackKey.style.left = `${index * 50 + 35}px`;
-      container.appendChild(blackKey);
-    }
+  const blackNote = pitch + '#' + oct;
+  const blackKey = makeKey(blackNote, true);
+  const index = (oct - 2) * 7 + i; // 0-based
+  blackKey.style.position = 'absolute';
+  blackKey.style.left = `calc(${index * whiteKeyWidth}% + ${whiteKeyWidth/2}% )`; // middle of white key
+  container.appendChild(blackKey);
+}
   });
   }
    // wav
@@ -841,23 +848,21 @@ window.addEventListener('click', function (e) {
    //warning sign
    function checkOrientation() {
   const warning = document.getElementById('rotate-warning');
-
-  // Only for small screens (mobile)
-  if (window.innerWidth <= 768) {
-    if (window.innerHeight > window.innerWidth) {
-      // Portrait
-      warning.style.display = 'flex';
-      document.getElementById('harmonium').style.transform = 'scale(0)'; // hide harmonium
-    } else {
-      // Landscape
-      warning.style.display = 'none';
-      document.getElementById('harmonium').style.transform = 'scale(1)'; // show harmonium
+  if (window.innerWidth <= 768) { // mobile
+    if (window.innerHeight > window.innerWidth) { // portrait
+      document.body.classList.add('portrait');
+    } else { // landscape
+      document.body.classList.remove('portrait');
     }
   } else {
-    warning.style.display = 'none'; // Desktop
-    document.getElementById('harmonium').style.transform = 'scale(1)';
+    document.body.classList.remove('portrait'); // desktop
   }
 }
+
+window.addEventListener('load', checkOrientation);
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+
 
 // Run on load
 window.addEventListener('load', checkOrientation);
