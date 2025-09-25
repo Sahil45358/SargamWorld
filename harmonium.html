@@ -27,7 +27,11 @@
       margin: 0 auto;
       padding: 40px 20px;
     }
-    a { text-decoration: none; color: inherit; }
+    /* Back to Home link */
+a[href="index.html"] {
+  color: #800000; /* or any dark/accent color */
+  text-decoration: underline;
+}
 
     #harmonium {
       display: flex;
@@ -249,30 +253,11 @@
     }
 
 
-  /* 🌟 Support Us Button */
-  .support-btn {
-    position: fixed;
-    right: 20px;
-    bottom: 80px;
-    background: #ffdf80;
-    color: #240b36 !important;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-  }
-  .support-btn:hover {
-    background: white;
-    color: #c31432 !important;
-  }
-
  /* Footer */
     .site-footer {
       text-align: center;
       padding: 20px;
-      color: #5a5a5a;
+      color: #333;
       font-size: 0.9rem;
       margin-top: 40px;
     }
