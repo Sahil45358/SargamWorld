@@ -206,6 +206,27 @@ a[href="index.html"] {
   padding: 10px;
 }
 
+/* Harmonium mobile scaling */
+@media (max-width: 768px) {
+  #harmonium {
+    width: 100vw;
+    height: auto;
+    max-height: 200px; /* fits in landscape */
+    padding: 5px;
+    margin: 10px auto;
+  }
+
+  .white-key {
+    width: calc(100% / 21) !important; /* scale to container width */
+    height: 120px;
+  }
+
+  .black-key {
+    width: calc(100% / 35) !important;
+    height: 80px;
+  }
+}
+    
  /* Navbar */
     .site-header {
       background: var(--accent);
@@ -287,9 +308,41 @@ a[href="index.html"] {
   }
 }
 
+    /* Warning overlay */
+#rotate-warning {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#rotate-warning .message {
+  max-width: 300px;
+}
+    
   </style>
 </head>
 <body>
+  
+  <div id="rotate-warning">
+  <div class="message">
+    Please rotate your device to landscape for the best experience
+  </div>
+</div>
+
+
+  
  <!-- Navbar -->
   <header class="site-header">
     <div class="nav-inner">
@@ -784,6 +837,34 @@ window.addEventListener('click', function (e) {
     document.getElementById('raags-options').classList.remove('show');
   }
 });
+
+   //warning sign
+   function checkOrientation() {
+  const warning = document.getElementById('rotate-warning');
+
+  // Only for small screens (mobile)
+  if (window.innerWidth <= 768) {
+    if (window.innerHeight > window.innerWidth) {
+      // Portrait
+      warning.style.display = 'flex';
+      document.getElementById('harmonium').style.transform = 'scale(0)'; // hide harmonium
+    } else {
+      // Landscape
+      warning.style.display = 'none';
+      document.getElementById('harmonium').style.transform = 'scale(1)'; // show harmonium
+    }
+  } else {
+    warning.style.display = 'none'; // Desktop
+    document.getElementById('harmonium').style.transform = 'scale(1)';
+  }
+}
+
+// Run on load
+window.addEventListener('load', checkOrientation);
+// Run on resize / orientation change
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+   
   // Hamburger
  const hamburger = document.querySelector(".hamburger");
     const navLinks = document.querySelector(".nav-links");
