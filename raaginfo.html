@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Raag Information – SargamWorld</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
   <meta name="google" content="notranslate" />
   <style>
     :root {
@@ -22,7 +23,7 @@
 
     a { text-decoration: none; color: inherit; }
 
-    /* 🌐 Navbar */
+    /* Navbar */
     .site-header {
       background: var(--accent);
       color: #fff;
@@ -31,24 +32,27 @@
       top: 0;
       z-index: 1000;
     }
-    .nav-inner {
-      max-width: var(--container-w);
-      margin: 0 auto;
+                .nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;  /* align logo + tagline to left */
+  gap: 12px;                    /* spacing between logo & tagline */
+  padding:12px 20px;
+}
+    .brand-wrap {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: flex-start;
-      gap: 12px;
-      padding: 12px 20px;
+      gap: 10px;
     }
-    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
-    .logo img { height: 50px; }
-    .brand { color: #fff; font-weight: 700; font-size: 1.2rem; }
+    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
     .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
-
-    .nav-links { display:flex; gap:10px; list-style:none; margin-left:auto; }
+    .nav-links { display:flex; gap:10px; list-style:none; }
     .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
     .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
-    .nav-links a.active { background: rgba(255,255,255,0.2); }
+    .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
     .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
     @media (max-width: 768px) {
@@ -57,8 +61,7 @@
         flex-direction: column;
         background: var(--accent);
         position: absolute;
-        top: 100%;
-        right: 20px;
+        top: 100px; right: 20px;
         padding: 15px;
         border-radius: 8px;
       }
@@ -115,18 +118,39 @@
     .back-button { text-align: center; margin-top: 2rem; }
     .back-button a { color: var(--accent); font-weight: bold; }
 
-    /* 📌 Footer */
+    /* Footer */
     .site-footer {
       text-align: center;
       padding: 20px;
       color: #5a5a5a;
       font-size: 0.9rem;
       margin-top: 40px;
-      background: #fff;
-      border-top: 1px solid #ddd;
     }
-    .site-footer a { color: var(--accent); text-decoration: none; }
-    .site-footer a:hover { text-decoration: underline; }
+
+   .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
+    .logo img { height: 120px; }
+   /* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
+}
+
+/* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+/* Keep the tagline visible on mobile (you said you wanted it kept) */
+.tagline {
+  display: inline-block;
+  white-space: nowrap;      /* keep tagline on one line */
+  overflow: hidden;         /* prevent overflow */
+  text-overflow: ellipsis;  /* add "…" if space is too small */
+}
+    @media (max-width: 768px) {
+  .tagline {
+    font-size: 0.7rem; /* 👈 slightly smaller on mobile */
+  }
+}
 
     /* 🌟 Floating Support Button */
     .support-btn {
@@ -191,7 +215,7 @@
   <div class="raag-container" id="raagContainer"></div>
 
   <div class="back-button">
-    <a href="harmonium.html">🎹 Jump to Harmonium</a>
+    <a href="harmonium.html">Jump to Harmonium</a>
   </div>
 </main>
 
