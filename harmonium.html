@@ -96,10 +96,6 @@ a[href="index.html"] {
       font-weight: bold;
     }
 
-    a {
-      color: #fff;
-      text-decoration: underline;
-    }
 
 #keyboard {
   width: 100%;
@@ -236,7 +232,7 @@ a[href="index.html"] {
       top: 0;
       z-index: 1000;
     }
-                .nav-inner {
+  .nav-inner {
   max-width: var(--container-w);
   margin: 0 auto;
   display:flex;
@@ -287,12 +283,12 @@ a[href="index.html"] {
     .logo img { height: 120px; }
    /* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
 @media (pointer: coarse) {
-  .logo span { display: none !important; }
+  .logo span { display: none !important; color: #fff !important;}
 }
 
 /* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
 @media (max-width: 1024px) {
-  .logo span { display: none !important; }
+  .logo span { display: none !important; color: #fff !important;}
 }
 
 /* Keep the tagline visible on mobile (you said you wanted it kept) */
