@@ -24,15 +24,15 @@
   a { text-decoration: none; color: inherit; }
 
   /* Navbar */
-  .site-header {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: relative;
-    top: 0;
-    z-index: 1000;
-    width: 100%;                /* ✅ full width */
-  }
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+  top: 0;
+  z-index: 1000;
+  width: 100%;             /* ✅ spans edge to edge */
+}
   .nav-inner {
     max-width: var(--container-w);
     margin: 0 auto;
@@ -70,25 +70,25 @@
     .hamburger { display: block; }
   }
 
-  /* Header */
-  header {
-    padding: 60px 20px;
-    text-align: center;
-    max-width: var(--container-w);   /* ✅ contained width */
-    margin: 0 auto;                  /* ✅ center */
-  }
-  header h1 {
-    font-size: 2.2rem;
-    color: var(--accent);
-    margin-bottom: 12px;
-    font-weight: 700;
-  }
-  header p {
-    max-width: 750px;
-    margin: auto;
-    color: #5a5a5a;
-    line-height: 1.6;
-  }
+/* Page Header (not navbar) */
+.page-header {
+  padding: 60px 20px;
+  text-align: center;
+  max-width: var(--container-w);
+  margin: 0 auto;
+}
+.page-header h1 {
+  font-size: 2.2rem;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.page-header p {
+  max-width: 750px;
+  margin: auto;
+  color: #5a5a5a;
+  line-height: 1.6;
+}
 
   /* Hero */
   .hero { 
@@ -176,11 +176,11 @@
     </div>
   </header>
 
- <!-- Page Header -->
-  <header>
-    <h1>Indian Music Theory – Sargam, Ragas, Voice Culture</h1>
-    <p>Learn the foundation of Indian classical and semi-classical music. This guide helps decode Sargam, Swaras, Ragas, and essential vocal techniques.</p>
-  </header>
+<!-- Page Header -->
+<header class="page-header">
+  <h1>Indian Music Theory – Sargam, Ragas, Voice Culture</h1>
+  <p>Learn the foundation of Indian classical and semi-classical music. This guide helps decode Sargam, Swaras, Ragas, and essential vocal techniques.</p>
+</header>
 
   <main>
 
