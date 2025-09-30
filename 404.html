@@ -1,0 +1,83 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon | SargamWorld</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #111; /* dark background */
+      color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      background-image: url("https://images.unsplash.com/photo-1479707341578-d3f239e493d1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); /* <-- replace with your image */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+    /* Dark overlay for readability */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #ffcc66; /* warm golden accent */
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      background: #800000;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    a:hover {
+      background: #a33;
+    }
+    .logo {
+      max-width: 120px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Optional Logo -->
+    <img src="logo.png" alt="SargamWorld Logo" class="logo">
+    <h1>Coming Soon</h1>
+    <p>
+      This section of <strong>SargamWorld</strong> is under construction.<br>
+      We’re preparing exclusive classical music content for you.<br>
+      Stay tuned!
+    </p>
+    <a href="/">Back to Home</a>
+  </div>
+</body>
+</html>
