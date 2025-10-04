@@ -245,44 +245,44 @@
       color: #aaa;
     }
 
-/* Cookie Consent Popup */
+/* === Cookie Consent Popup === */
 .cookie-popup {
   position: fixed;
   bottom: 20px;
   right: 20px;
   width: 320px;
-  background: #fff; /* popup background */
-  color: #000; /* text color */
-  border: 1px solid #ccc;
+  background: var(--bg-card-dark); /* matches dark theme */
+  color: var(--text-light);
+  border: 1px solid #333;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
   padding: 20px;
   z-index: 9999;
   font-family: 'Segoe UI', sans-serif;
-  display: none; /* hidden by default */
   opacity: 0;
   transform: translateY(20px);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none; /* prevents clicking when hidden */
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Show popup smoothly */
+/* Show popup */
 .cookie-popup.show {
-  display: block;
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto; /* enable interaction */
 }
 
 /* Headings */
 .cookie-popup h3 {
   margin: 0 0 10px 0;
   font-size: 1.2rem;
-  color: #800000; /* your accent color */
+  color: var(--accent);
 }
 
-/* Paragraph text */
+/* Paragraph */
 .cookie-popup p {
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-muted);
   margin: 0 0 15px 0;
   line-height: 1.4;
 }
@@ -352,25 +352,27 @@
     padding: 15px;
   }
 }
+
   </style>
 </head>
 <body>
 
-<div id="cookieConsentPopup" class="cookie-popup" role="dialog" aria-modal="true" aria-labelledby="cookieTitle">
-  <h3 id="cookieTitle">We use cookies</h3>
+<!-- Cookie Consent Popup -->
+<div id="cookieConsentPopup" class="cookie-popup">
+  <h3>We use cookies</h3>
   <p>Our website uses cookies to ensure you get the best experience. You can choose which cookies to allow.</p>
   
   <div class="cookie-options">
-    <label>
-      <input type="checkbox" disabled checked> Necessary (Always Active)
-    </label>
-    <label>
-      <input type="checkbox" id="analyticsCookie"> Analytics
-    </label>
-    <label>
-      <input type="checkbox" id="adsCookie"> Advertising / Ads
-    </label>
+    <label><input type="checkbox" disabled checked> Necessary (Always Active)</label>
+    <label><input type="checkbox" id="analyticsCookie"> Analytics</label>
+    <label><input type="checkbox" id="adsCookie"> Advertising / Ads</label>
   </div>
+  
+  <div class="cookie-buttons">
+    <button id="acceptAll">Accept All</button>
+    <button id="savePreferences">Save Preferences</button>
+  </div>
+</div>
   
   <div class="cookie-buttons">
     <button id="acceptAll" type="button">Accept All</button>
@@ -524,15 +526,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const savePreferences = document.getElementById("savePreferences");
   const analyticsCheckbox = document.getElementById("analyticsCookie");
   const adsCheckbox = document.getElementById("adsCookie");
+  const manageBtn = document.getElementById("manageCookiesBtn");
 
-  // Show popup only if consent not already given
-  if (!localStorage.getItem("cookieConsent")) {
-    popup.style.display = "block";
+  // Show popup smoothly
+  function showPopup() {
+    popup.classList.add("show");
+  }
+
+  // Hide popup smoothly
+  function hidePopup() {
+    popup.classList.remove("show");
   }
 
   // Load scripts based on user consent
   function loadScripts() {
-    // Load Google Analytics if allowed
+    // Google Analytics
     if (localStorage.getItem("analytics") === "true") {
       const gaScript = document.createElement("script");
       gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX";
@@ -540,12 +548,12 @@ document.addEventListener("DOMContentLoaded", () => {
       document.head.appendChild(gaScript);
 
       window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', 'G-XXXXXXX');
     }
 
-    // Load Google Ads if allowed
+    // Google Ads
     if (localStorage.getItem("ads") === "true") {
       const adsScript = document.createElement("script");
       adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
@@ -555,12 +563,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Show popup if consent not given
+  if (!localStorage.getItem("cookieConsent")) showPopup();
+
   // Accept all cookies
   acceptAll.addEventListener("click", () => {
     localStorage.setItem("cookieConsent", "true");
     localStorage.setItem("analytics", "true");
     localStorage.setItem("ads", "true");
-    popup.style.display = "none";
+    hidePopup();
     loadScripts();
   });
 
@@ -569,24 +580,22 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("cookieConsent", "true");
     localStorage.setItem("analytics", analyticsCheckbox.checked ? "true" : "false");
     localStorage.setItem("ads", adsCheckbox.checked ? "true" : "false");
-    popup.style.display = "none";
+    hidePopup();
     loadScripts();
   });
 
-  // Load scripts automatically if consent already exists
+  // Auto-load scripts if consent exists
   if (localStorage.getItem("cookieConsent") === "true") {
     loadScripts();
-    popup.style.display = "none";
+    hidePopup();
   }
 
   // Manage Cookies button
-  const manageBtn = document.getElementById("manageCookiesBtn");
   if (manageBtn) {
-    manageBtn.addEventListener("click", () => {
-      popup.style.display = "block";
-    });
+    manageBtn.addEventListener("click", () => showPopup());
   }
 });
+
   </script>
 </body>
 </html>
