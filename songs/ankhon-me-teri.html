@@ -220,46 +220,32 @@ fir | se | kahu | yaa | nahin
 }
 </style>
   <script>
-  const form = document.getElementById('comment-form');
+const form = document.getElementById('comment-form');
   const commentList = document.getElementById('comment-list');
 
-  // Load comments from localStorage
+  // Ask for admin key
+  const adminKey = prompt("Enter admin key (for delete access):");
+  const isAdmin = (adminKey === "yourSecret123"); // set your own key
+
+  // Load saved comments
   const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
-  savedComments.forEach(c => addCommentToDOM(c.name, c.text, c.date));
+  savedComments.forEach((c, index) => addCommentToDOM(c.name, c.text, c.date, index));
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-
     const name = document.getElementById('commenter-name').value.trim();
     const text = document.getElementById('comment-text').value.trim();
     const date = new Date().toLocaleString();
 
     if(name && text){
-      // Add to DOM
-      addCommentToDOM(name, text, date);
-
-      // Save to localStorage
       savedComments.unshift({ name, text, date });
       localStorage.setItem('comments', JSON.stringify(savedComments));
-
+      addCommentToDOM(name, text, date, 0);
       form.reset();
     }
   });
 
-  function addCommentToDOM(name, text, date){
-    const commentDiv = document.createElement('div');
-    commentDiv.className = 'comment';
-    commentDiv.innerHTML = `
-      <div class="meta"><strong>${name}</strong> • ${date}</div>
-      <p>${text}</p>
-    `;
-    commentList.prepend(commentDiv);
-  }
-
-     // Ask for admin key
-  const adminKey = prompt("Enter admin key (for delete access):");
-  const isAdmin = (adminKey === "yourSecret123"); // set your own key
- function addCommentToDOM(name, text, date, index){
+  function addCommentToDOM(name, text, date, index){
     const commentDiv = document.createElement('div');
     commentDiv.className = 'comment';
     commentDiv.innerHTML = `
