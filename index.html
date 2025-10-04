@@ -245,39 +245,71 @@
       color: #aaa;
     }
 
-    .cookie-popup {
+ give me css for 
+ChatGPT said:
+
+Here’s a modern, professional CSS for your cookie consent popup that matches your dark theme while keeping it clean, mobile-friendly, and with smooth transitions:
+
+/* Cookie Consent Popup */
+.cookie-popup {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 300px;
-  background: #fff;
-  color: #000; /* Black text */
+  width: 320px;
+  background: #fff; /* popup background */
+  color: #000; /* text color */
   border: 1px solid #ccc;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  border-radius: 10px;
-  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  padding: 20px;
   z-index: 9999;
-  font-family: sans-serif;
-  display: none;
+  font-family: 'Segoe UI', sans-serif;
+  display: none; /* hidden by default */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.cookie-popup h3 {
-  margin-top: 0;
-  font-size: 1.1rem;
-}
-
-.cookie-popup p {
-  font-size: 0.85rem;
-}
-
-.cookie-options label {
+/* Show popup smoothly */
+.cookie-popup.show {
   display: block;
-  font-size: 0.8rem;
-  margin: 5px 0;
+  opacity: 1;
+  transform: translateY(0);
 }
 
+/* Headings */
+.cookie-popup h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+  color: #800000; /* your accent color */
+}
+
+/* Paragraph text */
+.cookie-popup p {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0 0 15px 0;
+  line-height: 1.4;
+}
+
+/* Checkbox options */
+.cookie-options label {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.cookie-options input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+/* Buttons */
 .cookie-buttons {
-  margin-top: 10px;
+  margin-top: 15px;
   text-align: right;
 }
 
@@ -286,21 +318,20 @@
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 5px 10px;
-  margin-left: 5px;
+  padding: 6px 12px;
+  margin-left: 8px;
   cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .cookie-buttons button:hover {
   background: #9b1717;
+  transform: translateY(-1px);
 }
 
-/* Mobile */
-@media(max-width: 500px){
-  .cookie-popup { width: 90%; right: 5%; bottom: 10px; }
-}
-
-    .manage-cookies-btn {
+/* Manage Cookies Button (footer) */
+.manage-cookies-btn {
   background: transparent;
   color: var(--accent);
   border: 1px solid var(--accent);
@@ -317,28 +348,38 @@
   color: #fff;
 }
 
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .cookie-popup {
+    width: 90%;
+    right: 5%;
+    bottom: 10px;
+    padding: 15px;
+  }
+}
   </style>
 </head>
 <body>
 
-
-    
-<script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
-<div class="commonninja_component pid-bf197859-7990-487e-9ccf-7f7f2052ecc0"></div>
-
-<div id="cookieConsentPopup" class="cookie-popup">
-  <h3>We use cookies</h3>
+<div id="cookieConsentPopup" class="cookie-popup" role="dialog" aria-modal="true" aria-labelledby="cookieTitle">
+  <h3 id="cookieTitle">We use cookies</h3>
   <p>Our website uses cookies to ensure you get the best experience. You can choose which cookies to allow.</p>
   
   <div class="cookie-options">
-    <label><input type="checkbox" disabled checked> Necessary (Always Active)</label>
-    <label><input type="checkbox" id="analyticsCookie"> Analytics</label>
-    <label><input type="checkbox" id="adsCookie"> Advertising / Ads</label>
+    <label>
+      <input type="checkbox" disabled checked> Necessary (Always Active)
+    </label>
+    <label>
+      <input type="checkbox" id="analyticsCookie"> Analytics
+    </label>
+    <label>
+      <input type="checkbox" id="adsCookie"> Advertising / Ads
+    </label>
   </div>
   
   <div class="cookie-buttons">
-    <button id="acceptAll">Accept All</button>
-    <button id="savePreferences">Save Preferences</button>
+    <button id="acceptAll" type="button">Accept All</button>
+    <button id="savePreferences" type="button">Save Preferences</button>
   </div>
 </div>
   
@@ -482,8 +523,7 @@
       });
     });
 
-
- document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("cookieConsentPopup");
   const acceptAll = document.getElementById("acceptAll");
   const savePreferences = document.getElementById("savePreferences");
@@ -491,13 +531,13 @@
   const adsCheckbox = document.getElementById("adsCookie");
 
   // Show popup only if consent not already given
-  function showCookieConsent() {
-    if (!localStorage.getItem("cookieConsent")) popup.style.display = "block";
+  if (!localStorage.getItem("cookieConsent")) {
+    popup.style.display = "block";
   }
 
-  // Load scripts based on consent
+  // Load scripts based on user consent
   function loadScripts() {
-    // Analytics
+    // Load Google Analytics if allowed
     if (localStorage.getItem("analytics") === "true") {
       const gaScript = document.createElement("script");
       gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX";
@@ -510,12 +550,12 @@
       gtag('config', 'G-XXXXXXX');
     }
 
-    // Ads (only if allowed and no AdBlock)
-    if (localStorage.getItem("ads") === "true" && window.canRunAds !== false) {
+    // Load Google Ads if allowed
+    if (localStorage.getItem("ads") === "true") {
       const adsScript = document.createElement("script");
-      adsScript.setAttribute("data-ad-client", "ca-pub-XXXXXX");
-      adsScript.async = true;
       adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+      adsScript.async = true;
+      adsScript.setAttribute("data-ad-client", "ca-pub-XXXXXXX");
       document.head.appendChild(adsScript);
     }
   }
@@ -532,8 +572,8 @@
   // Save custom preferences
   savePreferences.addEventListener("click", () => {
     localStorage.setItem("cookieConsent", "true");
-    localStorage.setItem("analytics", analyticsCheckbox.checked);
-    localStorage.setItem("ads", adsCheckbox.checked);
+    localStorage.setItem("analytics", analyticsCheckbox.checked ? "true" : "false");
+    localStorage.setItem("ads", adsCheckbox.checked ? "true" : "false");
     popup.style.display = "none";
     loadScripts();
   });
@@ -544,27 +584,14 @@
     popup.style.display = "none";
   }
 
-  // Detect AdBlock using Common Ninja
-  function checkAdBlock() {
-    if (window.canRunAds === false) {
-      adsCheckbox.disabled = true;
-      adsCheckbox.checked = false;
-      adsCheckbox.parentElement.innerHTML = 'Advertising / Ads (AdBlock detected)';
-    }
+  // Manage Cookies button
+  const manageBtn = document.getElementById("manageCookiesBtn");
+  if (manageBtn) {
+    manageBtn.addEventListener("click", () => {
+      popup.style.display = "block";
+    });
   }
-
-  // Wait for Common Ninja detector to initialize
-  setTimeout(() => {
-    showCookieConsent();
-    checkAdBlock();
-  }, 1500);
 });
-
-document.getElementById("manageCookiesBtn").addEventListener("click", () => {
-  const popup = document.getElementById("cookieConsentPopup");
-  popup.style.display = "block";
-});
-
   </script>
 </body>
 </html>
