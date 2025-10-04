@@ -131,49 +131,36 @@ fir | se | kahu | yaa | nahin
 
 <style>
 
-  #comments-section {
-    margin-top: 40px;
-  }
+ #comments-section { margin-top: 40px; }
   #comment-form input, #comment-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+    width: 100%; padding: 10px; margin: 6px 0;
+    border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;
   }
   #comment-form button {
-    padding: 10px 20px;
-    background-color: #c31432;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
+    padding: 10px 20px; background-color: #c31432; color: white;
+    border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;
   }
-  #comment-form button:hover {
-    background-color: #a10f25;
-  }
+  #comment-form button:hover { background-color: #a10f25; }
+
   .comment {
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f8f8f8;
-    border-left: 4px solid #c31432;
+    margin: 15px 0; padding: 12px;
+    border-radius: 8px; background-color: #f8f8f8;
+    border-left: 4px solid #c31432; position: relative;
   }
-  .comment .meta {
-    font-size: 0.85rem;
-    color: #555;
-  }
+  .comment .meta { font-size: 0.85rem; color: #555; margin-bottom: 6px; }
+  .comment p { margin: 0; }
 
   /* Trash icon button */
   .delete-btn {
     position: absolute; top: 10px; right: 10px;
-    background: none; border: none; font-size: 1.2rem;
-    cursor: pointer; display: none; color: #999;
-    transition: color 0.2s;
+    background: none; border: none; cursor: pointer;
+    display: none; /* only show for owner's comment */
   }
-  .delete-btn:hover { color: #c31432; }
+  .delete-btn svg {
+    width: 18px; height: 18px;
+    fill: #999; transition: fill 0.2s;
+  }
+  .delete-btn:hover svg { fill: #c31432; }
   
   .video-section {
   text-align: center;
@@ -223,13 +210,15 @@ fir | se | kahu | yaa | nahin
 const form = document.getElementById('comment-form');
   const commentList = document.getElementById('comment-list');
 
-  // Ask for admin key
-  const adminKey = prompt("Enter admin key (for delete access):");
-  const isAdmin = (adminKey === "yourSecret123"); // set your own key
+  // Assign a unique ID to this visitor (if not already stored)
+  if (!localStorage.getItem('commenterId')) {
+    localStorage.setItem('commenterId', 'id-' + Math.random().toString(36).substr(2, 9));
+  }
+  const currentUserId = localStorage.getItem('commenterId');
 
   // Load saved comments
   const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
-  savedComments.forEach((c, index) => addCommentToDOM(c.name, c.text, c.date, index));
+  savedComments.forEach((c, index) => addCommentToDOM(c, index));
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -238,24 +227,31 @@ const form = document.getElementById('comment-form');
     const date = new Date().toLocaleString();
 
     if(name && text){
-      savedComments.unshift({ name, text, date });
+      const newComment = { id: currentUserId, name, text, date };
+      savedComments.unshift(newComment);
       localStorage.setItem('comments', JSON.stringify(savedComments));
-      addCommentToDOM(name, text, date, 0);
+      addCommentToDOM(newComment, 0);
       form.reset();
     }
   });
 
-  function addCommentToDOM(name, text, date, index){
+  function addCommentToDOM(comment, index){
     const commentDiv = document.createElement('div');
     commentDiv.className = 'comment';
     commentDiv.innerHTML = `
-      <div class="meta"><strong>${name}</strong> • ${date}</div>
-      <p>${text}</p>
-      <button class="delete-btn">🗑️</button>
+      <div class="meta"><strong>${comment.name}</strong> • ${comment.date}</div>
+      <p>${comment.text}</p>
+      <button class="delete-btn" title="Delete comment">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 6h18v2H3V6zm2 3h14l-1.5 12.5a1 1 0 0 1-1 .9H7.5a1 1 0 0 1-1-.9L5 9zm5 2v8h2v-8H10zm4 0v8h2v-8h-2zM9 4V2h6v2h5v2H4V4h5z"/>
+        </svg>
+      </button>
     `;
 
-    if(isAdmin){
-      const deleteBtn = commentDiv.querySelector('.delete-btn');
+    const deleteBtn = commentDiv.querySelector('.delete-btn');
+
+    // Only show delete for this user's own comments
+    if (comment.id === currentUserId) {
       deleteBtn.style.display = 'block';
       deleteBtn.addEventListener('click', () => {
         savedComments.splice(index, 1);
