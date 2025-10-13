@@ -196,15 +196,27 @@ a[href="index.html"] {
   position: relative;                   /* for Sa text positioning */
 }
 
+/* Default: Sa label at top */
 .highlight::after {
-  content: attr(data-label); /* shows “Sa” when set in JS */
+  content: attr(data-label);
   position: absolute;
-  top: 4px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
   font-weight: bold;
   color: #000;
+}
+
+/* White keys: Sa label at bottom */
+.highlight.white::after {
+  bottom: 5px;
+  top: auto;
+}
+
+/* Black keys: Sa label at top (default) */
+.highlight.black::after {
+  top: 4px;
+  bottom: auto;
 }
     @media (max-width: 480px) {
   .highlight::after {
@@ -532,7 +544,7 @@ function stopNote(note, keyDiv) {
 
   function makeKey(note, isBlack) {
     const key = document.createElement('div');
-    key.className = isBlack ? 'black-key' : 'white-key';
+    key.className = isBlack ? 'black-key black' : 'white-key white'; // added class
     key.dataset.note = note;
 
     if (!isBlack && note.startsWith('C')) {
