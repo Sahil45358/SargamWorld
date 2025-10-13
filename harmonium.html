@@ -227,6 +227,21 @@ a[href="index.html"] {
 #raags-options {
   max-height: 200px;
   overflow-y: auto;
+  display: none;        /* hide by default */
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px;
+}
+
+#raags-options.show {
+  display: flex;        /* show as flex when toggled */
+}
+
+    #scales-options {
+  display: none;
+}
+
+#scales-options.show {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
@@ -463,8 +478,6 @@ body.portrait #rotate-warning {
 
  <div id="raag-info" style="text-align: center; margin: 10px 0; font-weight: bold;"></div>
 
-  <div id="noteDisplay">Press a key…</div>
-  <div id="noteDisplay">All raags are in C# scale</div>
   
  <div id="harmonium"></div>
   <p><a href="index.html">⬅️ Back to Home</a></p>
