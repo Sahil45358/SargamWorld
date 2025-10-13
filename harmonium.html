@@ -386,7 +386,7 @@ body.portrait #rotate-warning {
 </head>
 <body>
   
-  <div id="rotate-warning">
+<div id="rotate-warning" style="display:none;">
   <div class="message">
     Please rotate your device to landscape for the best experience
   </div>
@@ -917,35 +917,27 @@ window.addEventListener('click', function (e) {
   }
 });
 
-   //warning sign
+// Warning sign
 function checkOrientation() {
   const warning = document.getElementById('rotate-warning');
+  const harmonium = document.getElementById('harmonium');
 
-  if (window.innerWidth <= 768) { // mobile
-    if (window.innerHeight > window.innerWidth) { // portrait
-      warning.style.display = "flex";      // show warning
-      document.getElementById('harmonium').style.display = "none"; // hide harmonium
-    } else { // landscape
-      warning.style.display = "none";      // hide warning
-      document.getElementById('harmonium').style.display = "flex"; // show harmonium
-    }
-  } else { // desktop
-    warning.style.display = "none";        // always hide warning
-    document.getElementById('harmonium').style.display = "flex"; // show harmonium
+  if (window.innerWidth <= 768 && window.innerHeight > window.innerWidth) {
+    // Mobile portrait
+    warning.style.display = "flex";
+    harmonium.style.display = "none";
+  } else {
+    // Desktop or mobile landscape
+    warning.style.display = "none";
+    harmonium.style.display = "flex";
   }
 }
 
+// Attach the listener only once
+['load', 'resize', 'orientationchange'].forEach(evt => 
+  window.addEventListener(evt, checkOrientation)
+);
 
-window.addEventListener('load', checkOrientation);
-window.addEventListener('resize', checkOrientation);
-window.addEventListener('orientationchange', checkOrientation);
-
-
-// Run on load
-window.addEventListener('load', checkOrientation);
-// Run on resize / orientation change
-window.addEventListener('resize', checkOrientation);
-window.addEventListener('orientationchange', checkOrientation);
    
   // Hamburger
  const hamburger = document.querySelector(".hamburger");
