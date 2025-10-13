@@ -192,9 +192,16 @@ a[href="index.html"] {
 
 /* Replace the old highlight class */
 .highlight {
-  background-color: #ffcc80 !important; /* light orange */
-  border-color: #ffb74d !important;
+  background-color: #ffcc80 !important;  /* light orange */
+  border: 2px solid black !important;     /* black border */
   box-shadow: 0 0 10px #ffb74d;
+}
+
+/* The "Sa" note key (first/root note of the raag or scale) */
+.highlight.sa-note {
+  background-color: #ffd700 !important;   /* bright golden-yellow */
+  border: 3px solid black !important;
+  box-shadow: 0 0 15px #ffb300, 0 0 25px #ffb300 inset;
 }
 
 #raags-options {
@@ -394,6 +401,8 @@ body.portrait #rotate-warning {
           <button onclick="highlightScale('B Major')">B Major</button>
         </div>
       </div>
+        <div class="dropdown">
+    <div class="dropdown-content">
       <div class="sub-dropdown">
   <span onclick="toggleSubOptions('raags')">Raags ▸</span>
   <div class="sub-options" id="raags-options">
@@ -433,6 +442,8 @@ body.portrait #rotate-warning {
     </div>
   </div>
 </div>
+    </div>
+  </div>
 
  <div id="raag-info" style="text-align: center; margin: 10px 0; font-weight: bold;"></div>
 
@@ -619,152 +630,181 @@ const raagMap = {
     notes: ['C#', 'D#', 'F', 'G','G#', 'A#', 'C'],
     aaroh: "N R G M^ D N S'",
     avroh: "S' N D P M^ G R S"
+    sa: 'C#'
   },
   "Bhairav": {
     notes: ['C#', 'D', 'F', 'F#', 'G#', 'A', 'C'], // Db → C#, C → C# so r becomes C##
     aaroh: "S r G M P d N S'",
     avroh: "S' N d P M G r S"
+    sa: 'C#'
   },
   "Bhairavi": {
     notes: ['C#', 'D', 'E', 'F#', 'G#', 'A', 'B'], // C → C#, Eb → D, Ab → G#, Bb → A#
     aaroh: "S r g M P d n S'",
     avroh: "S' n d P M g r S"
+    sa: 'C#'
   },
   "Desh": {
     notes: ['C#', 'D#', 'F', 'F#', 'G#', 'A#', 'B','C'], // C → C#, Bb → A#
     aaroh: "N R M P N S'",
     avroh: "S' n D P M G R S"
+    sa: 'C#'
   },
   "Kafi": {
     notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A#', 'B'], // C → C#, Eb → D#, Bb → A#
     aaroh: "S R g M P D n S'",
     avroh: "S' n D P M g R S"
+    sa: 'C#'
   },
   "Durga": {
     notes: ['C#', 'D#', 'F#', 'G#', 'A#'], // C → C#
     aaroh: "S R M P D S'",
     avroh: "S' D P M R S"
+    sa: 'C#'
   },
   "Bageshree": {
     notes: ['C#', 'D#', 'E', 'F#', 'A#', 'B'], // C → C#, Eb → D#, Bb → A#
     aaroh: "S g M D n S'",
     avroh: "S' n D M g R S"
+    sa: 'C#'
   },
   "Khamaj": {
     notes: ['C#', 'D#', 'F', 'F#', 'G#', 'A#', 'B', 'C'], // C → C#, Bb → A#
     aaroh: "S G M P D N S'",
     avroh: "S' n D P M G R S"
+    sa: 'C#'
   },
     
   "Todi": {
     notes: ['C#', 'D', 'E', 'G', 'A#', 'C'],
     aaroh: "S r g M^ D N S'",
     avroh: "S' N D M^ g r S"
+    sa: 'C#'
   },
   "Marwa": {
     notes: ['C#', 'D', 'F', 'G', 'A#', 'C'],
     aaroh: "S r G M^ D N S'",
     avroh: "S' N D M^ G r S"
+    sa: 'C#'
   },
   "Hansdhwani": {
     notes: ['C#', 'D#', 'F', 'G#', 'C'],
     aaroh: "S R G P N S'",
     avroh: "S' N P G R S"
+    sa: 'C#'
   },
   "Charukeshi": {
     notes: ['C#', 'D#', 'F', 'F#', 'G#', 'A', 'B'],
     aaroh: "S R G M P d n S'",
     avroh: "S' n d P M G R S"
+    sa: 'C#'
   },
   "Miyan ki Malhar": {
     notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
     aaroh: "N S R M P N S'",
     avroh: "S' N D P M R S"
+    sa: 'C#'
   },
   "Shivranjani": {
     notes: ['C#', 'D#', 'E', 'G#', 'A#'],
     aaroh: "S R g P D S'",
     avroh: "S' D P g R S"
+    sa: 'C#'
   },
   "Jog": {
     notes: ['C#', 'E', 'F', 'F#', 'G#', 'B'],
     aaroh: "S G g M P n S'",
     avroh: "S' n P M g G S"
+    sa: 'C#'
   },
   "Kedar": {
     notes: ['C#', 'D#', 'F', 'F#', 'G', 'G#', 'A#', 'C'],
     aaroh: "S M M^ P N S'",
     avroh: "S' N D P M^ G R S"
+    sa: 'C#'
   },
   
   "Malkauns": {
     notes: ['C#', 'E', 'F#', 'A', 'B'],
     aaroh: "S g M d n S'",
     avroh: "S' n d M g S"
+    sa: 'C#'
   },
   "Shree": {
     notes: ['C#', 'D', 'F', 'F#', 'A', 'C'],
     aaroh: "N r G M d N S'",
     avroh: "S' N d M G r S"
+    sa: 'C#'
   },
   "Lalit": {
     notes: ['C#', 'D', 'F', 'F#', 'G', 'A#', 'C'],
     aaroh: "S r G M M^ D N S'",
     avroh: "S' N D M^ M G r S"
+    sa: 'C#'
   },
   "Multani": {
     notes: ['C#', 'D', 'F', 'G', 'A#', 'C'],
     aaroh: "S r G M^ D N S'",
     avroh: "S' N D M^ G r S"
+    sa: 'C#'
   },
   "Jogiya": {
     notes: ['C#', 'D', 'F#', 'G#', 'A'],
     aaroh: "S r M P d S'",
     avroh: "S' d P M r S"
+    sa: 'C#'
   },
   "Saraswati": {
     notes: ['C#', 'D#', 'F', 'F#', 'A#', 'C'],
     aaroh: "S R G M D N S'",
     avroh: "S' N D M G R S"
+    sa: 'C#'
   },
   "Hemant": {
     notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
     aaroh: "S R M P D N S'",
     avroh: "S' N D P M R S"
+    sa: 'C#'
   },
   "Madhmad Sarang": {
     notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
     aaroh: "S R M P N S'",
     avroh: "S' N D P M R S"
+    sa: 'C#'
   },
    "Puriya": {
   notes: ['C#', 'D', 'F', 'F#', 'A#', 'C'],
   aaroh: "N r G M D N S'",
   avroh: "S' N D M G r N S"
+     sa: 'C#'
 },
 
 "Patdeep": {
   notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A#', 'C'],
   aaroh: "N S g M P N S'",
   avroh: "S' N D P M g R S"
+  sa: 'C#'
 },
 
 "Darbari Kanada": {
   notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B'],
   aaroh: "S R g M P d n S'",
   avroh: "S' n d P M g R S"
+  sa: 'C#'
 },
 
 "Shuddha Sarang": {
   notes: ['C#', 'D#', 'F#', 'G#', 'A#', 'C'],
   aaroh: "S R M P N S'",
   avroh: "S' N D P M R S"
+  sa: 'C#'
 },
 
 "Jaunpuri": {
   notes: ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B'],
   aaroh: "S R M P d n S'",
   avroh: "S' n d P M g R S"
+  sa: 'C#'
 },
 
 };
@@ -775,18 +815,30 @@ function clearHighlights() {
   document.querySelectorAll('.white-key, .black-key').forEach(key => key.classList.remove('highlight'));
 }
 
-function highlightScale(name) {
-  clearHighlights(); // Clear previous highlights
+function highlightRaag(name) {
+  clearHighlights();
+  const raag = raagMap[name];
+  if (!raag) return;
 
-  const pitches = scaleMap[name];
   for (let oct = 2; oct <= 4; oct++) {
-    pitches.forEach(pitch => {
+    raag.notes.forEach(pitch => {
       const note = `${pitch}${oct}`;
       const key = document.querySelector(`[data-note="${note}"]`);
       if (key) key.classList.add('highlight');
     });
   }
 
+  // Highlight Sa note specially
+  const saKey = document.querySelector(`[data-note="${raag.sa}3"]`);
+  if (saKey) saKey.classList.add('sa-note');
+
+  document.getElementById('raag-info').innerHTML = `
+    <strong>${name}</strong><br>
+    Aaroh: ${raag.aaroh}<br>
+    Avroh: ${raag.avroh}<br>
+    Sa: ${raag.sa}
+  `;
+}
   // Clear any previously selected raag
   highlightedRaag = null;
 
