@@ -343,6 +343,113 @@
   color: #fff;
 }
 
+/* Entrance Overlay */
+#intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #b30000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Hide main page until intro ends */
+body.loaded #intro {
+  display: none;
+}
+
+/* Main logo setup */
+.intro-logo {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+/* All logo layers same size */
+.intro-logo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Full logo - bounce and spin */
+#logo-full {
+  animation: bounce-spin 2s ease-in-out forwards;
+}
+
+/* Left and right halves start hidden */
+#logo-left,
+#logo-right {
+  opacity: 0;
+}
+
+/* Split animation */
+@keyframes bounce-spin {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  20% { transform: scale(1.1) rotate(0deg); opacity: 1; }
+  40% { transform: scale(1) rotate(360deg); }
+  60% { transform: scale(1) rotate(360deg); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* After split - moving halves */
+.split-left {
+  animation: moveLeft 1s forwards ease-in-out;
+}
+
+.split-right {
+  animation: moveRight 1s forwards ease-in-out;
+}
+
+@keyframes moveLeft {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%) rotate(-10deg); opacity: 0; }
+}
+
+@keyframes moveRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%) rotate(10deg); opacity: 0; }
+}
+
+/* Background panels split */
+.intro-bg::before,
+.intro-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: #b30000;
+  z-index: 1;
+  transition: transform 1s ease-in-out;
+}
+
+.intro-bg::before {
+  left: 0;
+}
+
+.intro-bg::after {
+  right: 0;
+}
+
+.bg-split .intro-bg::before {
+  transform: translateX(-100%);
+}
+
+.bg-split .intro-bg::after {
+  transform: translateX(100%);
+}
+
+    
 /* Mobile Responsive */
 @media (max-width: 500px) {
   .cookie-popup {
@@ -357,6 +464,18 @@
 </head>
 <body>
 
+<!-- Entrance Animation Overlay -->
+<div id="intro">
+  <div class="intro-bg">
+    <div class="intro-logo">
+      <img src="LOGO.png" alt="Logo" id="logo-full" />
+      <img src="LOGO.png" alt="Logo Left Half" id="logo-left" />
+      <img src="LOGO.png" alt="Logo Right Half" id="logo-right" />
+    </div>
+  </div>
+</div>
+
+  
 <!-- Cookie Consent Popup -->
 <div id="cookieConsentPopup" class="cookie-popup">
   <h3>We use cookies</h3>
@@ -441,6 +560,32 @@
 
 
   <script>
+
+    window.addEventListener('load', () => {
+  const intro = document.getElementById('intro');
+  const logoFull = document.getElementById('logo-full');
+  const logoLeft = document.getElementById('logo-left');
+  const logoRight = document.getElementById('logo-right');
+
+  // After main bounce-spin ends, start split animation
+  setTimeout(() => {
+    logoFull.style.display = 'none';
+    logoLeft.style.opacity = 1;
+    logoRight.style.opacity = 1;
+    logoLeft.classList.add('split-left');
+    logoRight.classList.add('split-right');
+    intro.classList.add('bg-split');
+  }, 2000);
+
+  // Remove intro after animation completes (~3s total)
+  setTimeout(() => {
+    intro.style.opacity = '0';
+    setTimeout(() => {
+      intro.style.display = 'none';
+    }, 500);
+  }, 3000);
+});
+    
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
