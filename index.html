@@ -361,7 +361,7 @@
   top: 0;
   width: 50%;
   height: 100%;
-  background: #b40000; /* your deeper SargamWorld red shade */
+  background: #b40000; /* deeper SargamWorld red shade */
   z-index: 2;
   transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
   transition-delay: 0.2s;
@@ -382,8 +382,8 @@
   position: relative;
   z-index: 3;
   display: flex;
-  flex-direction: column;  /* stack logo symbol above text */
-  align-items: center;     /* center horizontally */
+  flex-direction: column; /* stack symbol & text */
+  align-items: center;
   justify-content: center;
 }
 
@@ -413,10 +413,10 @@
   top: 0;
   transform-origin: center;
 }
-    
+
 /* === KEYFRAMES === */
 
-/* Bounce effect for S & Circle */
+/* 1️⃣ Bounce effect */
 @keyframes logoRealBounce {
   0%   { transform: translateY(-40px) scale(0.9); opacity: 0; }
   40%  { transform: translateY(0) scale(1.1); opacity: 1; }
@@ -424,34 +424,35 @@
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* Single smooth spin (for S & Circle) */
-@keyframes logoSpinOnce {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+/* 2️⃣ Spin + shrink + fade out */
+@keyframes spinAndDisappear {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg) scale(0);
+    opacity: 0;
+  }
 }
 
-/* Fade-in for text */
-@keyframes fadeInText {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+/* 3️⃣ Text grows in from logo center (same spot) */
+@keyframes textGrowInFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.15) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-/* Fade text out smoothly */
-@keyframes textFadeOut {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-10px); }
-}
-
-/* Split animations for S and Circle */
-@keyframes sSplitLeft {
-  to { transform: translateX(-150%) rotate(-15deg); opacity: 0; }
-}
-
-@keyframes circleSplitRight {
-  to { transform: translateX(150%) rotate(15deg); opacity: 0; }
-}
-
-/* Fade overlay out */
+/* 4️⃣ Fade overlay (optional) */
 @keyframes fadeOutOverlay {
   to { opacity: 0; visibility: hidden; }
 }
@@ -462,26 +463,36 @@
 
 /* === ASSIGNING ANIMATIONS === */
 
-/* S & Circle bounce initially (spin added later by JS) */
+/* S & Circle: bounce → spin + disappear */
 .logo-part.s,
 .logo-part.circle {
   opacity: 1;
-  animation: logoRealBounce 1.2s ease-out forwards;
+  animation:
+    logoRealBounce 1s ease-out forwards,      /* step 1 */
+    spinAndDisappear 1.2s ease-in forwards;   /* step 2 */
+  animation-delay: 0s, 1s;                    /* spin starts after bounce */
 }
 
-/* Text fades in normally (no bounce) */
+/* Text: grow in exactly from logo center */
 .logo-part.text {
+  position: absolute;                         /* overlaps logo position */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0;
-  animation: fadeInText 1s ease forwards;
+  animation: textGrowInFromCenter 0.8s ease-out forwards;
+  animation-delay: 2.1s;                      /* right after logo disappears */
 }
 
-/* Curtain panels open */
+/* Curtain panels open after text grows in */
 .curtain.open.left {
   transform: translateX(-100%);
+  transition-delay: 2.8s;
 }
 
 .curtain.open.right {
   transform: translateX(100%);
+  transition-delay: 2.8s;
 }
 
   </style>
@@ -596,38 +607,36 @@ window.addEventListener("load", () => {
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
 
-  // Step 1: show & bounce S + Circle
+  // STEP 1️⃣ — Bounce S + Circle
   sPart.style.opacity = 1;
   circlePart.style.opacity = 1;
-  sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
-  circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+  sPart.style.animation = "logoRealBounce 1s ease-out forwards";
+  circlePart.style.animation = "logoRealBounce 1s ease-out forwards";
 
-  // Step 2: text appears normally (no bounce)
+  // STEP 2️⃣ — Spin + shrink + disappear (after bounce ends)
+  setTimeout(() => {
+    sPart.style.animation = "spinAndDisappear 1.2s ease-in forwards";
+    circlePart.style.animation = "spinAndDisappear 1.2s ease-in forwards";
+  }, 1000); // starts right after bounce
+
+  // STEP 3️⃣ — Text grows in from center immediately after logo disappears
   setTimeout(() => {
     textPart.style.opacity = 1;
-  }, 500);
+    textPart.style.animation = "textGrowInFromCenter 0.8s ease-out forwards";
+  }, 2200); // starts after spin+shrink
 
-  // Step 3: spin once (after bounce)
+  // STEP 4️⃣ — Curtains open after text appears
   setTimeout(() => {
-    sPart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
-    circlePart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
-  }, 1300);
-
-  // Step 4: fade text, split S + Circle, open curtains
-  setTimeout(() => {
-    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
-    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
-    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
-
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
-  }, 2500);
+  }, 3000); // right after text grows in
 
-  // Step 5: fade out entrance overlay
+  // STEP 5️⃣ — Fade out the entrance overlay
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
-  }, 3700);
+  }, 4000);
 });
+
     
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
