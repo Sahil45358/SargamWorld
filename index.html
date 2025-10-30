@@ -355,18 +355,6 @@
   overflow: hidden;
 }
 
-/* === ENTRANCE SCREEN === */
-#entrance {
-  position: fixed;
-  inset: 0;
-  background: #800000; /* SargamWorld red */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  overflow: hidden;
-}
-
 /* === CURTAINS (background halves) === */
 .curtain {
   position: absolute;
@@ -376,18 +364,14 @@
   background: #b40000; /* deeper SargamWorld red shade */
   z-index: 2;
   transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-  transition-delay: 0.2s;
 }
 
-.curtain.left {
-  left: 0;
-  transform: translateX(0);
-}
+.curtain.left  { left: 0; transform: translateX(0); }
+.curtain.right { right: 0; transform: translateX(0); }
 
-.curtain.right {
-  right: 0;
-  transform: translateX(0);
-}
+/* Curtains open after logo + text animation */
+.curtain.open.left  { transform: translateX(-100%); transition-delay: 3s; }
+.curtain.open.right { transform: translateX(100%);  transition-delay: 3s; }
 
 /* === LOGO CONTAINER === */
 .logo-container {
@@ -397,16 +381,10 @@
   flex-direction: column; /* stack symbol & text */
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 /* === LOGO PARTS === */
-.logo-part {
-  position: absolute;
-  width: 280px;
-  opacity: 0;
-  transform-origin: center;
-}
-
 .logo-symbol {
   position: relative;
   width: 280px;
@@ -416,14 +394,23 @@
   justify-content: center;
 }
 
+/* Circle and S parts */
 .logo-symbol .circle,
 .logo-symbol .s {
   position: absolute;
   width: 100%;
   height: auto;
-  left: 0;
-  top: 0;
   transform-origin: center;
+  opacity: 0;
+}
+
+/* Text below the symbol */
+.logo-part.text {
+  position: relative;
+  width: 320px;
+  bottom: 0;
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* === KEYFRAMES === */
@@ -442,7 +429,7 @@
   100% { transform: rotate(360deg) scale(0); opacity: 0; }
 }
 
-/* 3️⃣ Text enlarges smoothly (already visible) */
+/* 3️⃣ Text enlarges smoothly */
 @keyframes textEnlarge {
   0%   { transform: scale(1); }
   100% { transform: scale(1.4); }
@@ -453,43 +440,28 @@
   to { opacity: 0; visibility: hidden; }
 }
 
-.fadeOutOverlay {
-  animation: fadeOutOverlay 0.8s ease-in-out forwards;
-}
-
-/* === ASSIGNING ANIMATIONS === */
+/* === ANIMATION ASSIGNMENTS === */
 
 /* S & Circle: bounce → spin + disappear */
-.logo-part.s,
-.logo-part.circle {
+.logo-symbol .s,
+.logo-symbol .circle {
   opacity: 1;
   animation:
-    logoRealBounce 1s ease-out forwards,      /* Step 1 */
-    spinAndDisappear 1.2s ease-in forwards;   /* Step 2 */
-  animation-delay: 0s, 1s;                    /* spin starts after bounce */
+    logoRealBounce 1s ease-out forwards,
+    spinAndDisappear 1.2s ease-in forwards;
+  animation-delay: 0s, 1s; /* spin starts after bounce */
 }
 
 /* Text: visible immediately, enlarges after logo disappears */
 .logo-part.text {
-  position: absolute;
-  bottom: 15%;              /* stays below the symbol */
-  opacity: 1;               /* visible from the start */
-  transform: scale(1);
   animation: textEnlarge 1s ease-out forwards;
-  animation-delay: 2s;      /* starts enlarging after logo disappears */
+  animation-delay: 2s; /* starts after logo animation */
 }
 
-/* Curtain panels open after text enlarges */
-.curtain.open.left {
-  transform: translateX(-100%);
-  transition-delay: 3s;
+/* Overlay fades away */
+.fadeOutOverlay {
+  animation: fadeOutOverlay 0.8s ease-in-out forwards;
 }
-
-.curtain.open.right {
-  transform: translateX(100%);
-  transition-delay: 3s;
-}
-
 
   </style>
 </head>
@@ -595,46 +567,42 @@
 
   <script>
 // === SargamWorld Entrance Animation ===
+// === SargamWorld Entrance Animation ===
 window.addEventListener("load", () => {
   const entrance = document.getElementById("entrance");
-  const sPart = document.querySelector(".logo-part.s");
-  const circlePart = document.querySelector(".logo-part.circle");
+  const sPart = document.querySelector(".logo-symbol .s");
+  const circlePart = document.querySelector(".logo-symbol .circle");
   const textPart = document.querySelector(".logo-part.text");
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
 
-  // STEP 1️⃣ — S + Circle bounce in
-  sPart.style.opacity = 1;
-  circlePart.style.opacity = 1;
+  // Step 1️⃣: bounce in
   sPart.style.animation = "logoRealBounce 1s ease-out forwards";
   circlePart.style.animation = "logoRealBounce 1s ease-out forwards";
 
-  // STEP 2️⃣ — Text is already visible and clear
-  textPart.style.opacity = 1;
-
-  // STEP 3️⃣ — Spin + shrink + disappear (after bounce)
+  // Step 2️⃣: spin + disappear after bounce
   setTimeout(() => {
     sPart.style.animation = "spinAndDisappear 1.2s ease-in forwards";
     circlePart.style.animation = "spinAndDisappear 1.2s ease-in forwards";
   }, 1000);
 
-  // STEP 4️⃣ — Text enlarges as logo disappears
+  // Step 3️⃣: text enlarges after logo disappears
   setTimeout(() => {
     textPart.style.animation = "textEnlarge 1s ease-out forwards";
-  }, 2000);
+  }, 2200);
 
-  // STEP 5️⃣ — Curtains open after text enlarges
+  // Step 4️⃣: curtain opens
   setTimeout(() => {
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
-  }, 3000);
+  }, 3200);
 
-  // STEP 6️⃣ — Fade out the entrance overlay
+  // Step 5️⃣: overlay fades out
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
-  }, 4000);
+  }, 4400);
 });
-    
+
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
