@@ -361,37 +361,41 @@
   top: 0;
   width: 50%;
   height: 100%;
-  background: #800000;
-  z-index: 1;
-  transition: transform 1s ease-in-out;
+  background: #b40000; /* your SargamWorld red shade */
+  z-index: 2;
+  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+  transition-delay: 0.2s; /* ↓ reduced delay */
 }
+
 .curtain.left { left: 0; transform: translateX(0); }
 .curtain.right { right: 0; transform: translateX(0); }
 
 /* Logo positioning */
 .logo-container {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Each part of logo */
 .logo-part {
   position: absolute;
-  width: 200px;  /* Adjust for your logo size */
+  width: 280px; /* ↑ increased from 200px */
   opacity: 0;
   transform-origin: center;
 }
 
-/* Smooth bounce + rotation + light pulse */
+/* === Keyframes === */
+
 /* Smooth spin (for S and Circle only) */
 @keyframes logoSpinSmooth {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Bounce pulse (used together with spin) */
+/* Bounce pulse (used when appearing) */
 @keyframes logoBouncePulse {
   0% {
     transform: scale(0.8);
@@ -420,7 +424,7 @@
   to { opacity: 0; transform: translateY(-10px); }
 }
 
-/* S and Circle splitting */
+/* Split animations for S and Circle */
 @keyframes sSplitLeft {
   to { transform: translateX(-150%) rotate(-15deg); opacity: 0; }
 }
@@ -438,28 +442,30 @@
   to { opacity: 0; visibility: hidden; }
 }
 
-/* Curtain panels */
-.curtain {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: #b40000; /* your SargamWorld red shade */
-  z-index: 2;
-  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+/* === Specific Logo Parts Animations === */
+
+/* "S" and Circle spin + bounce */
+.logo-part.s,
+.logo-part.circle {
+  animation: logoBouncePulse 1s ease-out forwards,
+             logoSpinSmooth 1.5s linear infinite; /* ↑ faster, smooth spin */
 }
 
-.curtain.left { left: 0; }
-.curtain.right { right: 0; }
-
-.fadeOutOverlay {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
+/* Text fades away */
+.logo-part.text {
+  animation: logoBouncePulse 1.2s ease-out forwards,
+             textFadeOut 1s ease-in-out 2s forwards; /* fades after spin */
 }
 
+/* Curtain panels open */
+.curtain.open.left {
+  transform: translateX(-100%);
+}
 
-
+.curtain.open.right {
+  transform: translateX(100%);
+}
+    
   </style>
 </head>
 <body>
@@ -565,41 +571,41 @@
   // Step 1: Smooth & fast spin
 window.addEventListener("load", () => {
   const entrance = document.getElementById("entrance");
-  const sPart = document.querySelector(".s-part");
-  const circlePart = document.querySelector(".circle-part");
-  const textPart = document.querySelector(".text-part");
-  const leftCurtain = document.querySelector(".curtain.left");
-  const rightCurtain = document.querySelector(".curtain.right");
+  const sPart = document.querySelector(".logo-part.s");
+  const circlePart = document.querySelector(".logo-part.circle");
+  const textPart = document.querySelector(".logo-part.text");
+  const curtainLeft = document.querySelector(".curtain.left");
+  const curtainRight = document.querySelector(".curtain.right");
 
-  // Step 1: Animate S and Circle only
+  // Step 1: show logo parts (fade + bounce)
   setTimeout(() => {
-    [sPart, circlePart].forEach(el => {
-      el.style.animation = `
-        logoBouncePulse 1s ease-out forwards,
-        logoSpinSmooth 1s linear forwards
-      `;
-    });
-  }, 100);
+    sPart.style.opacity = 1;
+    circlePart.style.opacity = 1;
+    textPart.style.opacity = 1;
+  }, 100); // logo appears quickly
 
-  // Step 2: Fade out text (after spin ends)
+  // Step 2: spin runs automatically (CSS infinite spin handles it)
+
+  // Step 3: fade out text after spin
   setTimeout(() => {
-    textPart.style.animation = "textFadeOut 1s ease forwards";
-  }, 1200);
+    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+  }, 1500); // slightly after spin finishes
 
-  // Step 3: Split S and Circle (slow & visible)
+  // Step 4: split S & circle like curtain
   setTimeout(() => {
-    sPart.style.animation = "sSplitLeft 1.6s cubic-bezier(0.77, 0, 0.175, 1) forwards";
-    circlePart.style.animation = "circleSplitRight 1.6s cubic-bezier(0.77, 0, 0.175, 1) forwards";
-    leftCurtain.style.transform = "translateX(-100%)";
-    rightCurtain.style.transform = "translateX(100%)";
-  }, 2200);
+    sPart.style.animation = "sSplitLeft 1s ease-in-out forwards";
+    circlePart.style.animation = "circleSplitRight 1s ease-in-out forwards";
 
-  // Step 4: Fade overlay away after small delay
+    curtainLeft.classList.add("open");
+    curtainRight.classList.add("open");
+  }, 2500); // after text fades
+
+  // Step 5: fade out overlay slightly after curtains open
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
-    setTimeout(() => entrance.remove(), 900);
-  }, 3900);
+  }, 3300); // reduced pause time for smoother transition
 });
+
     
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
