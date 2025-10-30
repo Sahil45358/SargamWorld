@@ -382,7 +382,8 @@
   position: relative;
   z-index: 3;
   display: flex;
-  align-items: center;
+  flex-direction: column;  /* stack logo symbol above text */
+  align-items: center;     /* center horizontally */
   justify-content: center;
 }
 
@@ -394,6 +395,25 @@
   transform-origin: center;
 }
 
+.logo-symbol {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-symbol .circle,
+.logo-symbol .s {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 0;
+  top: 0;
+  transform-origin: center;
+}
+    
 /* === KEYFRAMES === */
 
 /* Bounce effect for S & Circle */
@@ -474,11 +494,11 @@
   <div class="curtain right"></div>
 
   <div class="logo-container">
-    <div class="logo-center">
-      <img src="LOGO_CIRCLE.png" class="logo-part circle" alt="Circle" />
-      <img src="LOGO_S.png" class="logo-part s" alt="S" />
+    <div class="logo-symbol">
+      <img src="LOGO_CIRCLE.png" class="logo-part circle">
+      <img src="LOGO_S.png" class="logo-part s">
     </div>
-    <img src="LOGO_TEXT.png" class="logo-part text" alt="SargamWorld" />
+    <img src="LOGO_TEXT.png" class="logo-part text">
   </div>
 </div>
 
