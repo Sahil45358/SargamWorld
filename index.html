@@ -343,7 +343,7 @@
   color: #fff;
 }
 
-/* === Entrance Animation === */
+/* === ENTRANCE SCREEN === */
 #entrance {
   position: fixed;
   inset: 0;
@@ -355,22 +355,29 @@
   overflow: hidden;
 }
 
-/* Curtains (background halves) */
+/* === CURTAINS (background halves) === */
 .curtain {
   position: absolute;
   top: 0;
   width: 50%;
   height: 100%;
-  background: #b40000; /* your SargamWorld red shade */
+  background: #b40000; /* your deeper SargamWorld red shade */
   z-index: 2;
   transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
-  transition-delay: 0.2s; /* ↓ reduced delay */
+  transition-delay: 0.2s;
 }
 
-.curtain.left { left: 0; transform: translateX(0); }
-.curtain.right { right: 0; transform: translateX(0); }
+.curtain.left {
+  left: 0;
+  transform: translateX(0);
+}
 
-/* Logo positioning */
+.curtain.right {
+  right: 0;
+  transform: translateX(0);
+}
+
+/* === LOGO CONTAINER === */
 .logo-container {
   position: relative;
   z-index: 3;
@@ -379,49 +386,40 @@
   justify-content: center;
 }
 
-/* Each part of logo */
+/* === LOGO PARTS === */
 .logo-part {
   position: absolute;
-  width: 280px; /* ↑ increased from 200px */
+  width: 280px;
   opacity: 0;
   transform-origin: center;
 }
 
-/* === Keyframes === */
+/* === KEYFRAMES === */
 
-/* Smooth spin (for S and Circle only) */
-@keyframes logoSpinSmooth {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Bounce effect for S & Circle */
+@keyframes logoRealBounce {
+  0%   { transform: translateY(-40px) scale(0.9); opacity: 0; }
+  40%  { transform: translateY(0) scale(1.1); opacity: 1; }
+  70%  { transform: translateY(-15px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* Bounce pulse (used when appearing) */
-@keyframes logoBouncePulse {
-  0% {
-    transform: scale(0.8);
-    filter: drop-shadow(0 0 0 rgba(255,255,255,0));
-    opacity: 0;
-  }
-  30% {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
-    opacity: 1;
-  }
-  60% {
-    transform: scale(0.95);
-    filter: drop-shadow(0 0 18px rgba(255,255,255,0.6));
-  }
-  100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 0 rgba(255,255,255,0));
-    opacity: 1;
-  }
+/* Single smooth spin (for S & Circle) */
+@keyframes logoSpinOnce {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Fade-in for text */
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Fade text out smoothly */
 @keyframes textFadeOut {
   from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 0; transform: translateY(-10px); }
 }
 
 /* Split animations for S and Circle */
@@ -434,27 +432,27 @@
 }
 
 /* Fade overlay out */
-.fadeOutOverlay {
-  animation: fadeOutOverlay 0.8s ease-in-out forwards;
-}
-
 @keyframes fadeOutOverlay {
   to { opacity: 0; visibility: hidden; }
 }
 
-/* === Specific Logo Parts Animations === */
-
-/* "S" and Circle spin + bounce */
-.logo-part.s,
-.logo-part.circle {
-  animation: logoBouncePulse 1s ease-out forwards,
-             logoSpinSmooth 0.75s linear infinite; /* double speed */
+.fadeOutOverlay {
+  animation: fadeOutOverlay 0.8s ease-in-out forwards;
 }
 
-/* Text fades away */
+/* === ASSIGNING ANIMATIONS === */
+
+/* S & Circle bounce initially (spin added later by JS) */
+.logo-part.s,
+.logo-part.circle {
+  opacity: 1;
+  animation: logoRealBounce 1.2s ease-out forwards;
+}
+
+/* Text fades in normally (no bounce) */
 .logo-part.text {
-  animation: logoBouncePulse 1.2s ease-out forwards,
-             textFadeOut 1s ease-in-out 2s forwards; /* fades after spin */
+  opacity: 0;
+  animation: fadeInText 1s ease forwards;
 }
 
 /* Curtain panels open */
@@ -465,6 +463,7 @@
 .curtain.open.right {
   transform: translateX(100%);
 }
+
     
   </style>
 </head>
@@ -568,7 +567,7 @@
 
 
   <script>
-  // Step 1: Smooth & fast spin
+// === SargamWorld Entrance Animation ===
 window.addEventListener("load", () => {
   const entrance = document.getElementById("entrance");
   const sPart = document.querySelector(".logo-part.s");
@@ -577,33 +576,37 @@ window.addEventListener("load", () => {
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
 
-  // Step 1: show logo parts (fade + bounce)
+  // Step 1: show & bounce S + Circle
+  sPart.style.opacity = 1;
+  circlePart.style.opacity = 1;
+  sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+  circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+
+  // Step 2: text appears normally (no bounce)
   setTimeout(() => {
-    sPart.style.opacity = 1;
-    circlePart.style.opacity = 1;
     textPart.style.opacity = 1;
-  }, 100); // logo appears quickly
+  }, 500);
 
-  // Step 2: spin runs automatically (CSS infinite spin handles it)
+  // Step 3: spin once (after bounce)
+  setTimeout(() => {
+    sPart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
+    circlePart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
+  }, 1300);
 
-  // Step 3: fade out text after spin
+  // Step 4: fade text, split S + Circle, open curtains
   setTimeout(() => {
     textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
-  }, 1500); // slightly after spin finishes
-
-  // Step 4: split S & circle like curtain
-  setTimeout(() => {
-    sPart.style.animation = "sSplitLeft 1s ease-in-out forwards";
-    circlePart.style.animation = "circleSplitRight 1s ease-in-out forwards";
+    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
 
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
-  }, 2500); // after text fades
+  }, 2500);
 
-  // Step 5: fade out overlay slightly after curtains open
-setTimeout(() => {
-  entrance.classList.add("fadeOutOverlay");
-}, 2800);
+  // Step 5: fade out entrance overlay
+  setTimeout(() => {
+    entrance.classList.add("fadeOutOverlay");
+  }, 3700);
 });
 
     
