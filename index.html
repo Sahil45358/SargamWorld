@@ -355,7 +355,7 @@
   overflow: hidden;
 }
 
-/* === CURTAINS (background halves) === */
+/* === CURTAINS === */
 .curtain {
   position: absolute;
   top: 0;
@@ -367,15 +367,8 @@
   transition-delay: 0.2s;
 }
 
-.curtain.left {
-  left: 0;
-  transform: translateX(0);
-}
-
-.curtain.right {
-  right: 0;
-  transform: translateX(0);
-}
+.curtain.left { left: 0; transform: translateX(0); }
+.curtain.right { right: 0; transform: translateX(0); }
 
 /* === LOGO CONTAINER === */
 .logo-container {
@@ -384,14 +377,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 /* === LOGO PARTS === */
 .logo-part {
   position: absolute;
-  width: 280px;
   opacity: 0;
-  transform-origin: center;
+}
+
+/* Make logos larger */
+.logo-part.s,
+.logo-part.circle {
+  width: 340px; /* increased from 280px */
+  height: auto;
+  transform-origin: center center; /* spin around their true center */
+}
+
+.logo-part.text {
+  position: relative;
+  top: 220px; /* pushes text slightly below the circle */
+  width: 420px; /* increase text width */
+  height: auto;
+  opacity: 0;
 }
 
 /* === KEYFRAMES === */
@@ -404,7 +412,7 @@
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* Single smooth spin (for S & Circle) */
+/* Smooth single spin (centered) */
 @keyframes logoSpinOnce {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -451,7 +459,6 @@
 
 /* Text fades in normally (no bounce) */
 .logo-part.text {
-  opacity: 0;
   animation: fadeInText 1s ease forwards;
 }
 
@@ -463,7 +470,6 @@
 .curtain.open.right {
   transform: translateX(100%);
 }
-
     
   </style>
 </head>
