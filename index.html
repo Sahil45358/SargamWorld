@@ -394,16 +394,15 @@
 /* S + Circle parts */
 .logo-part.s,
 .logo-part.circle {
-  position: absolute;
   width: 300px;
   height: auto;
-  opacity: 0;
+  transform-origin: 52% 48%; /* ✅ adjust pivot slightly to the circle’s true center */
 }
 
 /* Text part */
 .logo-part.text {
   position: relative;
-  top: 60px;
+  margin-top: 10px; /* ✅ was 60px, now tighter & flexible */
   width: 380px;
   height: auto;
   opacity: 0;
