@@ -343,127 +343,77 @@
   color: #fff;
 }
 
-/* ------------------------------
-   ENTRANCE ANIMATION STYLES
---------------------------------*/
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-/* Lock scroll during intro */
-body.intro-active {
-  overflow: hidden;
-}
-
-#intro {
+/* === Entrance Animation === */
+#entrance {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #b30000;
+  background: #800000; /* SargamWorld red */
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 9999;
   overflow: hidden;
 }
 
-.intro-bg {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.intro-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
-}
-
-.intro-logo img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Text fades out early */
-#logo-text {
-  animation: fadeOut 1.5s ease-in-out 1.2s forwards;
-}
-
-/* Bounce + spin for S and Circle */
-#logo-s, #logo-circle {
-  animation: bounce-spin 2s ease-in-out forwards;
-}
-
-@keyframes bounce-spin {
-  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
-  20% { transform: scale(1.15) rotate(0deg); opacity: 1; }
-  40% { transform: scale(1) rotate(180deg); }
-  60% { transform: scale(1) rotate(360deg); }
-  80% { transform: scale(1); opacity: 1; }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes fadeOut {
-  to { opacity: 0; transform: translateY(10px); }
-}
-
-/* Split animation */
-.split-left {
-  animation: moveLeft 1s ease-in-out forwards;
-}
-
-.split-right {
-  animation: moveRight 1s ease-in-out forwards;
-}
-
-@keyframes moveLeft {
-  from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  to { transform: translate(-150%, -50%) rotate(-15deg) scale(0.9); opacity: 0; }
-}
-
-@keyframes moveRight {
-  from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  to { transform: translate(50%, -50%) rotate(15deg) scale(0.9); opacity: 0; }
-}
-
-/* Background halves */
-.intro-bg::before,
-.intro-bg::after {
-  content: "";
+/* Curtains (background halves) */
+.curtain {
   position: absolute;
   top: 0;
   width: 50%;
   height: 100%;
-  background: #b30000;
+  background: #800000;
   z-index: 1;
   transition: transform 1s ease-in-out;
 }
+.curtain.left { left: 0; transform: translateX(0); }
+.curtain.right { right: 0; transform: translateX(0); }
 
-.intro-bg::before { left: 0; }
-.intro-bg::after { right: 0; }
-
-.bg-split .intro-bg::before {
-  transform: translateX(-100%);
+/* Logo positioning */
+.logo-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bg-split .intro-bg::after {
-  transform: translateX(100%);
-}
-
-/* Fade out whole intro */
-.fade-out {
+.logo-part {
+  position: absolute;
+  width: 200px;  /* Adjust for your logo size */
   opacity: 0;
-  transition: opacity 0.6s ease-in-out;
-  pointer-events: none;
+  transform-origin: center;
 }
+
+/* Animations */
+@keyframes logoBounceSpin {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  20% { transform: scale(1.1) rotate(0deg); opacity: 1; }
+  40% { transform: scale(0.95) rotate(180deg); }
+  60% { transform: scale(1) rotate(360deg); }
+  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+@keyframes textFadeOut {
+  0%, 40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes sSplitLeft {
+  0%, 70% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-120%) rotate(-10deg); opacity: 0; }
+}
+
+@keyframes circleSplitRight {
+  0%, 70% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(120%) rotate(10deg); opacity: 0; }
+}
+
+.fadeOutOverlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
 
 
   </style>
@@ -471,15 +421,17 @@ body.intro-active {
 <body>
 
 <!-- Entrance Animation Overlay -->
-<div id="intro">
-  <div class="intro-bg">
-    <div class="intro-logo">
-      <img src="LOGO_S.png" id="logo-s" alt="S part" />
-      <img src="LOGO_CIRCLE.png" id="logo-circle" alt="Circle part" />
-      <img src="LOGO_TEXT.png" id="logo-text" alt="Text part" />
-    </div>
+<div id="entrance">
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+
+  <div class="logo-container">
+    <img src="LOGO_S.png" class="logo-part s-part" alt="S">
+    <img src="LOGO_CIRCLE.png" class="logo-part circle-part" alt="Circle">
+    <img src="LOGO_TEXT.png" class="logo-part text-part" alt="Text">
   </div>
 </div>
+
 
   
 <!-- Cookie Consent Popup -->
@@ -567,32 +519,39 @@ body.intro-active {
 
   <script>
 
-window.addEventListener('load', () => {
-  const body = document.body;
-  const intro = document.getElementById('intro');
-  const logoS = document.getElementById('logo-s');
-  const logoCircle = document.getElementById('logo-circle');
+window.addEventListener("load", () => {
+  const entrance = document.getElementById("entrance");
+  const sPart = document.querySelector(".s-part");
+  const circlePart = document.querySelector(".circle-part");
+  const textPart = document.querySelector(".text-part");
+  const leftCurtain = document.querySelector(".curtain.left");
+  const rightCurtain = document.querySelector(".curtain.right");
 
-  // Lock scroll while intro plays
-  body.classList.add('intro-active');
-
-  // After bounce-spin ends, split logo
+  // Step 1: Logo appears and spins
   setTimeout(() => {
-    logoS.classList.add('split-left');
-    logoCircle.classList.add('split-right');
-    intro.classList.add('bg-split');
-  }, 2200);
+    sPart.style.animation = "logoBounceSpin 1s ease forwards";
+    circlePart.style.animation = "logoBounceSpin 1s ease forwards";
+    textPart.style.animation = "logoBounceSpin 1s ease forwards";
+  }, 100);
 
-  // Fade out intro
+  // Step 2: Fade out text
   setTimeout(() => {
-    intro.classList.add('fade-out');
-    body.classList.remove('intro-active');
-  }, 3200);
+    textPart.style.animation = "textFadeOut 0.5s ease forwards";
+  }, 800);
 
-  // Remove intro completely
+  // Step 3: Split logo + curtains
   setTimeout(() => {
-    intro.remove();
-  }, 4000);
+    sPart.style.animation = "sSplitLeft 0.8s ease forwards";
+    circlePart.style.animation = "circleSplitRight 0.8s ease forwards";
+    leftCurtain.style.transform = "translateX(-100%)";
+    rightCurtain.style.transform = "translateX(100%)";
+  }, 1100);
+
+  // Step 4: Reveal website (fade in after 0.2s)
+  setTimeout(() => {
+    entrance.classList.add("fadeOutOverlay");
+    setTimeout(() => entrance.remove(), 800);
+  }, 1300);
 });
     
     function toggleMenu() {
