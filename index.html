@@ -343,33 +343,6 @@
   color: #fff;
 }
 
-/* === ENTRANCE SCREEN === */
-#entrance {
-  position: fixed;
-  inset: 0;
-  background: #800000; /* SargamWorld red */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  overflow: hidden;
-}
-
-/* === CURTAINS === */
-.curtain {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: #b40000;
-  z-index: 2;
-  transform: translateX(0);
-  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-.curtain.left.open { transform: translateX(-100%); }
-.curtain.right.open { transform: translateX(100%); }
-
 /* === LOGO CONTAINER === */
 .logo-container {
   position: relative;
@@ -378,42 +351,41 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0; /* ✅ remove gap completely */
 }
 
-/* === CENTER WRAPPER === */
+/* === LOGO CENTER WRAPPER === */
 .logo-center {
   position: relative;
-  width: 260px;      /* ✅ tighter, matches actual circle size */
-  height: 260px;
+  width: 240px; /* matches real circle size */
+  height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-origin: 50% 50%; /* ✅ perfect spin center */
+  transform-origin: center center; /* ✅ true spin center */
 }
 
-/* Circle + S perfectly overlap */
+/* Circle + S overlap perfectly */
 .logo-part.circle,
 .logo-part.s {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  top: 50%;
+  left: 50%;
+  width: 240px;
+  height: 240px;
+  transform: translate(-50%, -50%); /* ✅ perfectly center the layers */
   transform-origin: 50% 50%;
+  object-fit: contain;
   opacity: 0;
 }
 
-/* Text part (SargamWorld) — close to circle */
+/* Text: directly below circle */
 .logo-part.text {
-  position: relative;
-  margin-top: 4px; /* ✅ reduced gap (was 10px) */
-  width: 320px;
+  margin-top: -5px; /* ✅ reduces that huge vertical gap */
+  width: 300px;
   height: auto;
   opacity: 0;
 }
-
-
 /* === ANIMATIONS === */
 
 /* Natural bounce */
@@ -573,8 +545,8 @@ window.addEventListener("load", () => {
   // Step 1: Bounce in S + Circle
   sPart.style.opacity = 1;
   circlePart.style.opacity = 1;
-  sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
-  circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+const logoCenter = document.querySelector(".logo-center");
+logoCenter.style.animation = "logoSpinOnce 1.2s ease-in-out forwards";
 
   // Step 2: Show text normally (no bounce)
   setTimeout(() => {
