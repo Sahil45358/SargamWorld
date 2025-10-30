@@ -343,84 +343,98 @@
   color: #fff;
 }
 
-/* Entrance Overlay */
+/* ------------------------------
+   ENTRANCE ANIMATION STYLES
+--------------------------------*/
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Lock scroll during intro */
+body.intro-active {
+  overflow: hidden;
+}
+
 #intro {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   background: #b30000;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   z-index: 9999;
+  overflow: hidden;
 }
 
-/* Hide main page until intro ends */
-body.loaded #intro {
-  display: none;
-}
-
-/* Main logo setup */
-.intro-logo {
+.intro-bg {
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.intro-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;
 }
 
-/* All logo layers same size */
 .intro-logo img {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-/* Full logo - bounce and spin */
-#logo-full {
+/* Text fades out early */
+#logo-text {
+  animation: fadeOut 1.5s ease-in-out 1.2s forwards;
+}
+
+/* Bounce + spin for S and Circle */
+#logo-s, #logo-circle {
   animation: bounce-spin 2s ease-in-out forwards;
 }
 
-/* Left and right halves start hidden */
-#logo-left,
-#logo-right {
-  opacity: 0;
+@keyframes bounce-spin {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  20% { transform: scale(1.15) rotate(0deg); opacity: 1; }
+  40% { transform: scale(1) rotate(180deg); }
+  60% { transform: scale(1) rotate(360deg); }
+  80% { transform: scale(1); opacity: 1; }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(10px); }
 }
 
 /* Split animation */
-@keyframes bounce-spin {
-  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
-  20% { transform: scale(1.1) rotate(0deg); opacity: 1; }
-  40% { transform: scale(1) rotate(360deg); }
-  60% { transform: scale(1) rotate(360deg); }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-/* After split - moving halves */
 .split-left {
-  animation: moveLeft 1s forwards ease-in-out;
+  animation: moveLeft 1s ease-in-out forwards;
 }
 
 .split-right {
-  animation: moveRight 1s forwards ease-in-out;
+  animation: moveRight 1s ease-in-out forwards;
 }
 
 @keyframes moveLeft {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(-100%) rotate(-10deg); opacity: 0; }
+  from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  to { transform: translate(-150%, -50%) rotate(-15deg) scale(0.9); opacity: 0; }
 }
 
 @keyframes moveRight {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(100%) rotate(10deg); opacity: 0; }
+  from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  to { transform: translate(50%, -50%) rotate(15deg) scale(0.9); opacity: 0; }
 }
 
-/* Background panels split */
+/* Background halves */
 .intro-bg::before,
 .intro-bg::after {
   content: "";
@@ -433,13 +447,8 @@ body.loaded #intro {
   transition: transform 1s ease-in-out;
 }
 
-.intro-bg::before {
-  left: 0;
-}
-
-.intro-bg::after {
-  right: 0;
-}
+.intro-bg::before { left: 0; }
+.intro-bg::after { right: 0; }
 
 .bg-split .intro-bg::before {
   transform: translateX(-100%);
@@ -449,16 +458,13 @@ body.loaded #intro {
   transform: translateX(100%);
 }
 
-    
-/* Mobile Responsive */
-@media (max-width: 500px) {
-  .cookie-popup {
-    width: 90%;
-    right: 5%;
-    bottom: 10px;
-    padding: 15px;
-  }
+/* Fade out whole intro */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  pointer-events: none;
 }
+
 
   </style>
 </head>
@@ -468,9 +474,9 @@ body.loaded #intro {
 <div id="intro">
   <div class="intro-bg">
     <div class="intro-logo">
-      <img src="LOGO.png" alt="Logo" id="logo-full" />
-      <img src="LOGO.png" alt="Logo Left Half" id="logo-left" />
-      <img src="LOGO.png" alt="Logo Right Half" id="logo-right" />
+      <img src="LOGO_S.png" id="logo-s" alt="S part" />
+      <img src="LOGO_CIRCLE.png" id="logo-circle" alt="Circle part" />
+      <img src="LOGO_TEXT.png" id="logo-text" alt="Text part" />
     </div>
   </div>
 </div>
@@ -561,29 +567,32 @@ body.loaded #intro {
 
   <script>
 
-    window.addEventListener('load', () => {
+window.addEventListener('load', () => {
+  const body = document.body;
   const intro = document.getElementById('intro');
-  const logoFull = document.getElementById('logo-full');
-  const logoLeft = document.getElementById('logo-left');
-  const logoRight = document.getElementById('logo-right');
+  const logoS = document.getElementById('logo-s');
+  const logoCircle = document.getElementById('logo-circle');
 
-  // After main bounce-spin ends, start split animation
+  // Lock scroll while intro plays
+  body.classList.add('intro-active');
+
+  // After bounce-spin ends, split logo
   setTimeout(() => {
-    logoFull.style.display = 'none';
-    logoLeft.style.opacity = 1;
-    logoRight.style.opacity = 1;
-    logoLeft.classList.add('split-left');
-    logoRight.classList.add('split-right');
+    logoS.classList.add('split-left');
+    logoCircle.classList.add('split-right');
     intro.classList.add('bg-split');
-  }, 2000);
+  }, 2200);
 
-  // Remove intro after animation completes (~3s total)
+  // Fade out intro
   setTimeout(() => {
-    intro.style.opacity = '0';
-    setTimeout(() => {
-      intro.style.display = 'none';
-    }, 500);
-  }, 3000);
+    intro.classList.add('fade-out');
+    body.classList.remove('intro-active');
+  }, 3200);
+
+  // Remove intro completely
+  setTimeout(() => {
+    intro.remove();
+  }, 4000);
 });
     
     function toggleMenu() {
