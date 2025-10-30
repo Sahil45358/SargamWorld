@@ -448,7 +448,7 @@
 .logo-part.s,
 .logo-part.circle {
   animation: logoBouncePulse 1s ease-out forwards,
-             logoSpinSmooth 1.5s linear infinite; /* ↑ faster, smooth spin */
+             logoSpinSmooth 0.75s linear infinite; /* double speed */
 }
 
 /* Text fades away */
@@ -601,9 +601,9 @@ window.addEventListener("load", () => {
   }, 2500); // after text fades
 
   // Step 5: fade out overlay slightly after curtains open
-  setTimeout(() => {
-    entrance.classList.add("fadeOutOverlay");
-  }, 3300); // reduced pause time for smoother transition
+setTimeout(() => {
+  entrance.classList.add("fadeOutOverlay");
+}, 2800);
 });
 
     
