@@ -361,31 +361,42 @@
   top: 0;
   width: 50%;
   height: 100%;
-  background: #b40000; /* deeper SargamWorld red shade */
+  background: #b40000; /* your deeper SargamWorld red shade */
   z-index: 2;
   transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+  transition-delay: 0.2s;
 }
 
-.curtain.left  { left: 0; transform: translateX(0); }
-.curtain.right { right: 0; transform: translateX(0); }
+.curtain.left {
+  left: 0;
+  transform: translateX(0);
+}
 
-/* Curtains open after logo + text animation */
-.curtain.open.left  { transform: translateX(-100%); transition-delay: 3s; }
-.curtain.open.right { transform: translateX(100%);  transition-delay: 3s; }
+.curtain.right {
+  right: 0;
+  transform: translateX(0);
+}
 
 /* === LOGO CONTAINER === */
 .logo-container {
   position: relative;
   z-index: 3;
   display: flex;
-  flex-direction: column; /* stack symbol & text */
-  align-items: center;
+  flex-direction: column;  /* stack logo symbol above text */
+  align-items: center;     /* center horizontally */
   justify-content: center;
-  gap: 20px;
 }
 
+
 /* === LOGO PARTS === */
-.logo-symbol {
+.logo-part {
+  position: absolute;
+  width: 280px;
+  opacity: 0;
+  transform-origin: center;
+}
+
+  .logo-symbol {
   position: relative;
   width: 280px;
   height: 280px;
@@ -394,28 +405,20 @@
   justify-content: center;
 }
 
-/* Circle and S parts */
 .logo-symbol .circle,
 .logo-symbol .s {
   position: absolute;
   width: 100%;
   height: auto;
+  left: 0;
+  top: 0;
   transform-origin: center;
-  opacity: 0;
-}
-
-/* Text below the symbol */
-.logo-part.text {
-  position: relative;
-  width: 320px;
-  bottom: 0;
-  opacity: 1;
-  transform: scale(1);
-}
+}  
+  
 
 /* === KEYFRAMES === */
 
-/* 1️⃣ Bounce effect for logo */
+/* Bounce effect for S & Circle */
 @keyframes logoRealBounce {
   0%   { transform: translateY(-40px) scale(0.9); opacity: 0; }
   40%  { transform: translateY(0) scale(1.1); opacity: 1; }
@@ -423,44 +426,64 @@
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* 2️⃣ Spin + shrink + disappear */
-@keyframes spinAndDisappear {
-  0%   { transform: rotate(0deg) scale(1); opacity: 1; }
-  100% { transform: rotate(360deg) scale(0); opacity: 0; }
+/* Single smooth spin (for S & Circle) */
+@keyframes logoSpinOnce {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
-/* 3️⃣ Text enlarges smoothly */
-@keyframes textEnlarge {
-  0%   { transform: scale(1); }
-  100% { transform: scale(1.4); }
+/* Fade-in for text */
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* 4️⃣ Fade overlay out */
+/* Fade text out smoothly */
+@keyframes textFadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Split animations for S and Circle */
+@keyframes sSplitLeft {
+  to { transform: translateX(-150%) rotate(-15deg); opacity: 0; }
+}
+
+@keyframes circleSplitRight {
+  to { transform: translateX(150%) rotate(15deg); opacity: 0; }
+}
+
+/* Fade overlay out */
 @keyframes fadeOutOverlay {
   to { opacity: 0; visibility: hidden; }
 }
 
-/* === ANIMATION ASSIGNMENTS === */
-
-/* S & Circle: bounce → spin + disappear */
-.logo-symbol .s,
-.logo-symbol .circle {
-  opacity: 1;
-  animation:
-    logoRealBounce 1s ease-out forwards,
-    spinAndDisappear 1.2s ease-in forwards;
-  animation-delay: 0s, 1s; /* spin starts after bounce */
-}
-
-/* Text: visible immediately, enlarges after logo disappears */
-.logo-part.text {
-  animation: textEnlarge 1s ease-out forwards;
-  animation-delay: 2s; /* starts after logo animation */
-}
-
-/* Overlay fades away */
 .fadeOutOverlay {
   animation: fadeOutOverlay 0.8s ease-in-out forwards;
+}
+
+/* === ASSIGNING ANIMATIONS === */
+
+/* S & Circle bounce initially (spin added later by JS) */
+.logo-part.s,
+.logo-part.circle {
+  opacity: 1;
+  animation: logoRealBounce 1.2s ease-out forwards;
+}
+
+/* Text fades in normally (no bounce) */
+.logo-part.text {
+  opacity: 0;
+  animation: fadeInText 1s ease forwards;
+}
+
+/* Curtain panels open */
+.curtain.open.left {
+  transform: translateX(-100%);
+}
+
+.curtain.open.right {
+  transform: translateX(100%);
 }
 
   </style>
@@ -480,6 +503,7 @@
     <img src="LOGO_TEXT.png" class="logo-part text">
   </div>
 </div>
+
 
   
 <!-- Cookie Consent Popup -->
@@ -567,40 +591,44 @@
 
   <script>
 // === SargamWorld Entrance Animation ===
-// === SargamWorld Entrance Animation ===
 window.addEventListener("load", () => {
   const entrance = document.getElementById("entrance");
-  const sPart = document.querySelector(".logo-symbol .s");
-  const circlePart = document.querySelector(".logo-symbol .circle");
+  const sPart = document.querySelector(".logo-part.s");
+  const circlePart = document.querySelector(".logo-part.circle");
   const textPart = document.querySelector(".logo-part.text");
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
 
-  // Step 1️⃣: bounce in
-  sPart.style.animation = "logoRealBounce 1s ease-out forwards";
-  circlePart.style.animation = "logoRealBounce 1s ease-out forwards";
+  // Step 1: show & bounce S + Circle
+  sPart.style.opacity = 1;
+  circlePart.style.opacity = 1;
+  sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+  circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-  // Step 2️⃣: spin + disappear after bounce
+  // Step 2: text appears normally (no bounce)
   setTimeout(() => {
-    sPart.style.animation = "spinAndDisappear 1.2s ease-in forwards";
-    circlePart.style.animation = "spinAndDisappear 1.2s ease-in forwards";
-  }, 1000);
+    textPart.style.opacity = 1;
+  }, 500);
 
-  // Step 3️⃣: text enlarges after logo disappears
+  // Step 3: spin once (after bounce)
   setTimeout(() => {
-    textPart.style.animation = "textEnlarge 1s ease-out forwards";
-  }, 2200);
+    sPart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
+    circlePart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
+  }, 1300);
 
-  // Step 4️⃣: curtain opens
+  // Step 4: fade text, split S + Circle, open curtains
   setTimeout(() => {
+    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
-  }, 3200);
+  }, 2500);
 
-  // Step 5️⃣: overlay fades out
+  // Step 5: fade out entrance overlay
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
-  }, 4400);
+  }, 3700);
 });
 
     function toggleMenu() {
