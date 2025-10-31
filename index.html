@@ -497,40 +497,39 @@ body.no-scroll {
   z-index: 3; /* above curtains, below logo */
 }
 
+/* === ULTRA METALLIC PARTICLES === */
 .particle {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(145deg, #d9d9d9 0%, #a6a6a6 40%, #f0f0f0 100%);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(145deg, #e0e0e0 0%, #a9a9a9 45%, #f5f5f5 100%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+  transform: rotate(45deg);
   border-radius: 2px;
   opacity: 0;
-  transform: translate(0, 0) rotate(45deg);
-  animation: particleFly 1.2s ease-out forwards;
+  filter: brightness(1.2) contrast(1.1);
+  animation: particleFly 1.3s cubic-bezier(0.42, 0, 0.58, 1) forwards;
   will-change: transform, opacity;
 }
 
-/* Add a soft metallic reflection effect */
-.particle::after {
+/* subtle metallic edge reflection */
+.particle::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, transparent 70%);
-  mix-blend-mode: overlay;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7) 0%, transparent 70%);
+  mix-blend-mode: screen;
   border-radius: 2px;
   pointer-events: none;
 }
 
-/* === Particle Burst Animation === */
+/* improved burst trajectory */
 @keyframes particleFly {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.3) rotate(45deg);
+    transform: translate(0, 0) scale(0.4) rotate(45deg);
   }
-  20% {
+  15% {
     opacity: 1;
   }
   100% {
@@ -539,9 +538,9 @@ body.no-scroll {
   }
 }
 
-/* === Fade-out animation (already used in JS) === */
+/* smoother fade-out after pause */
 .fade-out {
-  animation: fadeParticlesOut 0.8s ease-in forwards;
+  animation: fadeParticlesOut 1s ease-in forwards;
 }
 
 @keyframes fadeParticlesOut {
@@ -699,7 +698,7 @@ window.addEventListener("load", () => {
 
         // Random direction & distance (burst outward)
         const angle = Math.random() * 2 * Math.PI;
-        const radius = 80 + Math.random() * 120; // how far they fly
+        const radius = 80 + Math.random() * 160; // how far they fly
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
 
@@ -720,14 +719,16 @@ window.addEventListener("load", () => {
 
   }, 1300);
 
-  // Step 4: Hold 0.4s, keep particles visible until curtains open
+// Step 4: Pause for 1.5s after spin before opening curtains
+setTimeout(() => {
+  // ✋ Pause moment (logo + particles stay still for 1.5s)
   setTimeout(() => {
-    // curtains start to open
+    // curtains start to open after pause
     textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
 
     sPart.style.animation = "none";
     circlePart.style.animation = "none";
-    void sPart.offsetWidth;
+    void sPart.offsetWidth; // reflow reset
 
     sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
     circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
@@ -739,7 +740,10 @@ window.addEventListener("load", () => {
       p.classList.add("fade-out");
     });
 
-  }, 2700); // 1300 + 900 (spin) + 400 hold
+  }, 1500); // pause duration (1.5s)
+
+}, 2200); // spin ends ~2.2s in (1300 + 900)
+
 
   // Step 5: fade out entrance overlay and re-enable scroll
   setTimeout(() => {
