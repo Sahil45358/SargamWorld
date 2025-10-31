@@ -494,31 +494,32 @@ body.no-scroll {
   transform: translate(-50%, -50%);
   pointer-events: none;
   overflow: visible;
-  z-index: 3; /* ✅ above curtains (2), below logo (4) */
+  z-index: 3; /* above curtains, below logo */
 }
 
 .particle {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background: linear-gradient(145deg, #c0c0c0, #8d8d8d);
-  transform: rotate(45deg);
+  transform: translate(0, 0) rotate(45deg);
   opacity: 0;
   border-radius: 1px;
-  animation: particleAppear 2s ease-out forwards;
+  animation: particleFly 1.2s ease-out forwards;
 }
 
-@keyframes particleAppear {
+/* Particles fly out from center and fade in */
+@keyframes particleFly {
   0% {
     opacity: 0;
-    transform: scale(0.5) rotate(45deg);
+    transform: translate(0, 0) scale(0.4) rotate(45deg);
   }
-  20% {
+  30% {
     opacity: 1;
   }
   100% {
     opacity: 1;
-    transform: scale(1) rotate(45deg);
+    transform: var(--translate) scale(1) rotate(45deg);
   }
 }
 
@@ -646,6 +647,9 @@ window.addEventListener("load", () => {
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
 
+  // 🚫 Disable scroll during entrance
+  document.body.classList.add("no-scroll");
+
   // Step 1: show & bounce S + Circle
   sPart.style.opacity = 1;
   circlePart.style.opacity = 1;
@@ -657,58 +661,70 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
-// Step 3: Smooth full spin (1°→360°) + deep shrink + particles appear slightly before spin ends
-setTimeout(() => {
-  // Smooth, fast full spin and deep shrink
-  sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
-  circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
-
-  // Start creating particles *just before* spin finishes
+  // Step 3: Smooth full spin (1°→360°) + deep shrink + particles appear slightly before spin ends
   setTimeout(() => {
-    const particleContainer = document.getElementById("particles-container");
-    for (let i = 0; i < 15; i++) {
-      const particle = document.createElement("div");
-      particle.classList.add("particle");
+    // Smooth, fast full spin and deep shrink
+    sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
+    circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-      const size = 6 + Math.random() * 8; // varied sizes (6–14px)
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
+    // ✨ Start creating particles slightly before spin finishes
+    setTimeout(() => {
+      const particleContainer = document.getElementById("particles-container");
+      for (let i = 0; i < 15; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
 
-      const angle = Math.random() * 2 * Math.PI;
-      const radius = 60 + Math.random() * 60;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius;
+        const size = 6 + Math.random() * 8; // varied sizes (6–14px)
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
 
-      particle.style.left = `calc(50% + ${x}px)`;
-      particle.style.top = `calc(50% + ${y}px)`;
-      particleContainer.appendChild(particle);
-    }
-  }, 500); // particles start appearing ~0.2s before spin ends (0.9s total spin)
+        // Random direction & distance
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 60 + Math.random() * 60;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
 
-}, 1300);
+        // 💥 NEW: fly outward animation (starts from center)
+        particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
 
-// Step 4: Hold for 0.4s after spin, then open curtains and fade particles
-setTimeout(() => {
-  document.querySelectorAll(".particle").forEach(p => {
-    p.classList.add("fade-out");
-  });
+        // Slight random delay for natural staggered burst
+        const delay = Math.random() * 0.2; 
+        particle.style.animationDelay = `${delay}s`;
 
-  textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+        particleContainer.appendChild(particle);
+      }
+    }, 500); // particles start appearing ~0.2s before spin ends
 
-  // Reset before split
-  sPart.style.animation = "none";
-  circlePart.style.animation = "none";
-  void sPart.offsetWidth; // reflow reset
+  }, 1300);
 
-  sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
-  circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
-  curtainLeft.classList.add("open");
-  curtainRight.classList.add("open");
-}, 2700); // 1300 + 900 (spin) + 400 hold
+  // Step 4: Hold for 0.4s after spin, then open curtains and fade particles
+  setTimeout(() => {
+    document.querySelectorAll(".particle").forEach(p => {
+      p.classList.add("fade-out");
+    });
 
-  // Step 5: fade out entrance overlay
+    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+
+    // Reset before split
+    sPart.style.animation = "none";
+    circlePart.style.animation = "none";
+    void sPart.offsetWidth; // reflow reset
+
+    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
+    curtainLeft.classList.add("open");
+    curtainRight.classList.add("open");
+  }, 2700); // 1300 + 900 (spin) + 400 hold
+
+  // Step 5: fade out entrance overlay and re-enable scroll
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
+
+    // ✅ Re-enable scroll after overlay fades
+    setTimeout(() => {
+      document.body.classList.remove("no-scroll");
+    }, 800);
+
   }, 3700);
 });
 
