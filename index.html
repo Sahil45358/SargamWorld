@@ -456,43 +456,65 @@ body.no-scroll {
   z-index: 3;
 }
 
+#particles-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  overflow: visible;
+  z-index: 3;
+}
+
+/* Base particle */
 .particle {
   position: absolute;
   opacity: 0;
   transform-origin: center;
-  background: linear-gradient(145deg, #d9d9d9 0%, #bfbfbf 40%, #f5f5f5 100%);
-  filter: brightness(1.05) contrast(1.15);
-  animation: particleFly 1.4s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: particleFly 1.2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
-/* Metallic hollow circle */
+/* Hollow circle */
 .particle.circle {
-  background: none;
-  border: 1.6px solid #d9d9d9;
+  border: 2px solid #ffffff;
   border-radius: 50%;
+  background: transparent;
 }
 
-/* Solid diamond */
+/* Sharp diamond (no rounding) */
 .particle.diamond {
+  background: #ffffff;
+  width: 6px;
+  height: 6px;
   transform: rotate(45deg);
-  border-radius: 2px;
 }
 
-/* Angled metallic line */
+/* Thin line, angled */
 .particle.line {
-  border-radius: 2px;
+  width: 2px;
+  height: 16px;
+  background: #ffffff;
   transform-origin: center;
-  background: linear-gradient(145deg, #d9d9d9, #bfbfbf, #f5f5f5);
 }
 
-/* Animation */
+/* Radial motion */
 @keyframes particleFly {
-  0% { opacity: 0; transform: translate(0, 0) scale(0.3); }
-  20% { opacity: 1; }
-  100% { opacity: 1; transform: var(--translate) rotate(var(--angle)) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: var(--translate) rotate(var(--angle)) scale(1);
+  }
 }
 
-/* Fade-out for particles */
+/* Fade-out effect */
 .particle.fade-out {
   animation: fadeParticlesOut 1s ease-in forwards;
 }
@@ -500,13 +522,6 @@ body.no-scroll {
   to { opacity: 0; transform: scale(0.7); }
 }
 
-
-@keyframes fadeParticlesOut {
-  to {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-}}
 
   </style>
 </head>
@@ -640,52 +655,51 @@ window.addEventListener("load", () => {
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
     // Spawn particles mid-spin
-    setTimeout(() => {
-      const particleContainer = document.getElementById("particles-container");
-      const shapes = ["diamond", "circle", "line"];
-      const particleCount = 26;
+   setTimeout(() => {
+  const particleContainer = document.getElementById("particles-container");
+  const shapes = ["diamond", "circle", "line"];
+  const particleCount = 26;
 
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("particle");
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
 
-        const shape = shapes[Math.floor(Math.random() * shapes.length)];
-        particle.classList.add(shape);
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    particle.classList.add(shape);
 
-        // Size per type
-        if (shape === "circle") {
-          const size = 4 + Math.random() * 5;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-        } else if (shape === "diamond") {
-          const size = 5 + Math.random() * 7;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-        } else if (shape === "line") {
-          particle.style.width = `${1.5 + Math.random() * 1}px`;
-          particle.style.height = `${12 + Math.random() * 10}px`;
-        }
+    // Size per shape
+    if (shape === "circle") {
+      const size = 5 + Math.random() * 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+    } else if (shape === "diamond") {
+      const size = 5 + Math.random() * 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+    } else if (shape === "line") {
+      particle.style.height = `${12 + Math.random() * 10}px`;
+      particle.style.width = "2px";
+    }
 
-        // Direction
-        const angle = Math.random() * 2 * Math.PI;
-        const radius = 70 + Math.random() * 110;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
-        particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
-        particle.style.setProperty("--angle", `${(angle * 180) / Math.PI}deg`);
+    // Radial direction from center
+    const angleRad = Math.random() * 2 * Math.PI;
+    const distance = 80 + Math.random() * 120;
+    const x = Math.cos(angleRad) * distance;
+    const y = Math.sin(angleRad) * distance;
+    particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
 
-        // Position center
-        particle.style.left = "50%";
-        particle.style.top = "50%";
+    // Rotate lines in the same outward direction
+    const angleDeg = (angleRad * 180) / Math.PI;
+    particle.style.setProperty("--angle", `${angleDeg}deg`);
 
-        // Slight delay
-        const delay = Math.random() * 0.15;
-        particle.style.animationDelay = `${delay}s`;
+    // Center and random delay
+    particle.style.left = "50%";
+    particle.style.top = "50%";
+    particle.style.animationDelay = `${Math.random() * 0.15}s`;
 
-        particleContainer.appendChild(particle);
-      }
-    }, 400);
-  }, 1300);
+    particleContainer.appendChild(particle);
+  }
+}, 400);
 
   // Step 4: Pause before opening curtains
   setTimeout(() => {
