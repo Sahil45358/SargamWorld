@@ -485,6 +485,65 @@
 .curtain.open.right {
   transform: translateX(100%);
 }
+    /* === Silver Particles === */
+#particles-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  overflow: visible;
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(145deg, #c0c0c0, #8d8d8d);
+  transform: rotate(45deg);
+  opacity: 0;
+  border-radius: 1px;
+  animation: particleAppear 2s ease-out forwards;
+}
+
+@keyframes particleAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(45deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+.particle.fade-out {
+  animation: particleFadeOut 1s ease forwards;
+}
+
+@keyframes particleFadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* === Shrink–Expand for S and Circle === */
+@keyframes spinShrinkExpand {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(0.8);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
 
   </style>
 </head>
@@ -502,6 +561,8 @@
     </div>
     <img src="LOGO_TEXT.png" class="logo-part text">
   </div>
+  <!-- Silver particles container -->
+<div id="particles-container"></div>
 </div>
 
 
@@ -610,15 +671,51 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: spin once (after bounce)
+  // Step 3: Spin + shrink/expand + particles appear
   setTimeout(() => {
-    sPart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
-    circlePart.style.animation = "logoSpinOnce 1s ease-in-out forwards";
-  }, 1300);
+    // Apply new spin+shrink animation
+    sPart.style.animation = "spinShrinkExpand 1.2s ease-in-out forwards";
+    circlePart.style.animation = "spinShrinkExpand 1.2s ease-in-out forwards";
+
+    // Generate silver diamond particles
+    const particleContainer = document.getElementById("particles-container");
+    for (let i = 0; i < 15; i++) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+
+      // Random size (small-medium range)
+      const size = 6 + Math.random() * 8; // between 6px and 14px
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+
+      // Random position in circular area
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = 60 + Math.random() * 60;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      particle.style.left = `calc(50% + ${x}px)`;
+      particle.style.top = `calc(50% + ${y}px)`;
+      particleContainer.appendChild(particle);
+    }
+  }, 1300); // sync with your timeline
+
+  // Step 4 (when curtains open): Fade out particles
+  setTimeout(() => {
+    document.querySelectorAll(".particle").forEach(p => {
+      p.classList.add("fade-out");
+    });
+  }, 2500);
 
   // Step 4: fade text, split S + Circle, open curtains
   setTimeout(() => {
     textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+
+    // Reset transform before split to avoid conflict with spinShrinkExpand
+    sPart.style.animation = "none";
+    circlePart.style.animation = "none";
+    void sPart.offsetWidth; // force reflow
+
     sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
     circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
     curtainLeft.classList.add("open");
@@ -630,6 +727,7 @@ window.addEventListener("load", () => {
     entrance.classList.add("fadeOutOverlay");
   }, 3700);
 });
+
 
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
