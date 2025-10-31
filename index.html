@@ -669,13 +669,13 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
- // Step 3: Smooth full spin (1°→360°) + deep shrink + particles appear right after
+// Step 3: Smooth full spin (1°→360°) + deep shrink + particles appear slightly before spin ends
 setTimeout(() => {
-  // Fast, smooth full spin and shrink
+  // Smooth, fast full spin and deep shrink
   sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
   circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-  // When spin completes, trigger particle appearance
+  // Start creating particles *just before* spin finishes
   setTimeout(() => {
     const particleContainer = document.getElementById("particles-container");
     for (let i = 0; i < 15; i++) {
@@ -695,11 +695,11 @@ setTimeout(() => {
       particle.style.top = `calc(50% + ${y}px)`;
       particleContainer.appendChild(particle);
     }
-  }, 900); // after spin ends
+  }, 700); // particles start appearing ~0.2s before spin ends (0.9s total spin)
 
 }, 1300);
 
-// Step 4 (after 0.4s hold, curtains open)
+// Step 4: Hold for 0.4s after spin, then open curtains and fade particles
 setTimeout(() => {
   document.querySelectorAll(".particle").forEach(p => {
     p.classList.add("fade-out");
@@ -707,6 +707,7 @@ setTimeout(() => {
 
   textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
 
+  // Reset before split
   sPart.style.animation = "none";
   circlePart.style.animation = "none";
   void sPart.offsetWidth; // reflow reset
@@ -715,7 +716,8 @@ setTimeout(() => {
   circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
   curtainLeft.classList.add("open");
   curtainRight.classList.add("open");
-}, 2700); // 1300 + 900 (spin) + 400ms hold
+}, 2700); // 1300 + 900 (spin) + 400 hold
+
   // Step 5: fade out entrance overlay
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
