@@ -647,7 +647,9 @@ window.addEventListener("load", () => {
   circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
   // Step 2: Fade in text
-  setTimeout(() => { textPart.style.opacity = 1; }, 500);
+  setTimeout(() => {
+    textPart.style.opacity = 1;
+  }, 500);
 
   // Step 3: Spin + particles
   setTimeout(() => {
@@ -655,54 +657,41 @@ window.addEventListener("load", () => {
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
     // Spawn particles mid-spin
-   setTimeout(() => {
-  const particleContainer = document.getElementById("particles-container");
-  const shapes = ["diamond", "circle", "line"];
-  const particleCount = 26;
+    setTimeout(() => {
+      const particleContainer = document.getElementById("particles-container");
+      const shapes = ["diamond", "circle", "line"];
+      const particleCount = 26;
 
-  for (let i = 0; i < particleCount; i++) {
-    const particle = document.createElement("div");
-    particle.classList.add("particle");
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        particle.classList.add(shape);
 
-    const shape = shapes[Math.floor(Math.random() * shapes.length)];
-    particle.classList.add(shape);
+        if (shape === "circle" || shape === "diamond") {
+          const size = 5 + Math.random() * 4;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+        } else if (shape === "line") {
+          particle.style.height = `${12 + Math.random() * 10}px`;
+          particle.style.width = "2px";
+        }
 
-    // Size per shape
-    if (shape === "circle") {
-      const size = 5 + Math.random() * 4;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-    } else if (shape === "diamond") {
-      const size = 5 + Math.random() * 4;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-    } else if (shape === "line") {
-      particle.style.height = `${12 + Math.random() * 10}px`;
-      particle.style.width = "2px";
-    }
+        const angleRad = Math.random() * 2 * Math.PI;
+        const distance = 80 + Math.random() * 120;
+        const x = Math.cos(angleRad) * distance;
+        const y = Math.sin(angleRad) * distance;
+        particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
+        particle.style.setProperty("--angle", `${(angleRad * 180) / Math.PI}deg`);
 
-    // Radial direction from center
-    const angleRad = Math.random() * 2 * Math.PI;
-    const distance = 80 + Math.random() * 120;
-    const x = Math.cos(angleRad) * distance;
-    const y = Math.sin(angleRad) * distance;
-    particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
+        particle.style.left = "50%";
+        particle.style.top = "50%";
+        particle.style.animationDelay = `${Math.random() * 0.15}s`;
+        particleContainer.appendChild(particle);
+      }
+    }, 400);
 
-    // Rotate lines in the same outward direction
-    const angleDeg = (angleRad * 180) / Math.PI;
-    particle.style.setProperty("--angle", `${angleDeg}deg`);
-
-    // Center and random delay
-    particle.style.left = "50%";
-    particle.style.top = "50%";
-    particle.style.animationDelay = `${Math.random() * 0.15}s`;
-
-    particleContainer.appendChild(particle);
-  }
-}, 400);
-
-  // Step 4: Pause before opening curtains
-  setTimeout(() => {
+    // Step 4: Pause before opening curtains
     setTimeout(() => {
       textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
       sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
@@ -713,15 +702,16 @@ window.addEventListener("load", () => {
       // Fade particles
       document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
     }, 1500);
+
+    // Step 5: Fade overlay + enable scroll
+    setTimeout(() => {
+      entrance.classList.add("fadeOutOverlay");
+      setTimeout(() => {
+        document.body.classList.remove("no-scroll");
+      }, 1000);
+    }, 2700); // adjusted total duration
   }, 2200);
-
-  // Step 5: Fade overlay + enable scroll
-  setTimeout(() => {
-    entrance.classList.add("fadeOutOverlay");
-    setTimeout(() => { document.body.classList.remove("no-scroll"); }, 1000);
-  }, 4200);
 });
-
 
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
