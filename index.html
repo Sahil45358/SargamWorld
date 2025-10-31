@@ -508,7 +508,6 @@ body.no-scroll {
   animation: particleFly 1.2s ease-out forwards;
 }
 
-/* Particles fly out from center and fade in */
 @keyframes particleFly {
   0% {
     opacity: 0;
@@ -522,7 +521,7 @@ body.no-scroll {
     transform: var(--translate) scale(1) rotate(45deg);
   }
 }
-
+    
 .particle.fade-out {
   animation: particleFadeOut 1s ease forwards;
 }
@@ -656,64 +655,70 @@ window.addEventListener("load", () => {
   sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
   circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-  // Step 2: text appears normally (no bounce)
+  // Step 2: text appears normally
   setTimeout(() => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: Smooth full spin (1°→360°) + deep shrink + particles appear slightly before spin ends
+  // Step 3: Smooth spin + deep shrink + particles burst from center
   setTimeout(() => {
-    // Smooth, fast full spin and deep shrink
     sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-    // ✨ Start creating particles slightly before spin finishes
+    // ✨ Start creating particles just before spin ends
     setTimeout(() => {
       const particleContainer = document.getElementById("particles-container");
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 18; i++) {
         const particle = document.createElement("div");
         particle.classList.add("particle");
 
-        const size = 6 + Math.random() * 8; // varied sizes (6–14px)
+        // Random size (6–14px)
+        const size = 6 + Math.random() * 8;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
 
-        // Random direction & distance
+        // Random direction & distance (burst outward)
         const angle = Math.random() * 2 * Math.PI;
-        const radius = 60 + Math.random() * 60;
+        const radius = 80 + Math.random() * 70; // how far they fly
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
 
-        // 💥 NEW: fly outward animation (starts from center)
+        // Fly outward from logo center
         particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
 
-        // Slight random delay for natural staggered burst
-        const delay = Math.random() * 0.2; 
+        // Appear directly at the center
+        particle.style.left = "50%";
+        particle.style.top = "50%";
+
+        // Random delay for natural staggered burst
+        const delay = Math.random() * 0.15;
         particle.style.animationDelay = `${delay}s`;
 
         particleContainer.appendChild(particle);
       }
-    }, 500); // particles start appearing ~0.2s before spin ends
+    }, 400); // burst begins ~0.4s before spin ends
 
   }, 1300);
 
-  // Step 4: Hold for 0.4s after spin, then open curtains and fade particles
+  // Step 4: Hold 0.4s, keep particles visible until curtains open
   setTimeout(() => {
-    document.querySelectorAll(".particle").forEach(p => {
-      p.classList.add("fade-out");
-    });
-
+    // curtains start to open
     textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
 
-    // Reset before split
     sPart.style.animation = "none";
     circlePart.style.animation = "none";
-    void sPart.offsetWidth; // reflow reset
+    void sPart.offsetWidth;
 
     sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
     circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
+
+    // 🌙 Particles fade out when curtains start opening
+    document.querySelectorAll(".particle").forEach(p => {
+      p.classList.add("fade-out");
+    });
+
   }, 2700); // 1300 + 900 (spin) + 400 hold
 
   // Step 5: fade out entrance overlay and re-enable scroll
@@ -724,9 +729,9 @@ window.addEventListener("load", () => {
     setTimeout(() => {
       document.body.classList.remove("no-scroll");
     }, 800);
-
   }, 3700);
 });
+
 
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
