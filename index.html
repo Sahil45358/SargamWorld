@@ -531,20 +531,18 @@
   100% { opacity: 0; }
 }
 
-/* === Shrink–Expand for S and Circle === */
+/* === Very Smooth Full Spin + Deep Shrink (99% smaller) === */
 @keyframes spinShrinkExpand {
   0% {
-    transform: rotate(0deg) scale(1);
+    transform: rotate(1deg) scale(1);
   }
-  50% {
-    transform: rotate(180deg) scale(0.8);
+  40% {
+    transform: rotate(144deg) scale(0.01);
   }
   100% {
     transform: rotate(360deg) scale(1);
   }
 }
-
-
   </style>
 </head>
 <body>
@@ -671,24 +669,23 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: Spin + shrink/expand + particles appear
-  setTimeout(() => {
-    // Apply new spin+shrink animation
-    sPart.style.animation = "spinShrinkExpand 1.2s ease-in-out forwards";
-    circlePart.style.animation = "spinShrinkExpand 1.2s ease-in-out forwards";
+ // Step 3: Smooth full spin (1°→360°) + deep shrink + particles appear right after
+setTimeout(() => {
+  // Fast, smooth full spin and shrink
+  sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
+  circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-    // Generate silver diamond particles
+  // When spin completes, trigger particle appearance
+  setTimeout(() => {
     const particleContainer = document.getElementById("particles-container");
     for (let i = 0; i < 15; i++) {
       const particle = document.createElement("div");
       particle.classList.add("particle");
 
-      // Random size (small-medium range)
-      const size = 6 + Math.random() * 8; // between 6px and 14px
+      const size = 6 + Math.random() * 8; // varied sizes (6–14px)
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
 
-      // Random position in circular area
       const angle = Math.random() * 2 * Math.PI;
       const radius = 60 + Math.random() * 60;
       const x = Math.cos(angle) * radius;
@@ -698,36 +695,32 @@ window.addEventListener("load", () => {
       particle.style.top = `calc(50% + ${y}px)`;
       particleContainer.appendChild(particle);
     }
-  }, 1300); // sync with your timeline
+  }, 900); // after spin ends
 
-  // Step 4 (when curtains open): Fade out particles
-  setTimeout(() => {
-    document.querySelectorAll(".particle").forEach(p => {
-      p.classList.add("fade-out");
-    });
-  }, 2500);
+}, 1300);
 
-  // Step 4: fade text, split S + Circle, open curtains
-  setTimeout(() => {
-    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+// Step 4 (after 0.4s hold, curtains open)
+setTimeout(() => {
+  document.querySelectorAll(".particle").forEach(p => {
+    p.classList.add("fade-out");
+  });
 
-    // Reset transform before split to avoid conflict with spinShrinkExpand
-    sPart.style.animation = "none";
-    circlePart.style.animation = "none";
-    void sPart.offsetWidth; // force reflow
+  textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
 
-    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
-    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
-    curtainLeft.classList.add("open");
-    curtainRight.classList.add("open");
-  }, 2500);
+  sPart.style.animation = "none";
+  circlePart.style.animation = "none";
+  void sPart.offsetWidth; // reflow reset
 
+  sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+  circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
+  curtainLeft.classList.add("open");
+  curtainRight.classList.add("open");
+}, 2700); // 1300 + 900 (spin) + 400ms hold
   // Step 5: fade out entrance overlay
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
   }, 3700);
 });
-
 
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
