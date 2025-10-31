@@ -497,49 +497,66 @@ body.no-scroll {
   z-index: 3; /* above curtains, below logo */
 }
 
-/* === ULTRA METALLIC PARTICLES === */
+/* === Metallic Particles (Diamond, Circle, Line) === */
 .particle {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: linear-gradient(145deg, #e0e0e0 0%, #a9a9a9 45%, #f5f5f5 100%);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
-  transform: rotate(45deg);
-  border-radius: 2px;
   opacity: 0;
-  filter: brightness(1.2) contrast(1.1);
+  transform-origin: center;
+  background: linear-gradient(145deg, #b0b0b0 0%, #7e7e7e 40%, #d6d6d6 100%);
+  filter: brightness(1.1) contrast(1.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
   animation: particleFly 1.3s cubic-bezier(0.42, 0, 0.58, 1) forwards;
-  will-change: transform, opacity;
 }
 
-/* subtle metallic edge reflection */
-.particle::before {
+/* Diamond */
+.particle.diamond {
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+/* Circle — HOLLOW metallic ring */
+.particle.circle {
+  background: none;
+  border: 2px solid;
+  border-image: linear-gradient(145deg, #c0c0c0, #8a8a8a, #dcdcdc) 1;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Line */
+.particle.line {
+  border-radius: 4px;
+  transform: rotate(calc(360deg * var(--rand, 0)));
+}
+
+/* Metallic reflection for solid particles */
+.particle:not(.circle)::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7) 0%, transparent 70%);
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 70%);
   mix-blend-mode: screen;
-  border-radius: 2px;
+  border-radius: inherit;
   pointer-events: none;
 }
 
-/* improved burst trajectory */
+/* Fly outward animation */
 @keyframes particleFly {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.4) rotate(45deg);
+    transform: translate(0, 0) scale(0.4);
   }
-  15% {
+  20% {
     opacity: 1;
   }
   100% {
     opacity: 1;
-    transform: var(--translate) scale(1) rotate(45deg);
+    transform: var(--translate) scale(1);
   }
 }
 
-/* smoother fade-out after pause */
-.fade-out {
+/* Fade-out */
+.particle.fade-out {
   animation: fadeParticlesOut 1s ease-in forwards;
 }
 
@@ -548,7 +565,7 @@ body.no-scroll {
     opacity: 0;
     transform: scale(0.7);
   }
-}
+}}
 
   </style>
 </head>
@@ -679,7 +696,7 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: Smooth spin + deep shrink + particles burst from center
+  // Step 3: Smooth spin + deep shrink + metallic particle burst
   setTimeout(() => {
     sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
@@ -687,63 +704,72 @@ window.addEventListener("load", () => {
     // ✨ Start creating particles just before spin ends
     setTimeout(() => {
       const particleContainer = document.getElementById("particles-container");
-      for (let i = 0; i < 18; i++) {
+
+      const shapes = ["diamond", "circle", "line"];
+      const particleCount = 24; // more particles for cinematic look
+
+      for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement("div");
         particle.classList.add("particle");
 
-        // Random size (6–14px)
-        const size = 6 + Math.random() * 8;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
+        // Random shape
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        particle.classList.add(shape);
 
-        // Random direction & distance (burst outward)
+        // Random size depending on shape
+        let size;
+        if (shape === "line") {
+          particle.style.width = `${2 + Math.random() * 3}px`;
+          particle.style.height = `${10 + Math.random() * 20}px`;
+        } else {
+          size = 6 + Math.random() * 10;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+        }
+
+        // Random direction & distance
         const angle = Math.random() * 2 * Math.PI;
-        const radius = 80 + Math.random() * 160; // how far they fly
+        const radius = 100 + Math.random() * 180;
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
-
-        // Fly outward from logo center
         particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
 
-        // Appear directly at the center
+        // Position at center
         particle.style.left = "50%";
         particle.style.top = "50%";
 
-        // Random delay for natural staggered burst
-        const delay = Math.random() * 0.15;
+        // Random delay for natural stagger
+        const delay = Math.random() * 0.2;
         particle.style.animationDelay = `${delay}s`;
 
         particleContainer.appendChild(particle);
       }
-    }, 400); // burst begins ~0.4s before spin ends
+    }, 400); // burst starts just before spin ends
 
   }, 1300);
 
-// Step 4: Pause for 1.5s after spin before opening curtains
-setTimeout(() => {
-  // ✋ Pause moment (logo + particles stay still for 1.5s)
+  // Step 4: Pause for 1.5 s after spin before opening curtains
   setTimeout(() => {
-    // curtains start to open after pause
-    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+    setTimeout(() => {
+      // 🏁 Curtains open after pause
+      textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
 
-    sPart.style.animation = "none";
-    circlePart.style.animation = "none";
-    void sPart.offsetWidth; // reflow reset
+      sPart.style.animation = "none";
+      circlePart.style.animation = "none";
+      void sPart.offsetWidth; // reset reflow
 
-    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
-    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
-    curtainLeft.classList.add("open");
-    curtainRight.classList.add("open");
+      sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+      circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
+      curtainLeft.classList.add("open");
+      curtainRight.classList.add("open");
 
-    // 🌙 Particles fade out when curtains start opening
-    document.querySelectorAll(".particle").forEach(p => {
-      p.classList.add("fade-out");
-    });
+      // 🌙 Fade out particles when curtains open
+      document.querySelectorAll(".particle").forEach(p => {
+        p.classList.add("fade-out");
+      });
 
-  }, 1500); // pause duration (1.5s)
-
-}, 2200); // spin ends ~2.2s in (1300 + 900)
-
+    }, 1500); // pause duration (1.5s)
+  }, 2200); // spin ends ~2.2 s (1300 + 900)
 
   // Step 5: fade out entrance overlay and re-enable scroll
   setTimeout(() => {
@@ -753,9 +779,8 @@ setTimeout(() => {
     setTimeout(() => {
       document.body.classList.remove("no-scroll");
     }, 800);
-  }, 3700);
+  }, 4200); // extended to account for 1.5s pause
 });
-
 
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
