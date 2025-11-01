@@ -565,7 +565,7 @@ body.no-scroll {
 <body>
 
 <!-- Entrance Animation Overlay -->
-<div id="entrance">
+<div id="entrance" style="display: none;">
   <div class="curtain left"></div>
   <div class="curtain right"></div>
 
@@ -755,7 +755,7 @@ if (!lastShown || now - lastShown > oneDay) {
   // ❌ Skip animation — show main content instantly
   window.addEventListener("load", () => {
     const entrance = document.getElementById("entrance");
-    entrance.style.display = "none";
+    entrance.style.display = "flex";
     document.body.classList.remove("no-scroll");
   });
 }
