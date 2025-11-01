@@ -484,6 +484,21 @@ body.no-scroll {
   transform: translateX(100%);
 }
 
+    @keyframes burstMove {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  70% {
+    transform: var(--translate) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: var(--translate) scale(0.7);
+    opacity: 0;
+  }
+}
+    
 /* === Silver Particles === */
 #particles-container {
   position: absolute;
@@ -503,12 +518,13 @@ body.no-scroll {
   width: 8px;
   height: 8px;
   background: linear-gradient(145deg, #d9d9d9 0%, #a6a6a6 40%, #f0f0f0 100%);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
   border-radius: 2px;
   opacity: 0;
   transform: translate(0, 0) rotate(45deg);
-  animation: particleFly 1.2s ease-out forwards;
+  animation: particleFly 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   will-change: transform, opacity;
+  mix-blend-mode: screen;
 }
 
 /* Add a soft metallic reflection effect */
