@@ -709,9 +709,9 @@ window.addEventListener("load", () => {
         // 🌈 Semi-circular (sideways) spread — like a fan
         const side = Math.random() < 0.5 ? -1 : 1; // left or right
         const baseAngle = side === -1 ? Math.PI : 0;
-        const spread = (Math.random() - 0.5) * (Math.PI / 3); // ±30° arc
+        const spread = (Math.random() - 0.5) * (Math.PI / 2); // ±45° arc
         const angle = baseAngle + spread;
-        const radius = 80 + Math.random() * 120;
+        const radius = 80 + Math.random() * 160;
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius * 0.6;
 
@@ -721,7 +721,7 @@ window.addEventListener("load", () => {
         particle.style.animationDelay = `${Math.random() * 0.05}s`; // near-instant
         particleContainer.appendChild(particle);
       }
-    }, 900); // ← same as spin duration
+    }, 700); // ← same as spin duration
   }, 1200); // spin starts after bounce ends
 
   // 4️⃣ Pause briefly, then curtains + split
