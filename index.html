@@ -669,7 +669,7 @@ body.no-scroll {
 // === Show entrance animation only once every 24 hours ===
 const lastShown = localStorage.getItem("entranceLastShown");
 const now = Date.now();
-const oneDay = 12 * 60 * 60 * 1000;
+const oneDay = 6 * 60 * 60 * 1000;
 
 if (!lastShown || now - lastShown > oneDay) {
   // ✅ Run entrance animation
