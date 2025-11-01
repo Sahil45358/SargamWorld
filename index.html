@@ -663,7 +663,6 @@ animation: particleFly 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
   <script>
 // === SargamWorld Entrance Animation ===
-// === SargamWorld Entrance Animation ===
 window.addEventListener("load", () => {
   const entrance = document.getElementById("entrance");
   const sPart = document.querySelector(".logo-part.s");
@@ -685,60 +684,69 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: Spin + particles
+  // Step 3: Spin + Pulse + Particles
   setTimeout(() => {
-    sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
-    circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
-
-    // Logo pulse before burst
-    sPart.style.animation = "logoPulse 1s ease-out";
-    circlePart.style.animation = "logoPulse 1s ease-out";
+    // Combine spin + pulse seamlessly
+    sPart.style.animation = "spinShrinkExpand 1s ease-in-out forwards, logoPulse 1.1s ease-out 0.1s";
+    circlePart.style.animation = "spinShrinkExpand 1s ease-in-out forwards, logoPulse 1.1s ease-out 0.1s";
     textPart.style.animation = "logoPulse 1s ease-out";
 
-    // Spawn particles mid-spin
+    // Spawn particles mid-spin (with radial burst depth)
     setTimeout(() => {
-      // === Radial Spread Burst (like the image) ===
       const particleContainer = document.getElementById("particles-container");
       const shapes = ["diamond", "circle", "line"];
-      const particleCount = 30;
+      const particleCount = 36;
 
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement("div");
         particle.classList.add("particle");
+
         const shape = shapes[Math.floor(Math.random() * shapes.length)];
         particle.classList.add(shape);
 
+        // Randomize sizes slightly
         if (shape === "circle") {
-          const size = 5 + Math.random() * 3;
+          const size = 4 + Math.random() * 4;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
         } else if (shape === "diamond") {
-          const width = 8 + Math.random() * 5;
-          const height = 5 + Math.random() * 3;
-          particle.style.width = `${width}px`;
-          particle.style.height = `${height}px`;
+          const w = 6 + Math.random() * 4;
+          const h = 4 + Math.random() * 2;
+          particle.style.width = `${w}px`;
+          particle.style.height = `${h}px`;
         } else if (shape === "line") {
-          particle.style.height = `${14 + Math.random() * 10}px`;
+          particle.style.height = `${10 + Math.random() * 12}px`;
           particle.style.width = "2px";
         }
 
+        // Radial direction with depth illusion
         const baseAngle = (i / particleCount) * 2 * Math.PI;
-        const jitter = (Math.random() - 0.5) * 0.25;
-        const angleRad = baseAngle + jitter;
+        const jitter = (Math.random() - 0.5) * 0.3;
+        const angle = baseAngle + jitter;
 
-        const distance = 60 + Math.pow(Math.random(), 1.7) * 140;
-        const x = Math.cos(angleRad) * distance;
-        const y = Math.sin(angleRad) * distance;
+        // Depth-based spread (closer = slower, farther = faster)
+        const depth = Math.random();
+        const distance = 40 + Math.pow(depth, 0.4) * 180;
+
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance * (0.8 + Math.random() * 0.4);
 
         particle.style.setProperty("--tx", `${x}px`);
         particle.style.setProperty("--ty", `${y}px`);
-        particle.style.setProperty("--angle", `${(angleRad * 180) / Math.PI}deg`);
+        particle.style.setProperty("--angle", `${(angle * 180) / Math.PI}deg`);
+
+        // Layer depth + opacity
+        particle.style.zIndex = Math.floor(depth * 3);
+        particle.style.opacity = 0.4 + Math.random() * 0.6;
+        particle.style.animationDelay = `${Math.random() * 0.25}s`;
+
+        // Place particle in center
         particle.style.left = "50%";
         particle.style.top = "50%";
-        particle.style.animationDelay = `${Math.random() * 0.25}s`;
+
         particleContainer.appendChild(particle);
       }
-    }, 300); // particles appear mid-spin
+    }, 300);
 
     // Step 4: Pause before opening curtains
     setTimeout(() => {
@@ -748,9 +756,8 @@ window.addEventListener("load", () => {
       curtainLeft.classList.add("open");
       curtainRight.classList.add("open");
 
-      // Fade particles
       document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
-    }, 1500);
+    }, 1700);
 
     // Step 5: Fade overlay + enable scroll
     setTimeout(() => {
@@ -758,9 +765,10 @@ window.addEventListener("load", () => {
       setTimeout(() => {
         document.body.classList.remove("no-scroll");
       }, 1000);
-    }, 2700);
+    }, 2800);
   }, 2200);
 });
+
 
 
     function toggleMenu() {
