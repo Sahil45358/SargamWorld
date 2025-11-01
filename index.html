@@ -485,20 +485,27 @@ body.no-scroll {
   background: transparent;
 }
 
-/* Sharp diamond (no rounding) */
+/* === RHOMBOID DIAMOND (concave feel) === */
 .particle.diamond {
-  background: #ffffff;
-  width: 6px;
+  position: absolute;
+  width: 10px;
   height: 6px;
-  transform: rotate(45deg);
+  background: linear-gradient(145deg, #ffffff, #d0d0d0);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+  transform-origin: center;
+  transform: rotate(var(--angle));
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
 }
 
-/* Thin line, angled */
+/* === LINES (angled from center) === */
 .particle.line {
+  position: absolute;
   width: 2px;
-  height: 16px;
-  background: #ffffff;
-  transform-origin: center;
+  height: 18px;
+  background: linear-gradient(to bottom, #ffffff, #a8a8a8);
+  transform-origin: center bottom;
+  transform: rotate(var(--angle));
+  border-radius: 1px;
 }
 
 /* Radial motion */
@@ -664,33 +671,49 @@ window.addEventListener("load", () => {
       const shapes = ["diamond", "circle", "line"];
       const particleCount = 26;
 
+      // === Integrated Particle Code ===
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement("div");
         particle.classList.add("particle");
+
         const shape = shapes[Math.floor(Math.random() * shapes.length)];
         particle.classList.add(shape);
 
-        if (shape === "circle" || shape === "diamond") {
-          const size = 5 + Math.random() * 4;
+        let size = 0;
+
+        if (shape === "circle") {
+          size = 5 + Math.random() * 4;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
+        } else if (shape === "diamond") {
+          // slightly stretched rhomboid look
+          const width = 8 + Math.random() * 5;
+          const height = 5 + Math.random() * 3;
+          particle.style.width = `${width}px`;
+          particle.style.height = `${height}px`;
         } else if (shape === "line") {
-          particle.style.height = `${12 + Math.random() * 10}px`;
+          particle.style.height = `${14 + Math.random() * 10}px`;
           particle.style.width = "2px";
         }
 
+        // Radial direction
         const angleRad = Math.random() * 2 * Math.PI;
         const distance = 80 + Math.random() * 120;
         const x = Math.cos(angleRad) * distance;
         const y = Math.sin(angleRad) * distance;
+
+        // Apply transform + rotation
         particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
         particle.style.setProperty("--angle", `${(angleRad * 180) / Math.PI}deg`);
 
+        // Center origin + animation delay
         particle.style.left = "50%";
         particle.style.top = "50%";
         particle.style.animationDelay = `${Math.random() * 0.15}s`;
+
         particleContainer.appendChild(particle);
       }
+      // === End Integrated Particle Code ===
     }, 400);
 
     // Step 4: Pause before opening curtains
@@ -714,6 +737,7 @@ window.addEventListener("load", () => {
     }, 2700); // adjusted total duration
   }, 2200);
 });
+
 
 
 
