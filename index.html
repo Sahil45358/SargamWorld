@@ -684,48 +684,47 @@ window.addEventListener("load", () => {
   sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
   circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-  // 2️⃣ Fade in text
+  // 2️⃣ Fade in text slightly after bounce starts
   setTimeout(() => (textPart.style.opacity = 1), 500);
 
-  // 3️⃣ Spin begins
+  // 3️⃣ Spin
   setTimeout(() => {
     sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
-  }, 1200); // start spin after bounce
 
-  // 4️⃣ Particles burst AFTER spin completes (0.9s spin + small delay)
-  setTimeout(() => {
-    const textures = [
-      "url('particle_smooth.png')",
-      "url('particle_brushed.png')"
-    ];
-    for (let i = 0; i < 22; i++) {
-      const particle = document.createElement("div");
-      particle.classList.add("particle");
-      const size = 6 + Math.random() * 8;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.backgroundImage = textures[Math.floor(Math.random() * 2)];
+    // 💥 Particles burst *exactly as spin completes*
+    setTimeout(() => {
+      const textures = [
+        "url('particle_smooth.png')",
+        "url('particle_brushed.png')"
+      ];
+      for (let i = 0; i < 22; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        const size = 6 + Math.random() * 8;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.backgroundImage = textures[Math.floor(Math.random() * 2)];
 
-      // 🌈 Semi-circular (sideways) spread
-      // Left half: 150°–210°, Right half: –30°–30°
-      const side = Math.random() < 0.5 ? -1 : 1;
-      const baseAngle = side === -1 ? Math.PI : 0;
-      const spread = (Math.random() - 0.5) * (Math.PI / 3); // ±30° variation
-      const angle = baseAngle + spread;
-      const radius = 80 + Math.random() * 120;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius * 0.6; // slightly curved arc
+        // 🌈 Semi-circular (sideways) spread — like a fan
+        const side = Math.random() < 0.5 ? -1 : 1; // left or right
+        const baseAngle = side === -1 ? Math.PI : 0;
+        const spread = (Math.random() - 0.5) * (Math.PI / 3); // ±30° arc
+        const angle = baseAngle + spread;
+        const radius = 80 + Math.random() * 120;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius * 0.6;
 
-      particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
-      particle.style.left = "50%";
-      particle.style.top = "50%";
-      particle.style.animationDelay = `${Math.random() * 0.1}s`;
-      particleContainer.appendChild(particle);
-    }
-  }, 1200 + 950); // after bounce + spin (≈2.15s)
+        particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
+        particle.style.left = "50%";
+        particle.style.top = "50%";
+        particle.style.animationDelay = `${Math.random() * 0.05}s`; // near-instant
+        particleContainer.appendChild(particle);
+      }
+    }, 900); // ← same as spin duration
+  }, 1200); // spin starts after bounce ends
 
-  // 5️⃣ Pause, then curtains open + split
+  // 4️⃣ Pause briefly, then curtains + split
   setTimeout(() => {
     textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
     sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
@@ -733,13 +732,13 @@ window.addEventListener("load", () => {
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
     document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
-  }, 3900); // added longer pause (≈0.8s after burst)
+  }, 3800); // pause ≈0.8 s after burst
 
-  // 6️⃣ Fade overlay and re-enable scroll
+  // 5️⃣ Fade overlay and re-enable scroll
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
     setTimeout(() => document.body.classList.remove("no-scroll"), 800);
-  }, 5200);
+  }, 5100);
 });
 
 
