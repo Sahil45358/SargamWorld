@@ -517,12 +517,12 @@ animation: particleFly 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   70% {
     opacity: 1;
-    transform: calc(var(--translate) * 0.9) rotate(var(--angle)) scale(1.05);
+    transform: translate(var(--tx), var(--ty)) rotate(var(--angle)) scale(1.05);
     filter: brightness(1.2);
   }
   100% {
     opacity: 0.4;
-    transform: var(--translate) rotate(var(--angle)) scale(1.2);
+    transform: translate(calc(var(--tx) * 1.2), calc(var(--ty) * 1.2)) rotate(var(--angle)) scale(1.2);
     filter: brightness(0.6);
   }
 }
@@ -736,7 +736,9 @@ for (let i = 0; i < particleCount; i++) {
   const y = Math.sin(angleRad) * distance;
 
   // Set transform for motion
-  particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
+particle.style.setProperty("--tx", `${x}px`);
+particle.style.setProperty("--ty", `${y}px`);
+
   particle.style.setProperty("--angle", `${(angleRad * 180) / Math.PI}deg`);
 
   // Place at center
