@@ -666,81 +666,99 @@ body.no-scroll {
 
 
   <script>
-// === SargamWorld Entrance Animation ===
-window.addEventListener("load", () => {
-  const entrance = document.getElementById("entrance");
-  const sPart = document.querySelector(".logo-part.s");
-  const circlePart = document.querySelector(".logo-part.circle");
-  const textPart = document.querySelector(".logo-part.text");
-  const curtainLeft = document.querySelector(".curtain.left");
-  const curtainRight = document.querySelector(".curtain.right");
-  const particleContainer = document.getElementById("particles-container");
+// === Show entrance animation only once every 24 hours ===
+const lastShown = localStorage.getItem("entranceLastShown");
+const now = Date.now();
+const oneDay = 24 * 60 * 60 * 1000;
 
-  document.body.classList.add("no-scroll");
+if (!lastShown || now - lastShown > oneDay) {
+  // ✅ Run entrance animation
+  localStorage.setItem("entranceLastShown", now);
 
-  // 1️⃣ Bounce in S + Circle
-  sPart.style.opacity = 1;
-  circlePart.style.opacity = 1;
-  sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
-  circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+  // === SargamWorld Entrance Animation ===
+  window.addEventListener("load", () => {
+    const entrance = document.getElementById("entrance");
+    const sPart = document.querySelector(".logo-part.s");
+    const circlePart = document.querySelector(".logo-part.circle");
+    const textPart = document.querySelector(".logo-part.text");
+    const curtainLeft = document.querySelector(".curtain.left");
+    const curtainRight = document.querySelector(".curtain.right");
+    const particleContainer = document.getElementById("particles-container");
 
-  // 2️⃣ Fade in text slightly after bounce starts
-  setTimeout(() => (textPart.style.opacity = 1), 500);
+    document.body.classList.add("no-scroll");
 
-  // 3️⃣ Spin
-  setTimeout(() => {
-    sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
-    circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
+    // 1️⃣ Bounce in S + Circle
+    sPart.style.opacity = 1;
+    circlePart.style.opacity = 1;
+    sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
+    circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-    // 💥 Particles burst *exactly as spin completes*
+    // 2️⃣ Fade in text slightly after bounce starts
+    setTimeout(() => (textPart.style.opacity = 1), 500);
+
+    // 3️⃣ Spin
     setTimeout(() => {
-      const textures = [
-        "url('particle_smooth.png')",
-        "url('particle_brushed.png')"
-      ];
-      for (let i = 0; i < 22; i++) {
-        const particle = document.createElement("div");
-        particle.classList.add("particle");
-        const isLarge = Math.random() < 0.35; // ~35% large particles
-let size = isLarge ? 10 + Math.random() * 6 : 5 + Math.random() * 3;
-particle.style.width = `${size}px`;
-particle.style.height = `${size}px`;
-        particle.style.backgroundImage = textures[Math.floor(Math.random() * 2)];
+      sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
+      circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-        // 🌈 Semi-circular (sideways) spread — like a fan
-        const side = Math.random() < 0.5 ? -1 : 1; // left or right
-        const baseAngle = side === -1 ? Math.PI : 0;
-        const spread = (Math.random() - 0.5) * (Math.PI / 2); // ±45° arc
-        const angle = baseAngle + spread;
-        const radius = 80 + Math.random() * 160;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius * 0.6;
+      // 💥 Particles burst *exactly as spin completes*
+      setTimeout(() => {
+        const textures = [
+          "url('particle_smooth.png')",
+          "url('particle_brushed.png')"
+        ];
+        for (let i = 0; i < 22; i++) {
+          const particle = document.createElement("div");
+          particle.classList.add("particle");
+          const isLarge = Math.random() < 0.35; // ~35% large particles
+          let size = isLarge ? 10 + Math.random() * 6 : 5 + Math.random() * 3;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.backgroundImage = textures[Math.floor(Math.random() * 2)];
 
-        particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
-        particle.style.left = "50%";
-        particle.style.top = "50%";
-        particle.style.animationDelay = `${Math.random() * 0.05}s`; // near-instant
-        particleContainer.appendChild(particle);
-      }
-    }, 700); // ← same as spin duration
-  }, 1200); // spin starts after bounce ends
+          // 🌈 Semi-circular (sideways) spread — like a fan
+          const side = Math.random() < 0.5 ? -1 : 1; // left or right
+          const baseAngle = side === -1 ? Math.PI : 0;
+          const spread = (Math.random() - 0.5) * (Math.PI / 2); // ±45° arc
+          const angle = baseAngle + spread;
+          const radius = 80 + Math.random() * 160;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius * 0.6;
 
-  // 4️⃣ Pause briefly, then curtains + split
-  setTimeout(() => {
-    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
-    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
-    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
-    curtainLeft.classList.add("open");
-    curtainRight.classList.add("open");
-    document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
-  }, 3800); // pause ≈0.8 s after burst
+          particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
+          particle.style.left = "50%";
+          particle.style.top = "50%";
+          particle.style.animationDelay = `${Math.random() * 0.05}s`; // near-instant
+          particleContainer.appendChild(particle);
+        }
+      }, 700); // ← slightly before spin ends
+    }, 1200); // spin starts after bounce ends
 
-  // 5️⃣ Fade overlay and re-enable scroll
-  setTimeout(() => {
-    entrance.classList.add("fadeOutOverlay");
-    setTimeout(() => document.body.classList.remove("no-scroll"), 800);
-  }, 5100);
-});
+    // 4️⃣ Pause briefly, then curtains + split
+    setTimeout(() => {
+      textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+      sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+      circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
+      curtainLeft.classList.add("open");
+      curtainRight.classList.add("open");
+      document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
+    }, 3800); // pause ≈0.8 s after burst
+
+    // 5️⃣ Fade overlay and re-enable scroll
+    setTimeout(() => {
+      entrance.classList.add("fadeOutOverlay");
+      setTimeout(() => document.body.classList.remove("no-scroll"), 800);
+    }, 5100);
+  });
+
+} else {
+  // ❌ Skip animation — show main content instantly
+  window.addEventListener("load", () => {
+    const entrance = document.getElementById("entrance");
+    entrance.style.display = "none";
+    document.body.classList.remove("no-scroll");
+  });
+}
 
 
 
