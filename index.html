@@ -512,7 +512,7 @@ body.no-scroll {
   z-index: 3; /* above curtains, below logo */
 }
 
-/* === Particle Styling (using image textures) === */
+/* === Particle Styling === */
 .particle {
   position: absolute;
   width: 10px;
@@ -521,29 +521,30 @@ body.no-scroll {
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0;
-  transform: translate(0, 0);
-  animation: particleFly 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: transform, opacity, filter;
+  transform: translate(0, 0) scale(0.5);
+  animation: particleFly 1.8s ease-out forwards;
+  will-change: transform, opacity;
   mix-blend-mode: screen;
-
-  /* Soft metallic glow for depth */
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4))
           drop-shadow(0 0 3px rgba(255, 255, 255, 0.2));
 }
-
 
 /* === Particle Burst Animation === */
 @keyframes particleFly {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.3) rotate(45deg);
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
   }
-  20% {
+  15% {
+    opacity: 1;
+  }
+  70% {
+    transform: var(--translate) scale(1) rotate(45deg);
     opacity: 1;
   }
   100% {
-    opacity: 1;
-    transform: var(--translate) scale(1) rotate(45deg);
+    transform: var(--translate) scale(0.8) rotate(90deg);
+    opacity: 0;
   }
 }
 
