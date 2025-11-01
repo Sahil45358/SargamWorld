@@ -701,56 +701,52 @@ particleImages.forEach(src => {
     sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-// ✨ Start creating particles just before spin ends
+// ✨ Start creating particles just before spin ends (after images are preloaded)
 setTimeout(() => {
   const particleContainer = document.getElementById("particles-container");
 
-  // List of available particle textures
+  // Make sure both particle images exist before proceeding
   const textures = [
     "url('particle_smooth.png')",
     "url('particle_brushed.png')"
   ];
 
+  // Safety check: if container not found, skip (avoids crash)
+  if (!particleContainer) return;
+
   for (let i = 0; i < 18; i++) {
     const particle = document.createElement("div");
     particle.classList.add("particle");
 
-    // Random size (6–14px)
     const size = 6 + Math.random() * 8;
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
 
-    // Randomly assign one of the two texture images
-    const texture = textures[Math.floor(Math.random() * textures.length)];
-    particle.style.backgroundImage = texture;
-    particle.style.backgroundSize = "cover";
+    // Randomly pick a texture
+    particle.style.backgroundImage = textures[Math.floor(Math.random() * textures.length)];
+    particle.style.backgroundSize = "contain";
     particle.style.backgroundRepeat = "no-repeat";
     particle.style.backgroundPosition = "center";
 
-    // Spread particles in a wide horizontal arc (~120° per side)
-    const side = Math.random() < 0.5 ? -1 : 1; // left or right side
-    const angleRange = Math.PI / 3; // 60° total spread per side
-    const baseAngle = side === 1 ? 0 : Math.PI; // right or left
+    // Fly direction & spread
+    const side = Math.random() < 0.5 ? -1 : 1;
+    const angleRange = Math.PI / 3;
+    const baseAngle = side === 1 ? 0 : Math.PI;
     const angle = baseAngle + (Math.random() * angleRange - angleRange / 2);
+    const radius = 80 + Math.random() * 120;
 
-    const radius = 80 + Math.random() * 120; // how far they fly
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
-
-    // Fly outward from logo center
     particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
 
-    // Appear directly at the center
     particle.style.left = "50%";
     particle.style.top = "50%";
-
-    // Random delay for natural staggered burst
-    const delay = Math.random() * 0.15;
-    particle.style.animationDelay = `${delay}s`;
+    particle.style.animationDelay = `${Math.random() * 0.15}s`;
 
     particleContainer.appendChild(particle);
   }
-}, 400); // burst begins ~0.4s before spin ends
+}, 600); // wait slightly longer to ensure images are ready
+
 
 
 // Step 4: Pause for 1.5s after spin before opening curtains
