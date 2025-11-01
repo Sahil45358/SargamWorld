@@ -517,22 +517,36 @@ body.no-scroll {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: radial-gradient(circle at 50% 45%, #f8f8f8 0%, #c0c0c0 60%, #a0a0a0 100%);
-  box-shadow:
-    0 0 4px rgba(255, 255, 255, 0.4),
-    inset 0 0 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f5f5f5 0%, #bfbfbf 50%, #9c9c9c 100%);
   opacity: 0;
   transform: translate(0, 0) rotate(45deg);
   animation: particleFly 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform, opacity, filter;
   mix-blend-mode: screen;
 
-  /* create concave diamond shape */
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 90%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 90%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
-  border-radius: 3px;
+  /* Use inline SVG path for real concavity */
+  -webkit-mask: url("data:image/svg+xml;utf8,\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>\
+      <path d='M50 0 C40 20, 60 20, 50 0 \
+               L100 50 C80 40, 80 60, 100 50 \
+               L50 100 C60 80, 40 80, 50 100 \
+               L0 50 C20 60, 20 40, 0 50 Z' fill='black'/>\
+    </svg>");
+  -webkit-mask-size: 100% 100%;
+  mask: url("data:image/svg+xml;utf8,\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>\
+      <path d='M50 0 C40 20, 60 20, 50 0 \
+               L100 50 C80 40, 80 60, 100 50 \
+               L50 100 C60 80, 40 80, 50 100 \
+               L0 50 C20 60, 20 40, 0 50 Z' fill='black'/>\
+    </svg>");
+  mask-size: 100% 100%;
+
+  /* Add depth and highlights */
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.3),
+    inset 0 0 3px rgba(0, 0, 0, 0.4),
+    inset 0 2px 2px rgba(255, 255, 255, 0.4);
 }
 
 /* Add a soft metallic reflection effect */
