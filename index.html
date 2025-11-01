@@ -1,3 +1,5 @@
+the screen the broke nothig is happening
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -473,7 +475,7 @@ body.no-scroll {
   position: absolute;
   opacity: 0;
   transform-origin: center;
-animation: particleFly 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: particleFly 1.2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
 /* Hollow circle */
@@ -483,70 +485,37 @@ animation: particleFly 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   background: transparent;
 }
 
-/* === RHOMBOID DIAMOND (concave feel) === */
+/* Sharp diamond (no rounding) */
 .particle.diamond {
-  position: absolute;
-  width: 10px;
+  background: #ffffff;
+  width: 6px;
   height: 6px;
-  background: linear-gradient(145deg, #ffffff, #d0d0d0);
-  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transform-origin: center;
-  transform: rotate(var(--angle));
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+  transform: rotate(45deg);
 }
 
-/* === LINES (angled from center) === */
+/* Thin line, angled */
 .particle.line {
-  position: absolute;
   width: 2px;
-  height: 18px;
-  background: linear-gradient(to bottom, #ffffff, #a8a8a8);
-  transform-origin: center bottom;
-  transform: rotate(var(--angle));
-  border-radius: 1px;
+  height: 16px;
+  background: #ffffff;
+  transform-origin: center;
 }
 
-/* === Cinematic particle burst motion === */
+/* Radial motion */
 @keyframes particleFly {
   0% {
     opacity: 0;
     transform: translate(0, 0) scale(0.3);
   }
-  10% {
+  15% {
     opacity: 1;
-  }
-  70% {
-    opacity: 1;
-    transform: translate(var(--tx), var(--ty)) rotate(var(--angle)) scale(1.05);
-    filter: brightness(1.2);
   }
   100% {
-    opacity: 0.4;
-    transform: translate(calc(var(--tx) * 1.2), calc(var(--ty) * 1.2)) rotate(var(--angle)) scale(1.2);
-    filter: brightness(0.6);
+    opacity: 1;
+    transform: var(--translate) rotate(var(--angle)) scale(1);
   }
 }
 
-/* === Logo energy pulse === */
-@keyframes logoPulse {
-  0% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-  20% {
-    transform: scale(1.15);
-    filter: brightness(1.3);
-  }
-  50% {
-    transform: scale(0.96);
-    filter: brightness(1.1);
-  }
-  100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-}
-    
 /* Fade-out effect */
 .particle.fade-out {
   animation: fadeParticlesOut 1s ease-in forwards;
@@ -684,69 +653,45 @@ window.addEventListener("load", () => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: Spin + Pulse + Particles
+  // Step 3: Spin + particles
   setTimeout(() => {
-    // Combine spin + pulse seamlessly
-    sPart.style.animation = "spinShrinkExpand 1s ease-in-out forwards, logoPulse 1.1s ease-out 0.1s";
-    circlePart.style.animation = "spinShrinkExpand 1s ease-in-out forwards, logoPulse 1.1s ease-out 0.1s";
-    textPart.style.animation = "logoPulse 1s ease-out";
+    sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
+    circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-    // Spawn particles mid-spin (with radial burst depth)
+    // Spawn particles mid-spin
     setTimeout(() => {
       const particleContainer = document.getElementById("particles-container");
       const shapes = ["diamond", "circle", "line"];
-      const particleCount = 36;
+      const particleCount = 26;
 
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement("div");
         particle.classList.add("particle");
-
         const shape = shapes[Math.floor(Math.random() * shapes.length)];
         particle.classList.add(shape);
 
-        // Randomize sizes slightly
-        if (shape === "circle") {
-          const size = 4 + Math.random() * 4;
+        if (shape === "circle" || shape === "diamond") {
+          const size = 5 + Math.random() * 4;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
-        } else if (shape === "diamond") {
-          const w = 6 + Math.random() * 4;
-          const h = 4 + Math.random() * 2;
-          particle.style.width = `${w}px`;
-          particle.style.height = `${h}px`;
         } else if (shape === "line") {
-          particle.style.height = `${10 + Math.random() * 12}px`;
+          particle.style.height = `${12 + Math.random() * 10}px`;
           particle.style.width = "2px";
         }
 
-        // Radial direction with depth illusion
-        const baseAngle = (i / particleCount) * 2 * Math.PI;
-        const jitter = (Math.random() - 0.5) * 0.3;
-        const angle = baseAngle + jitter;
+        const angleRad = Math.random() * 2 * Math.PI;
+        const distance = 80 + Math.random() * 120;
+        const x = Math.cos(angleRad) * distance;
+        const y = Math.sin(angleRad) * distance;
+        particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
+        particle.style.setProperty("--angle", `${(angleRad * 180) / Math.PI}deg`);
 
-        // Depth-based spread (closer = slower, farther = faster)
-        const depth = Math.random();
-        const distance = 40 + Math.pow(depth, 0.4) * 180;
-
-        const x = Math.cos(angle) * distance;
-        const y = Math.sin(angle) * distance * (0.8 + Math.random() * 0.4);
-
-        particle.style.setProperty("--tx", `${x}px`);
-        particle.style.setProperty("--ty", `${y}px`);
-        particle.style.setProperty("--angle", `${(angle * 180) / Math.PI}deg`);
-
-        // Layer depth + opacity
-        particle.style.zIndex = Math.floor(depth * 3);
-        particle.style.opacity = 0.4 + Math.random() * 0.6;
-        particle.style.animationDelay = `${Math.random() * 0.25}s`;
-
-        // Place particle in center
         particle.style.left = "50%";
         particle.style.top = "50%";
-
+        particle.style.animationDelay = `${Math.random() * 0.15}s`;
         particleContainer.appendChild(particle);
       }
-    }, 300);
+    }, 400);
 
     // Step 4: Pause before opening curtains
     setTimeout(() => {
@@ -756,8 +701,9 @@ window.addEventListener("load", () => {
       curtainLeft.classList.add("open");
       curtainRight.classList.add("open");
 
+      // Fade particles
       document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
-    }, 1700);
+    }, 1500);
 
     // Step 5: Fade overlay + enable scroll
     setTimeout(() => {
@@ -765,7 +711,7 @@ window.addEventListener("load", () => {
       setTimeout(() => {
         document.body.classList.remove("no-scroll");
       }, 1000);
-    }, 2800);
+    }, 2700); // adjusted total duration
   }, 2200);
 });
 
