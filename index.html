@@ -674,116 +674,66 @@ window.addEventListener("load", () => {
   const textPart = document.querySelector(".logo-part.text");
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
+  const particleContainer = document.getElementById("particles-container");
 
-  // 🚫 Disable scroll during entrance
   document.body.classList.add("no-scroll");
 
-// === Preload particle images ===
-const particleImages = ["particle_smooth.png", "particle_brushed.png"];
-particleImages.forEach(src => {
-  const img = new Image();
-  img.src = src;
-});
-
-  
-  // Step 1: show & bounce S + Circle
+  // 1️⃣ Bounce in S + Circle
   sPart.style.opacity = 1;
   circlePart.style.opacity = 1;
   sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
   circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-  // Step 2: text appears normally
-  setTimeout(() => {
-    textPart.style.opacity = 1;
-  }, 500);
+  // 2️⃣ Fade in text
+  setTimeout(() => (textPart.style.opacity = 1), 500);
 
-  // Step 3: Smooth spin + deep shrink + particles burst from center
+  // 3️⃣ Spin + particle burst
   setTimeout(() => {
     sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-// ✨ Start creating particles just before spin ends (after images are preloaded)
-setTimeout(() => {
-  const particleContainer = document.getElementById("particles-container");
+    // Create burst particles once
+    const textures = [
+      "url('particle_smooth.png')",
+      "url('particle_brushed.png')"
+    ];
+    for (let i = 0; i < 18; i++) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      const size = 6 + Math.random() * 8;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundImage = textures[Math.floor(Math.random() * 2)];
 
-  // Make sure both particle images exist before proceeding
-  const textures = [
-    "url('particle_smooth.png')",
-    "url('particle_brushed.png')"
-  ];
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 80 + Math.random() * 120;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+      particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
 
-  // Safety check: if container not found, skip (avoids crash)
-  if (!particleContainer) return;
+      particle.style.left = "50%";
+      particle.style.top = "50%";
+      particle.style.animationDelay = `${Math.random() * 0.15}s`;
+      particleContainer.appendChild(particle);
+    }
+  }, 1200); // after bounce
 
-  for (let i = 0; i < 18; i++) {
-    const particle = document.createElement("div");
-    particle.classList.add("particle");
-
-    const size = 6 + Math.random() * 8;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-
-    // Randomly pick a texture
-    particle.style.backgroundImage = textures[Math.floor(Math.random() * textures.length)];
-    particle.style.backgroundSize = "contain";
-    particle.style.backgroundRepeat = "no-repeat";
-    particle.style.backgroundPosition = "center";
-
-    // Fly direction & spread
-    const side = Math.random() < 0.5 ? -1 : 1;
-    const angleRange = Math.PI / 3;
-    const baseAngle = side === 1 ? 0 : Math.PI;
-    const angle = baseAngle + (Math.random() * angleRange - angleRange / 2);
-    const radius = 80 + Math.random() * 120;
-
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
-    particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
-
-    particle.style.left = "50%";
-    particle.style.top = "50%";
-    particle.style.animationDelay = `${Math.random() * 0.15}s`;
-
-    particleContainer.appendChild(particle);
-  }
-}, 600); // wait slightly longer to ensure images are ready
-
-
-
-// Step 4: Pause for 1.5s after spin before opening curtains
-setTimeout(() => {
-  // ✋ Pause moment (logo + particles stay still for 1.5s)
+  // 4️⃣ Pause, then curtains + split
   setTimeout(() => {
-    // curtains start to open after pause
     textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
-
-    sPart.style.animation = "none";
-    circlePart.style.animation = "none";
-    void sPart.offsetWidth; // reflow reset
-
     sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
     circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
     curtainLeft.classList.add("open");
     curtainRight.classList.add("open");
 
-    // 🌙 Particles fade out when curtains start opening
-    document.querySelectorAll(".particle").forEach(p => {
-      p.classList.add("fade-out");
-    });
+    document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
+  }, 3100); // bounce + spin + small delay
 
-  }, 1300); // pause duration (1.5s)
-
-}, 2200); // spin ends ~2.2s in (1300 + 900)
-  
-  // Step 5: fade out entrance overlay and re-enable scroll
+  // 5️⃣ Fade overlay and re-enable scroll
   setTimeout(() => {
     entrance.classList.add("fadeOutOverlay");
-
-    // ✅ Re-enable scroll after overlay fades
-    setTimeout(() => {
-      document.body.classList.remove("no-scroll");
-    }, 800);
-  }, 3700);
+    setTimeout(() => document.body.classList.remove("no-scroll"), 800);
+  }, 4400);
 });
 
 
