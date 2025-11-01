@@ -517,15 +517,23 @@ body.no-scroll {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: linear-gradient(145deg, #d9d9d9 0%, #a6a6a6 40%, #f0f0f0 100%);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
-  border-radius: 2px;
+  background: linear-gradient(135deg, #f5f5f5 0%, #a9a9a9 50%, #e6e6e6 100%);
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.25),
+    inset 0 0 3px rgba(0, 0, 0, 0.15); /* subtle 3D depth */
   opacity: 0;
   transform: translate(0, 0) rotate(45deg);
-  animation: particleFly 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  will-change: transform, opacity;
+  animation: particleFly 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity, filter;
   mix-blend-mode: screen;
+  clip-path: path(
+    "M 50% 0 C 45% 10%, 55% 10%, 50% 0 
+     L 100% 50% C 90% 45%, 90% 55%, 100% 50% 
+     L 50% 100% C 55% 90%, 45% 90%, 50% 100% 
+     L 0 50% C 10% 55%, 10% 45%, 0 50% Z"
+  );
 }
+
 
 /* Add a soft metallic reflection effect */
 .particle::after {
