@@ -349,7 +349,7 @@ the screen the broke nothig is happening
 #entrance {
   position: fixed;
   inset: 0;
-  background: #b40000;
+  background: #b40000; /* single-tone red */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -362,37 +362,46 @@ body.no-scroll {
   overflow: hidden;
 }
 
-/* === CURTAINS === */
+/* === CURTAINS (background halves) === */
 .curtain {
   position: absolute;
   top: 0;
   width: 50%;
   height: 100%;
-  background: #b40000;
+  background: #b40000; /* same tone as base */
   z-index: 2;
   transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
   transition-delay: 0.2s;
 }
-.curtain.left { left: 0; transform: translateX(0); }
-.curtain.right { right: 0; transform: translateX(0); }
-.curtain.open.left { transform: translateX(-100%); }
-.curtain.open.right { transform: translateX(100%); }
 
-/* === LOGO === */
+.curtain.left {
+  left: 0;
+  transform: translateX(0);
+}
+
+.curtain.right {
+  right: 0;
+  transform: translateX(0);
+}
+
+/* === LOGO CONTAINER === */
 .logo-container {
   position: relative;
-  z-index: 4;
+  z-index: 4; /* topmost layer */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
+/* === LOGO PARTS === */
 .logo-part {
   position: absolute;
   width: 280px;
   opacity: 0;
   transform-origin: center;
 }
+
 .logo-symbol {
   position: relative;
   width: 280px;
@@ -401,6 +410,7 @@ body.no-scroll {
   align-items: center;
   justify-content: center;
 }
+
 .logo-symbol .circle,
 .logo-symbol .s {
   position: absolute;
@@ -412,40 +422,71 @@ body.no-scroll {
 }
 
 /* === KEYFRAMES === */
+
+/* Bounce effect for S & Circle */
 @keyframes logoRealBounce {
-  0% { transform: translateY(-40px) scale(0.9); opacity: 0; }
-  40% { transform: translateY(0) scale(1.1); opacity: 1; }
-  70% { transform: translateY(-15px) scale(0.98); }
+  0%   { transform: translateY(-40px) scale(0.9); opacity: 0; }
+  40%  { transform: translateY(0) scale(1.1); opacity: 1; }
+  70%  { transform: translateY(-15px) scale(0.98); }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
+
+/* Smooth full 360° spin with deep shrink (99%) */
 @keyframes spinShrinkExpand {
-  0% { transform: rotate(1deg) scale(1); }
-  30% { transform: rotate(108deg) scale(0.01); }
-  60% { transform: rotate(216deg) scale(0.01); }
-  100% { transform: rotate(360deg) scale(1); }
+  0% {
+    transform: rotate(1deg) scale(1);
+  }
+  30% {
+    transform: rotate(108deg) scale(0.01);
+  }
+  60% {
+    transform: rotate(216deg) scale(0.01);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
 }
+
+/* Fade-in for text */
 @keyframes fadeInText {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
+
+/* Fade text out smoothly */
 @keyframes textFadeOut {
   from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 0; transform: translateY(-10px); }
 }
+
+/* Split animations for S and Circle */
 @keyframes sSplitLeft {
   to { transform: translateX(-150%) rotate(-15deg); opacity: 0; }
 }
+
 @keyframes circleSplitRight {
   to { transform: translateX(150%) rotate(15deg); opacity: 0; }
 }
+
+/* Fade overlay out */
 @keyframes fadeOutOverlay {
   to { opacity: 0; visibility: hidden; }
 }
+
 .fadeOutOverlay {
   animation: fadeOutOverlay 0.8s ease-in-out forwards;
 }
 
-/* === PARTICLES === */
+/* Curtain panels open */
+.curtain.open.left {
+  transform: translateX(-100%);
+}
+
+.curtain.open.right {
+  transform: translateX(100%);
+}
+
+/* === Silver Particles === */
 #particles-container {
   position: absolute;
   top: 50%;
@@ -455,82 +496,43 @@ body.no-scroll {
   transform: translate(-50%, -50%);
   pointer-events: none;
   overflow: visible;
-  z-index: 3;
+  z-index: 3; /* above curtains, below logo */
 }
 
-#particles-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200px;
-  height: 200px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  overflow: visible;
-  z-index: 3;
-}
-
-/* Base particle */
 .particle {
   position: absolute;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(145deg, #c0c0c0, #8d8d8d);
+  transform: translate(0, 0) rotate(45deg);
   opacity: 0;
-  transform-origin: center;
-  animation: particleFly 1.2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
-}
-
-/* Hollow circle */
-.particle.circle {
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  background: transparent;
-}
-
-/* === RHOMBOID DIAMOND (concave feel) === */
-.particle.diamond {
-  position: absolute;
-  width: 10px;
-  height: 6px;
-  background: linear-gradient(145deg, #ffffff, #d0d0d0);
-  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
-  transform-origin: center;
-  transform: rotate(var(--angle));
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
-}
-
-/* === LINES (angled from center) === */
-.particle.line {
-  position: absolute;
-  width: 2px;
-  height: 18px;
-  background: linear-gradient(to bottom, #ffffff, #a8a8a8);
-  transform-origin: center bottom;
-  transform: rotate(var(--angle));
   border-radius: 1px;
+  animation: particleFly 1.2s ease-out forwards;
 }
 
-/* Radial motion */
+/* Particles fly out from center and fade in */
 @keyframes particleFly {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.3);
+    transform: translate(0, 0) scale(0.4) rotate(45deg);
   }
-  15% {
+  30% {
     opacity: 1;
   }
   100% {
     opacity: 1;
-    transform: var(--translate) rotate(var(--angle)) scale(1);
+    transform: var(--translate) scale(1) rotate(45deg);
   }
 }
 
-/* Fade-out effect */
 .particle.fade-out {
-  animation: fadeParticlesOut 1s ease-in forwards;
-}
-@keyframes fadeParticlesOut {
-  to { opacity: 0; transform: scale(0.7); }
+  animation: particleFadeOut 1s ease forwards;
 }
 
+@keyframes particleFadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
 
   </style>
 </head>
@@ -647,98 +649,91 @@ window.addEventListener("load", () => {
   const curtainLeft = document.querySelector(".curtain.left");
   const curtainRight = document.querySelector(".curtain.right");
 
-  document.body.classList.add("no-scroll"); // disable scroll
+  // 🚫 Disable scroll during entrance
+  document.body.classList.add("no-scroll");
 
-  // Step 1: Bounce logo
+  // Step 1: show & bounce S + Circle
   sPart.style.opacity = 1;
   circlePart.style.opacity = 1;
   sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
   circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-  // Step 2: Fade in text
+  // Step 2: text appears normally
   setTimeout(() => {
     textPart.style.opacity = 1;
   }, 500);
 
-  // Step 3: Spin + particles
+  // Step 3: Smooth spin + deep shrink + particles burst from center
   setTimeout(() => {
     sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
     circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-    // Spawn particles mid-spin
+    // ✨ Start creating particles just before spin ends
     setTimeout(() => {
       const particleContainer = document.getElementById("particles-container");
-      const shapes = ["diamond", "circle", "line"];
-      const particleCount = 26;
-
-      // === Integrated Particle Code ===
-      for (let i = 0; i < particleCount; i++) {
+      for (let i = 0; i < 18; i++) {
         const particle = document.createElement("div");
         particle.classList.add("particle");
 
-        const shape = shapes[Math.floor(Math.random() * shapes.length)];
-        particle.classList.add(shape);
+        // Random size (6–14px)
+        const size = 6 + Math.random() * 8;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
 
-        let size = 0;
+        // Random direction & distance (burst outward)
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 80 + Math.random() * 70; // how far they fly
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
 
-        if (shape === "circle") {
-          size = 5 + Math.random() * 4;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-        } else if (shape === "diamond") {
-          // slightly stretched rhomboid look
-          const width = 8 + Math.random() * 5;
-          const height = 5 + Math.random() * 3;
-          particle.style.width = `${width}px`;
-          particle.style.height = `${height}px`;
-        } else if (shape === "line") {
-          particle.style.height = `${14 + Math.random() * 10}px`;
-          particle.style.width = "2px";
-        }
-
-        // Radial direction
-        const angleRad = Math.random() * 2 * Math.PI;
-        const distance = 80 + Math.random() * 120;
-        const x = Math.cos(angleRad) * distance;
-        const y = Math.sin(angleRad) * distance;
-
-        // Apply transform + rotation
+        // Fly outward from logo center
         particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
-        particle.style.setProperty("--angle", `${(angleRad * 180) / Math.PI}deg`);
 
-        // Center origin + animation delay
+        // Appear directly at the center
         particle.style.left = "50%";
         particle.style.top = "50%";
-        particle.style.animationDelay = `${Math.random() * 0.15}s`;
+
+        // Random delay for natural staggered burst
+        const delay = Math.random() * 0.15;
+        particle.style.animationDelay = `${delay}s`;
 
         particleContainer.appendChild(particle);
       }
-      // === End Integrated Particle Code ===
-    }, 400);
+    }, 400); // burst begins ~0.4s before spin ends
 
-    // Step 4: Pause before opening curtains
+  }, 1300);
+
+  // Step 4: Hold 0.4s, keep particles visible until curtains open
+  setTimeout(() => {
+    // curtains start to open
+    textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
+
+    sPart.style.animation = "none";
+    circlePart.style.animation = "none";
+    void sPart.offsetWidth;
+
+    sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
+    circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
+    curtainLeft.classList.add("open");
+    curtainRight.classList.add("open");
+
+    // 🌙 Particles fade out when curtains start opening
+    document.querySelectorAll(".particle").forEach(p => {
+      p.classList.add("fade-out");
+    });
+
+  }, 2700); // 1300 + 900 (spin) + 400 hold
+
+  // Step 5: fade out entrance overlay and re-enable scroll
+  setTimeout(() => {
+    entrance.classList.add("fadeOutOverlay");
+
+    // ✅ Re-enable scroll after overlay fades
     setTimeout(() => {
-      textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
-      sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
-      circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
-      curtainLeft.classList.add("open");
-      curtainRight.classList.add("open");
-
-      // Fade particles
-      document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
-    }, 1500);
-
-    // Step 5: Fade overlay + enable scroll
-    setTimeout(() => {
-      entrance.classList.add("fadeOutOverlay");
-      setTimeout(() => {
-        document.body.classList.remove("no-scroll");
-      }, 1000);
-    }, 2700); // adjusted total duration
-  }, 2200);
+      document.body.classList.remove("no-scroll");
+    }, 800);
+  }, 3700);
 });
-
-
 
 
     function toggleMenu() {
