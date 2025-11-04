@@ -677,7 +677,7 @@ const lastShown = localStorage.getItem("entranceLastShown");
 const now = Date.now();
 const oneDay = 3 * 60 * 60 * 1000;
 
-if (!lastShown || now - lastShown > oneDay) {
+if (!lastShown || now - lastShown > threeHours) {
   // ✅ Run entrance animation
   localStorage.setItem("entranceLastShown", now);
 
