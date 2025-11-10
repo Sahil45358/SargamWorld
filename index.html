@@ -672,26 +672,25 @@ body.no-scroll {
 
 
   <script>
-// === Show entrance animation only once every 24 hours ===
-const lastShown = localStorage.getItem("entranceLastShown");
-const now = Date.now();
-const threeHours = 3 * 60 * 60 * 1000;
+window.addEventListener("load", () => {
+  const entrance = document.getElementById("entrance");
+  const lastShown = Number(localStorage.getItem("entranceLastShown")) || 0;
+  const now = Date.now();
+  const threeHours = 3 * 60 * 60 * 1000; // 3 hours in ms
 
-if (!lastShown || now - lastShown > threeHours) {
-  // ✅ Run entrance animation
-  localStorage.setItem("entranceLastShown", now);
+  if (now - lastShown > threeHours) {
+    // ✅ Run entrance animation
+    localStorage.setItem("entranceLastShown", now);
+    entrance.style.display = "flex";
+    document.body.classList.add("no-scroll");
 
-  // === SargamWorld Entrance Animation ===
-  window.addEventListener("load", () => {
-    const entrance = document.getElementById("entrance");
+    // === SargamWorld Entrance Animation ===
     const sPart = document.querySelector(".logo-part.s");
     const circlePart = document.querySelector(".logo-part.circle");
     const textPart = document.querySelector(".logo-part.text");
     const curtainLeft = document.querySelector(".curtain.left");
     const curtainRight = document.querySelector(".curtain.right");
     const particleContainer = document.getElementById("particles-container");
-
-    document.body.classList.add("no-scroll");
 
     // 1️⃣ Bounce in S + Circle
     sPart.style.opacity = 1;
@@ -716,16 +715,15 @@ if (!lastShown || now - lastShown > threeHours) {
         for (let i = 0; i < 22; i++) {
           const particle = document.createElement("div");
           particle.classList.add("particle");
-          const isLarge = Math.random() < 0.35; // ~35% large particles
+          const isLarge = Math.random() < 0.35;
           let size = isLarge ? 10 + Math.random() * 6 : 5 + Math.random() * 3;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
           particle.style.backgroundImage = textures[Math.floor(Math.random() * 2)];
 
-          // 🌈 Semi-circular (sideways) spread — like a fan
-          const side = Math.random() < 0.5 ? -1 : 1; // left or right
+          const side = Math.random() < 0.5 ? -1 : 1;
           const baseAngle = side === -1 ? Math.PI : 0;
-          const spread = (Math.random() - 0.5) * (Math.PI / 2); // ±45° arc
+          const spread = (Math.random() - 0.5) * (Math.PI / 2);
           const angle = baseAngle + spread;
           const radius = 80 + Math.random() * 160;
           const x = Math.cos(angle) * radius;
@@ -734,11 +732,11 @@ if (!lastShown || now - lastShown > threeHours) {
           particle.style.setProperty("--translate", `translate(${x}px, ${y}px)`);
           particle.style.left = "50%";
           particle.style.top = "50%";
-          particle.style.animationDelay = `${Math.random() * 0.05}s`; // near-instant
+          particle.style.animationDelay = `${Math.random() * 0.05}s`;
           particleContainer.appendChild(particle);
         }
-      }, 700); // ← slightly before spin ends
-    }, 1200); // spin starts after bounce ends
+      }, 700);
+    }, 1200);
 
     // 4️⃣ Pause briefly, then curtains + split
     setTimeout(() => {
@@ -748,23 +746,19 @@ if (!lastShown || now - lastShown > threeHours) {
       curtainLeft.classList.add("open");
       curtainRight.classList.add("open");
       document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
-    }, 3800); // pause ≈0.8 s after burst
+    }, 3800);
 
     // 5️⃣ Fade overlay and re-enable scroll
     setTimeout(() => {
       entrance.classList.add("fadeOutOverlay");
       setTimeout(() => document.body.classList.remove("no-scroll"), 800);
     }, 5100);
-  });
-
-} else {
-  // ❌ Skip animation — show main content instantly
-  window.addEventListener("load", () => {
-    const entrance = document.getElementById("entrance");
+  } else {
+    // ❌ Skip animation — show main content instantly
     entrance.style.display = "none";
     document.body.classList.remove("no-scroll");
-  });
-}
+  }
+});
 
 
 
