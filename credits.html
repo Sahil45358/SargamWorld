@@ -4,205 +4,119 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Credits — SargamWorld</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <style>
-    :root {
-      --accent: #800000;
-      --bg: #f3eee8;
-      --text: #222;
-      --muted: #5a5a5a;
-      --radius: 12px;
-      --container-w: 1100px;
-      --transition: 0.3s ease;
-    }
+  <link rel="icon" type="image/png" href="favicon.png">
 
+  <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
       line-height: 1.6;
-    }
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
-
-    /* Navbar */
-    .site-header {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 1000;
-    }
-    .nav-inner {
-      max-width: var(--container-w);
-      margin: 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content: flex-start;
-      gap: 12px;
-      padding:12px 20px;
-    }
-    .brand-wrap { display: flex; align-items: center; gap: 10px; }
-    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; }
-
-    .nav-links { display:flex; gap:10px; list-style:none; margin-left: auto; }
-    .nav-links a {
-      color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition);
-    }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
-    .nav-links a.active { background: rgba(255,255,255,0.15); }
-
-    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: var(--accent);
-        position: absolute;
-        top: 100px; right: 20px;
-        padding: 15px;
-        border-radius: 8px;
-      }
-      .nav-links.show { display: flex; }
-      .hamburger { display: block; position: relative; z-index: 1100; }
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
     }
 
-    /* Logo */
-    .logo { display: flex; align-items: center; gap: 8px; font-weight:700; font-size:1.2rem; color:#fff; }
-    .logo img { height: 120px; }
-    @media (pointer: coarse) { .logo span { display: none !important; } }
-    @media (max-width: 1024px) { .logo span { display: none !important; } }
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
 
-    /* Keep tagline on mobile */
-    .tagline {
+    h1, h2 {
+      color: #800000;
+    }
+
+    a {
+      color: #228B22;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .back-button {
       display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    @media (max-width: 768px) {
-      .tagline { font-size: 0.7rem; }
+      margin-top: 25px;
+      padding: 8px 16px;
+      background: #800000;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
-    /* Page content */
-    h1, h2 { color: var(--accent); margin-bottom: 10px; }
-    p, li { margin-bottom: 10px; }
-    ul { padding-left: 20px; }
+    .back-button:hover {
+      background: #9b1717;
+    }
 
-    /* Footer */
-    .site-footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 40px;
-      border-top: 1px solid #ddd;
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
-
-  <!-- Header -->
-  <header class="site-header">
-    <div class="nav-inner">
-      <div class="brand-wrap">
-        <a href="index.html" class="logo">
-          <img src="LOGO.png" alt="SargamWorld Logo">
-          <span>SargamWorld</span>
-        </a>
-        <span class="tagline">Explore • Learn • Practice</span>
-      </div>
-
-      <div class="hamburger">☰</div>
-
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="songs.html">Songs</a></li>
-        <li><a href="tools.html">Tools</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="support.html">Support</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- Main -->
-  <main class="container">
+  <div class="container">
     <h1>Credits & Attributions</h1>
-    <p><strong>SargamWorld</strong> is built with the help of many free and open resources. I deeply appreciate the creators whose work made this project possible.</p>
+    <p>
+      <strong>SargamWorld</strong> is built with the help of many free and open resources. 
+      This page acknowledges the creators whose works contributed to this project.
+    </p>
 
-    <section>
-      <h2>Fonts & Styles</h2>
-      <ul>
-        <li><strong>Bhatkhande font</strong> — from <a href="https://omenad.github.io/" target="_blank">Omenad</a></li>
-      </ul>
-    </section>
+    <h2>Fonts & Styles</h2>
+    <ul>
+      <li><strong>Bhatkhande Font</strong> — from <a href="https://omenad.github.io/" target="_blank">Omenad</a></li>
+    </ul>
 
-    <section>
-      <h2>Logos & Graphics</h2>
-      <ul>
-        <li><strong>Logo</strong> — created using <a href="https://looka.com" target="_blank">Looka</a> and edited in <a href="https://canva.com" target="_blank">Canva</a></li>
-        <li><strong>Mic image (Home tab)</strong> — from <a href="https://hdqwalls.com/microphone-dark-background-4k-5k-wallpaper" target="_blank">HDQWalls</a></li>
-        <li><strong>Harmonium image (Home tab)</strong> — from <a href="https://in.pinterest.com/pin/115967759149230114/" target="_blank">Pinterest</a></li>
-        <li><strong>Raj Kapoor image (Home tab)</strong> — from <a href="https://www.floweraura.com/blog/valentine-outfit-ideas-inspired-retro-bollywood?srsltid=AfmBOoozuglaFBwuGuFYV5eh1MHUWkfPIzTTOkh_jbnOU6JRrCELWkbt" target="_blank">FlowerAura Blog</a></li>
-       <li><strong>Harmonium background</strong> — from <a href="https://www.wallpaperflare.com/blue-surface-advertisement-advertising-background-billboard-wallpaper-zwvvd" target="_blank">Wallpaper Flare </a></li>
-      </ul>
-    </section>
+    <h2>Logos & Graphics</h2>
+    <ul>
+      <li><strong>Logo</strong> — created using <a href="https://looka.com" target="_blank">Looka</a> and edited in <a href="https://canva.com" target="_blank">Canva</a></li>
+      <li><strong>Mic Image (Home)</strong> — from <a href="https://hdqwalls.com/microphone-dark-background-4k-5k-wallpaper" target="_blank">HDQWalls</a></li>
+      <li><strong>Harmonium Image (Home)</strong> — from <a href="https://in.pinterest.com/pin/115967759149230114/" target="_blank">Pinterest</a></li>
+      <li><strong>Raj Kapoor Image (Home)</strong> — from <a href="https://www.floweraura.com/blog/valentine-outfit-ideas-inspired-retro-bollywood" target="_blank">FlowerAura Blog</a></li>
+      <li><strong>Harmonium Background</strong> — from 
+        <a href="https://www.wallpaperflare.com/blue-surface-advertisement-advertising-background-billboard-wallpaper-zwvvd" target="_blank">Wallpaper Flare</a>
+      </li>
+    </ul>
 
-    <section>
-      <h2>Audio Resources</h2>
-      <ul>
-        <li><strong>Harmonium key sounds</strong> — from <a href="https://freesound.org/people/cabled_mess/packs/29512/" target="_blank">Freesound (cabled_mess)</a></li>
-      
-      </ul>
-    </section>
+    <h2>Audio Resources</h2>
+    <ul>
+      <li><strong>Harmonium Key Sounds</strong> — 
+        from <a href="https://freesound.org/people/cabled_mess/packs/29512/" target="_blank">Freesound (cabled_mess)</a>
+      </li>
+    </ul>
 
-    <section>
-      <h2>Special Thanks</h2>
-      <p>
-        I would like to express my gratitude to my friends, my mentor and my parents for their valuable ideas, feedback, and encouragement throughout the making of this project.  
-        Their support has been a big part of shaping <strong>SargamWorld</strong>.
-      </p>
-    </section>
+    <h2>Special Thanks</h2>
+    <p>
+      A heartfelt thank you to my friends, mentor, and parents for their ideas, feedback, and constant support. 
+      Their contributions have helped shape <strong>SargamWorld</strong>.
+    </p>
 
-    <section>
-  <h2>User Contributions</h2>
-  <p>
-    SargamWorld allows users to submit notations, tabs, or other musical content. 
-    While we encourage sharing, SargamWorld does not verify copyright ownership of submitted content. 
-    Users are responsible for ensuring that the content they submit does not infringe on third-party copyrights. 
-    If you believe your copyrighted material has been posted without permission, please contact us at <a href="mailto:copyright@sargamworld.com">copyright@sargamworld.com</a>.
-  </p>
-</section>
+    <h2>User Contributions</h2>
+    <p>
+      Users may submit notations, tabs, or musical content. Contributors must ensure that submissions do 
+      not violate copyrights. If you believe any content infringes your rights, contact:
+      <a href="mailto:copyright@sargamworld.com">copyright@sargamworld.com</a>.
+    </p>
 
-    <section>
-  <p style="font-size:0.8rem; color:var(--muted);">
-    All external resources used in SargamWorld are credited to their respective creators. 
-    SargamWorld is not responsible for the content or copyright of third-party submissions or external links.
-  </p>
-</section>
+    <p style="font-size:0.85rem; color:#666;">
+      All external assets belong to their respective creators. SargamWorld is not responsible 
+      for the content or copyright of third-party submissions or external links.
+    </p>
 
-    
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
-  </footer>
-
-  <!-- JS for Hamburger -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.querySelector(".hamburger");
-      const navLinks = document.getElementById("navLinks");
-
-      hamburger.addEventListener("click", () => {
-        navLinks.classList.toggle("show");
-      });
-    });
-  </script>
+    <a href="about.html" class="back-button">← Back to About Page</a>
+  </div>
 </body>
 </html>
