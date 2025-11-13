@@ -265,7 +265,7 @@
 
 /* Footer Logo */
 .footer-logo {
-  height: 55px;      /* increased size */
+  height: 75px;      /* bigger logo */
   border-radius: 6px;
 }
 
@@ -280,6 +280,7 @@
   font-size: 0.85rem;
   color: #aaa;
   line-height: 1.4;
+  margin-top: 10px;   /* pushes tagline down */
 }
 
 /* Column headers */
@@ -334,12 +335,25 @@
 }
 
 /* Mobile adjustments */
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .footer-content {
-    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* two columns */
+    gap: 20px;
+    text-align: left;
   }
+
+  .footer-brand-col {
+    grid-column: span 2;   /* brand spans full width */
+    text-align: center;
+  }
+
   .footer-logo {
-    height: 50px;
+    height: 60px;  /* slightly smaller on mobile */
+  }
+
+  .footer-col {
+    text-align: left;
   }
 }
 
