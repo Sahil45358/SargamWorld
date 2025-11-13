@@ -331,24 +331,38 @@
 @media (max-width: 650px) {
   .footer-content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* two columns */
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     text-align: left;
   }
 
   .footer-brand-col {
-    grid-column: span 2;   /* brand spans full width */
-    text-align: center;
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* centers both items */
+    gap: 15px; /* space between logo & tagline */
+    text-align: left;
   }
 
+  /* LOGO on mobile */
   .footer-logo {
-    height: 120px;  /* slightly smaller on mobile */
+    height: 100px; /* was 120, now reduced for better balance */
+  }
+
+  /* Tagline beside the logo */
+  .footer-tagline {
+    margin-top: 0;           /* remove extra spacing */
+    font-size: 0.78rem;      /* slightly smaller on mobile */
+    max-width: 160px;        /* keeps it narrow */
+    line-height: 1.3;        /* tighter line height */
   }
 
   .footer-col {
     text-align: left;
   }
 }
+
 
 /* === Modern Cookie Popup === */
 .cookie-popup {
