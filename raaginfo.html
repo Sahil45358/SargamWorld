@@ -7,67 +7,130 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <meta name="google" content="notranslate" />
   <style>
-    :root {
-      --accent: #800000; /* main brand color */
+     :root {
+      --accent: #800000;
+      --bg: #f3eee8;
+      --text: #222;
+      --muted: #5a5a5a;
       --radius: 12px;
       --container-w: 1100px;
       --transition: 0.3s ease;
     }
 
+    /* Global Styles */
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
       font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: #f3eee8;
-      color: #222;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
-
     a { text-decoration: none; color: inherit; }
+    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
 
-    /* Navbar */
-    .site-header {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: relative;
-      top: 0;
-      z-index: 1000;
-    }
-                .nav-inner {
+   /* === UNIVERSAL NAVBAR (MATCHES INDEX EXACTLY) === */
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-inner {
   max-width: var(--container-w);
   margin: 0 auto;
   display:flex;
   align-items:center;
-  justify-content: flex-start;  /* align logo + tagline to left */
-  gap: 12px;                    /* spacing between logo & tagline */
+  justify-content: space-between;  /* ❤️ THIS IS THE KEY */
+  gap: 12px;
   padding:12px 20px;
 }
-    .brand-wrap {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; margin-top: 2px; }
-    .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a { color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition); }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
-    .nav-links a.active { background: rgba(255, 255, 255, 0.15); }
-    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: var(--accent);
-        position: absolute;
-        top: 100px; right: 20px;
-        padding: 15px;
-        border-radius: 8px;
-      }
-      .nav-links.show { display: flex; }
-      .hamburger { display: block; }
-    }
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.logo img {
+  height: 120px;
+}
+
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
+}
+
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+.tagline {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  color: #f3e8e8;
+}
+
+@media (max-width: 768px) {
+  .tagline { font-size: 0.7rem; }
+}
+
+.nav-links {
+  display:flex;
+  gap:10px;
+  list-style:none;
+}
+
+.nav-links a {
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-links a.active {
+  background: rgba(255,255,255,0.15);
+}
+
+.hamburger {
+  display:none;
+  cursor:pointer;
+  font-size:1.6rem;
+  color:#fff;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display:none;
+    flex-direction: column;
+    background: var(--accent);
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .nav-links.show { display:flex; }
+  .hamburger { display:block; }
+}
 
     /* 🌟 Header */
     header {
@@ -118,38 +181,46 @@
     .back-button { text-align: center; margin-top: 2rem; }
     .back-button a { color: var(--accent); font-weight: bold; }
 
-    /* Footer */
-    .site-footer {
-      text-align: center;
-      padding: 20px;
-      color: #5a5a5a;
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
-
-   .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
-    .logo img { height: 120px; }
-   /* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
-@media (pointer: coarse) {
-  .logo span { display: none !important; }
+   /* === Footer (kept as is) === */
+.sargam-footer {
+  background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
+  padding: 45px 20px 20px;
+  color: #ccc;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 60px;
 }
 
-/* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
-@media (max-width: 1024px) {
-  .logo span { display: none !important; }
+.footer-content {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
 }
 
-/* Keep the tagline visible on mobile (you said you wanted it kept) */
-.tagline {
-  display: inline-block;
-  white-space: nowrap;      /* keep tagline on one line */
-  overflow: hidden;         /* prevent overflow */
-  text-overflow: ellipsis;  /* add "…" if space is too small */
+.footer-brand-col { max-width: 260px; }
+.footer-logo { height: 150px; border-radius: 12px; }
+.footer-tagline { font-size: 0.85rem; color: #aaa; line-height: 1.4; margin-top: 10px; }
+
+.footer-col h4 {
+  margin-bottom: 12px; font-size: 1rem; color: #fff;
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
 }
-    @media (max-width: 768px) {
-  .tagline {
-    font-size: 0.7rem; /* 👈 slightly smaller on mobile */
-  }
+
+.footer-col a {
+  color: #ccc;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  display: block;
+  transition: 0.3s;
+}
+.footer-col a:hover { color: var(--accent); }
+
+.footer-bottom {
+  text-align: center; color: #888; font-size: 0.8rem;
+  margin-top: 30px; padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
     /* 🌟 Floating Support Button */
@@ -174,26 +245,33 @@
 </head>
 <body>
 
-<!-- 🌐 Navbar -->
-<header class="site-header">
+ <!-- ====================================
+       UNIVERSAL NAVBAR
+       ==================================== -->
+ <header class="site-header">
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <img src="LOGO.png" alt="SargamWorld Logo">
-      <span>SargamWorld</span>
-    </a>
-    <span class="tagline">Explore • Learn • Practice</span>
-    <div class="hamburger">☰</div>
-    <ul class="nav-links">
- <li><a href="index.html">Home</a></li>
-        <li><a href="songs.html">Songs</a></li>
-        <li><a href="tools.html" class="active">Tools</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="support.html">Support</a></li>
+
+    <div class="brand-wrap">
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="songs.html">Songs</a></li>
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support</a></li>
     </ul>
+
   </div>
 </header>
-
 <!-- 🌟 Header -->
 <header>
   <h1>Explore Raags – Indian Classical Music</h1>
@@ -219,10 +297,50 @@
   </div>
 </main>
 
-<!-- 📌 Footer -->
-<footer class="site-footer">
-  <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
+<footer class="sargam-footer">
+  <div class="footer-content">
+
+    <!-- Column 1: Brand -->
+    <div class="footer-col footer-brand-col">
+      <img src="LOGO.png" class="footer-logo" alt="SargamWorld Logo">
+      <p class="footer-tagline">
+       “Your companion for learning Indian classical music.”
+      </p>
+    </div>
+
+    <!-- Column 2: Explore -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <!-- Column 3: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="dmca.html">DMCA</a>
+    </div>
+
+    <!-- Column 4: Contact -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Us</a>
+      <a href="mailto:sargam.world453@gmail.com">Email</a>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 SargamWorld. All rights reserved.
+  </div>
 </footer>
+
 
 <!-- 🌟 Floating Support Button -->
 <a href="support.html" class="support-btn">☕ Support Us</a>
