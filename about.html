@@ -116,88 +116,76 @@
 }
 
 
- /* === Light Footer === */
 .light-footer {
-  background: #e2dbd2;
-  padding: 25px 20px;
+  background: #f1ebe3; /* warm, soft theme-friendly color */
+  padding: 28px 20px;
   color: #444;
   margin-top: 40px;
-  border-top: 1px solid rgba(0,0,0,0.08);
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-.lf-container {
+.light-footer-container {
   max-width: 1100px;
   margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 35px;
 }
 
-/* Logo + Tagline side-by-side */
-.lf-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Improve logo visibility */
-.lf-brand img {
-  height: 90px;
-  border-radius: 10px;
-  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.25));
-}
-
-/* Tagline beside logo */
-.lf-tagline {
-  max-width: 260px;
-  font-size: 0.9rem;
-  line-height: 1.35;
-  color: #555;
-}
-
-/* Footer links */
-.lf-links a {
-  margin-right: 16px;
+.lf-col h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
   color: #800000;
-  font-weight: 600;
+  border-left: 3px solid #800000;
+  padding-left: 8px;
+}
+
+.lf-col a {
+  display: block;
+  color: #555;
+  margin-bottom: 8px;
   text-decoration: none;
+  font-size: 0.92rem;
   transition: 0.3s ease;
 }
 
-.lf-links a:hover {
-  text-decoration: underline;
+.lf-col a:hover {
+  color: #800000;
 }
 
-/* Bottom text */
+.lf-tagline {
+  font-size: 0.9rem;
+  color: #555;
+  max-width: 180px;
+  line-height: 1.4;
+}
+
 .lf-bottom {
+  margin-top: 25px;
+  padding-top: 15px;
   text-align: center;
   font-size: 0.85rem;
   color: #777;
-  margin-top: 20px;
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-/* Mobile layout */
+/* Mobile */
 @media (max-width: 650px) {
-  .lf-container {
-    flex-direction: column;
-    text-align: center;
+  .light-footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   .lf-brand {
-    flex-direction: column;
-  }
-
-  .lf-brand img {
-    height: 85px; /* larger on mobile for clarity */
+    grid-column: span 2;
+    text-align: center;
   }
 
   .lf-tagline {
-    max-width: 280px;
-    font-size: 0.95rem;
+    max-width: none;
   }
 }
+
 
 
 .credits-link {
@@ -296,24 +284,39 @@
   </main>
 
 <footer class="light-footer">
-  <div class="lf-container">
+  <div class="light-footer-container">
 
-    <div class="lf-brand">
-      <img src="LOGO.png" alt="SargamWorld Logo">
-      <p class="lf-tagline">“Your complete companion for learning Indian classical music.”</p>
+    <div class="lf-col lf-brand">
+      <p class="lf-tagline">Your companion for learning Indian classical music.</p>
     </div>
 
-    <div class="lf-links">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="dmca.html">DMCA</a>
+    <div class="lf-col">
+      <h4>Quick Links</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <div class="lf-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+    </div>
+
+    <div class="lf-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Page</a>
+      <a href="mailto:sargam.world453@gmail.com">Email Us</a>
     </div>
 
   </div>
 
-  <p class="lf-bottom">© 2025 SargamWorld — All rights reserved.</p>
+  <div class="lf-bottom">
+    © 2025 SargamWorld — All rights reserved.
+  </div>
 </footer>
+
 
 
   <!-- JS for Hamburger -->
