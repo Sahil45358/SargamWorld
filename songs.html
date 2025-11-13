@@ -92,10 +92,15 @@
 }
 
 .nav-links {
-  display:flex;
-  gap:10px;
-  list-style:none;
+  display: flex;
+  gap: 10px;
+  list-style: none;
+
+  /* ⭐ FIX VERTICAL ALIGNMENT ⭐ */
+  height: 120px;         /* same as logo height */
+  align-items: center;   /* vertically center the buttons */
 }
+
 
 .nav-links a {
   color: #fff;
