@@ -241,15 +241,114 @@
   }
 }
     
-    /* Footer */
-    footer {
-      background: #151525;
-      text-align: center;
-      padding: 20px;
-      margin-top: 50px;
-      font-size: 0.9rem;
-      color: #aaa;
-    }
+/* === FOOTER STYLING === */
+.site-footer {
+  background: #101015;
+  padding: 45px 20px;
+  color: #ccc;
+  margin-top: 70px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.footer-container {
+  max-width: var(--container-w);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Brand section */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo {
+  height: 55px;
+  border-radius: 8px;
+}
+
+.footer-brand h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: white;
+}
+
+.footer-brand p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #aaa;
+}
+
+/* Separator line */
+.footer-line {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Legal links */
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #ccc;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+/* Bottom */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 12px;
+}
+
+.footer-cookie-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.footer-cookie-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Mobile layout */
+@media (max-width: 650px) {
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  .footer-brand {
+    justify-content: center;
+  }
+}
+
 
 /* === Cookie Consent Popup === */
 .cookie-popup {
@@ -306,6 +405,11 @@
 .cookie-options input[type="checkbox"] {
   width: 16px;
   height: 16px;
+}
+
+    .cookie-options input[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Buttons */
@@ -598,11 +702,18 @@ body.no-scroll {
     <label><input type="checkbox" id="analyticsCookie"> Analytics</label>
     <label><input type="checkbox" id="adsCookie"> Advertising / Ads</label>
   </div>
-  
+  <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">
+  Necessary cookies enable core site functions and cannot be disabled.
+</p>
+
   <div class="cookie-buttons">
     <button id="acceptAll">Accept All</button>
     <button id="savePreferences">Save Preferences</button>
   </div>
+  <p style="font-size: 0.7rem; color: #777; margin-top: 10px;">
+  You can also clear cookies anytime from your browser settings.
+</p>
+
 </div>
   
   <!-- Navbar -->
@@ -664,12 +775,37 @@ body.no-scroll {
     </a>
   </section>
 
-  <!-- Footer -->
-<footer>
- <small> © 2025 SargamWorld. All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> </small>
- <small> <button id="manageCookiesBtn" class="manage-cookies-btn">Manage Cookies</button></small>
-</footer>
+<footer class="site-footer">
+  <div class="footer-container">
 
+    <!-- Brand -->
+    <div class="footer-brand">
+      <img src="LOGO.png" alt="SargamWorld Logo" class="footer-logo">
+      <div>
+        <h3>SargamWorld</h3>
+        <p>Explore • Learn • Practice</p>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-line"></div>
+
+    <!-- Legal Links -->
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="dmca.html">DMCA</a>
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <p>© 2025 SargamWorld. All rights reserved.</p>
+      <button id="manageCookiesBtn" class="footer-cookie-btn">Manage Cookies</button>
+    </div>
+
+  </div>
+</footer>
 
   <script>
 window.addEventListener("load", () => {
@@ -843,17 +979,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const adsCheckbox = document.getElementById("adsCookie");
   const manageBtn = document.getElementById("manageCookiesBtn");
 
-  // Show popup smoothly
+  // Show popup
   function showPopup() {
+    // Pre-fill preferences when reopening
+    if (localStorage.getItem("analytics") === "true") {
+      analyticsCheckbox.checked = true;
+    }
+    if (localStorage.getItem("ads") === "true") {
+      adsCheckbox.checked = true;
+    }
     popup.classList.add("show");
   }
 
-  // Hide popup smoothly
+  // Hide popup
   function hidePopup() {
     popup.classList.remove("show");
   }
 
-  // Load scripts based on user consent
+  // Load scripts AFTER consent
   function loadScripts() {
     // Google Analytics
     if (localStorage.getItem("analytics") === "true") {
@@ -878,38 +1021,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Show popup if consent not given
-  if (!localStorage.getItem("cookieConsent")) showPopup();
+  // Show popup on first visit
+  if (!localStorage.getItem("cookieConsent")) {
+    showPopup();
+  } else {
+    loadScripts();
+  }
 
-  // Accept all cookies
+  // Accept All
   acceptAll.addEventListener("click", () => {
     localStorage.setItem("cookieConsent", "true");
     localStorage.setItem("analytics", "true");
     localStorage.setItem("ads", "true");
+
+    // Update checkboxes visually
+    analyticsCheckbox.checked = true;
+    adsCheckbox.checked = true;
+
     hidePopup();
     loadScripts();
   });
 
-  // Save custom preferences
+  // Save Preferences
   savePreferences.addEventListener("click", () => {
     localStorage.setItem("cookieConsent", "true");
     localStorage.setItem("analytics", analyticsCheckbox.checked ? "true" : "false");
     localStorage.setItem("ads", adsCheckbox.checked ? "true" : "false");
+
     hidePopup();
     loadScripts();
   });
 
-  // Auto-load scripts if consent exists
-  if (localStorage.getItem("cookieConsent") === "true") {
-    loadScripts();
-    hidePopup();
-  }
-
-  // Manage Cookies button
+  // Manage Cookies Button
   if (manageBtn) {
     manageBtn.addEventListener("click", () => showPopup());
   }
 });
+
 
   </script>
 </body>
