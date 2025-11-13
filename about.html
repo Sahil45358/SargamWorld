@@ -29,7 +29,9 @@
     a { text-decoration: none; color: inherit; }
     .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
 
-    /* Navbar */
+    /* ====================================
+       UNIVERSAL NAVBAR (Copied EXACTLY from Homepage)
+       ==================================== */
     .site-header {
       background: var(--accent);
       color: #fff;
@@ -38,32 +40,86 @@
       top: 0;
       z-index: 1000;
     }
-      .nav-inner {
-  max-width: var(--container-w);
-  margin: 0 auto;
-  display:flex;
-  align-items:center;
-  justify-content: flex-start;  /* align logo + tagline to left */
-  gap: 12px;                    /* spacing between logo & tagline */
-  padding:12px 20px;
-}
+
+    .nav-inner {
+      max-width: var(--container-w);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding:12px 20px;
+    }
+
     .brand-wrap {
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 10px;
     }
-    .brand { color: #fff; font-weight:700; font-size:1.2rem; }
-    .tagline { font-size: 0.8rem; font-weight: 400; color: #f3e8e8; }
 
-    .nav-links { display:flex; gap:10px; list-style:none; }
-    .nav-links a {
-      color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; transition: var(--transition);
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #fff;
     }
-    .nav-links a:hover, .nav-links a:focus { background: rgba(255,255,255,0.1); }
-    .nav-links a.active { background: rgba(255,255,255,0.15); }
 
-    .hamburger { display: none; cursor: pointer; font-size: 1.6rem; color: #fff; }
+    .logo img {
+      height: 120px;
+    }
+
+    /* Hide text on mobile */
+    @media (pointer: coarse) {
+      .logo span { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      .logo span { display: none !important; }
+    }
+
+    .tagline {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.75rem;
+      color: #f3e8e8;
+    }
+    @media (max-width: 768px) {
+      .tagline { font-size: 0.7rem; }
+    }
+
+    .nav-links {
+      display:flex;
+      gap:10px;
+      list-style:none;
+    }
+
+    .nav-links a {
+      color:#fff;
+      padding:8px 12px;
+      border-radius:8px;
+      font-weight:600;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: #fff;
+    }
 
     @media (max-width: 768px) {
       .nav-links {
@@ -71,13 +127,14 @@
         flex-direction: column;
         background: var(--accent);
         position: absolute;
-        top: 100px; right: 20px;
+        top: 60px; right: 20px;
         padding: 15px;
         border-radius: 8px;
       }
       .nav-links.show { display: flex; }
-      .hamburger { display: block; position: relative; z-index: 1100; } /* ✅ keep hamburger above menu */
-}
+      .hamburger { display: block; }
+    }
+
 
     /* Hero & Content */
     .hero { text-align: center; margin-bottom: 30px; }
@@ -88,34 +145,8 @@
     h1,h2 { color: var(--accent); margin-bottom: 10px; }
     p { color: var(--text); margin-bottom: 20px; line-height: 1.6; }
 
-    /* Logo */
- .logo { display: flex; align-items: center; gap: 8px; font-weight:700; font-size:1.2rem; color:#fff; }
-.logo img { height: 120px; }
 
-/* 1) Hide the site name (SargamWorld) on touch devices (covers mobile portrait & landscape) */
-@media (pointer: coarse) {
-  .logo span { display: none !important; }
-}
-
-/* 2) Fallback: if pointer media-query isn't supported, hide on narrower viewports too */
-@media (max-width: 1024px) {
-  .logo span { display: none !important; }
-}
-
-/* Keep the tagline visible on mobile (you said you wanted it kept) */
-.tagline {
-  display: inline-block;
-  white-space: nowrap;      /* keep tagline on one line */
-  overflow: hidden;         /* prevent overflow */
-  text-overflow: ellipsis;  /* add "…" if space is too small */
-}
-    @media (max-width: 768px) {
-  .tagline {
-    font-size: 0.7rem; /* 👈 slightly smaller on mobile */
-  }
-}
-
-/* === SargamWorld Footer === */
+/* === Footer (kept as is) === */
 .sargam-footer {
   background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
   padding: 45px 20px 20px;
@@ -132,112 +163,41 @@
   gap: 40px;
 }
 
-/* Brand Column */
-.footer-brand-col {
-  max-width: 260px;
-}
+.footer-brand-col { max-width: 260px; }
+.footer-logo { height: 150px; border-radius: 12px; }
+.footer-tagline { font-size: 0.85rem; color: #aaa; line-height: 1.4; margin-top: 10px; }
 
-/* Footer Logo */
-.footer-logo {
-  height: 150px;      /* bigger logo */
-  border-radius: 12px;
-}
-
-.footer-tagline {
-  font-size: 0.85rem;
-  color: #aaa;
-  line-height: 1.4;
-  margin-top: 10px;   /* pushes tagline down */
-}
-
-/* Column headers */
 .footer-col h4 {
-  margin-bottom: 12px;
-  font-size: 1rem;
-  color: #fff;
+  margin-bottom: 12px; font-size: 1rem; color: #fff;
   border-left: 3px solid var(--accent);
   padding-left: 8px;
 }
 
-/* Links */
 .footer-col a {
-  display: block;
   color: #ccc;
-  text-decoration: none;
   margin-bottom: 8px;
   font-size: 0.85rem;
-  transition: color 0.3s ease;
+  display: block;
+  transition: 0.3s;
 }
+.footer-col a:hover { color: var(--accent); }
 
-.footer-col a:hover {
-  color: var(--accent);
-}
-
-/* Footer bottom */
 .footer-bottom {
-  text-align: center;
-  color: #888;
-  font-size: 0.8rem;
-  margin-top: 30px;
-  padding-top: 15px;
+  text-align: center; color: #888; font-size: 0.8rem;
+  margin-top: 30px; padding-top: 15px;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Mobile adjustments */
-@media (max-width: 650px) {
-  .footer-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    text-align: left;
-  }
-
-  .footer-brand-col {
-    grid-column: span 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    textAlign: left;
-    flex-wrap: nowrap;
-  }
-
-  .footer-logo {
-    height: 100px;
-  }
-
-  .footer-tagline {
-    margin-top: 0;
-    font-size: 0.90rem;
-    max-width: 220px;
-    min-width: 180px;
-    line-height: 1.35;
-    white-space: normal;
-  }
-
-  .footer-col {
-    text-align: left;
-  }
-}  
-
-.credits-link {
-  color: var(--accent);      /* matches your theme color */
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-.credits-link:hover {
-  color: var(--accent-dark);
-  text-decoration: underline;
-}
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- ====================================
+       UNIVERSAL NAVBAR
+       ==================================== -->
   <header class="site-header">
     <div class="nav-inner">
+
       <div class="brand-wrap">
         <a href="index.html" class="logo">
           <img src="LOGO.png" alt="SargamWorld Logo">
@@ -246,7 +206,7 @@
         <span class="tagline">Explore • Learn • Practice</span>
       </div>
 
-      <div class="hamburger">☰</div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
@@ -256,6 +216,7 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="support.html">Support</a></li>
       </ul>
+
     </div>
   </header>
 
