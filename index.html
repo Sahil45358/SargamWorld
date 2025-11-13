@@ -263,9 +263,17 @@
   max-width: 260px;
 }
 
+/* Footer Logo */
 .footer-logo {
-  height: 60px;
-  margin-bottom: 12px;
+  height: 55px;      /* increased size */
+  border-radius: 6px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .footer-logo {
+    height: 45px;    /* slightly smaller on mobile */
+  }
 }
 
 .footer-tagline {
