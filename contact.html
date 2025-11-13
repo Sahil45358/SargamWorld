@@ -108,14 +108,110 @@
     .contact-card a { color: var(--accent); font-weight: 600; text-decoration: none; }
     .contact-card a:hover { text-decoration: underline; }
 
-    /* Footer */
-    .site-footer {
-      text-align: center;
-      padding: 20px;
-      color: #5a5a5a;
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
+/* === SargamWorld Footer === */
+.sargam-footer {
+  background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
+  padding: 45px 20px 20px;
+  color: #ccc;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 60px;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+}
+
+/* Brand Column */
+.footer-brand-col {
+  max-width: 260px;
+}
+
+/* Footer Logo */
+.footer-logo {
+  height: 150px;      /* bigger logo */
+  border-radius: 12px;
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.4;
+  margin-top: 10px;   /* pushes tagline down */
+}
+
+/* Column headers */
+.footer-col h4 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #fff;
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
+}
+
+/* Links */
+.footer-col a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.footer-col a:hover {
+  color: var(--accent);
+}
+
+/* Footer bottom */
+.footer-bottom {
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Mobile adjustments */
+@media (max-width: 650px) {
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    text-align: left;
+  }
+
+  .footer-brand-col {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    textAlign: left;
+    flex-wrap: nowrap;
+  }
+
+  .footer-logo {
+    height: 100px;
+  }
+
+  .footer-tagline {
+    margin-top: 0;
+    font-size: 0.90rem;
+    max-width: 220px;
+    min-width: 180px;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .footer-col {
+    text-align: left;
+  }
+} 
 
     .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: #fff; }
     .logo img { height: 120px; }
@@ -191,10 +287,49 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
-  </footer>
+<footer class="sargam-footer">
+  <div class="footer-content">
+
+    <!-- Column 1: Brand -->
+    <div class="footer-col footer-brand-col">
+      <img src="LOGO.png" class="footer-logo" alt="SargamWorld Logo">
+      <p class="footer-tagline">
+       “Your companion for learning Indian classical music.”
+      </p>
+    </div>
+
+    <!-- Column 2: Explore -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <!-- Column 3: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="dmca.html">DMCA</a>
+    </div>
+
+    <!-- Column 4: Contact -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Us</a>
+      <a href="mailto:sargam.world453@gmail.com">Email</a>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 SargamWorld. All rights reserved.
+  </div>
+</footer>
 
   <!-- JS Hamburger -->
   <script>
