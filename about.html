@@ -114,14 +114,90 @@
     font-size: 0.7rem; /* 👈 slightly smaller on mobile */
   }
 }
-    /* Footer */
-    .site-footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
+   /* === Light Footer (for inner pages) === */
+.light-footer {
+  background: #efe9e2;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 40px 20px 20px;
+  margin-top: 60px;
+  color: #333;
+}
+
+.light-footer-container {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+}
+
+/* Brand */
+.lf-brand img {
+  height: 70px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.lf-brand p {
+  font-size: 0.85rem;
+  color: #555;
+  max-width: 220px;
+}
+
+/* Column Title */
+.light-footer h4 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #800000;
+  border-left: 3px solid #800000;
+  padding-left: 8px;
+}
+
+/* Links */
+.light-footer a {
+  display: block;
+  color: #444;
+  text-decoration: none;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  transition: 0.25s ease;
+}
+
+.light-footer a:hover {
+  color: #800000;
+}
+
+/* Bottom */
+.lf-bottom {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.85rem;
+  color: #666;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+  .light-footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .lf-brand {
+    grid-column: span 2;
+    text-align: center;
+  }
+
+  .lf-brand img {
+    height: 60px;
+  }
+
+  .lf-brand p {
+    margin: 0 auto;
+  }
+}
+
 .credits-link {
   color: var(--accent);      /* matches your theme color */
   text-decoration: none;
@@ -217,10 +293,41 @@
 
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
-  </footer>
+<footer class="light-footer">
+  <div class="light-footer-container">
+
+    <div class="lf-col lf-brand">
+      <img src="LOGO.png" alt="SargamWorld Logo">
+      <p>Your companion for learning Indian classical music.</p>
+    </div>
+
+    <div class="lf-col">
+      <h4>Quick Links</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <div class="lf-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+    </div>
+
+    <div class="lf-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Page</a>
+      <a href="mailto:sargam.world453@gmail.com">Email Us</a>
+    </div>
+
+  </div>
+
+  <div class="lf-bottom">
+    © 2025 SargamWorld — All rights reserved.
+  </div>
+</footer>
+
 
   <!-- JS for Hamburger -->
   <script>
