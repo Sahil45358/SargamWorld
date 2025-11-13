@@ -8,28 +8,26 @@
 
   <link rel="icon" type="image/png" href="favicon.png" />
   <style>
- :root {
-      --accent: #800000;  /* navbar and brand color */
-      --bg-dark: #0f0f12;
-      --bg-card-dark: #1c1c26;
-      --text-light: #f3f3f3;
-      --text-muted: #aaa;
+   :root {
+      --accent: #800000;
+      --bg: #f3eee8;
+      --text: #222;
+      --muted: #5a5a5a;
       --radius: 12px;
       --container-w: 1100px;
       --transition: 0.3s ease;
     }
 
     /* Global Styles */
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-light);
-      overflow-x: hidden;
-      transition: background 0.5s ease;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
     a { text-decoration: none; color: inherit; }
-
+    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
 
    /* === UNIVERSAL NAVBAR (MATCHES INDEX EXACTLY) === */
 .site-header {
