@@ -27,8 +27,112 @@
     }
     a { text-decoration: none; color: inherit; }
     .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
+    
+   /* === UNIVERSAL NAVBAR (MATCHES INDEX EXACTLY) === */
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+  top: 0;
+  z-index: 1000;
+}
 
-    #harmonium {
+.nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;  /* ❤️ THIS IS THE KEY */
+  gap: 12px;
+  padding:12px 20px;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.logo img {
+  height: 120px;
+}
+
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
+}
+
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+.tagline {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  color: #f3e8e8;
+}
+
+@media (max-width: 768px) {
+  .tagline { font-size: 0.7rem; }
+}
+
+.nav-links {
+  display:flex;
+  gap:10px;
+  list-style:none;
+}
+
+.nav-links a {
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-links a.active {
+  background: rgba(255,255,255,0.15);
+}
+
+.hamburger {
+  display:none;
+  cursor:pointer;
+  font-size:1.6rem;
+  color:#fff;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display:none;
+    flex-direction: column;
+    background: var(--accent);
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .nav-links.show { display:flex; }
+  .hamburger { display:block; }
+}
+
+#harmonium {
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -260,110 +364,6 @@
   }
 }
     
-   /* === UNIVERSAL NAVBAR (MATCHES INDEX EXACTLY) === */
-.site-header {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  position: relative;
-  top: 0;
-  z-index: 1000;
-}
-
-.nav-inner {
-  max-width: var(--container-w);
-  margin: 0 auto;
-  display:flex;
-  align-items:center;
-  justify-content: space-between;  /* ❤️ THIS IS THE KEY */
-  gap: 12px;
-  padding:12px 20px;
-}
-
-.brand-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #fff;
-}
-
-.logo img {
-  height: 120px;
-}
-
-@media (pointer: coarse) {
-  .logo span { display: none !important; }
-}
-
-@media (max-width: 1024px) {
-  .logo span { display: none !important; }
-}
-
-.tagline {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.75rem;
-  color: #f3e8e8;
-}
-
-@media (max-width: 768px) {
-  .tagline { font-size: 0.7rem; }
-}
-
-.nav-links {
-  display:flex;
-  gap:10px;
-  list-style:none;
-}
-
-.nav-links a {
-  color:#fff;
-  padding:8px 12px;
-  border-radius:8px;
-  font-weight:600;
-  transition: var(--transition);
-}
-
-.nav-links a:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.nav-links a.active {
-  background: rgba(255,255,255,0.15);
-}
-
-.hamburger {
-  display:none;
-  cursor:pointer;
-  font-size:1.6rem;
-  color:#fff;
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display:none;
-    flex-direction: column;
-    background: var(--accent);
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  .nav-links.show { display:flex; }
-  .hamburger { display:block; }
-}
-
 /* === Footer (kept as is) === */
 .sargam-footer {
   background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
@@ -542,10 +542,49 @@ body.portrait #rotate-warning {
  <div id="harmonium"></div>
   <p><a href="index.html">⬅️ Back to Home</a></p>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <small>© 2025 SargamWorld — All rights reserved. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></small>
-  </footer>
+<footer class="sargam-footer">
+  <div class="footer-content">
+
+    <!-- Column 1: Brand -->
+    <div class="footer-col footer-brand-col">
+      <img src="LOGO.png" class="footer-logo" alt="SargamWorld Logo">
+      <p class="footer-tagline">
+       “Your companion for learning Indian classical music.”
+      </p>
+    </div>
+
+    <!-- Column 2: Explore -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <!-- Column 3: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="dmca.html">DMCA</a>
+    </div>
+
+    <!-- Column 4: Contact -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Us</a>
+      <a href="mailto:sargam.world453@gmail.com">Email</a>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 SargamWorld. All rights reserved.
+  </div>
+</footer>
 
 
   
