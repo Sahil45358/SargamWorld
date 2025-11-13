@@ -53,7 +53,6 @@
 
 .brand-wrap {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 10px;
 }
@@ -71,17 +70,6 @@
   height: 120px;
 }
 
-.tagline {
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: #f3e8e8;
-  margin-top: 2px;      /* ⬅ SAME AS INDEX ✔ */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
 @media (pointer: coarse) {
   .logo span { display: none !important; }
 }
@@ -90,8 +78,21 @@
   .logo span { display: none !important; }
 }
 
+.tagline {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  color: #f3e8e8;
+}
+
+@media (max-width: 768px) {
+  .tagline { font-size: 0.7rem; }
+}
 
 .nav-links {
+  padding-top: 18px;
   display:flex;
   gap:10px;
   list-style:none;
