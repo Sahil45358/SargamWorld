@@ -241,64 +241,51 @@
   }
 }
     
-/* === FOOTER STYLING === */
+/* === Compact Footer === */
 .site-footer {
-  background: #101015;
-  padding: 45px 20px;
+  background: #0e0e12;
+  padding: 20px 20px 10px;
   color: #ccc;
-  margin-top: 70px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  margin-top: 50px;
 }
 
 .footer-container {
   max-width: var(--container-w);
   margin: auto;
   display: flex;
-  flex-direction: column;
-  gap: 25px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-/* Brand section */
+/* Brand */
 .footer-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 .footer-logo {
-  height: 55px;
-  border-radius: 8px;
+  height: 32px;
+  border-radius: 6px;
 }
 
-.footer-brand h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: white;
-}
-
-.footer-brand p {
-  margin: 0;
-  font-size: 0.82rem;
-  color: #aaa;
-}
-
-/* Separator line */
-.footer-line {
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Legal links */
+/* Links */
 .footer-links {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .footer-links a {
-  color: #ccc;
-  font-size: 0.9rem;
+  color: #bbb;
+  font-size: 0.85rem;
   text-decoration: none;
   transition: 0.3s ease;
 }
@@ -307,24 +294,16 @@
   color: var(--accent);
 }
 
-/* Bottom */
-.footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 12px;
-}
-
+/* Manage cookies button */
 .footer-cookie-btn {
+  padding: 5px 10px;
+  font-size: 0.8rem;
   background: transparent;
   border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 6px 12px;
   border-radius: 6px;
+  color: var(--accent);
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.3s;
 }
 
 .footer-cookie-btn:hover {
@@ -332,125 +311,114 @@
   color: #fff;
 }
 
-/* Mobile layout */
+/* Bottom copyright */
+.footer-bottom {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Mobile */
 @media (max-width: 650px) {
-  .footer-bottom {
+  .footer-container {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     text-align: center;
   }
-
-  .footer-links {
-    justify-content: center;
-  }
-
-  .footer-brand {
-    justify-content: center;
-  }
 }
 
-
-/* === Cookie Consent Popup === */
+/* === Modern Cookie Popup === */
 .cookie-popup {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 320px;
-  background: var(--bg-card-dark); /* matches dark theme */
-  color: var(--text-light);
-  border: 1px solid #333;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  padding: 20px;
-  z-index: 9999;
-  font-family: 'Segoe UI', sans-serif;
+  bottom: 22px;
+  right: 22px;
+  width: 340px;
+  background: #1b1b22;
+  color: #e6e6e6;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+  padding: 22px;
+  z-index: 99999;
   opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none; /* prevents clicking when hidden */
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(25px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  backdrop-filter: blur(6px);
 }
 
-/* Show popup */
 .cookie-popup.show {
   opacity: 1;
   transform: translateY(0);
-  pointer-events: auto; /* enable interaction */
+  pointer-events: auto;
 }
 
-/* Headings */
 .cookie-popup h3 {
   margin: 0 0 10px 0;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   color: var(--accent);
+  font-weight: 700;
 }
 
-/* Paragraph */
 .cookie-popup p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin: 0 0 15px 0;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  color: #b6b6b6;
+  margin-bottom: 16px;
+  line-height: 1.45;
 }
 
-/* Checkbox options */
+/* Options */
+.cookie-options {
+  margin-bottom: 12px;
+}
+
 .cookie-options label {
   display: flex;
   align-items: center;
   font-size: 0.85rem;
+  gap: 8px;
   margin-bottom: 8px;
-  gap: 6px;
-  cursor: pointer;
 }
 
-.cookie-options input[type="checkbox"] {
+.cookie-options input {
   width: 16px;
   height: 16px;
 }
 
-    .cookie-options input[disabled] {
-  opacity: 0.6;
+.cookie-options input[disabled] {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 /* Buttons */
 .cookie-buttons {
-  margin-top: 15px;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .cookie-buttons button {
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: none;
   background: var(--accent);
   color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  margin-left: 8px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: 0.25s ease;
 }
 
 .cookie-buttons button:hover {
   background: #9b1717;
-  transform: translateY(-1px);
 }
 
-/* Manage Cookies Button (footer) */
-.manage-cookies-btn {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-size: 0.85rem;
-  margin-left: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.manage-cookies-btn:hover {
-  background: var(--accent);
-  color: #fff;
+/* Notice under buttons */
+.cookie-popup .cookie-notice {
+  font-size: 0.75rem;
+  color: #7c7c7c;
+  margin-top: 12px;
+  text-align: left;
 }
 
 /* === ENTRANCE SCREEN === */
@@ -778,34 +746,29 @@ body.no-scroll {
 <footer class="site-footer">
   <div class="footer-container">
 
-    <!-- Brand -->
+    <!-- Left: Brand -->
     <div class="footer-brand">
       <img src="LOGO.png" alt="SargamWorld Logo" class="footer-logo">
-      <div>
-        <h3>SargamWorld</h3>
-        <p>Explore • Learn • Practice</p>
-      </div>
+      <span>SargamWorld</span>
     </div>
 
-    <!-- Divider -->
-    <div class="footer-line"></div>
-
-    <!-- Legal Links -->
+    <!-- Right: Links -->
     <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms & Conditions</a>
-      <a href="cookies.html">Cookie Policy</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="cookies.html">Cookies</a>
       <a href="dmca.html">DMCA</a>
-    </div>
-
-    <!-- Bottom -->
-    <div class="footer-bottom">
-      <p>© 2025 SargamWorld. All rights reserved.</p>
       <button id="manageCookiesBtn" class="footer-cookie-btn">Manage Cookies</button>
     </div>
 
   </div>
+
+  <div class="footer-bottom">
+    © 2025 SargamWorld. All rights reserved.
+  </div>
 </footer>
+
 
   <script>
 window.addEventListener("load", () => {
