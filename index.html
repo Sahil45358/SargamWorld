@@ -241,69 +241,73 @@
   }
 }
     
-/* === Compact Footer === */
-.site-footer {
-  background: #0e0e12;
-  padding: 20px 20px 10px;
+/* === SargamWorld Footer === */
+.sargam-footer {
+  background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
+  padding: 45px 20px 20px;
   color: #ccc;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  margin-top: 50px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 60px;
 }
 
-.footer-container {
-  max-width: var(--container-w);
+.footer-content {
+  max-width: 1100px;
   margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
 }
 
-/* Brand */
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
+/* Brand Column */
+.footer-brand-col {
+  max-width: 260px;
 }
 
 .footer-logo {
-  height: 32px;
-  border-radius: 6px;
+  height: 60px;
+  margin-bottom: 12px;
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+/* Column headers */
+.footer-col h4 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #fff;
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
 }
 
 /* Links */
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.footer-links a {
-  color: #bbb;
-  font-size: 0.85rem;
+.footer-col a {
+  display: block;
+  color: #ccc;
   text-decoration: none;
-  transition: 0.3s ease;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
 }
 
-.footer-links a:hover {
+.footer-col a:hover {
   color: var(--accent);
 }
 
-/* Manage cookies button */
+/* Manage cookie button */
 .footer-cookie-btn {
-  padding: 5px 10px;
-  font-size: 0.8rem;
+  margin-top: 10px;
+  padding: 6px 12px;
   background: transparent;
   border: 1px solid var(--accent);
-  border-radius: 6px;
   color: var(--accent);
+  border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  font-size: 0.82rem;
+  transition: 0.3s ease;
 }
 
 .footer-cookie-btn:hover {
@@ -311,20 +315,23 @@
   color: #fff;
 }
 
-/* Bottom copyright */
+/* Footer bottom */
 .footer-bottom {
   text-align: center;
-  margin-top: 8px;
-  font-size: 0.8rem;
   color: #888;
+  font-size: 0.8rem;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Mobile */
-@media (max-width: 650px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .footer-content {
+    gap: 25px;
+  }
+  .footer-logo {
+    height: 50px;
   }
 }
 
@@ -743,22 +750,40 @@ body.no-scroll {
     </a>
   </section>
 
-<footer class="site-footer">
-  <div class="footer-container">
+<footer class="sargam-footer">
+  <div class="footer-content">
 
-    <!-- Left: Brand -->
-    <div class="footer-brand">
-      <img src="LOGO.png" alt="SargamWorld Logo" class="footer-logo">
-      <span>SargamWorld</span>
+    <!-- Column 1: Brand -->
+    <div class="footer-col footer-brand-col">
+      <img src="LOGO.png" class="footer-logo" alt="SargamWorld Logo">
+      <p class="footer-tagline">
+       “Your complete companion for learning Indian classical music.”
+      </p>
     </div>
 
-    <!-- Right: Links -->
-    <div class="footer-links">
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="cookies.html">Cookies</a>
+    <!-- Column 2: Explore -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <!-- Column 3: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
       <a href="dmca.html">DMCA</a>
+    </div>
+
+    <!-- Column 4: Contact -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Us</a>
+      <a href="mailto:sargam.world453@gmail.com">Email</a>
       <button id="manageCookiesBtn" class="footer-cookie-btn">Manage Cookies</button>
     </div>
 
@@ -768,6 +793,7 @@ body.no-scroll {
     © 2025 SargamWorld. All rights reserved.
   </div>
 </footer>
+
 
 
   <script>
