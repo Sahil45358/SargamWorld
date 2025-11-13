@@ -389,6 +389,44 @@ pre {
       .nav-links.show { display: flex; }
       .hamburger { display: block; }
     }
+
+/* ⭐ Disclaimer Dropdown */
+.disclaimer-box {
+  max-width: var(--container-w);
+  margin: 0 auto 25px;
+}
+
+.disclaimer-toggle {
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #c31432;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #c31432;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.disclaimer-toggle:hover {
+  background: #fce4e4;
+}
+
+.disclaimer-content {
+  display: none;
+  background: #fcf8f0;
+  padding: 15px 20px;
+  margin-top: 8px;
+  border-left: 4px solid #c31432;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  color: #5a3d3d;
+  line-height: 1.6;
+}
+
+  
 </style>
 
 <main>
@@ -418,27 +456,35 @@ pre {
 
     </section>
 
-<!-- ⭐ Legal Music Disclaimers -->
-<div style="background:#fcf8f0; padding:15px 20px; border-left:4px solid #c31432; border-radius:6px; margin-bottom:25px;">
+<!-- ⭐ Collapsible Legal Disclaimer -->
+<div class="disclaimer-box">
+  <button class="disclaimer-toggle" onclick="toggleDisclaimer()">
+    📄 Disclaimer
+  </button>
 
-  <p style="margin:0; font-size:0.92rem; color:#5a3d3d;">
-    <strong>Lyrics Disclaimer:</strong> All song lyrics belong to their respective copyright owners. 
-    SargamWorld does not claim ownership of any lyrics. They are shown only for educational and personal practice 
-    to help learners understand and perform sargam notations.
-  </p>
+  <div id="disclaimerContent" class="disclaimer-content">
 
-  <p style="margin:10px 0 0; font-size:0.92rem; color:#5a3d3d;">
-    <strong>Notation Disclaimer:</strong> All sargam notations on SargamWorld (except user submissions) are original 
-    transcriptions created by us. They are not copied from books, paid sources, or third-party websites. 
-    These notations are for learning only and must not be reproduced or used commercially without permission.
-  </p>
+    <!-- Your exact long text -->
+    <p>
+      <strong>Lyrics Disclaimer:</strong> All song lyrics belong to their respective copyright owners. 
+      SargamWorld does not claim ownership of any lyrics. They are shown only for educational and personal practice 
+      to help learners understand and perform sargam notations.
+    </p>
 
-  <p style="margin:10px 0 0; font-size:0.9rem; color:#5a3d3d;">
-    <strong>User Submissions:</strong> Users who share notations confirm they own the rights to publish them. 
-    If any copyrighted content is found, contact us for immediate removal.
-  </p>
+    <p>
+      <strong>Notation Disclaimer:</strong> All sargam notations on SargamWorld (except user submissions) are original 
+      transcriptions created by us. They are not copied from books, paid sources, or third-party websites. 
+      These notations are for learning only and must not be reproduced or used commercially without permission.
+    </p>
 
+    <p>
+      <strong>User Submissions:</strong> Users who share notations confirm they own the rights to publish them. 
+      If any copyrighted content is found, contact us for immediate removal.
+    </p>
+
+  </div>
 </div>
+
 
   
     <!-- ✅ Song List -->
@@ -786,6 +832,12 @@ pre {
   </footer>
   <!-- ✅ Scripts -->
 <script>
+
+function toggleDisclaimer() {
+  const box = document.getElementById("disclaimerContent");
+  box.style.display = (box.style.display === "block") ? "none" : "block";
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Remove 🎵 before sorting
   const titles = document.querySelectorAll('.song-card h3');
