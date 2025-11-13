@@ -98,12 +98,18 @@
 }
 
 .nav-links a {
-  color:#fff;
-  padding:8px 12px;
-  border-radius:8px;
-  font-weight:600;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
   transition: var(--transition);
+
+  /* ⭐ FIX MISALIGNMENT ⭐ */
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
+
 
 .nav-links a:hover {
   background: rgba(255,255,255,0.1);
