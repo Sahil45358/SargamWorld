@@ -5,42 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>SargamWorld | Songs & Sargam Notations</title>
 <meta name="description" content=" Discover a wide collection of songs with detailed sargam notations at SargamWorld. Learn, practice, and enjoy music.">
-  
-  <link rel="stylesheet" href="style.css">
+
      <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
-  </head>
-<body>
 
-  <!-- ====================================
-       UNIVERSAL NAVBAR
-       ==================================== -->
- <header class="site-header">
-  <div class="nav-inner">
-
-    <div class="brand-wrap">
-      <a href="index.html" class="logo">
-        <img src="LOGO.png" alt="SargamWorld Logo">
-        <span>SargamWorld</span>
-      </a>
-      <span class="tagline">Explore • Learn • Practice</span>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="songs.html" class="active">Songs</a></li>
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="support.html">Support</a></li>
-    </ul>
-
-  </div>
-</header>
-
-  
 <style>
    :root {
       --accent: #800000;
@@ -561,7 +529,37 @@ pre {
 
   
 </style>
+</head>
+<body>
+  <!-- ====================================
+       UNIVERSAL NAVBAR
+       ==================================== -->
+ <header class="site-header">
+  <div class="nav-inner">
 
+    <div class="brand-wrap">
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="songs.html" class="active">Songs</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+
+  </div>
+</header>
+
+  
 <main>
   
   
@@ -1107,8 +1105,6 @@ document.getElementById("languageFilter").addEventListener("change", applyFilter
     hamburger.addEventListener('click', () => navLinks.classList.toggle('show'));
   });
 </script>
-
-
 
 </body>
 </html>
