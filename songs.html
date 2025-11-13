@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="favicon.png">
 
 <style>
-   :root {
+      :root {
       --accent: #800000;
       --bg: #f3eee8;
       --text: #222;
@@ -53,6 +53,7 @@
 
 .brand-wrap {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 10px;
 }
@@ -70,6 +71,17 @@
   height: 120px;
 }
 
+.tagline {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #f3e8e8;
+  margin-top: 2px;      /* ⬅ SAME AS INDEX ✔ */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
 @media (pointer: coarse) {
   .logo span { display: none !important; }
 }
@@ -78,43 +90,20 @@
   .logo span { display: none !important; }
 }
 
-.tagline {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.75rem;
-  color: #f3e8e8;
-}
-
-@media (max-width: 768px) {
-  .tagline { font-size: 0.7rem; }
-}
 
 .nav-links {
-  display: flex;
-  gap: 10px;
-  list-style: none;
-
-  /* ⭐ FIX VERTICAL ALIGNMENT ⭐ */
-  height: 120px;         /* same as logo height */
-  align-items: center;   /* vertically center the buttons */
+  display:flex;
+  gap:10px;
+  list-style:none;
 }
-
 
 .nav-links a {
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-weight: 600;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
   transition: var(--transition);
-
-  /* ⭐ FIX MISALIGNMENT ⭐ */
-  line-height: 1;
-  display: flex;
-  align-items: center;
 }
-
 
 .nav-links a:hover {
   background: rgba(255,255,255,0.1);
@@ -133,7 +122,6 @@
 
 @media (max-width: 768px) {
   .nav-links {
-    line-height: 1;
     display:none;
     flex-direction: column;
     background: var(--accent);
@@ -146,7 +134,6 @@
   .nav-links.show { display:flex; }
   .hamburger { display:block; }
 }
-
 /* =====================
    Main Content
 ===================== */
