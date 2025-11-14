@@ -773,15 +773,13 @@ window.addEventListener("load", () => {
   const entrance = document.getElementById("entrance");
   const lastShown = Number(localStorage.getItem("entranceLastShown")) || 0;
   const now = Date.now();
-  const threeHours = 3 * 60 * 60 * 1000; // 3 hours in ms
+  const threeHours = 3 * 60 * 60 * 1000;
 
   if (now - lastShown > threeHours) {
-    // ✅ Run entrance animation
     localStorage.setItem("entranceLastShown", now);
     entrance.style.display = "flex";
     document.body.classList.add("no-scroll");
 
-    // === SargamWorld Entrance Animation ===
     const sPart = document.querySelector(".logo-part.s");
     const circlePart = document.querySelector(".logo-part.circle");
     const textPart = document.querySelector(".logo-part.text");
@@ -789,13 +787,13 @@ window.addEventListener("load", () => {
     const curtainRight = document.querySelector(".curtain.right");
     const particleContainer = document.getElementById("particles-container");
 
-    // 1️⃣ Bounce in S + Circle
+    // 1️⃣ Bounce
     sPart.style.opacity = 1;
     circlePart.style.opacity = 1;
     sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
     circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-    // 2️⃣ Fade in text slightly after bounce starts
+    // 2️⃣ Fade text
     setTimeout(() => (textPart.style.opacity = 1), 500);
 
     // 3️⃣ Spin
@@ -803,32 +801,24 @@ window.addEventListener("load", () => {
       sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
       circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-      // 💥 Particles burst *exactly as spin completes*
-setTimeout(() => {
-    const canvas = document.createElement("canvas");
-    canvas.id = "particlesCanvas";
-    canvas.width = 250;
-    canvas.height = 250;
-    canvas.style.position = "absolute";
-    canvas.style.left = "50%";
-    canvas.style.top = "50%";
-    canvas.style.transform = "translate(-50%, -50%)";
-    canvas.style.zIndex = 3;
+      // 💥 Particles BURST
+      setTimeout(() => {
+        const canvas = document.getElementById("particlesCanvas");
+        const ctx = canvas.getContext("2d");
 
-    particleContainer.appendChild(canvas);
+        canvas.width = 250;
+        canvas.height = 250;
 
-    const ctx = canvas.getContext("2d");
+        const particles = [];
+        const total = 28;
 
-    const particles = [];
-    const total = 28; // smoother burst
+        for (let i = 0; i < total; i++) {
+          const side = Math.random() < 0.5 ? -1 : 1;
+          const baseAngle = side === -1 ? Math.PI : 0;
+          const spread = (Math.random() - 0.5) * (Math.PI / 2);
+          const angle = baseAngle + spread;
 
-    for (let i = 0; i < total; i++) {
-        const side = Math.random() < 0.5 ? -1 : 1;
-        const baseAngle = side === -1 ? Math.PI : 0;
-        const spread = (Math.random() - 0.5) * (Math.PI / 2);
-        const angle = baseAngle + spread;
-
-        particles.push({
+          particles.push({
             x: 125,
             y: 125,
             size: Math.random() < 0.35 ? 8 + Math.random() * 5 : 5 + Math.random() * 3,
@@ -836,14 +826,13 @@ setTimeout(() => {
             radius: 60 + Math.random() * 120,
             opacity: 1,
             speed: 1 + Math.random() * 1.3
-        });
-    }
+          });
+        }
 
-    function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function drawParticles() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        particles.forEach(p => {
-            // Move outward
+          particles.forEach(p => {
             p.x = 125 + Math.cos(p.angle) * p.radius;
             p.y = 125 + Math.sin(p.angle) * p.radius * 0.6;
             p.radius += p.speed;
@@ -851,44 +840,42 @@ setTimeout(() => {
 
             ctx.globalAlpha = Math.max(p.opacity, 0);
 
-            // Silver glow look
             const gradient = ctx.createRadialGradient(
-                p.x, p.y, 0,
-                p.x, p.y, p.size
+              p.x, p.y, 0,
+              p.x, p.y, p.size
             );
             gradient.addColorStop(0, "rgba(255,255,255,1)");
             gradient.addColorStop(1, "rgba(200,200,200,0.4)");
 
             ctx.fillStyle = gradient;
             ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
-        });
+          });
 
-        if (particles.some(p => p.opacity > 0)) {
+          if (particles.some(p => p.opacity > 0)) {
             requestAnimationFrame(drawParticles);
+          }
         }
-    }
 
-    drawParticles();
-}, 700);
+        drawParticles();
+      }, 700); // END particles
+    }, 1200); // END spin
 
-
-    // 4️⃣ Pause briefly, then curtains + split
+    // 4️⃣ Curtains + split
     setTimeout(() => {
       textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
       sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
       circlePart.style.animation = "circleSplitRight 1.2s ease-in-out forwards";
       curtainLeft.classList.add("open");
       curtainRight.classList.add("open");
-      document.querySelectorAll(".particle").forEach(p => p.classList.add("fade-out"));
     }, 3800);
 
-    // 5️⃣ Fade overlay and re-enable scroll
+    // 5️⃣ Fade overlay out
     setTimeout(() => {
       entrance.classList.add("fadeOutOverlay");
       setTimeout(() => document.body.classList.remove("no-scroll"), 800);
     }, 5100);
+
   } else {
-    // ❌ Skip animation — show main content instantly
     entrance.style.display = "none";
     document.body.classList.remove("no-scroll");
   }
