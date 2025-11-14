@@ -633,7 +633,6 @@ body.no-scroll {
 
   <!-- Silver particles (Canvas version) -->
   <div id="particles-container">
-      <canvas id="particlesCanvas"></canvas>
   </div>
 </div>
 
@@ -812,29 +811,34 @@ const particleImages = [];
   particleImages.push(img);
 });
 
-// 💥 FAST Particle Burst
 setTimeout(() => {
-    const canvas = document.getElementById("particlesCanvas");
-    const ctx = canvas.getContext("2d");
 
-    // bigger canvas so burst is not clipped
+    // ⭐ CREATE CANVAS HERE INSIDE THE ENTRANCE ⭐
+    const canvas = document.createElement("canvas");
+    canvas.id = "particlesCanvas";
     canvas.width = 500;
     canvas.height = 500;
-    canvas.style.width = "500px";
-    canvas.style.height = "500px";
+    canvas.style.position = "absolute";
+    canvas.style.left = "50%";
+    canvas.style.top = "50%";
+    canvas.style.transform = "translate(-50%, -50%)";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "3";
+
+    particleContainer.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
 
     const particles = [];
-    const total = 35;
+    const total = 40;
 
     for (let i = 0; i < total; i++) {
-      const angle = Math.random() * Math.PI * 2;
-
       particles.push({
         x: 250,
         y: 250,
         size: 8 + Math.random() * 10,
-        angle: angle,
-        speed: 2.0 + Math.random() * 3.0,   // faster burst
+        angle: Math.random() * Math.PI * 2,
+        speed: 2 + Math.random() * 3,
         opacity: 1,
         img: particleImages[Math.floor(Math.random() * particleImages.length)]
       });
@@ -843,40 +847,27 @@ setTimeout(() => {
     let startTime = performance.now();
 
     function animate() {
-      const now = performance.now();
-      const elapsed = now - startTime;
+      const elapsed = performance.now() - startTime;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach(p => {
-        // move outward continuously
         p.x += Math.cos(p.angle) * p.speed;
         p.y += Math.sin(p.angle) * p.speed;
 
-        // slow fade after 2400ms so they stay visible longer
-        if (elapsed > 2400) {
-          p.opacity -= 0.01;
-        }
+        if (elapsed > 2600) p.opacity -= 0.015;
+        ctx.globalAlpha = Math.max(p.opacity, 0.02);
 
-        ctx.globalAlpha = Math.max(p.opacity, 0.01);
-
-        ctx.drawImage(
-          p.img,
-          p.x - p.size / 2,
-          p.y - p.size / 2,
-          p.size,
-          p.size
-        );
+        ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
       });
 
-      // keep animating until the curtain animation starts (~3800ms)
-      if (elapsed < 3800) {
-        requestAnimationFrame(animate);
-      }
+      if (elapsed < 3800) requestAnimationFrame(animate);
     }
 
     animate();
+
 }, 700);
+
     }, 1200); // END spin timeout
 
     // 4️⃣ Curtains + split
