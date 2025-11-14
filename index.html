@@ -786,13 +786,12 @@ const particleImages = [];
 function startParticlesBurst() {
     console.log("Particles started!");
 
-    // Fullscreen canvas ABOVE entrance
     const canvas = document.createElement("canvas");
     canvas.id = "particlesCanvas";
     canvas.style.position = "fixed";
     canvas.style.inset = "0";
     canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = "10000";   
+    canvas.style.zIndex = "10000";
 
     document.body.appendChild(canvas);
 
@@ -807,25 +806,24 @@ function startParticlesBurst() {
     const cx = canvas.width / 2;
     const cy = canvas.height / 2;
 
-    // Create particles
     for (let i = 0; i < total; i++) {
 
-        // LEFT + RIGHT semicircle burst only
+        // LEFT + RIGHT semicircles only
         let angle;
         if (Math.random() < 0.5) {
-            // LEFT SIDE (135° to 225°)
+            // LEFT SIDE
             angle = Math.PI * (0.75 + Math.random() * 0.5);
         } else {
-            // RIGHT SIDE (-45° to 45°)
+            // RIGHT SIDE
             angle = (Math.random() * (Math.PI / 2)) - (Math.PI / 4);
         }
 
         particles.push({
             x: cx,
             y: cy,
-            size: 10 + Math.random() * 12,
-            angle: angle,  // ✔ store angle
-            speed: 1 + Math.random() * 1.5, // ✔ slower movement
+            size: 10 + Math.random() * 10,
+            angle,
+            speed: 4 + Math.random() * 4,   // ⭐ MUCH FASTER (old: 1–1.5)
             opacity: 1,
             img: particleImages[Math.floor(Math.random() * particleImages.length)]
         });
@@ -840,26 +838,32 @@ function startParticlesBurst() {
 
         particles.forEach(p => {
 
-            // Move outward
+            // Fast outward movement
             p.x += Math.cos(p.angle) * p.speed;
             p.y += Math.sin(p.angle) * p.speed;
 
-            // Fade only near end
-            if (elapsed > 3300) p.opacity -= 0.01;
+            // Start fading early (1800ms)
+            if (elapsed > 1800) p.opacity -= 0.04;  // ⭐ much faster fade
 
             ctx.globalAlpha = Math.max(p.opacity, 0);
 
-            ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+            ctx.drawImage(
+                p.img,
+                p.x - p.size / 2,
+                p.y - p.size / 2,
+                p.size,
+                p.size
+            );
         });
 
-        if (elapsed < 3800) {
+        // Stop early (particles gone before curtains)
+        if (elapsed < 2500) {
             requestAnimationFrame(animate);
         }
     }
 
     animate();
 }
-
 /******************************
  * MAIN ENTRANCE ANIMATION
  ******************************/
