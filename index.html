@@ -775,6 +775,7 @@ const particleImages = [];
 ["particle_smooth.png", "particle_brushed.png"].forEach(src => {
     const img = new Image();
     img.src = src;
+    img.onload = () => console.log("Loaded:", src);
     particleImages.push(img);
 });
 
@@ -783,18 +784,18 @@ const particleImages = [];
  * FULLSCREEN PARTICLE BURST
  ******************************/
 function startParticlesBurst() {
+    console.log("Particles started!");
 
-    // Create a full-screen canvas (NO CLIPPING)
+    // Fullscreen canvas ABOVE entrance
     const canvas = document.createElement("canvas");
     canvas.id = "particlesCanvas";
     canvas.style.position = "fixed";
     canvas.style.inset = "0";
     canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = "3";
+    canvas.style.zIndex = "10000";   // 🔥 FIXED (was behind entrance)
 
     document.body.appendChild(canvas);
 
-    // Match physical resolution
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -831,12 +832,10 @@ function startParticlesBurst() {
             p.x += Math.cos(p.angle) * p.speed;
             p.y += Math.sin(p.angle) * p.speed;
 
-            // Fade out near end
             if (elapsed > 2600) p.opacity -= 0.02;
 
             ctx.globalAlpha = Math.max(p.opacity, 0);
 
-            // Draw PNG particle
             ctx.drawImage(
                 p.img,
                 p.x - p.size / 2,
@@ -846,7 +845,6 @@ function startParticlesBurst() {
             );
         });
 
-        // Run until curtains begin opening (≈3800ms)
         if (elapsed < 3800) requestAnimationFrame(animate);
     }
 
@@ -879,25 +877,26 @@ window.addEventListener("load", () => {
     // 1️⃣ Bounce
     sPart.style.opacity = 1;
     circlePart.style.opacity = 1;
-
     sPart.style.animation = "logoRealBounce 1.2s ease-out forwards";
     circlePart.style.animation = "logoRealBounce 1.2s ease-out forwards";
 
-    // 2️⃣ Fade in text
+    // 2️⃣ Fade-in text
     setTimeout(() => textPart.style.opacity = 1, 500);
 
     // 3️⃣ Spin
     setTimeout(() => {
 
+        console.log("Spin started");
+
         sPart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
         circlePart.style.animation = "spinShrinkExpand 0.9s ease-in-out forwards";
 
-        // ⭐ PERFECT TIMING — particles burst exactly when spin ends
+        // ⭐ Particles EXACT when spin ends
         setTimeout(startParticlesBurst, 900);
 
     }, 1200);
 
-    // 4️⃣ Curtains sliding & logo pieces split
+    // 4️⃣ Curtains & split
     setTimeout(() => {
       textPart.style.animation = "textFadeOut 1s ease-in-out forwards";
       sPart.style.animation = "sSplitLeft 1.2s ease-in-out forwards";
@@ -906,7 +905,7 @@ window.addEventListener("load", () => {
       curtainRight.classList.add("open");
     }, 3800);
 
-    // 5️⃣ Fade entrance out
+    // 5️⃣ Fade out overlay
     setTimeout(() => {
       entrance.classList.add("fadeOutOverlay");
       setTimeout(() => document.body.classList.remove("no-scroll"), 800);
@@ -917,7 +916,6 @@ window.addEventListener("load", () => {
     document.body.classList.remove("no-scroll");
   }
 });
-
 
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
