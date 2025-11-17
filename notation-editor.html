@@ -198,71 +198,69 @@
   }
 }
     
-/* ======================
-   MODERN KEYBOARD STYLE
-========================= */
+/* ================================
+   MOBILE FRIENDLY KEYBOARD LAYOUT
+================================ */
 
 .keyboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 14px;
-  margin-top: 20px;
-}
-
-/* Each section box */
-.keyboard-section {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  text-align: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 /* Section title */
 .keyboard-section h4 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #800000;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
-/* Buttons */
+/* Wrapping rows like phone keyboard */
+.key-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+/* Main key style */
 .keyboard button {
-  width: 65px;
-  height: 42px;
-  margin: 4px;
+  min-width: 48px;
+  height: 45px;
+  padding: 0px 8px;
   background: #800000;
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
   transition: 0.15s ease;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .keyboard button:hover {
   background: #a00000;
 }
 
-/* Mobile friendly text */
-@media(max-width: 480px) {
+/* MOBILE OPTIMIZATION */
+@media(max-width: 600px) {
   .keyboard button {
-    width: 58px;
-    height: 40px;
-    margin: 3px;
-    font-size: 0.78rem;
-    border-radius: 8px;
-  }
-
-  .keyboard-section {
-    padding: 10px;
+    min-width: 40px;
+    height: 42px;
+    font-size: 0.8rem;
+    border-radius: 7px;
   }
 }
+
 
 /* Controls Section Buttons (Undo/Redo) */
 .controls .control-btn {
@@ -468,106 +466,123 @@
 </a>
   
 <div class="keyboard">
+
   <!-- Swars -->
   <div class="keyboard-section">
     <h4>Swars</h4>
-    <button data-key="s">Sa</button>
-    <button data-key="r">Re</button>
-    <button data-key="R">Komal Re</button>
-    <button data-key="g">Ga</button>
-    <button data-key="G">Komal Ga</button>
-    <button data-key="m">Ma</button>
-    <button data-key="M">Teevra Ma</button>
-    <button data-key="p">Pa</button>
-    <button data-key="d">Dha</button>
-    <button data-key="D">Komal Dha</button>
-    <button data-key="n">Ni</button>
-    <button data-key="N">Komal Ni</button>
+    <div class="key-row">
+      <button data-key="s">Sa</button>
+      <button data-key="r">Re</button>
+      <button data-key="R">ṟ</button>
+      <button data-key="g">Ga</button>
+      <button data-key="G">g̱</button>
+      <button data-key="m">Ma</button>
+      <button data-key="M">Ṁa</button>
+      <button data-key="p">Pa</button>
+      <button data-key="d">Dha</button>
+      <button data-key="D">Ḏ</button>
+      <button data-key="n">Ni</button>
+      <button data-key="N">Ṉ</button>
+    </div>
   </div>
 
   <!-- Octaves -->
   <div class="keyboard-section">
     <h4>Octaves</h4>
-    <button data-key="su">Taar Sa</button>
-    <button data-key="Nl">Mandra Komal Ni</button>
-    <button data-key="Mu">Taar Teevra Ma</button>
+    <div class="key-row">
+      <button data-key="su">Taar Sa</button>
+      <button data-key="Nl">Mandra Ni</button>
+      <button data-key="Mu">Taar Ma</button>
+    </div>
   </div>
 
   <!-- Chhand -->
-  <div class="keyboard-section chhand">
+  <div class="keyboard-section">
     <h4>Chhand</h4>
-    <button data-key="@">Dugun (2)</button>
-    <button data-key="#">Tigun (3)</button>
-    <button data-key="$">Chaugun (4)</button>
-    <button data-key="%">Pachgun (5)</button>
-    <button data-key="^">Chhatgun (6)</button>
-    <button data-key="&">Satgun (7)</button>
-    <button data-key="*">Athgun (8)</button>
-    <button data-key="`">Lower Chaugun (4)</button>
-    <button data-key="!">Lower Chhatgun (6)</button>
-    <button data-key="~">Lower Athgun (8)</button>
+    <div class="key-row">
+      <button data-key="@">2</button>
+      <button data-key="#">3</button>
+      <button data-key="$">4</button>
+      <button data-key="%">5</button>
+      <button data-key="^">6</button>
+      <button data-key="&">7</button>
+      <button data-key="*">8</button>
+      <button data-key="`">⇣4</button>
+      <button data-key="!">⇣6</button>
+      <button data-key="~">⇣8</button>
+    </div>
   </div>
 
   <!-- Meend -->
   <div class="keyboard-section">
     <h4>Meend</h4>
-    <button data-key="q">Start</button>
-    <button data-key="w">Continue</button>
-    <button data-key="e">End</button>
-    <button data-key="Q">Ghaseet Start</button>
-    <button data-key="W">Stroke</button>
-    <button data-key="E">Ghaseet End</button>
+    <div class="key-row">
+      <button data-key="q">Start</button>
+      <button data-key="w">Mid</button>
+      <button data-key="e">End</button>
+      <button data-key="Q">G-Start</button>
+      <button data-key="W">Stroke</button>
+      <button data-key="E">G-End</button>
+    </div>
   </div>
 
   <!-- Murki -->
   <div class="keyboard-section">
     <h4>Murki</h4>
-    <button data-key="(">( Start</button>
-    <button data-key=")">) End</button>
+    <div class="key-row">
+      <button data-key="("> ( </button>
+      <button data-key=")"> ) </button>
+    </div>
   </div>
 
   <!-- Mizrab -->
   <div class="keyboard-section">
     <h4>Mizrab</h4>
-    <button data-key=";">Da (;)</button>
-    <button data-key="'">Ra (')</button>
-    <button data-key="[">Daa ([)</button>
-    <button data-key="]">Raa (])</button>
-    <button data-key="\\">Dir (\)</button>
-    <button data-key="-">Khali (-)</button>
+    <div class="key-row">
+      <button data-key=";">Da</button>
+      <button data-key="'">Ra</button>
+      <button data-key="[">Daa</button>
+      <button data-key="]">Raa</button>
+      <button data-key="\\">Dir</button>
+      <button data-key="-">Khali</button>
+    </div>
   </div>
 
-  <!-- Miscellaneous -->
+  <!-- Misc -->
   <div class="keyboard-section">
     <h4>Misc</h4>
-    <button data-key="x">Sam</button>
-    <button data-key="_">Long Dash</button>
-    <button data-key=",">Comma</button>
-    <button data-key="+">Plus</button>
-    <button data-key="a">Short Divider</button>
-    <button data-key="A">Long Divider</button>
-    <button data-key="0">0</button>
-    <button data-key="1">1</button>
-    <button data-key="2">2</button>
-    <button data-key="3">3</button>
-    <button data-key="4">4</button>
-    <button data-key="5">5</button>
-    <button data-key="6">6</button>
-    <button data-key="7">7</button>
-    <button data-key="8">8</button>
-    <button data-key="9">9</button>
+    <div class="key-row">
+      <button data-key="x">Sam</button>
+      <button data-key="_">Dash</button>
+      <button data-key=",">,</button>
+      <button data-key="+">+</button>
+      <button data-key="a">Divider</button>
+      <button data-key="A">Divider+</button>
+      <button data-key="0">0</button>
+      <button data-key="1">1</button>
+      <button data-key="2">2</button>
+      <button data-key="3">3</button>
+      <button data-key="4">4</button>
+      <button data-key="5">5</button>
+      <button data-key="6">6</button>
+      <button data-key="7">7</button>
+      <button data-key="8">8</button>
+      <button data-key="9">9</button>
+    </div>
   </div>
 
   <!-- Controls -->
-<div class="keyboard-section controls">
-  <h4>Controls</h4>
-
-  <button class="control-btn" onclick="undoChange()">Undo ⤺</button>
-  <button class="control-btn" onclick="redoChange()">Redo ⤻</button>
-  <button class="control-btn clear-btn" onclick="clearEditor()">Clear</button>
-  <button class="control-btn" onclick="window.location.href='keyboard-info.html'">Key Info</button>
+  <div class="keyboard-section controls">
+    <h4>Controls</h4>
+    <div class="key-row">
+      <button class="control-btn" onclick="undoChange()">Undo ⤺</button>
+      <button class="control-btn" onclick="redoChange()">Redo ⤻</button>
+      <button class="control-btn clear-btn" onclick="clearEditor()">Clear</button>
+      <button class="control-btn" onclick="window.location.href='keyboard-info.html'">Key Info</button>
+    </div>
+  </div>
 </div>
-  
+
   <button id="downloadPDF"
     style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">
     Download PDF
