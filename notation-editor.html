@@ -632,31 +632,22 @@ toggleBtn.addEventListener("click", () => {
 function exitNotationSpan() {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
-  
+
   const range = sel.getRangeAt(0);
-  const node = range.startContainer;
+  let node = range.startContainer;
 
-  // Case 1: cursor inside text node inside a span
-  if (node.parentElement && node.parentElement !== editor) {
-    let notationSpan = node.parentElement;
-
-    // Move caret after the span
-    const newRange = document.createRange();
-    newRange.setStartAfter(notationSpan);
-    newRange.collapse(true);
-
-    sel.removeAllRanges();
-    sel.addRange(newRange);
+  // If cursor is inside a text node, move to its parent
+  if (node.nodeType === Node.TEXT_NODE) {
+    node = node.parentElement;
   }
 
-  // Case 2: cursor is exactly the span node
-  if (node.nodeType === 1 && node.classList && node.classList.contains(selectedFont)) {
-    const newRange = document.createRange();
-    newRange.setStartAfter(node);
-    newRange.collapse(true);
-
-    sel.removeAllRanges();
-    sel.addRange(newRange);
+  // If that parent is a notation span → REMOVE the class
+  if (node && node.classList) {
+    for (const fontClass in fontNames) {
+      if (node.classList.contains(fontClass)) {
+        node.classList.remove(fontClass);
+      }
+    }
   }
 }
   
