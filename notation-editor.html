@@ -866,7 +866,7 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
     const posY = (pageHeight - wmHeight) / 2;
 
     doc.saveGraphicsState();
-    doc.setGState(new doc.GState({ opacity: 0.13 }));
+    doc.setGState(new doc.GState({ opacity: 0.26 }));
 
     doc.addImage(
       watermarkImg,
@@ -955,7 +955,7 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
           const posY = (pageHeight - 320) / 2;
 
           doc.saveGraphicsState();
-          doc.setGState(new doc.GState({ opacity: 0.13 }));
+          doc.setGState(new doc.GState({ opacity: 0.26 }));
           doc.addImage(watermarkImg, "PNG", posX, posY, 320, 320);
           doc.restoreGraphicsState();
         }
@@ -981,7 +981,7 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
               const posY = (pageHeight - 320) / 2;
 
               doc.saveGraphicsState();
-              doc.setGState(new doc.GState({ opacity: 0.13 }));
+              doc.setGState(new doc.GState({ opacity: 0.26 }));
               doc.addImage(watermarkImg, "PNG", posX, posY, 320, 320);
               doc.restoreGraphicsState();
             }
