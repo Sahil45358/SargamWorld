@@ -318,7 +318,7 @@
 }
 
     
-/* === Footer (kept as is) === */
+  /* === SargamWorld Footer === */
 .sargam-footer {
   background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
   padding: 45px 20px 20px;
@@ -335,30 +335,93 @@
   gap: 40px;
 }
 
-.footer-brand-col { max-width: 260px; }
-.footer-logo { height: 150px; border-radius: 12px; }
-.footer-tagline { font-size: 0.85rem; color: #aaa; line-height: 1.4; margin-top: 10px; }
+/* Brand Column */
+.footer-brand-col {
+  max-width: 260px;
+}
 
+/* Footer Logo */
+.footer-logo {
+  height: 150px;      /* bigger logo */
+  border-radius: 12px;
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.4;
+  margin-top: 10px;   /* pushes tagline down */
+}
+
+/* Column headers */
 .footer-col h4 {
-  margin-bottom: 12px; font-size: 1rem; color: #fff;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #fff;
   border-left: 3px solid var(--accent);
   padding-left: 8px;
 }
 
+/* Links */
 .footer-col a {
+  display: block;
   color: #ccc;
+  text-decoration: none;
   margin-bottom: 8px;
   font-size: 0.85rem;
-  display: block;
-  transition: 0.3s;
+  transition: color 0.3s ease;
 }
-.footer-col a:hover { color: var(--accent); }
 
+.footer-col a:hover {
+  color: var(--accent);
+}
+
+/* Footer bottom */
 .footer-bottom {
-  text-align: center; color: #888; font-size: 0.8rem;
-  margin-top: 30px; padding-top: 15px;
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 30px;
+  padding-top: 15px;
   border-top: 1px solid rgba(255,255,255,0.1);
 }
+
+/* Mobile adjustments */
+@media (max-width: 650px) {
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    text-align: left;
+  }
+
+  .footer-brand-col {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    textAlign: left;
+    flex-wrap: nowrap;
+  }
+
+  .footer-logo {
+    height: 100px;
+  }
+
+  .footer-tagline {
+    margin-top: 0;
+    font-size: 0.90rem;
+    max-width: 220px;
+    min-width: 180px;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .footer-col {
+    text-align: left;
+  }
+}  
 
 .notation-active {
   border: 2px solid var(--accent);
