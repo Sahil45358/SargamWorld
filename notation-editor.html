@@ -615,17 +615,19 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.innerText = "Notation Mode: ON";
     toggleBtn.style.background = "#228B22";
     fontSelector.disabled = false;
-  } else {
-    toggleBtn.innerText = "Notation Mode: OFF";
-    toggleBtn.style.background = "var(--accent)";
-    fontSelector.disabled = true;
-    fontSelector.value = "";
-    selectedFont = "";
+} else {
+  toggleBtn.innerText = "Notation Mode: OFF";
+  toggleBtn.style.background = "var(--accent)";
+  fontSelector.disabled = true;
+  fontSelector.value = "";
+  selectedFont = "";
 
-    // IMPORTANT FIX: exit notation span
-    exitNotationSpan();
-  }
+  // FIX 1: Remove notation styling from the *nearest* parent span
+  exitNotationSpan();
 
+  // FIX 2: Force editor default font (important!)
+  editor.style.fontFamily = "inherit";
+}
   editor.focus();
 });
 
@@ -636,21 +638,19 @@ function exitNotationSpan() {
   const range = sel.getRangeAt(0);
   let node = range.startContainer;
 
-  // If cursor is inside a text node, move to its parent
-  if (node.nodeType === Node.TEXT_NODE) {
-    node = node.parentElement;
-  }
-
-  // If that parent is a notation span → REMOVE the class
-  if (node && node.classList) {
-    for (const fontClass in fontNames) {
-      if (node.classList.contains(fontClass)) {
-        node.classList.remove(fontClass);
+  // If cursor is inside a span, remove all notation classes
+  while (node && node !== editor) {
+    if (node.nodeType === 1 && node.classList) {
+      for (const key in fontNames) {
+        if (node.classList.contains(key)) {
+          node.classList.remove(key);  // remove notation font
+        }
       }
     }
+    node = node.parentNode; // keep going upward
   }
 }
-  
+ 
   // Font change
   fontSelector.addEventListener("change", () => {
     selectedFont = fontSelector.value;
@@ -683,20 +683,28 @@ function exitNotationSpan() {
     console.log("5. Selection is valid. Preparing to insert:", content); // DEBUG
 
     range.deleteContents();
+    
+let node;
+if (notationMode && selectedFont) {
+    node = document.createElement("span");
+    node.className = selectedFont;
+    node.textContent = content;
+    console.log("6. Creating SPAN with class:", selectedFont); // DEBUG
+} else {
+    // NORMAL TYPING → ensure normal font is used
+    node = document.createElement("span");
+    node.style.fontFamily = "inherit";
+    node.textContent = content;
+    console.log("6. Creating NORMAL TEXT span");
+}
 
-    let node;
-    if (notationMode && selectedFont) {
-        node = document.createElement("span");
-        node.className = selectedFont;
-        node.textContent = content;
-        console.log("6. Creating SPAN with class:", selectedFont); // DEBUG
-    } else {
-        node = document.createTextNode(content);
-        console.log("6. Creating TEXT node"); // DEBUG
-    }
+range.insertNode(node);
+console.log("7. Node inserted into DOM.");
 
-    range.insertNode(node);
-    console.log("7. Node inserted into DOM."); // DEBUG
+// EXTRA safety: ensure parent also uses normal font
+if (!notationMode) {
+    node.parentElement.style.fontFamily = "inherit";
+}
 
     // Move the cursor to after the inserted node
     const newRange = document.createRange();
