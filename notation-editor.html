@@ -607,23 +607,59 @@ document.addEventListener("DOMContentLoaded", () => {
   // Disable font selector initially
   fontSelector.disabled = true;
 
-  // Toggle Notation Mode
-  toggleBtn.addEventListener("click", () => {
-    notationMode = !notationMode;
-    if (notationMode) {
-      toggleBtn.innerText = "Notation Mode: ON";
-      toggleBtn.style.background = "#228B22";
-      fontSelector.disabled = false;
-    } else {
-      toggleBtn.innerText = "Notation Mode: OFF";
-      toggleBtn.style.background = "var(--accent)";
-      fontSelector.disabled = true;
-      fontSelector.value = "";
-      selectedFont = "";
-    }
-    editor.focus();
-  });
+// Toggle Notation Mode
+toggleBtn.addEventListener("click", () => {
+  notationMode = !notationMode;
 
+  if (notationMode) {
+    toggleBtn.innerText = "Notation Mode: ON";
+    toggleBtn.style.background = "#228B22";
+    fontSelector.disabled = false;
+  } else {
+    toggleBtn.innerText = "Notation Mode: OFF";
+    toggleBtn.style.background = "var(--accent)";
+    fontSelector.disabled = true;
+    fontSelector.value = "";
+    selectedFont = "";
+
+    // IMPORTANT FIX: exit notation span
+    exitNotationSpan();
+  }
+
+  editor.focus();
+});
+
+function exitNotationSpan() {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  
+  const range = sel.getRangeAt(0);
+  const node = range.startContainer;
+
+  // Case 1: cursor inside text node inside a span
+  if (node.parentElement && node.parentElement !== editor) {
+    let notationSpan = node.parentElement;
+
+    // Move caret after the span
+    const newRange = document.createRange();
+    newRange.setStartAfter(notationSpan);
+    newRange.collapse(true);
+
+    sel.removeAllRanges();
+    sel.addRange(newRange);
+  }
+
+  // Case 2: cursor is exactly the span node
+  if (node.nodeType === 1 && node.classList && node.classList.contains(selectedFont)) {
+    const newRange = document.createRange();
+    newRange.setStartAfter(node);
+    newRange.collapse(true);
+
+    sel.removeAllRanges();
+    sel.addRange(newRange);
+  }
+}
+  
   // Font change
   fontSelector.addEventListener("change", () => {
     selectedFont = fontSelector.value;
