@@ -198,87 +198,97 @@
   }
 }
     
-/* Keyboard container */
+/* ======================
+   MODERN KEYBOARD STYLE
+========================= */
+
 .keyboard {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;               
-  justify-content: center;
-  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
 }
 
+/* Each section box */
 .keyboard-section {
-  border: 1px solid rgba(0,0,0,0.1);
-  border-radius: var(--radius);
-  padding: 8px;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  min-width: 150px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
+/* Section title */
 .keyboard-section h4 {
-  width: 100%;
-  text-align: center;
-  margin: 0 0 6px 0;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #800000;
+  margin-bottom: 10px;
 }
 
+/* Buttons */
 .keyboard button {
-  width: auto;              
-  min-width: 50px;          
-  max-width: 70px;          
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 4px;
-  font-size: 0.7rem;        
-  text-align: center;
-  line-height: 1.1;
-  word-wrap: break-word;
-  background: var(--accent);
+  width: 65px;
+  height: 42px;
+  margin: 4px;
+  background: #800000;
   color: #fff;
   border: none;
-  border-radius: 6px;
-  margin: 3px;
-  cursor: pointer;
+  border-radius: 10px;
+  font-size: 0.85rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: normal;
+}
+
+.keyboard button:hover {
+  background: #a00000;
+}
+
+/* Mobile friendly text */
+@media(max-width: 480px) {
+  .keyboard button {
+    width: 58px;
+    height: 40px;
+    margin: 3px;
+    font-size: 0.78rem;
+    border-radius: 8px;
+  }
+
+  .keyboard-section {
+    padding: 10px;
+  }
+}
+
+/* Controls Section Buttons (Undo/Redo) */
+.controls .control-btn {
+  min-width: 70px;
+  padding: 8px 12px;
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: 0.2s ease;
 }
 
-.keyboard button:hover { background: #9b1717; }
-
-/* Desktop adjustments */
-@media(min-width: 1025px) {
-  .keyboard button {
-    height: 40px;
-    font-size: 0.75rem;
-    min-width: 55px;
-    max-width: 80px;
-  }
+.controls .control-btn:hover {
+  background: #666;
 }
 
-/* Mobile adjustments */
-@media(max-width: 768px) {
-  .keyboard-section { min-width: 120px; padding: 6px; }
-  .keyboard button {
-    height: 32px;
-    font-size: 0.65rem;
-    min-width: 45px;
-    max-width: 65px;
-    padding: 2px 3px;
-  }
+.controls .clear-btn {
+  background: #b30000;
 }
 
-/* Chhand section adjustments */
-.keyboard-section.chhand button {
-  font-size: 0.6rem;       
-  white-space: normal;     
-  line-height: 1.1;        
-  min-height: 40px;        
+.controls .clear-btn:hover {
+  background: #d40000;
 }
 
     
@@ -368,6 +378,39 @@
 #editor .ome-bhatkhande-bangla { font-family: 'OmeBhatkhandeBangla' !important; }
 #editor .ome-bhatkhande-english { font-family: 'OmeBhatkhandeEnglish' !important; }
 #editor .ome-swarlipi { font-family: 'OmeSwarlipi' !important; }
+
+
+/* ======================
+   UNDO / REDO / CONTROLS
+========================= */
+
+.controls .control-btn {
+  min-width: 70px;
+  padding: 8px 12px;
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  margin: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.controls .control-btn:hover {
+  background: #666;
+}
+
+.controls .clear-btn {
+  background: #b30000;
+}
+
+.controls .clear-btn:hover {
+  background: #d40000;
+}
+
+    
 </style>
 </head>
 <body>
@@ -516,14 +559,15 @@
   </div>
 
   <!-- Controls -->
-  <div class="keyboard-section">
-    <h4>Controls</h4>
-    <button onclick="clearEditor()">Clear</button>
-    <button onclick="window.location.href='keyboard-info.html'">Key Info</button>
-  </div>
+<div class="keyboard-section controls">
+  <h4>Controls</h4>
+
+  <button class="control-btn" onclick="undoChange()">Undo ⤺</button>
+  <button class="control-btn" onclick="redoChange()">Redo ⤻</button>
+  <button class="control-btn clear-btn" onclick="clearEditor()">Clear</button>
+  <button class="control-btn" onclick="window.location.href='keyboard-info.html'">Key Info</button>
 </div>
-
-
+  
   <button id="downloadPDF"
     style="padding:10px 16px; background:var(--accent); color:#fff; border:none; border-radius:var(--radius); font-weight:600; cursor:pointer; margin-top:10px;">
     Download PDF
@@ -607,7 +651,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const editor = document.getElementById("editor");
 
   fontSelector.disabled = true;
+  // ===== UNDO / REDO history tracking =====
+  editor.addEventListener("input", saveHistory);
+  editor.addEventListener("click", saveHistory);
+  editor.addEventListener("keyup", saveHistory);
 
+  // Initial snapshot
+  saveHistory();
+  
   /******************************************
       1. TOGGLE NOTATION MODE
   ******************************************/
@@ -893,6 +944,104 @@ document.getElementById("downloadPDF").addEventListener("click", () => {
 
   doc.save("Bhatkhande_Notation.pdf");
 });
+
+
+  // ======= UNDO / REDO HISTORY =======
+let historyStack = [];
+let redoStack = [];
+let isTyping = false;
+
+function saveHistory() {
+  if (isTyping) return; // prevent double pushes
+  isTyping = true;
+
+  historyStack.push({
+    html: editor.innerHTML,
+    selection: saveSelection(editor)
+  });
+
+  // clear redo history when new typing happens
+  redoStack = [];
+
+  setTimeout(() => (isTyping = false), 150);
+}
+
+function undoChange() {
+  if (historyStack.length <= 1) return;
+
+  const last = historyStack.pop();
+  redoStack.push(last);
+
+  const state = historyStack[historyStack.length - 1];
+
+  editor.innerHTML = state.html;
+  restoreSelection(editor, state.selection);
+}
+
+function redoChange() {
+  if (redoStack.length === 0) return;
+
+  const state = redoStack.pop();
+  historyStack.push(state);
+
+  editor.innerHTML = state.html;
+  restoreSelection(editor, state.selection);
+}
+
+  // ======= CARET SAVE / RESTORE =======
+function saveSelection(containerEl) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return null;
+
+  const range = sel.getRangeAt(0);
+  return {
+    start: getNodeOffset(containerEl, range.startContainer, range.startOffset),
+    end: getNodeOffset(containerEl, range.endContainer, range.endOffset)
+  };
+}
+
+function restoreSelection(containerEl, savedSel) {
+  if (!savedSel) return;
+
+  const range = document.createRange();
+  const sel = window.getSelection();
+
+  let start = findNodeOffset(containerEl, savedSel.start);
+  let end = findNodeOffset(containerEl, savedSel.end);
+
+  range.setStart(start.node, start.offset);
+  range.setEnd(end.node, end.offset);
+
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+function getNodeOffset(root, node, offset) {
+  let chars = 0;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_ALL);
+
+  while (walker.nextNode()) {
+    const current = walker.currentNode;
+
+    if (current === node) return chars + offset;
+
+    chars += current.textContent?.length ?? 0;
+  }
+  return chars;
+}
+
+function findNodeOffset(root, count) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_ALL);
+
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    const text = node.textContent ?? "";
+    if (count <= text.length) return { node, offset: count };
+    count -= text.length;
+  }
+
+  return { node: root, offset: root.childNodes.length };
+}
 
   // Hamburger menu
   const hamburger = document.querySelector(".hamburger");
