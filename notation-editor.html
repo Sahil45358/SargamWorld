@@ -817,8 +817,7 @@ document.addEventListener("DOMContentLoaded", () => {
       6. VIRTUAL KEYBOARD — FIXED!
       ✨ DISABLED WHEN notationMode = OFF
   ******************************************/
-  const buttons = document.querySelectorAll(".keyboard button[data-key]");
-
+const buttons = document.querySelectorAll(".key-btn");
   buttons.forEach(btn => {
     btn.addEventListener("mousedown", e => {
       e.preventDefault();
