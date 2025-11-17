@@ -603,110 +603,120 @@ document.addEventListener("DOMContentLoaded", () => {
   const fontSelector = document.getElementById("fontSelector");
   const toggleBtn = document.getElementById("toggleNotation");
   const editor = document.getElementById("editor");
-  
+
   // Disable font selector initially
   fontSelector.disabled = true;
 
-// Toggle Notation Mode
-toggleBtn.addEventListener("click", () => {
-  notationMode = !notationMode;
+  // =============================
+  // TOGGLE NOTATION MODE
+  // =============================
+  toggleBtn.addEventListener("click", () => {
+    notationMode = !notationMode;
 
-  if (notationMode) {
-    toggleBtn.innerText = "Notation Mode: ON";
-    toggleBtn.style.background = "#228B22";
-    fontSelector.disabled = false;
-} else {
-  toggleBtn.innerText = "Notation Mode: OFF";
-  toggleBtn.style.background = "var(--accent)";
-  fontSelector.disabled = true;
-  fontSelector.value = "";
-  selectedFont = "";
+    if (notationMode) {
+      toggleBtn.innerText = "Notation Mode: ON";
+      toggleBtn.style.background = "#228B22";
+      fontSelector.disabled = false;
 
-  // FIX 1: Remove notation styling from the *nearest* parent span
-  exitNotationSpan();
+    } else {
+      toggleBtn.innerText = "Notation Mode: OFF";
+      toggleBtn.style.background = "var(--accent)";
+      fontSelector.disabled = true;
+      fontSelector.value = "";
+      selectedFont = "";
 
-  // FIX 2: Force editor default font (important!)
-  editor.style.fontFamily = "inherit";
-}
-  editor.focus();
-});
-
-function exitNotationSpan() {
-  const sel = window.getSelection();
-  if (!sel.rangeCount) return;
-
-  const range = sel.getRangeAt(0);
-  let node = range.startContainer;
-
-  // If cursor is inside a span, remove all notation classes
-  while (node && node !== editor) {
-    if (node.nodeType === 1 && node.classList) {
-      for (const key in fontNames) {
-        if (node.classList.contains(key)) {
-          node.classList.remove(key);  // remove notation font
-        }
-      }
+      exitNotationSpan();         // VERY IMPORTANT
+      editor.style.fontFamily = "inherit";
     }
-    node = node.parentNode; // keep going upward
+
+    editor.focus();
+  });
+
+  // =============================
+  // EXIT NOTATION SPAN – THE REAL FIX
+  // =============================
+  function exitNotationSpan() {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
+
+    let range = sel.getRangeAt(0);
+    let node = range.startContainer;
+
+    // If text node → move to parent
+    if (node.nodeType === Node.TEXT_NODE) {
+      node = node.parentNode;
+    }
+
+    // Move upward breaking any notation span
+    while (node && node !== editor) {
+      if (node.tagName === "SPAN") {
+        // Remove notation classes if present
+        for (const key in fontNames) {
+          if (node.classList.contains(key)) {
+            node.classList.remove(key);
+          }
+        }
+        // BREAK OUT of span
+        const newRange = document.createRange();
+        newRange.setStartAfter(node);
+        newRange.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        return;
+      }
+      node = node.parentNode;
+    }
   }
-}
- 
-  // Font change
+
+  // =============================
+  // FONT SELECT CHANGE
+  // =============================
   fontSelector.addEventListener("change", () => {
     selectedFont = fontSelector.value;
     editor.focus();
   });
 
-  // INSERT TEXT AT CARET - FIXED FOR DESKTOP
+  // =============================
+  // INSERT TEXT AT CARET
+  // =============================
   function insertAtCaret(content) {
-    console.log("1. Function called. Notation Mode:", notationMode, "Selected Font:", selectedFont); // DEBUG
     editor.focus();
-
     const sel = window.getSelection();
-    console.log("2. Selection rangeCount:", sel.rangeCount); // DEBUG
 
     if (sel.rangeCount === 0) {
-        console.log("3a. No selection found. Appending content."); // DEBUG
-        appendContent(content);
-        return;
+      appendContent(content);
+      return;
     }
 
     const range = sel.getRangeAt(0);
-    console.log("3b. Range found. commonAncestorContainer:", range.commonAncestorContainer); // DEBUG
 
-    // Check if the selection is within the editor
     if (!editor.contains(range.commonAncestorContainer)) {
-        console.log("4. Selection is NOT inside editor. Appending content."); // DEBUG
-        appendContent(content);
-        return;
+      appendContent(content);
+      return;
     }
-    console.log("5. Selection is valid. Preparing to insert:", content); // DEBUG
 
     range.deleteContents();
-    
-let node;
-if (notationMode && selectedFont) {
-    node = document.createElement("span");
-    node.className = selectedFont;
-    node.textContent = content;
-    console.log("6. Creating SPAN with class:", selectedFont); // DEBUG
-} else {
-    // NORMAL TYPING → ensure normal font is used
-    node = document.createElement("span");
-    node.style.fontFamily = "inherit";
-    node.textContent = content;
-    console.log("6. Creating NORMAL TEXT span");
-}
 
-range.insertNode(node);
-console.log("7. Node inserted into DOM.");
+    let node;
 
-// EXTRA safety: ensure parent also uses normal font
-if (!notationMode) {
-    node.parentElement.style.fontFamily = "inherit";
-}
+    // ------------------------------------------------
+    // NOTATION MODE → insert <span class="font">x</span>
+    // ------------------------------------------------
+    if (notationMode && selectedFont) {
+      node = document.createElement("span");
+      node.className = selectedFont;
+      node.textContent = content;
 
-    // Move the cursor to after the inserted node
+    // ------------------------------------------------
+    // NORMAL MODE → insert plain text node
+    // ------------------------------------------------
+    } else {
+      node = document.createTextNode(content);
+    }
+
+    range.insertNode(node);
+
+    // Move cursor after inserted node
     const newRange = document.createRange();
     newRange.setStartAfter(node);
     newRange.collapse(true);
@@ -714,55 +724,54 @@ if (!notationMode) {
     sel.removeAllRanges();
     sel.addRange(newRange);
     editor.focus();
-    console.log("8. Cursor moved and focus set. Operation complete.\n---"); // DEBUG
   }
-   // Helper function to append content if selection is lost - FIXED VERSION
+
+  // =============================
+  // APPEND CONTENT (fallback)
+  // =============================
   function appendContent(content) {
     let node;
     if (notationMode && selectedFont) {
-        node = document.createElement("span");
-        node.className = selectedFont;
-        node.textContent = content;
+      node = document.createElement("span");
+      node.className = selectedFont;
+      node.textContent = content;
     } else {
-        node = document.createTextNode(content);
+      node = document.createTextNode(content);
     }
+
     editor.appendChild(node);
 
-    // Move cursor to end after appending - FIXED LOGIC
     const sel = window.getSelection();
-    const newRange = document.createRange();
-    
-    // Set the range to the end of the newly inserted node
-    newRange.setStartAfter(node);
-    newRange.collapse(true); // Collapse to the start of the range (which is now after the node)
+    const range = document.createRange();
+    range.setStartAfter(node);
+    range.collapse(true);
 
     sel.removeAllRanges();
-    sel.addRange(newRange);
+    sel.addRange(range);
   }
 
-  // Attach virtual keyboard buttons (once) - IMPROVED VERSION
+  // =============================
+  // VIRTUAL KEYBOARD BUTTONS
+  // =============================
   const buttons = document.querySelectorAll(".keyboard button[data-key]");
   buttons.forEach(btn => {
-    // Listener for mouse/trackpad
-    btn.addEventListener("mousedown", (e) => {
-      e.preventDefault(); // prevent losing focus
+    btn.addEventListener("mousedown", e => {
+      e.preventDefault();
       const key = btn.getAttribute("data-key");
       insertAtCaret(key);
     });
-    // Listener for touch/accessibility/fallback
-    btn.addEventListener("click", (e) => {
-      e.preventDefault(); 
-      // insertAtCaret is already called by mousedown, 
-      // so this is just a safety net. No need to call it again.
-    });
   });
 
-
-  // Clear editor
+  // =============================
+  // CLEAR EDITOR
+  // =============================
   window.clearEditor = function() {
     editor.innerHTML = "";
     editor.focus();
   };
+
+});
+
 
 // PDF - Exact Editor Style with alignment, emojis, and proper spacing
 document.getElementById("downloadPDF").addEventListener("click", () => {
