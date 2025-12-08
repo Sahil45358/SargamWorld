@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SargamWorld | Scales & Notation Guide</title>
+  <meta name="description" content="Learn how musical scales work and how to write Bhatkhande-style sargam notations for any song by understanding its scale.">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    :root {
+      --accent: #800000;
+      --bg: #f3eee8;
+      --text: #222;
+      --muted: #5a5a5a;
+      --radius: 12px;
+      --container-w: 1100px;
+      --transition: 0.3s ease;
+    }
+
+    /* Global Styles */
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
+
+   /* === UNIVERSAL NAVBAR (MATCHES INDEX EXACTLY) === */
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-inner {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+  padding:12px 20px;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.logo img {
+  height: 120px;
+}
+
+/* Hide site name on touch devices */
+@media (pointer: coarse) {
+  .logo span { display: none !important; }
+}
+
+/* Fallback: hide name on narrower viewports too */
+@media (max-width: 1024px) {
+  .logo span { display: none !important; }
+}
+
+/* Keep tagline visible */
+.tagline {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 768px) {
+  .tagline {
+    font-size: 0.7rem;
+  }
+}
+
+.nav-links {
+  display:flex;
+  gap:10px;
+  list-style:none;
+}
+
+.nav-links a {
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-links a.active {
+  background: rgba(255,255,255,0.15);
+}
+
+.hamburger {
+  display:none;
+  cursor:pointer;
+  font-size:1.6rem;
+  color:#fff;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display:none;
+    flex-direction: column;
+    background: var(--accent);
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .nav-links.show { display:flex; }
+  .hamburger { display:block; }
+}
+
+    /* Hero */
+    .hero { text-align: center; margin-bottom: 30px; }
+    .hero h1 { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
+    .hero p { max-width: 720px; margin: 0 auto; color: #5a5a5a; line-height: 1.6; }
+
+    /* Generic card layout reused for theory blocks */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+    }
+
+    .info-card h2,
+    .info-card h3 {
+      color: var(--accent);
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .info-card p {
+      margin: 6px 0;
+      color: #5a5a5a;
+    }
+
+    .info-card ul {
+      margin-left: 18px;
+      margin-top: 6px;
+      color: #444;
+    }
+
+    .info-section {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+      margin-bottom: 26px;
+    }
+
+    .info-section h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 1.25rem;
+    }
+
+    .info-section h3 {
+      margin-top: 16px;
+      margin-bottom: 8px;
+      color: #9b1c1c;
+      font-size: 1.05rem;
+    }
+
+    .info-section p, .info-section ul, .info-section ol {
+      color: #444;
+      margin-bottom: 8px;
+    }
+
+    .info-section code,
+    .info-section pre {
+      background: #f7f1e7;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    .example-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #9b1c1c;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Table for note mapping */
+    .note-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 6px;
+      font-size: 0.9rem;
+    }
+    .note-table th, .note-table td {
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 6px 8px;
+      text-align: center;
+    }
+    .note-table th {
+      background: #f7f1e7;
+      font-weight: 600;
+    }
+
+  /* === SargamWorld Footer === */
+.sargam-footer {
+  background: linear-gradient(to bottom, #0e0e12, #0b0b0e);
+  padding: 45px 20px 20px;
+  color: #ccc;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 60px;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+}
+
+/* Brand Column */
+.footer-brand-col {
+  max-width: 260px;
+}
+
+/* Footer Logo */
+.footer-logo {
+  height: 150px;
+  border-radius: 12px;
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+/* Column headers */
+.footer-col h4 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #fff;
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
+}
+
+/* Links */
+.footer-col a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.footer-col a:hover {
+  color: var(--accent);
+}
+
+/* Footer bottom */
+.footer-bottom {
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Mobile adjustments */
+@media (max-width: 650px) {
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    text-align: left;
+  }
+
+  .footer-brand-col {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    textAlign: left;
+    flex-wrap: nowrap;
+  }
+
+  .footer-logo {
+    height: 100px;
+  }
+
+  .footer-tagline {
+    margin-top: 0;
+    font-size: 0.90rem;
+    max-width: 220px;
+    min-width: 180px;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .footer-col {
+    text-align: left;
+  }
+}
+
+/* ⭐ Disclaimer Dropdown (reused styles) */
+.disclaimer-box {
+  max-width: var(--container-w);
+  margin: 0 auto 25px;
+}
+
+.disclaimer-toggle {
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #c31432;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #c31432;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.disclaimer-toggle:hover {
+  background: #fce4e4;
+}
+
+.disclaimer-content {
+  display: none;
+  background: #fcf8f0;
+  padding: 15px 20px;
+  margin-top: 8px;
+  border-left: 4px solid #c31432;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  color: #5a3d3d;
+  line-height: 1.6;
+}
+  </style>
+</head>
+<body>
+  <!-- ====================================
+       UNIVERSAL NAVBAR
+       ==================================== -->
+ <header class="site-header">
+  <div class="nav-inner">
+
+    <div class="brand-wrap">
+      <a href="index.html" class="logo">
+        <img src="LOGO.png" alt="SargamWorld Logo">
+        <span>SargamWorld</span>
+      </a>
+      <span class="tagline">Explore • Learn • Practice</span>
+    </div>
+
+    <div class="hamburger">☰</div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="songs.html">Songs</a></li>
+      <li><a href="tools.html" class="active">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="hero">
+      <h1>Scales & Notation – Step-by-Step Guide</h1>
+      <p>
+        Understand how scales work and learn a clear method to write Bhatkhande-style
+        sargam notations for any song once you know its scale.
+      </p>
+    </section>
+
+    <!-- ⭐ Collapsible Guide Note -->
+    <div class="disclaimer-box">
+      <button class="disclaimer-toggle" onclick="toggleScaleGuideNote()">
+        ℹ️ How to Use This Guide
+      </button>
+
+      <div id="scaleGuideContent" class="disclaimer-content">
+        <p>
+          This page is meant as a <strong>conceptual guide</strong>. It gives you a
+          simple, practical method:
+        </p>
+        <ul>
+          <li>Understand what a scale is in Indian classical + Western terms.</li>
+          <li>Identify the <strong>Sa</strong> (key) of a song.</li>
+          <li>Map that key to sargam notes (Sa Re Ga…)</li>
+          <li>Write clean Bhatkhande-style notation for your songs.</li>
+        </ul>
+        <p>
+          Use this together with the <strong>Harmonium Simulator</strong> and
+          <strong>Notation Editor</strong> on SargamWorld to practice.
+        </p>
+      </div>
+    </div>
+
+    <!-- Quick concepts cards -->
+    <section class="info-grid">
+      <div class="info-card">
+        <h2>1. What is a Scale?</h2>
+        <p>
+          A scale is a <strong>fixed set of notes</strong> arranged in order
+          that your song uses – like a “palette” of swars.
+        </p>
+        <ul>
+          <li>Indian: Bilawal, Kalyan, Kafi, etc.</li>
+          <li>Western: C major, G minor, etc.</li>
+          <li>A song usually stays inside one main scale or raag.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h2>2. Sa & the Key</h2>
+        <p>
+          <strong>Sa</strong> is your reference note (the tonic). In Western terms
+          this is the “key” of the song (C, D, E♭, etc.).
+        </p>
+        <p>
+          Once you fix Sa on the harmonium/keyboard, all other notes are
+          counted relative to that Sa.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h2>3. Scale → Sargam</h2>
+        <p>
+          After finding Sa and the scale type (major, minor, or raag),
+          every melody note can be named as:
+        </p>
+        <p>
+          <strong>Sa Re Ga Ma Pa Dha Ni</strong> (with komal/tivra where needed).
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h2>4. Then Write Notation</h2>
+        <p>
+          Break the song into small phrases (2–4 beats) and write the
+          corresponding sargam for each beat.
+        </p>
+        <p>
+          Use <strong>dots</strong>, <strong>lines</strong> or
+          <strong>bars</strong> as per your preferred Bhatkhande style.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Mapping Sa to Piano Keys -->
+    <section class="info-section">
+      <h2>Mapping Sa to Harmonium / Keyboard</h2>
+      <p>
+        For a simple Bilawal / Major scale, the pattern of swars is:
+        <strong>Sa Re Ga Ma Pa Dha Ni (all shuddha)</strong>.
+      </p>
+
+      <h3>Example: Sa = C (C Major / Bilawal on C)</h3>
+      <table class="note-table">
+        <thead>
+          <tr>
+            <th>Sargam</th>
+            <th>Western Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sa</td><td>C</td></tr>
+          <tr><td>Re</td><td>D</td></tr>
+          <tr><td>Ga</td><td>E</td></tr>
+          <tr><td>Ma</td><td>F</td></tr>
+          <tr><td>Pa</td><td>G</td></tr>
+          <tr><td>Dha</td><td>A</td></tr>
+          <tr><td>Ni</td><td>B</td></tr>
+          <tr><td>Sa (u)</td><td>C (next octave)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Example: Sa = D (D Major / Bilawal on D)</h3>
+      <p>The swars are still Sa Re Ga Ma Pa Dha Ni, but the keys change:</p>
+      <table class="note-table">
+        <thead>
+          <tr>
+            <th>Sargam</th>
+            <th>Western Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sa</td><td>D</td></tr>
+          <tr><td>Re</td><td>E</td></tr>
+          <tr><td>Ga</td><td>F♯</td></tr>
+          <tr><td>Ma</td><td>G</td></tr>
+          <tr><td>Pa</td><td>A</td></tr>
+          <tr><td>Dha</td><td>B</td></tr>
+          <tr><td>Ni</td><td>C♯</td></tr>
+          <tr><td>Sa (u)</td><td>D (next octave)</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        👉 The <strong>pattern</strong> of swars remains same. Only the actual
+        keyboard keys shift when you choose a new Sa.
+      </p>
+    </section>
+
+    <!-- Section: Steps to find scale of a song -->
+    <section class="info-section">
+      <h2>How to Find the Scale of a Song</h2>
+      <ol>
+        <li>
+          <strong>Listen for the “home” note (Sa).</strong><br>
+          This is the note where phrases feel complete and restful.
+        </li>
+        <li>
+          <strong>Try that note on harmonium.</strong><br>
+          Sing “Sa” along with different keys until it feels perfect and stable.
+        </li>
+        <li>
+          <strong>Sing the song’s main line slowly.</strong><br>
+          While singing, try to press keys and figure out all notes used.
+        </li>
+        <li>
+          <strong>Check which pattern fits:</strong><br>
+          If all notes are shuddha and match the Bilawal pattern,
+          it’s like a major scale. If some are komal/tivra, it may
+          be a different scale/raag.
+        </li>
+        <li>
+          <strong>Fix your Sa + scale.</strong><br>
+          Example: “My Sa is G, and the song mostly uses shuddha notes
+          → G major / Bilawal on G.”
+        </li>
+      </ol>
+    </section>
+
+    <!-- Section: Writing notation -->
+    <section class="info-section">
+      <h2>Writing Bhatkhande-Style Notation Once Scale Is Known</h2>
+
+      <h3>Notation Basics (Sargam)</h3>
+      <ul>
+        <li><strong>Sa Re Ga Ma Pa Dha Ni</strong> – shuddha swars</li>
+        <li><strong>Komal</strong> swars – re, ga, dha, ni (often written with a line/underline or lowercase)</li>
+        <li><strong>Tivra</strong> Ma – written as <strong>Mȧ</strong> or <strong>M^</strong> depending on your style</li>
+        <li>
+          <strong>Lower octave</strong> – show with a dot or mark below
+          (e.g., <code>.Sa</code>) if you use that style.
+        </li>
+        <li>
+          <strong>Upper octave</strong> – dot above or another mark
+          (e.g., <code>Sa.</code>).
+        </li>
+      </ul>
+
+      <h3>Beat Grouping</h3>
+      <p>
+        Decide the <strong>taal</strong> (for example: Teentaal – 16 beats).
+        Then group notes by matra:
+      </p>
+      <ul>
+        <li>Write 1–4 notes per beat, depending on speed.</li>
+        <li>Use bars <code>|</code> to mark vibhag, and double bar <code>||</code> to mark sam if you like.</li>
+      </ul>
+
+      <h3>Example: Simple Line in C Major (Sa = C)</h3>
+      <p class="example-label">Melody (Western keys):</p>
+      <pre>C  D  E  G | E  D  C  –</pre>
+
+      <p class="example-label">Sargam (Bilawal, Sa = C):</p>
+      <pre>Sa Re Ga Pa | Ga Re Sa –</pre>
+
+      <p>
+        If the same melody is sung with <strong>Sa = D</strong> (one step higher),
+        the actual keys change to:
+      </p>
+
+      <p class="example-label">Melody (keys when Sa = D):</p>
+      <pre>D  E  F♯  A | F♯  E  D  –</pre>
+
+      <p class="example-label">Sargam (still):</p>
+      <pre>Sa Re Ga Pa | Ga Re Sa –</pre>
+
+      <p>
+        👉 Because notation is <strong>relative to Sa</strong>, the written
+        sargam stays same even if you change the pitch for your voice.
+      </p>
+    </section>
+
+    <!-- Section: Practical workflow -->
+    <section class="info-section">
+      <h2>Practical Workflow – From Song to Notation</h2>
+      <ol>
+        <li><strong>Choose your comfortable Sa</strong> on harmonium.</li>
+        <li><strong>Find the scale</strong> (major/raag) by checking which notes appear.</li>
+        <li>
+          <strong>Write swars phrase-wise</strong>:
+          <ul>
+            <li>Sing 2–4 beats slowly.</li>
+            <li>Find keys, convert to Sa Re Ga…</li>
+            <li>Write into your notebook or SargamWorld Notation Editor.</li>
+          </ul>
+        </li>
+        <li><strong>Add taal structure</strong> – mark sam, vibhag, and matras.</li>
+        <li><strong>Review & sing from notation</strong> – correct any swars that sound off.</li>
+      </ol>
+
+      <p>
+        You can now open the <a href="harmonium.html">🎹 Harmonium Simulator</a>
+        to test scales, and then use the
+        <a href="notation-editor.html">📖 Notation Editor</a>
+        to type and save your final notation.
+      </p>
+    </section>
+
+  </main>
+
+ <footer class="sargam-footer">
+  <div class="footer-content">
+
+    <!-- Column 1: Brand -->
+    <div class="footer-col footer-brand-col">
+      <img src="LOGO.png" class="footer-logo" alt="SargamWorld Logo">
+      <p class="footer-tagline">
+       “Your companion for learning Indian classical music.”
+      </p>
+    </div>
+
+    <!-- Column 2: Explore -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="songs.html">Songs</a>
+      <a href="tools.html">Music Tools</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support Us</a>
+    </div>
+
+    <!-- Column 3: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="dmca.html">DMCA</a>
+    </div>
+
+    <!-- Column 4: Contact -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="contact.html">Contact Us</a>
+      <a href="mailto:sargam.world453@gmail.com">Email</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 SargamWorld. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  function toggleScaleGuideNote() {
+    const box = document.getElementById("scaleGuideContent");
+    box.style.display = (box.style.display === "block") ? "none" : "block";
+  }
+
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.getElementById("navLinks");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+</script>
+</body>
+</html>
