@@ -25,7 +25,14 @@
       color: var(--text);
       line-height: 1.6;
     }
-    a { text-decoration: none; color: inherit; }
+   a {
+  color: var(--accent);        /* maroon link color */
+  text-decoration: underline;  /* make links clearly visible */
+}
+
+a:hover {
+  text-decoration: none;       /* optional: remove underline on hover */
+}
     .container { max-width: var(--container-w); margin: 0 auto; padding: 40px 20px; }
 
    /* === UNIVERSAL NAVBAR (MATCHES INDEX EXACTLY) === */
@@ -102,8 +109,8 @@
   border-radius:8px;
   font-weight:600;
   transition: var(--transition);
+  text-decoration: none;   /* prevent underline in navbar */
 }
-
 .nav-links a:hover {
   background: rgba(255,255,255,0.1);
 }
