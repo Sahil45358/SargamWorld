@@ -153,277 +153,185 @@ Nahin | nahin | nahin nahin
     </div>
     </section>
       
-<!-- ===== Song Reactions ===== -->
-<section class="song-reactions">
-  <h3>Did you enjoy this song?</h3>
+<!-- =================== REACTIONS + SHARE =================== -->
+<section class="song-actions">
 
+  <!-- 🔴 CHANGE song-id FOR EACH SONG PAGE -->
   <div class="reaction-box" data-song-id="abhi-na-jao">
-    <button class="reaction" data-reaction="like">👍</button>
-    <span class="count" id="like-count">0</span>
 
-    <button class="reaction" data-reaction="love">❤️</button>
-    <span class="count" id="love-count">0</span>
+    <button class="reaction" data-reaction="like">
+      👍
+      <span class="count" id="like-count">0</span>
+    </button>
 
-    <button class="reaction" data-reaction="music">🎶</button>
-    <span class="count" id="music-count">0</span>
+    <button class="reaction" data-reaction="love">
+      ❤️
+      <span class="count" id="love-count">0</span>
+    </button>
+
+    <button class="share-btn" id="shareBtn">Share</button>
   </div>
 
-  <p class="reaction-note">You can choose only one reaction</p>
+  <p class="reaction-note">You can change your reaction anytime</p>
 </section>
 
 <a href="../songs.html">⬅️ Back to song list</a>
-    
-   
 
-  </main>
-  
+</main>
+
 <footer class="site-footer">
   <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
+    © 2025 SargamWorld ·
+    <a href="privacy.html">Privacy</a> ·
+    <a href="terms.html">Terms</a>
   </small>
 </footer>
 
+<!-- =================== STYLES =================== -->
 <style>
-  /* ===== Premium Song Header ===== */
-
 .song-header {
   background: linear-gradient(135deg, #7b0000, #3a0000);
-  padding: 45px 20px 35px;
+  padding: 45px 20px;
   text-align: center;
   color: #fff;
-  border-bottom: 4px solid rgba(255,255,255,0.15);
 }
 
 .song-header h1 {
   font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 10px;
 }
 
 .song-header p {
-  font-size: 0.95rem;
   color: #f1dede;
-  max-width: 900px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
 }
 
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%;
   height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .video-container iframe {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
 }
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-
-  /* ===== Premium Song Page Enhancements ===== */
-
-header {
-  background: linear-gradient(135deg, #800000, #5a0000);
-  color: #fff;
-  padding: 35px 20px;
-  text-align: center;
-  border-radius: 0 0 20px 20px;
-}
-
-header p {
-  color: #f3e8e8;
-  font-size: 0.95rem;
-}
-
-/* Sargam block */
 .sargam-content {
   background: #fff;
-  border-radius: 16px;
   padding: 25px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border-radius: 16px;
   border-left: 6px solid #800000;
 }
 
-pre {
-  font-family: "Segoe UI", system-ui, sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-
-/* Section headings */
-section h2 {
-  border-left: 4px solid #800000;
-  padding-left: 10px;
-}
-
-  /* ===== Song Reactions ===== */
-
-/* ===== Song Actions ===== */
-
 .song-actions {
-  margin: 55px 0 35px;
+  margin: 50px 0;
   text-align: center;
 }
 
 .reaction-box {
   display: flex;
   justify-content: center;
-  gap: 28px;
-  align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
 .reaction {
   background: #fff;
   border: 1px solid #ddd;
-  border-radius: 14px;
   padding: 12px 18px;
-  font-size: 1.4rem;
+  border-radius: 14px;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.reaction:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
 }
 
 .reaction.selected {
   border-color: #800000;
-  box-shadow: 0 0 0 2px rgba(128,0,0,0.15);
 }
 
 .count {
   display: block;
   font-size: 0.8rem;
-  color: #5a5a5a;
-  margin-top: 4px;
+  color: #555;
 }
 
-/* Share button */
 .share-btn {
-  background: linear-gradient(135deg, #800000, #5a0000);
+  background: #800000;
   color: #fff;
   border: none;
+  padding: 12px 18px;
   border-radius: 14px;
-  padding: 12px 20px;
-  font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
-
-.share-btn:hover {
-  opacity: 0.9;
-}
-
-
 </style>
+
+<!-- =================== FIREBASE LOGIC =================== -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+/* 🔥 Firebase Config */
+firebase.initializeApp({
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+});
+
+const db = firebase.firestore();
+
+document.addEventListener("DOMContentLoaded", async () => {
   const box = document.querySelector(".reaction-box");
   const songId = box.dataset.songId;
 
-  const reactions = ["like", "love"];
+  const likeCount = document.getElementById("like-count");
+  const loveCount = document.getElementById("love-count");
 
-  // Load counts
-  reactions.forEach(r => {
-    const count = localStorage.getItem(`${songId}-${r}`) || 0;
-    document.getElementById(`${r}-count`).textContent = count;
-  });
+  const docRef = db.collection("songs").doc(songId);
 
-  // Load user reaction
-  let userReaction = localStorage.getItem(`${songId}-user`);
-
-  if (userReaction) {
-    document
-      .querySelector(`.reaction[data-reaction="${userReaction}"]`)
-      .classList.add("selected");
+  const snap = await docRef.get();
+  if (!snap.exists) {
+    await docRef.set({ like: 0, love: 0 });
   }
 
+  docRef.onSnapshot(doc => {
+    const data = doc.data();
+    likeCount.textContent = data.like;
+    loveCount.textContent = data.love;
+  });
+
+  let userReaction = localStorage.getItem(`${songId}-reaction`);
+
   document.querySelectorAll(".reaction").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const newReaction = btn.dataset.reaction;
 
       if (userReaction === newReaction) return;
 
-      // Remove previous reaction
-      if (userReaction) {
-        let oldCount = parseInt(localStorage.getItem(`${songId}-${userReaction}`));
-        localStorage.setItem(`${songId}-${userReaction}`, oldCount - 1);
-        document.getElementById(`${userReaction}-count`).textContent = oldCount - 1;
+      await db.runTransaction(async tx => {
+        const d = await tx.get(docRef);
+        const data = d.data();
 
-        document
-          .querySelector(`.reaction[data-reaction="${userReaction}"]`)
-          .classList.remove("selected");
-      }
+        if (userReaction) data[userReaction]--;
+        data[newReaction]++;
 
-      // Add new reaction
-      let newCount = parseInt(localStorage.getItem(`${songId}-${newReaction}`) || 0) + 1;
-      localStorage.setItem(`${songId}-${newReaction}`, newCount);
-      document.getElementById(`${newReaction}-count`).textContent = newCount;
+        tx.update(docRef, data);
+      });
 
-      localStorage.setItem(`${songId}-user`, newReaction);
+      document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
 
+      localStorage.setItem(`${songId}-reaction`, newReaction);
       userReaction = newReaction;
     });
   });
 
-  // Share button
+  // Share
   document.getElementById("shareBtn").addEventListener("click", () => {
-    const shareData = {
-      title: document.title,
-      text: "Check out this beautiful song with sargam on SargamWorld 🎶",
-      url: window.location.href
-    };
-
+    const url = window.location.href;
     if (navigator.share) {
-      navigator.share(shareData);
+      navigator.share({ title: document.title, url });
     } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
+      navigator.clipboard.writeText(url);
+      alert("Link copied!");
     }
   });
 });
 </script>
-
 
 </body>
 </html>
