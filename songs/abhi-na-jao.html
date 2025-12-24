@@ -9,10 +9,14 @@
   
 </head>
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Abhi Na Jao Chhod Kar</h1>
-    <p>Movie: Hum Dono (1961) • Singers: Rafi & Asha • Lyrics: Sahir Ludhianvi • Music: Jaidev • Raga: Yaman</p>
-  </header>
+ <header class="song-header">
+  <h1 class="notranslate">Abhi Na Jao Chhod Kar</h1>
+  <p>
+    Movie: Hum Dono (1961) · Singers: Rafi & Asha · Lyrics: Sahir Ludhianvi · 
+    Music: Jaidev · Raag: Yaman
+  </p>
+</header>
+
 
   <main>
     <section>
@@ -183,6 +187,30 @@ Nahin | nahin | nahin nahin
 </footer>
 
 <style>
+  /* ===== Premium Song Header ===== */
+
+.song-header {
+  background: linear-gradient(135deg, #7b0000, #3a0000);
+  padding: 45px 20px 35px;
+  text-align: center;
+  color: #fff;
+  border-bottom: 4px solid rgba(255,255,255,0.15);
+}
+
+.song-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.song-header p {
+  font-size: 0.95rem;
+  color: #f1dede;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
   .video-section {
   text-align: center;
   margin: 30px 0;
@@ -266,93 +294,136 @@ section h2 {
 
   /* ===== Song Reactions ===== */
 
-.song-reactions {
-  margin: 50px 0;
-  text-align: center;
-}
+/* ===== Song Actions ===== */
 
-.song-reactions h3 {
-  margin-bottom: 15px;
-  color: #800000;
+.song-actions {
+  margin: 55px 0 35px;
+  text-align: center;
 }
 
 .reaction-box {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 28px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .reaction {
-  font-size: 1.8rem;
-  background: none;
-  border: none;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-size: 1.4rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .reaction:hover {
-  transform: scale(1.2);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
 }
 
 .reaction.selected {
-  filter: drop-shadow(0 0 6px rgba(128,0,0,0.5));
+  border-color: #800000;
+  box-shadow: 0 0 0 2px rgba(128,0,0,0.15);
 }
 
 .count {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #5a5a5a;
   margin-top: 4px;
 }
 
-.reaction-note {
-  margin-top: 10px;
-  font-size: 0.8rem;
-  color: #777;
+/* Share button */
+.share-btn {
+  background: linear-gradient(135deg, #800000, #5a0000);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
+
+.share-btn:hover {
+  opacity: 0.9;
+}
+
 
 </style>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const box = document.querySelector(".reaction-box");
-    const songId = box.dataset.songId;
+document.addEventListener("DOMContentLoaded", () => {
+  const box = document.querySelector(".reaction-box");
+  const songId = box.dataset.songId;
 
-    const reactions = ["like", "love", "music"];
+  const reactions = ["like", "love"];
 
-    // Load stored counts
-    reactions.forEach(r => {
-      const count = localStorage.getItem(`${songId}-${r}`) || 0;
-      document.getElementById(`${r}-count`).textContent = count;
-    });
+  // Load counts
+  reactions.forEach(r => {
+    const count = localStorage.getItem(`${songId}-${r}`) || 0;
+    document.getElementById(`${r}-count`).textContent = count;
+  });
 
-    // Check if user already reacted
-    const userReaction = localStorage.getItem(`${songId}-user`);
+  // Load user reaction
+  let userReaction = localStorage.getItem(`${songId}-user`);
 
-    if (userReaction) {
-      document
-        .querySelector(`.reaction[data-reaction="${userReaction}"]`)
-        .classList.add("selected");
-    }
+  if (userReaction) {
+    document
+      .querySelector(`.reaction[data-reaction="${userReaction}"]`)
+      .classList.add("selected");
+  }
 
-    document.querySelectorAll(".reaction").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if (localStorage.getItem(`${songId}-user`)) return;
+  document.querySelectorAll(".reaction").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const newReaction = btn.dataset.reaction;
 
-        const reaction = btn.dataset.reaction;
+      if (userReaction === newReaction) return;
 
-        let count = parseInt(localStorage.getItem(`${songId}-${reaction}`) || 0);
-        count++;
+      // Remove previous reaction
+      if (userReaction) {
+        let oldCount = parseInt(localStorage.getItem(`${songId}-${userReaction}`));
+        localStorage.setItem(`${songId}-${userReaction}`, oldCount - 1);
+        document.getElementById(`${userReaction}-count`).textContent = oldCount - 1;
 
-        localStorage.setItem(`${songId}-${reaction}`, count);
-        localStorage.setItem(`${songId}-user`, reaction);
+        document
+          .querySelector(`.reaction[data-reaction="${userReaction}"]`)
+          .classList.remove("selected");
+      }
 
-        document.getElementById(`${reaction}-count`).textContent = count;
-        btn.classList.add("selected");
-      });
+      // Add new reaction
+      let newCount = parseInt(localStorage.getItem(`${songId}-${newReaction}`) || 0) + 1;
+      localStorage.setItem(`${songId}-${newReaction}`, newCount);
+      document.getElementById(`${newReaction}-count`).textContent = newCount;
+
+      localStorage.setItem(`${songId}-user`, newReaction);
+      btn.classList.add("selected");
+
+      userReaction = newReaction;
     });
   });
+
+  // Share button
+  document.getElementById("shareBtn").addEventListener("click", () => {
+    const shareData = {
+      title: document.title,
+      text: "Check out this beautiful song with sargam on SargamWorld 🎶",
+      url: window.location.href
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData);
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    }
+  });
+});
 </script>
+
 
 </body>
 </html>
