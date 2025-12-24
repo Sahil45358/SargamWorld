@@ -148,6 +148,24 @@ Nahin | nahin | nahin nahin
       </pre>
     </div>
     </section>
+      
+<!-- ===== Song Reactions ===== -->
+<section class="song-reactions">
+  <h3>Did you enjoy this song?</h3>
+
+  <div class="reaction-box" data-song-id="abhi-na-jao">
+    <button class="reaction" data-reaction="like">👍</button>
+    <span class="count" id="like-count">0</span>
+
+    <button class="reaction" data-reaction="love">❤️</button>
+    <span class="count" id="love-count">0</span>
+
+    <button class="reaction" data-reaction="music">🎶</button>
+    <span class="count" id="music-count">0</span>
+  </div>
+
+  <p class="reaction-note">You can choose only one reaction</p>
+</section>
 
 <a href="../songs.html">⬅️ Back to song list</a>
     
@@ -208,7 +226,133 @@ Nahin | nahin | nahin nahin
 .site-footer a:hover {
   text-decoration: underline;
 }
+
+  /* ===== Premium Song Page Enhancements ===== */
+
+header {
+  background: linear-gradient(135deg, #800000, #5a0000);
+  color: #fff;
+  padding: 35px 20px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+}
+
+header p {
+  color: #f3e8e8;
+  font-size: 0.95rem;
+}
+
+/* Sargam block */
+.sargam-content {
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border-left: 6px solid #800000;
+}
+
+pre {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* Section headings */
+section h2 {
+  border-left: 4px solid #800000;
+  padding-left: 10px;
+}
+
+  /* ===== Song Reactions ===== */
+
+.song-reactions {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.song-reactions h3 {
+  margin-bottom: 15px;
+  color: #800000;
+}
+
+.reaction-box {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  align-items: center;
+}
+
+.reaction {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.reaction:hover {
+  transform: scale(1.2);
+}
+
+.reaction.selected {
+  filter: drop-shadow(0 0 6px rgba(128,0,0,0.5));
+}
+
+.count {
+  display: block;
+  font-size: 0.85rem;
+  color: #5a5a5a;
+  margin-top: 4px;
+}
+
+.reaction-note {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #777;
+}
+
 </style>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const box = document.querySelector(".reaction-box");
+    const songId = box.dataset.songId;
+
+    const reactions = ["like", "love", "music"];
+
+    // Load stored counts
+    reactions.forEach(r => {
+      const count = localStorage.getItem(`${songId}-${r}`) || 0;
+      document.getElementById(`${r}-count`).textContent = count;
+    });
+
+    // Check if user already reacted
+    const userReaction = localStorage.getItem(`${songId}-user`);
+
+    if (userReaction) {
+      document
+        .querySelector(`.reaction[data-reaction="${userReaction}"]`)
+        .classList.add("selected");
+    }
+
+    document.querySelectorAll(".reaction").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (localStorage.getItem(`${songId}-user`)) return;
+
+        const reaction = btn.dataset.reaction;
+
+        let count = parseInt(localStorage.getItem(`${songId}-${reaction}`) || 0);
+        count++;
+
+        localStorage.setItem(`${songId}-${reaction}`, count);
+        localStorage.setItem(`${songId}-user`, reaction);
+
+        document.getElementById(`${reaction}-count`).textContent = count;
+        btn.classList.add("selected");
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
