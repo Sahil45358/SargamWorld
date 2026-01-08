@@ -342,6 +342,8 @@ Nahin | nahin | nahin nahin
 <!-- =================== FIREBASE SDKs =================== -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
 
 <script>
 firebase.initializeApp({
@@ -349,6 +351,11 @@ firebase.initializeApp({
   authDomain: "sargamworld-f7d63.firebaseapp.com",
   projectId: "sargamworld-f7d63",
 });
+  firebase.auth().signInAnonymously()
+  .catch(error => {
+    console.error("Auth error:", error);
+  });
+
 
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
@@ -380,38 +387,59 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // View count (unique per device)
-  const viewKey = `${songId}-viewed`;
-  if (!localStorage.getItem(viewKey)) {
+ firebase.auth().onAuthStateChanged(async user => {
+  if (!user) return;
+
+  const uid = user.uid;
+  const viewRef = docRef.collection("views").doc(uid);
+
+  const viewed = await viewRef.get();
+  if (!viewed.exists) {
+    await viewRef.set({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
     await docRef.update({
       views: FieldValue.increment(1)
     });
-    localStorage.setItem(viewKey, "true");
   }
+});
+
 
   // Reactions
-  let userReaction = localStorage.getItem(`${songId}-reaction`);
+firebase.auth().onAuthStateChanged(async user => {
+  if (!user) return;
+
+  const uid = user.uid;
+  const reactionRef = docRef.collection("reactions").doc(uid);
+
+  const snap = await reactionRef.get();
+  let currentReaction = snap.exists ? snap.data().type : null;
 
   document.querySelectorAll(".reaction").forEach(btn => {
     btn.addEventListener("click", async () => {
       const newReaction = btn.dataset.reaction;
-      if (userReaction === newReaction) return;
+      if (newReaction === currentReaction) return;
 
       const updates = {};
 
-      if (userReaction) {
-        updates[userReaction] = FieldValue.increment(-1);
+      if (currentReaction) {
+        updates[currentReaction] = FieldValue.increment(-1);
       }
 
       updates[newReaction] = FieldValue.increment(1);
+
       await docRef.update(updates);
+      await reactionRef.set({ type: newReaction });
+
+      currentReaction = newReaction;
 
       document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
-
-      localStorage.setItem(`${songId}-reaction`, newReaction);
-      userReaction = newReaction;
     });
   });
+});
+
 
   // Share
   document.getElementById("shareBtn").addEventListener("click", async () => {
