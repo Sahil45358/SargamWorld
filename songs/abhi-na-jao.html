@@ -50,13 +50,13 @@
   <!-- 🔴 CHANGE song-id FOR EACH SONG PAGE -->
   <div class="stats-panel reaction-box" data-song-id="abhi-na-jao">
 
-    <div class="stat reaction" data-reaction="like">
+   <button class="stat reaction" data-reaction="like" type="button">
       <span class="icon">👍</span>
       <span class="label">Likes</span>
       <span class="count" id="like-count">0</span>
     </div>
 
-    <div class="stat reaction" data-reaction="love">
+  <button class="stat reaction" data-reaction="love" type="button">
       <span class="icon">❤️</span>
       <span class="label">Favorites</span>
       <span class="count" id="love-count">0</span>
@@ -194,6 +194,18 @@ Nahin | nahin | nahin nahin
 
 <!-- =================== STYLES =================== -->
 <style>
+
+  .stat {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+}
+
+.stat.reaction {
+  cursor: pointer;
+}
+
 .song-header {
   background: linear-gradient(135deg, #7b0000, #3a0000);
   padding: 45px 20px;
@@ -362,18 +374,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("share-count").textContent = data.shares || 0;
 });
 
-  // -------- VIEW COUNT --------
+// -------- VIEW COUNT --------
 const viewKey = `${songId}-viewed`;
 
 if (!localStorage.getItem(viewKey)) {
-  await db.runTransaction(async tx => {
-    const d = await tx.get(docRef);
-    const data = d.data();
-    tx.update(docRef, { views: (data.views || 0) + 1 });
+  await docRef.update({
+    views: firebase.firestore.FieldValue.increment(1)
   });
-
   localStorage.setItem(viewKey, "true");
 }
+
 
   let userReaction = localStorage.getItem(`${songId}-reaction`);
 
@@ -404,17 +414,20 @@ if (!localStorage.getItem(viewKey)) {
   // Share
 document.getElementById("shareBtn").addEventListener("click", async () => {
   const url = window.location.href;
+  const title = document.title;
 
-  await db.runTransaction(async tx => {
-    const d = await tx.get(docRef);
-    const data = d.data();
-    tx.update(docRef, { shares: (data.shares || 0) + 1 });
+  await docRef.update({
+    shares: firebase.firestore.FieldValue.increment(1)
   });
 
   if (navigator.share) {
-    navigator.share({ title: document.title, url });
+    try {
+      await navigator.share({ title, url });
+    } catch (e) {
+      // user cancelled share
+    }
   } else {
-    navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(url);
     alert("Link copied!");
   }
 });
