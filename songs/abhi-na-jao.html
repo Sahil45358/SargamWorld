@@ -68,7 +68,7 @@
     <span class="count" id="view-count">0</span>
   </div>
 
-  <div class="stat" id="shareBtn">
+ <button class="stat" id="shareBtn" type="button">
     <span class="icon">🔗</span>
     <span class="label">Shares</span>
     <span class="count" id="share-count">0</span>
@@ -390,28 +390,28 @@ if (!localStorage.getItem(viewKey)) {
   let userReaction = localStorage.getItem(`${songId}-reaction`);
 
   document.querySelectorAll(".reaction").forEach(btn => {
-    btn.addEventListener("click", async () => {
-      const newReaction = btn.dataset.reaction;
+  btn.addEventListener("click", async () => {
+    const newReaction = btn.dataset.reaction;
 
-      if (userReaction === newReaction) return;
+    if (userReaction === newReaction) return;
 
-      await db.runTransaction(async tx => {
-        const d = await tx.get(docRef);
-        const data = d.data();
+    const updates = {};
 
-        if (userReaction) data[userReaction]--;
-        data[newReaction]++;
+    if (userReaction) {
+      updates[userReaction] = firebase.firestore.FieldValue.increment(-1);
+    }
 
-        tx.update(docRef, data);
-      });
+    updates[newReaction] = firebase.firestore.FieldValue.increment(1);
 
-      document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
+    await docRef.update(updates);
 
-      localStorage.setItem(`${songId}-reaction`, newReaction);
-      userReaction = newReaction;
-    });
+    document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+
+    localStorage.setItem(`${songId}-reaction`, newReaction);
+    userReaction = newReaction;
   });
+});
 
   // Share
 document.getElementById("shareBtn").addEventListener("click", async () => {
@@ -425,9 +425,7 @@ document.getElementById("shareBtn").addEventListener("click", async () => {
   if (navigator.share) {
     try {
       await navigator.share({ title, url });
-    } catch (e) {
-      // user cancelled share
-    }
+    } catch (e) {}
   } else {
     await navigator.clipboard.writeText(url);
     alert("Link copied!");
