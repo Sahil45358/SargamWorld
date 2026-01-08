@@ -37,20 +37,46 @@
       </ul>
     </section>
       
-   <section class="video-section">
-    <h2> Watch on YouTube</h2>
-    <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/mfEQgoVi7P4" 
-        title="Abhi Na Jao Chhod Kar YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
-      </iframe>
+  <section class="video-and-stats">
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/mfEQgoVi7P4" 
+      title="Abhi Na Jao Chhod Kar"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- 🔴 CHANGE song-id FOR EACH SONG PAGE -->
+  <div class="stats-panel reaction-box" data-song-id="abhi-na-jao">
+
+    <div class="stat reaction" data-reaction="like">
+      <span class="icon">👍</span>
+      <span class="label">Likes</span>
+      <span class="count" id="like-count">0</span>
     </div>
-  </section>
+
+    <div class="stat reaction" data-reaction="love">
+      <span class="icon">❤️</span>
+      <span class="label">Favorites</span>
+      <span class="count" id="love-count">0</span>
+    </div>
+
+    <div class="stat">
+      <span class="icon">👁️</span>
+      <span class="label">Views</span>
+      <span class="count" id="view-count">0</span>
+    </div>
+
+    <div class="stat" id="shareBtn">
+      <span class="icon">🔗</span>
+      <span class="label">Shares</span>
+      <span class="count" id="share-count">0</span>
+    </div>
+
+  </div>
+</section>
+
       
     <section>
       <h2>Lyrics & Sargam</h2>
@@ -153,25 +179,6 @@ Nahin | nahin | nahin nahin
     </div>
     </section>
       
-<!-- =================== REACTIONS + SHARE =================== -->
-<section class="song-actions">
-
-  <!-- 🔴 CHANGE song-id FOR EACH SONG PAGE -->
-  <div class="reaction-box" data-song-id="abhi-na-jao">
-
-    <button class="reaction" data-reaction="like">
-      👍
-      <span class="count" id="like-count">0</span>
-    </button>
-
-    <button class="reaction" data-reaction="love">
-      ❤️
-      <span class="count" id="love-count">0</span>
-    </button>
-
-    <button class="share-btn" id="shareBtn">Share</button>
-  </div>
-</section>
 
 <a href="../songs.html">⬅️ Back to song list</a>
 
@@ -259,6 +266,61 @@ Nahin | nahin | nahin nahin
   border-radius: 14px;
   cursor: pointer;
 }
+
+  .video-and-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.stats-panel {
+  min-width: 220px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.stat .icon {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.stat .label {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.stat .count {
+  font-weight: 600;
+}
+
+.reaction.selected {
+  color: #800000;
+}
+
+@media (max-width: 768px) {
+  .video-and-stats {
+    flex-direction: column;
+  }
+
+  .stats-panel {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
 </style>
 
 <!-- =================== FIREBASE SDKs =================== -->
@@ -287,14 +349,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const snap = await docRef.get();
   if (!snap.exists) {
-    await docRef.set({ like: 0, love: 0 });
+    await docRef.set({ like: 0, love: 0, views: 0, shares: 0 });
   }
 
   docRef.onSnapshot(doc => {
-    const data = doc.data();
-    likeCount.textContent = data.like;
-    loveCount.textContent = data.love;
+  const data = doc.data();
+  likeCount.textContent = data.like;
+  loveCount.textContent = data.love;
+  document.getElementById("view-count").textContent = data.views || 0;
+  document.getElementById("share-count").textContent = data.shares || 0;
+});
+
+  // -------- VIEW COUNT --------
+const viewKey = `${songId}-viewed`;
+
+if (!localStorage.getItem(viewKey)) {
+  await db.runTransaction(async tx => {
+    const d = await tx.get(docRef);
+    const data = d.data();
+    tx.update(docRef, { views: (data.views || 0) + 1 });
   });
+
+  localStorage.setItem(viewKey, "true");
+}
 
   let userReaction = localStorage.getItem(`${songId}-reaction`);
 
@@ -323,16 +400,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Share
-  document.getElementById("shareBtn").addEventListener("click", () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      navigator.share({ title: document.title, url });
-    } else {
-      navigator.clipboard.writeText(url);
-      alert("Link copied!");
-    }
+document.getElementById("shareBtn").addEventListener("click", async () => {
+  const url = window.location.href;
+
+  await db.runTransaction(async tx => {
+    const d = await tx.get(docRef);
+    const data = d.data();
+    tx.update(docRef, { shares: (data.shares || 0) + 1 });
   });
+
+  if (navigator.share) {
+    navigator.share({ title: document.title, url });
+  } else {
+    navigator.clipboard.writeText(url);
+    alert("Link copied!");
+  }
 });
+
 </script>
 
 
