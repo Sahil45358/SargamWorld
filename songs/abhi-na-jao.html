@@ -37,7 +37,7 @@
       </ul>
     </section>
       
-  <section class="video-and-stats">
+<section class="video-zone">
   <div class="video-container">
     <iframe 
       src="https://www.youtube.com/embed/mfEQgoVi7P4" 
@@ -195,32 +195,33 @@ Nahin | nahin | nahin nahin
 /* ================== HEADER ================== */
 .song-header {
   background: linear-gradient(135deg, #7b0000, #3a0000);
-  padding: 50px 20px;
+  padding: 52px 20px;
   text-align: center;
   color: #fff;
 }
 
 .song-header h1 {
-  font-size: 2.3rem;
-  letter-spacing: 0.5px;
+  font-size: 2.4rem;
+  letter-spacing: 0.6px;
 }
 
 .song-header p {
-  color: #f1dede;
-  margin-top: 8px;
+  color: #f2dddd;
+  margin-top: 10px;
   font-size: 0.95rem;
 }
 
-/* ================== VIDEO + STATS LAYOUT ================== */
-.video-and-stats {
-  display: flex;
+/* ================== VIDEO ZONE ================== */
+.video-zone {
+  display: grid;
+  grid-template-columns: 1fr 96px;
   gap: 28px;
-  margin-top: 32px;
+  margin-top: 40px;
+  align-items: start;
 }
 
 /* ================== VIDEO ================== */
 .video-container {
-  flex: 2;
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
@@ -230,77 +231,88 @@ Nahin | nahin | nahin nahin
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 18px;
+  border-radius: 22px;
 }
 
-/* ================== STATS PANEL (NEW DESIGN) ================== */
+/* ================== REACTION STRIP ================== */
 .stats-panel {
-  flex: 1;
-  background: #ffffff;
-  border-radius: 22px;
-  padding: 18px;
-  border: 1px solid #ececec;
+  position: sticky;
+  top: 120px;
+  background: linear-gradient(to bottom, #fffdfb, #ffffff);
+  border-radius: 30px;
+  padding: 14px 10px;
+  border: 1px solid #ededed;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
+  align-items: center;
 }
 
-/* ================== STAT CARD ================== */
+/* ================== REACTION ITEM ================== */
 .stat {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: #fafafa;
+  border: 1px solid #e6e6e6;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 16px;
-  border-radius: 18px;
-  background: #fafafa;
-  border: 1px solid #e9e9e9;
   cursor: pointer;
   transition: all 0.25s ease;
+  position: relative;
 }
 
 /* Emoji */
 .stat .icon {
-  font-size: 1.7rem;
+  font-size: 1.65rem;
   line-height: 1;
 }
 
 /* Count */
 .stat .count {
-  font-size: 1.25rem;
+  font-size: 0.75rem;
+  margin-top: 4px;
   font-weight: 600;
-  color: #222;
+  color: #444;
 }
 
 /* Hover */
 .stat:hover {
-  background: #f4f4f4;
-  transform: translateY(-1px);
-}
-
-/* Tap feedback */
-.stat:active {
-  transform: scale(0.97);
+  transform: translateY(-4px);
+  background: #fdf4f4;
 }
 
 /* ================== SELECTED REACTION ================== */
 .stat.reaction.selected {
-  background: #fff5f5;
+  background: #fff0f0;
   border-color: #800000;
-  box-shadow: 0 8px 20px rgba(128, 0, 0, 0.15);
+  box-shadow: 0 10px 22px rgba(128, 0, 0, 0.2);
 }
 
-/* ================== VIEWS (NON CLICKABLE BUT SAME STYLE) ================== */
+/* Soft pulse */
+.stat.reaction.selected::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(128, 0, 0, 0.3);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+
+/* ================== NON-CLICKABLE ================== */
 .stat-view {
   cursor: default;
   background: #fcfcfc;
 }
 
 /* ================== SHARE ================== */
-.stat-share {
-  background: #f7f9ff;
-}
-
 .stat-share:hover {
   background: #eef2ff;
 }
@@ -308,35 +320,34 @@ Nahin | nahin | nahin nahin
 /* ================== CONTENT ================== */
 .sargam-content {
   background: #ffffff;
-  padding: 26px;
-  border-radius: 18px;
+  padding: 30px;
+  border-radius: 20px;
   border-left: 6px solid #800000;
-  line-height: 1.6;
+  line-height: 1.65;
+  margin-top: 40px;
 }
 
 /* ================== RESPONSIVE ================== */
 @media (max-width: 768px) {
-  .video-and-stats {
-    flex-direction: column;
+  .video-zone {
+    grid-template-columns: 1fr;
   }
 
   .stats-panel {
+    position: relative;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin-top: 18px;
     padding: 14px;
   }
 
   .stat {
-    flex: 1;
-    padding: 14px 10px;
+    width: 56px;
+    height: 56px;
   }
 
   .stat .icon {
     font-size: 1.45rem;
-  }
-
-  .stat .count {
-    font-size: 1.1rem;
   }
 }
 
