@@ -304,10 +304,10 @@ firebase.initializeApp({
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
 
-/* 🔐 Anonymous auth */
+/* 🔐 Sign in */
 firebase.auth().signInAnonymously().catch(console.error);
 
-/* ✅ MAIN INIT */
+/* ✅ MAIN INIT — SINGLE SOURCE OF TRUTH */
 firebase.auth().onAuthStateChanged(async user => {
   if (!user) return;
 
@@ -338,15 +338,16 @@ firebase.auth().onAuthStateChanged(async user => {
       shareCount.textContent = d.shares || 0;
     });
 
-    /* 👁️ Views */
     const uid = user.uid;
+
+    /* 👁️ VIEW COUNT */
     const viewRef = docRef.collection("views").doc(uid);
     if (!(await viewRef.get()).exists) {
       await viewRef.set({ t: Date.now() });
       await docRef.update({ views: FieldValue.increment(1) });
     }
 
-    /* ❤️ Reactions */
+    /* ❤️ REACTIONS */
     const reactionRef = docRef.collection("reactions").doc(uid);
     let currentReaction = (await reactionRef.get()).data()?.type || null;
 
@@ -372,7 +373,7 @@ firebase.auth().onAuthStateChanged(async user => {
       });
     });
 
-    /* 🔗 Share clicks */
+    /* 🔗 SHARE CLICKS */
     document.getElementById("shareBtn").addEventListener("click", async (e) => {
       e.preventDefault();
       await docRef.update({ shares: FieldValue.increment(1) });
@@ -381,8 +382,6 @@ firebase.auth().onAuthStateChanged(async user => {
 
   });
 });
-</script>
-
 </script>
 
 </body>
