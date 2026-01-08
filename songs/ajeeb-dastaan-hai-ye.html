@@ -125,6 +125,170 @@ Ki jag padi hoon khwaab se
   </small>
 </footer>
 
+  <!-- =================== STYLES =================== -->
+<style>
+
+/* ================== HEADER ================== */
+.song-header {
+  background: linear-gradient(135deg, #7b0000, #3a0000);
+  padding: 52px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.song-header h1 {
+  font-size: 2.4rem;
+  letter-spacing: 0.6px;
+}
+
+.song-header p {
+  color: #f2dddd;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+/* ================== VIDEO ZONE ================== */
+.video-zone {
+  display: grid;
+  grid-template-columns: 1fr 96px;
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+/* ================== VIDEO ================== */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.video-container iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+}
+
+/* ================== REACTION STRIP ================== */
+.stats-panel {
+  position: sticky;
+  top: 120px;
+  background: linear-gradient(to bottom, #fffdfb, #ffffff);
+  border-radius: 30px;
+  padding: 14px 10px;
+  border: 1px solid #ededed;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+/* ================== REACTION ITEM ================== */
+.stat {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: #fafafa;
+  border: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* Emoji */
+.stat .icon {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+/* Count */
+.stat .count {
+  font-size: 0.75rem;
+  margin-top: 4px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Hover */
+.stat:hover {
+  transform: translateY(-4px);
+  background: #fdf4f4;
+}
+
+/* ================== SELECTED REACTION ================== */
+.stat.reaction.selected {
+  background: #fff0f0;
+  border-color: #800000;
+  box-shadow: 0 10px 22px rgba(128, 0, 0, 0.2);
+}
+
+/* Soft pulse */
+.stat.reaction.selected::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(128, 0, 0, 0.3);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+
+/* ================== NON-CLICKABLE ================== */
+.stat-view {
+  cursor: default;
+  background: #fcfcfc;
+}
+
+/* ================== SHARE ================== */
+.stat-share:hover {
+  background: #eef2ff;
+}
+
+/* ================== CONTENT ================== */
+.sargam-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  border-left: 6px solid #800000;
+  line-height: 1.65;
+  margin-top: 40px;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 768px) {
+  .video-zone {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-panel {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 18px;
+    padding: 14px;
+  }
+
+  .stat {
+    width: 56px;
+    height: 56px;
+  }
+
+  .stat .icon {
+    font-size: 1.45rem;
+  }
+}
+
+</style>
+  
 <!-- =================== FIREBASE =================== -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
