@@ -301,73 +301,88 @@ firebase.initializeApp({
   projectId: "sargamworld-f7d63",
 });
 
-firebase.auth().signInAnonymously();
-
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
 
-document.addEventListener("DOMContentLoaded", async () => {
+/* 🔐 Anonymous auth */
+firebase.auth().signInAnonymously().catch(console.error);
 
-  const box = document.querySelector(".reaction-box");
-  const songId = box.dataset.songId;
-  const docRef = db.collection("songs").doc(songId);
+/* ✅ MAIN INIT */
+firebase.auth().onAuthStateChanged(async user => {
+  if (!user) return;
 
-  const likeCount = document.getElementById("like-count");
-  const loveCount = document.getElementById("love-count");
-  const viewCount = document.getElementById("view-count");
-  const shareCount = document.getElementById("share-count");
+  document.addEventListener("DOMContentLoaded", async () => {
 
-  const snap = await docRef.get();
-  if (!snap.exists) {
-    await docRef.set({ like: 0, love: 0, views: 0, shares: 0 });
-  }
+    const box = document.querySelector(".reaction-box");
+    if (!box) return;
 
-  docRef.onSnapshot(doc => {
-    const d = doc.data();
-    likeCount.textContent = d.like || 0;
-    loveCount.textContent = d.love || 0;
-    viewCount.textContent = d.views || 0;
-    shareCount.textContent = d.shares || 0;
-  });
+    const songId = box.dataset.songId;
+    const docRef = db.collection("songs").doc(songId);
 
-  firebase.auth().onAuthStateChanged(async user => {
-    if (!user) return;
+    const likeCount  = document.getElementById("like-count");
+    const loveCount  = document.getElementById("love-count");
+    const viewCount  = document.getElementById("view-count");
+    const shareCount = document.getElementById("share-count");
+
+    /* Create doc */
+    if (!(await docRef.get()).exists) {
+      await docRef.set({ like: 0, love: 0, views: 0, shares: 0 });
+    }
+
+    /* Live sync */
+    docRef.onSnapshot(snap => {
+      const d = snap.data();
+      likeCount.textContent  = d.like  || 0;
+      loveCount.textContent  = d.love  || 0;
+      viewCount.textContent  = d.views || 0;
+      shareCount.textContent = d.shares || 0;
+    });
+
+    /* 👁️ Views */
     const uid = user.uid;
-
     const viewRef = docRef.collection("views").doc(uid);
     if (!(await viewRef.get()).exists) {
       await viewRef.set({ t: Date.now() });
       await docRef.update({ views: FieldValue.increment(1) });
     }
 
+    /* ❤️ Reactions */
     const reactionRef = docRef.collection("reactions").doc(uid);
     let currentReaction = (await reactionRef.get()).data()?.type || null;
 
     document.querySelectorAll(".reaction").forEach(btn => {
-      btn.onclick = async () => {
+      btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+
         const r = btn.dataset.reaction;
         if (r === currentReaction) return;
 
-        const u = {};
-        if (currentReaction) u[currentReaction] = FieldValue.increment(-1);
-        u[r] = FieldValue.increment(1);
+        const updates = {};
+        if (currentReaction) updates[currentReaction] = FieldValue.increment(-1);
+        updates[r] = FieldValue.increment(1);
 
-        await docRef.update(u);
+        await docRef.update(updates);
         await reactionRef.set({ type: r });
+
         currentReaction = r;
 
-        document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
+        document.querySelectorAll(".reaction")
+          .forEach(b => b.classList.remove("selected"));
         btn.classList.add("selected");
-      };
+      });
     });
+
+    /* 🔗 Share clicks */
+    document.getElementById("shareBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+      await docRef.update({ shares: FieldValue.increment(1) });
+      await navigator.clipboard.writeText(location.href);
+    });
+
   });
-
-  document.getElementById("shareBtn").onclick = async () => {
-    await docRef.update({ shares: FieldValue.increment(1) });
-    await navigator.clipboard.writeText(location.href);
-  };
-
 });
+</script>
+
 </script>
 
 </body>
