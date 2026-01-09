@@ -66,6 +66,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       await viewRef.set({ t: Date.now() });
       await docRef.update({ views: FieldValue.increment(1) });
     }
+try {
+  const viewRef = docRef.collection("views").doc(uid);
+  if (!(await viewRef.get()).exists) {
+    await viewRef.set({ t: Date.now() });
+    await docRef.update({ views: FieldValue.increment(1) });
+  }
+} catch (e) {
+  console.error("View write failed", e);
+}
 
     // ❤️ Load previous reaction
     const reactionRef = docRef.collection("reactions").doc(uid);
