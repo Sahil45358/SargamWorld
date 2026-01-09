@@ -288,14 +288,128 @@ Ki jag padi hoon khwaab se
   }
 }
 
-</style>
-  
-<!-- =================== FIREBASE =================== -->
+<!-- =================== FIREBASE SDKs =================== -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-<script src="../js/song-reactions.js" defer></script>
 
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyDPfqsPhVtjEduj4pkU-8wK2mgCOB8BvK8",
+  authDomain: "sargamworld-f7d63.firebaseapp.com",
+  projectId: "sargamworld-f7d63",
+});
+  firebase.auth().signInAnonymously()
+  .catch(error => {
+    console.error("Auth error:", error);
+  });
+
+
+const db = firebase.firestore();
+const FieldValue = firebase.firestore.FieldValue;
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const box = document.querySelector(".reaction-box");
+  const songId = box.dataset.songId;
+  const docRef = db.collection("songs").doc(songId);
+
+  const likeCount = document.getElementById("like-count");
+  const loveCount = document.getElementById("love-count");
+  const viewCount = document.getElementById("view-count");
+  const shareCount = document.getElementById("share-count");
+
+  // Create doc if not exists
+  const snap = await docRef.get();
+  if (!snap.exists) {
+    await docRef.set({ like: 0, love: 0, views: 0, shares: 0 });
+  }
+
+  // Live updates
+  docRef.onSnapshot(doc => {
+    const d = doc.data();
+    likeCount.textContent = d.like || 0;
+    loveCount.textContent = d.love || 0;
+    viewCount.textContent = d.views || 0;
+    shareCount.textContent = d.shares || 0;
+  });
+
+  // View count (unique per device)
+ firebase.auth().onAuthStateChanged(async user => {
+  if (!user) return;
+
+  const uid = user.uid;
+  const viewRef = docRef.collection("views").doc(uid);
+
+  const viewed = await viewRef.get();
+  if (!viewed.exists) {
+    await viewRef.set({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    await docRef.update({
+      views: FieldValue.increment(1)
+    });
+  }
+});
+
+
+  // Reactions
+firebase.auth().onAuthStateChanged(async user => {
+  if (!user) return;
+
+  const uid = user.uid;
+  const reactionRef = docRef.collection("reactions").doc(uid);
+
+  const snap = await reactionRef.get();
+  let currentReaction = snap.exists ? snap.data().type : null;
+
+  document.querySelectorAll(".reaction").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const newReaction = btn.dataset.reaction;
+      if (newReaction === currentReaction) return;
+
+      const updates = {};
+
+      if (currentReaction) {
+        updates[currentReaction] = FieldValue.increment(-1);
+      }
+
+      updates[newReaction] = FieldValue.increment(1);
+
+      await docRef.update(updates);
+      await reactionRef.set({ type: newReaction });
+
+      currentReaction = newReaction;
+
+      document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+    });
+  });
+});
+
+
+  // Share
+  document.getElementById("shareBtn").addEventListener("click", async () => {
+    await docRef.update({
+      shares: FieldValue.increment(1)
+    });
+
+    const url = window.location.href;
+    const title = document.title;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert("Link copied!");
+    }
+  });
+
+});
+</script>
 </body>
 </html>
