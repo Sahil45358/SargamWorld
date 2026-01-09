@@ -319,12 +319,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const viewCount  = document.getElementById("view-count");
   const shareCount = document.getElementById("share-count");
 
-  // create doc
+  // Ensure doc exists
   if (!(await docRef.get()).exists) {
     await docRef.set({ like: 0, love: 0, views: 0, shares: 0 });
   }
 
-  // live sync
+  // Live updates
   docRef.onSnapshot(doc => {
     const d = doc.data();
     likeCount.textContent  = d.like  || 0;
@@ -333,46 +333,60 @@ document.addEventListener("DOMContentLoaded", async () => {
     shareCount.textContent = d.shares || 0;
   });
 
+  let uid = null;
+  let currentReaction = null;
+
   firebase.auth().onAuthStateChanged(async user => {
     if (!user) return;
+    uid = user.uid;
 
-    const uid = user.uid;
-
-    /* 👁️ views */
+    // Views (unique per user)
     const viewRef = docRef.collection("views").doc(uid);
     if (!(await viewRef.get()).exists) {
       await viewRef.set({ t: Date.now() });
       await docRef.update({ views: FieldValue.increment(1) });
     }
 
-    /* ❤️ reactions */
-    const reactionRef = docRef.collection("reactions").doc(uid);
-    let currentReaction = (await reactionRef.get()).data()?.type || null;
+    // Load previous reaction
+    const reactionSnap = await docRef.collection("reactions").doc(uid).get();
+    currentReaction = reactionSnap.exists ? reactionSnap.data().type : null;
 
-    document.querySelectorAll(".reaction").forEach(btn => {
-      btn.onclick = async () => {
-        const r = btn.dataset.reaction;
-        if (r === currentReaction) return;
+    if (currentReaction) {
+      document
+        .querySelector(`[data-reaction="${currentReaction}"]`)
+        ?.classList.add("selected");
+    }
+  });
 
-        const update = {};
-        if (currentReaction) update[currentReaction] = FieldValue.increment(-1);
-        update[r] = FieldValue.increment(1);
+  // ✅ Attach handlers IMMEDIATELY
+  document.querySelectorAll(".reaction").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      if (!uid) return;
 
-        await docRef.update(update);
-        await reactionRef.set({ type: r });
+      const newReaction = btn.dataset.reaction;
+      if (newReaction === currentReaction) return;
 
-        currentReaction = r;
-        document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-      };
+      const update = {};
+      if (currentReaction) {
+        update[currentReaction] = FieldValue.increment(-1);
+      }
+      update[newReaction] = FieldValue.increment(1);
+
+      await docRef.update(update);
+      await docRef.collection("reactions").doc(uid).set({ type: newReaction });
+
+      currentReaction = newReaction;
+      document.querySelectorAll(".reaction").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
     });
   });
 
-  /* 🔗 share clicks */
-  document.getElementById("shareBtn").onclick = async () => {
+  // Share
+  document.getElementById("shareBtn").addEventListener("click", async () => {
     await docRef.update({ shares: FieldValue.increment(1) });
     await navigator.clipboard.writeText(location.href);
-  };
+    alert("Link copied!");
+  });
 
 });
 </script>
