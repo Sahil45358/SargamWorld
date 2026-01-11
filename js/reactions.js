@@ -19,10 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!box) return;
 
   const songId = box.dataset.songId;
-  if (!songId) {
-    console.error("Missing data-song-id");
-    return;
-  }
+  if (!songId) return;
 
   const docRef = db.collection("songs").doc(songId);
 
@@ -31,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const viewCount  = document.getElementById("view-count");
   const shareCount = document.getElementById("share-count");
 
-  // ---------- Ensure document exists ----------
+  // ---------- Ensure song doc exists ----------
   const snap = await docRef.get();
   if (!snap.exists) {
     await docRef.set({
@@ -42,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // ---------- Live sync ----------
+  // ---------- Live counters ----------
   docRef.onSnapshot(doc => {
     const d = doc.data() || {};
     likeCount.textContent  = d.like   || 0;
@@ -54,29 +51,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   let uid = null;
   let currentReaction = null;
 
-  // ---------- Auth-dependent logic ----------
+  // ================= AUTH =================
   firebase.auth().onAuthStateChanged(async user => {
     if (!user) return;
-
     uid = user.uid;
 
-    // 👁️ Views (unique per user)
-    const viewRef = docRef.collection("views").doc(uid);
-    if (!(await viewRef.get()).exists) {
-      await viewRef.set({ t: Date.now() });
-      await docRef.update({ views: FieldValue.increment(1) });
-    }
-try {
-  const viewRef = docRef.collection("views").doc(uid);
-  if (!(await viewRef.get()).exists) {
-    await viewRef.set({ t: Date.now() });
-    await docRef.update({ views: FieldValue.increment(1) });
-  }
-} catch (e) {
-  console.error("View write failed", e);
-}
+    // ================= 👁️ VIEWS (FIXED) =================
+    try {
+      await db.runTransaction(async (tx) => {
+        const songSnap = await tx.get(docRef);
+        if (!songSnap.exists) return;
 
-    // ❤️ Load previous reaction
+        const viewRef = docRef.collection("views").doc(uid);
+        const viewSnap = await tx.get(viewRef);
+
+        if (!viewSnap.exists) {
+          tx.set(viewRef, { t: Date.now() });
+          tx.update(docRef, {
+            views: FieldValue.increment(1)
+          });
+        }
+      });
+    } catch (e) {
+      console.error("View transaction failed:", e);
+    }
+
+    // ================= ❤️ LOAD REACTION =================
     const reactionRef = docRef.collection("reactions").doc(uid);
     const rSnap = await reactionRef.get();
     currentReaction = rSnap.exists ? rSnap.data().type : null;
@@ -88,7 +88,7 @@ try {
     }
   });
 
-  // ---------- Reaction buttons ----------
+  // ================= ❤️ REACTIONS =================
   document.querySelectorAll(".reaction").forEach(btn => {
     btn.addEventListener("click", async () => {
       if (!uid) return;
@@ -116,7 +116,7 @@ try {
     });
   });
 
-  // ---------- Share ----------
+  // ================= 🔗 SHARE =================
   const shareBtn = document.getElementById("shareBtn");
   if (shareBtn) {
     shareBtn.addEventListener("click", async () => {
