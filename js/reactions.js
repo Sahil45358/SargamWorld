@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const viewCount  = document.getElementById("view-count");
   const shareCount = document.getElementById("share-count");
 
-  // ---------- Ensure song doc exists ----------
+  // ---------- Ensure song document exists ----------
   const snap = await docRef.get();
   if (!snap.exists) {
     await docRef.set({
@@ -56,7 +56,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!user) return;
     uid = user.uid;
 
-    // ================= 👁️ VIEWS (FIXED) =================
+    // ================= 👁️ VIEWS (1 PER DAY) =================
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
     try {
       await db.runTransaction(async (tx) => {
         const songSnap = await tx.get(docRef);
@@ -65,18 +67,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         const viewRef = docRef.collection("views").doc(uid);
         const viewSnap = await tx.get(viewRef);
 
-        if (!viewSnap.exists) {
-          tx.set(viewRef, { t: Date.now() });
+        if (!viewSnap.exists || viewSnap.data().day !== today) {
+          tx.set(viewRef, { day: today }, { merge: true });
           tx.update(docRef, {
             views: FieldValue.increment(1)
           });
         }
       });
     } catch (e) {
-      console.error("View transaction failed:", e);
+      console.error("Daily view transaction failed:", e);
     }
 
-    // ================= ❤️ LOAD REACTION =================
+    // ================= ❤️ LOAD PREVIOUS REACTION =================
     const reactionRef = docRef.collection("reactions").doc(uid);
     const rSnap = await reactionRef.get();
     currentReaction = rSnap.exists ? rSnap.data().type : null;
@@ -109,6 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         .set({ type: newReaction });
 
       currentReaction = newReaction;
+
       document
         .querySelectorAll(".reaction")
         .forEach(b => b.classList.remove("selected"));
@@ -120,12 +123,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shareBtn = document.getElementById("shareBtn");
   if (shareBtn) {
     shareBtn.addEventListener("click", async () => {
-      await docRef.update({ shares: FieldValue.increment(1) });
+      await docRef.update({
+        shares: FieldValue.increment(1)
+      });
 
       const url = location.href;
       if (navigator.share) {
         try {
-          await navigator.share({ title: document.title, url });
+          await navigator.share({
+            title: document.title,
+            url
+          });
         } catch {}
       } else {
         await navigator.clipboard.writeText(url);
