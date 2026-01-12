@@ -18,7 +18,7 @@ body {
   background: #f4f6f9;
   padding: 30px;
 }
-h1 { margin-bottom: 5px; }
+h1 { margin-bottom: 4px; }
 .subtitle { color: #666; margin-bottom: 20px; }
 
 .filters {
@@ -38,6 +38,29 @@ h1 { margin-bottom: 5px; }
   border-color: #800000;
 }
 
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi {
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+.kpi span {
+  color: #666;
+  font-size: 13px;
+}
+.kpi strong {
+  font-size: 24px;
+  display: block;
+  margin-top: 4px;
+}
+
 .dashboard {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -47,7 +70,8 @@ h1 { margin-bottom: 5px; }
 .dashboard-bottom {
   margin-top: 24px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
 .card {
@@ -70,6 +94,11 @@ h1 { margin-bottom: 5px; }
 }
 .trending-list li:last-child { border-bottom: none; }
 
+.loading {
+  color: #777;
+  font-size: 14px;
+}
+
 canvas { max-height: 320px; }
 </style>
 </head>
@@ -84,6 +113,14 @@ canvas { max-height: 320px; }
   <button onclick="setDays(30, event)">Last 30 days</button>
 </div>
 
+<!-- KPI SUMMARY -->
+<div class="kpis">
+  <div class="kpi"><span>Total Views</span><strong id="kpiViews">–</strong></div>
+  <div class="kpi"><span>Total Likes</span><strong id="kpiLikes">–</strong></div>
+  <div class="kpi"><span>Total Love</span><strong id="kpiLove">–</strong></div>
+  <div class="kpi"><span>Total Shares</span><strong id="kpiShares">–</strong></div>
+</div>
+
 <div class="dashboard">
 
   <div class="card">
@@ -93,16 +130,27 @@ canvas { max-height: 320px; }
 
   <div class="card">
     <h3>🔥 Top Trending Songs</h3>
-    <ul id="trendingList" class="trending-list"></ul>
+    <ul id="trendingList" class="trending-list">
+      <li class="loading">Loading…</li>
+    </ul>
   </div>
 
 </div>
 
 <div class="dashboard-bottom">
+
   <div class="card">
     <h3>❤️ Engagement Breakdown</h3>
     <canvas id="engagementChart"></canvas>
   </div>
+
+  <div class="card">
+    <h3>🎵 Most Viewed Songs</h3>
+    <ul id="topViewedList" class="trending-list">
+      <li class="loading">Loading…</li>
+    </ul>
+  </div>
+
 </div>
 
 <script>
@@ -117,8 +165,7 @@ firebase.auth().signInAnonymously();
 const db = firebase.firestore();
 
 let DAYS = 7;
-let viewsChart;
-let engagementChart;
+let viewsChart, engagementChart;
 
 /* ================= AUTH ================= */
 firebase.auth().onAuthStateChanged(async user => {
@@ -136,15 +183,13 @@ firebase.auth().onAuthStateChanged(async user => {
 /* ================= FILTER ================= */
 function setDays(d, e) {
   DAYS = d;
-  document.querySelectorAll(".filters button")
-    .forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
   e.target.classList.add("active");
   loadAnalytics();
 }
 
 /* ================= LOAD ANALYTICS ================= */
 async function loadAnalytics() {
-
   const since = new Date();
   since.setDate(since.getDate() - DAYS);
   const sinceDay = since.toISOString().slice(0,10);
@@ -153,29 +198,29 @@ async function loadAnalytics() {
 
   const dailyCounts = {};
   const trending = [];
+  const topViewed = [];
 
-  let totalLikes = 0;
-  let totalLove = 0;
-  let totalShares = 0;
+  let totalViews = 0, totalLikes = 0, totalLove = 0, totalShares = 0;
 
   await Promise.all(songsSnap.docs.map(async doc => {
     const d = doc.data();
 
-    // engagement totals
+    totalViews  += d.views  || 0;
     totalLikes  += d.like   || 0;
     totalLove   += d.love   || 0;
     totalShares += d.shares || 0;
 
-    // trending score
-    let score =
-      (d.views || 0) +
-      (d.love || 0) * 3 +
-      (d.like || 0) * 1.5 +
-      (d.shares || 0) * 4;
+    trending.push({
+      id: doc.id,
+      score:
+        (d.views || 0) +
+        (d.love || 0) * 3 +
+        (d.like || 0) * 1.5 +
+        (d.shares || 0) * 4
+    });
 
-    trending.push({ id: doc.id, score });
+    topViewed.push({ id: doc.id, views: d.views || 0 });
 
-    // views per day
     const viewsSnap = await db
       .collection("songs")
       .doc(doc.id)
@@ -189,79 +234,59 @@ async function loadAnalytics() {
     });
   }));
 
+  // KPIs
+  kpiViews.textContent  = totalViews;
+  kpiLikes.textContent  = totalLikes;
+  kpiLove.textContent   = totalLove;
+  kpiShares.textContent = totalShares;
+
   renderViewsChart(dailyCounts);
   renderTrending(trending);
+  renderTopViewed(topViewed);
   renderEngagementChart(totalLikes, totalLove, totalShares);
 }
 
-/* ================= VIEWS CHART ================= */
+/* ================= CHARTS ================= */
 function renderViewsChart(map) {
   const labels = Object.keys(map).sort();
   const data = labels.map(d => map[d]);
 
   if (viewsChart) viewsChart.destroy();
 
-  viewsChart = new Chart(
-    document.getElementById("viewsChart"),
-    {
-      type: "line",
-      data: {
-        labels,
-        datasets: [{
-          label: "Views",
-          data,
-          tension: 0.35,
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
-      }
-    }
-  );
+  viewsChart = new Chart(viewsChartEl, {
+    type: "line",
+    data: { labels, datasets: [{ label: "Views", data, tension: 0.35 }] },
+    options: { scales: { y: { beginAtZero: true } } }
+  });
 }
 
-/* ================= ENGAGEMENT CHART ================= */
 function renderEngagementChart(likes, love, shares) {
-
   if (engagementChart) engagementChart.destroy();
 
-  engagementChart = new Chart(
-    document.getElementById("engagementChart"),
-    {
-      type: "doughnut",
-      data: {
-        labels: ["Likes 👍", "Love ❤️", "Shares 🔗"],
-        datasets: [{
-          data: [likes, love, shares]
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "bottom"
-          }
-        }
-      }
-    }
-  );
+  engagementChart = new Chart(engagementChartEl, {
+    type: "doughnut",
+    data: {
+      labels: ["Likes 👍", "Love ❤️", "Shares 🔗"],
+      datasets: [{ data: [likes, love, shares] }]
+    },
+    options: { plugins: { legend: { position: "bottom" } } }
+  });
 }
 
-/* ================= TRENDING ================= */
+/* ================= LISTS ================= */
 function renderTrending(list) {
   list.sort((a,b) => b.score - a.score);
-  const ul = document.getElementById("trendingList");
-  ul.innerHTML = "";
-
+  trendingList.innerHTML = "";
   list.slice(0,5).forEach((s,i) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <span>${i+1}. ${s.id}</span>
-      <strong>${Math.round(s.score)}</strong>
-    `;
-    ul.appendChild(li);
+    trendingList.innerHTML += `<li><span>${i+1}. ${s.id}</span><strong>${Math.round(s.score)}</strong></li>`;
+  });
+}
+
+function renderTopViewed(list) {
+  list.sort((a,b) => b.views - a.views);
+  topViewedList.innerHTML = "";
+  list.slice(0,5).forEach((s,i) => {
+    topViewedList.innerHTML += `<li><span>${i+1}. ${s.id}</span><strong>${s.views}</strong></li>`;
   });
 }
 </script>
