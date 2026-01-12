@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard – SargamWorld</title>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <style>
+    body { font-family: Arial; padding: 30px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    button { padding: 6px 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+<p>Manage songs and stats</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Song ID</th>
+      <th>Views</th>
+      <th>Likes</th>
+      <th>Love</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="songsTable"></tbody>
+</table>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyDPfqsPhVtjEduj4pkU-8wK2mgCOB8BvK8",
+  authDomain: "sargamworld-f7d63.firebaseapp.com",
+  projectId: "sargamworld-f7d63",
+});
+
+firebase.auth().signInAnonymously();
+
+const db = firebase.firestore();
+
+firebase.auth().onAuthStateChanged(async user => {
+  if (!user) return;
+
+  const adminSnap = await db.collection("admins").doc(user.uid).get();
+  if (!adminSnap.exists) {
+    document.body.innerHTML = "<h2>Access Denied</h2>";
+    return;
+  }
+
+  loadSongs();
+});
+
+async function loadSongs() {
+  const snap = await db.collection("songs").get();
+  const tbody = document.getElementById("songsTable");
+
+  snap.forEach(doc => {
+    const d = doc.data();
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${doc.id}</td>
+      <td>${d.views || 0}</td>
+      <td>${d.like || 0}</td>
+      <td>${d.love || 0}</td>
+      <td>
+        <button onclick="resetStats('${doc.id}')">Reset</button>
+        <button onclick="deleteSong('${doc.id}')">Delete</button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+async function resetStats(songId) {
+  if (!confirm("Reset stats?")) return;
+
+  await db.collection("songs").doc(songId).update({
+    views: 0,
+    like: 0,
+    love: 0,
+    shares: 0
+  });
+
+  location.reload();
+}
+
+async function deleteSong(songId) {
+  if (!confirm("Delete this song?")) return;
+
+  await db.collection("songs").doc(songId).delete();
+  location.reload();
+}
+</script>
+
+</body>
+</html>
