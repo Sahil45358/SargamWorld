@@ -1,54 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Analytics – SargamWorld</title>
+<meta charset="UTF-8">
+<title>Analytics Dashboard – SargamWorld</title>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      background: #fafafa;
-    }
-    h1 { margin-bottom: 10px; }
-    .chart-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 40px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    canvas {
-      max-height: 400px;
-    }
-  </style>
+<style>
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f4f6f9;
+  padding: 30px;
+}
+h1 { margin-bottom: 5px; }
+.subtitle { color: #666; margin-bottom: 20px; }
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.filters {
+  margin-bottom: 15px;
+}
+.filters button {
+  margin-right: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+.filters button.active {
+  background: #800000;
+  color: #fff;
+  border-color: #800000;
+}
+
+.trending-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+.trending-list li:last-child { border-bottom: none; }
+
+canvas { max-height: 320px; }
+</style>
 </head>
+
 <body>
 
 <h1>📊 Analytics Dashboard</h1>
-<p>Admin-only song performance insights</p>
+<div class="subtitle">Admin insights & performance overview</div>
 
-<div class="chart-box">
-  <h3>👁️ Views per Song</h3>
-  <canvas id="viewsChart"></canvas>
+<div class="filters">
+  <button class="active" onclick="setDays(7)">Last 7 days</button>
+  <button onclick="setDays(30)">Last 30 days</button>
 </div>
 
-<div class="chart-box">
-  <h3>❤️ Likes vs Love (All Songs)</h3>
-  <canvas id="reactionChart"></canvas>
-</div>
+<div class="dashboard">
 
-<div class="chart-box">
-  <h3>📈 Views Per Day (All Songs)</h3>
-  <canvas id="dailyChart"></canvas>
+  <div class="card">
+    <h3>👁️ Views Over Time</h3>
+    <canvas id="viewsChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h3>🔥 Top Trending Songs</h3>
+    <ul id="trendingList" class="trending-list"></ul>
+  </div>
+
 </div>
 
 <script>
@@ -60,15 +101,17 @@ firebase.initializeApp({
 });
 
 firebase.auth().signInAnonymously();
-
 const db = firebase.firestore();
 
-/* ================= AUTH CHECK ================= */
+let DAYS = 7;
+let chart;
+
+/* ================= AUTH ================= */
 firebase.auth().onAuthStateChanged(async user => {
   if (!user) return;
 
-  const adminSnap = await db.collection("admins").doc(user.uid).get();
-  if (!adminSnap.exists) {
+  const admin = await db.collection("admins").doc(user.uid).get();
+  if (!admin.exists) {
     document.body.innerHTML = "<h2>⛔ Access Denied</h2>";
     return;
   }
@@ -76,94 +119,90 @@ firebase.auth().onAuthStateChanged(async user => {
   loadAnalytics();
 });
 
+/* ================= FILTER ================= */
+function setDays(d) {
+  DAYS = d;
+  document.querySelectorAll(".filters button")
+    .forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
+  loadAnalytics();
+}
+
 /* ================= LOAD ANALYTICS ================= */
 async function loadAnalytics() {
 
+  const since = new Date();
+  since.setDate(since.getDate() - DAYS);
+  const sinceDay = since.toISOString().slice(0,10);
+
   const songsSnap = await db.collection("songs").get();
 
-  /* -------- Views per song -------- */
-  const songLabels = [];
-  const songViews = [];
+  const dailyCounts = {};
+  const trending = [];
 
-  let totalLikes = 0;
-  let totalLove = 0;
-
-  songsSnap.forEach(doc => {
+  await Promise.all(songsSnap.docs.map(async doc => {
     const d = doc.data();
-    songLabels.push(doc.id);
-    songViews.push(d.views || 0);
-    totalLikes += d.like || 0;
-    totalLove  += d.love || 0;
-  });
 
-  new Chart(document.getElementById("viewsChart"), {
-    type: "bar",
-    data: {
-      labels: songLabels,
-      datasets: [{
-        label: "Views",
-        data: songViews
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-  });
+    let score =
+      (d.views || 0) +
+      (d.love || 0) * 3 +
+      (d.like || 0) * 1.5 +
+      (d.shares || 0) * 4;
 
-  /* -------- Likes vs Love -------- */
-  new Chart(document.getElementById("reactionChart"), {
-    type: "doughnut",
-    data: {
-      labels: ["Likes", "Love"],
-      datasets: [{
-        data: [totalLikes, totalLove]
-      }]
-    },
-    options: {
-      responsive: true
-    }
-  });
+    trending.push({ id: doc.id, score });
 
-  /* -------- Views per day -------- */
-  const dailyMap = {};
-
-  for (const song of songsSnap.docs) {
     const viewsSnap = await db
       .collection("songs")
-      .doc(song.id)
+      .doc(doc.id)
       .collection("views")
+      .where("day", ">=", sinceDay)
       .get();
 
     viewsSnap.forEach(v => {
-      const day = v.data().day;
-      if (!day) return;
-      dailyMap[day] = (dailyMap[day] || 0) + 1;
+      dailyCounts[v.data().day] =
+        (dailyCounts[v.data().day] || 0) + 1;
     });
-  }
+  }));
 
-  const days = Object.keys(dailyMap).sort();
-  const counts = days.map(d => dailyMap[d]);
+  renderViewsChart(dailyCounts);
+  renderTrending(trending);
+}
 
-  new Chart(document.getElementById("dailyChart"), {
+/* ================= CHART ================= */
+function renderViewsChart(map) {
+  const labels = Object.keys(map).sort();
+  const data = labels.map(d => map[d]);
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(document.getElementById("viewsChart"), {
     type: "line",
     data: {
-      labels: days,
+      labels,
       datasets: [{
-        label: "Views per Day",
-        data: counts,
-        fill: false,
-        tension: 0.3
+        label: "Views",
+        data,
+        tension: 0.35,
+        borderWidth: 2
       }]
     },
     options: {
       responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
+      scales: { y: { beginAtZero: true } }
     }
+  });
+}
+
+/* ================= TRENDING ================= */
+function renderTrending(list) {
+  list.sort((a,b) => b.score - a.score);
+  const ul = document.getElementById("trendingList");
+  ul.innerHTML = "";
+
+  list.slice(0,5).forEach((s,i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${i+1}. ${s.id}</span><strong>${Math.round(s.score)}</strong>`;
+    ul.appendChild(li);
   });
 }
 </script>
