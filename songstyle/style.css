@@ -156,3 +156,21 @@
     font-size: 1.45rem;
   }
 }
+
+.learning-swar {
+  background: #fcf8f0;
+  padding: 1.5rem;
+  border-left: 4px solid #c31432;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+}
+
+pre {
+  background: #f7f7f7;
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: 'Noto Sans Devanagari', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+}
