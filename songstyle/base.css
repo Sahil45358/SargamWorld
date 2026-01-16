@@ -1,41 +1,46 @@
-/* ===== BASE (LIGHT, BOOK-LIKE) ===== */
-
-* {
-  box-sizing: border-box;
-}
+/* ===== SONG BASE (FROM ABHI NA JAO) ===== */
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #222;
-  line-height: 1.6;
-}
-
-/* NO width control */
-main {
-  padding: 0;
-}
-
-h1, h2, h3 {
-  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #fff8f0;
+  color: #333;
 }
 
 a {
-  color: #800000;
+  color: #c31432;
   text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
-.site-footer {
-  text-align: center;
-  padding: 16px 10px;
-  font-size: 0.85rem;
-  color: #666;
+main {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-ul {
-  padding-left: 20px;
+h2 {
+  border-left: 5px solid #c31432;
+  padding-left: 10px;
+  font-size: 1.5rem;
+  color: #c31432;
+  margin-top: 2rem;
+}
+
+footer,
+.site-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #999;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #fff3f3;
+  border-top: 1px solid #e0e0e0;
 }
