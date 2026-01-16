@@ -1,6 +1,4 @@
-/* ===============================
-   BASE STYLES (MATCH ABHI NA JAO)
-   =============================== */
+/* ===== BASE (LIGHT, BOOK-LIKE) ===== */
 
 * {
   box-sizing: border-box;
@@ -13,17 +11,15 @@ body {
   line-height: 1.6;
 }
 
-/* NO max-width, NO centering */
+/* NO width control */
 main {
   padding: 0;
 }
 
-/* Headings */
 h1, h2, h3 {
   font-weight: 600;
 }
 
-/* Links */
 a {
   color: #800000;
   text-decoration: none;
@@ -33,16 +29,13 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Footer — simple like Abhi Na Jao */
 .site-footer {
   text-align: center;
   padding: 16px 10px;
   font-size: 0.85rem;
   color: #666;
-  margin-top: 20px;
 }
 
-/* Lists */
 ul {
   padding-left: 20px;
 }
