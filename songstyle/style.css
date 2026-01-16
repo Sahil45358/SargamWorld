@@ -1,4 +1,5 @@
- .song-header {
+/* ================== HEADER ================== */
+.song-header {
   background: linear-gradient(135deg, #7b0000, #3a0000);
   padding: 52px 20px;
   text-align: center;
