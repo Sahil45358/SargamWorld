@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <title>Ankhon Me Teri Ajab Si – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css"/>
-        <link rel="icon" type="image/png" href="favicon.png" />
-  <meta name="google" content="notranslate"/>
+<<head>
+  <meta charset="UTF-8" />
+
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Ankhon Me Teri Ajab Si – Sargam Notations | SargamWorld</title>
+
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PERFORMANCE -->
+  <meta name="google" content="notranslate" />
+
+  <!-- STYLES -->
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Ankhon Me Teri Ajab Si</h1>
-    <p>Movie: Shamitabh (2015) · Singer: K. K. · Lyrics: Javed Akhtar · Music: Vishal–Shekhar</p>
-  </header>
-
+  <header class="song-header">
+  <h1 class="notranslate">Ankhon Me Teri Ajab Si</h1>
+  <p>
+    Movie: Shamitabh (2015) · Singer: K. K. · Lyrics: Javed Akhtar ·
+    Music: Vishal–Shekhar
+  </p>
+</header>
+ 
   <main>
     <section class="learning-swar">
       <h3>🎼 Understanding Swar & Octaves</h3>
@@ -30,23 +48,48 @@
       </ul>
     </section>
 
-     <section class="video-section">
-    <h2> Watch on YouTube</h2>
+     <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/7KKVb0_IdD4" 
-        title="Ankhon Me Teri Ajab Si YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+        src="https://www.youtube.com/embed/7KKVb0_IdD4"
+        title="Ankhon Me Teri Ajab Si"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+<!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="Ankhon-Me-Teri">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+    </div>
   </section>
     
-    <section>
-      <h2>Lyrics & Sargam</h2>
+  <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
+
+    <div class="sargam-content">
       <pre class="notranslate">
 <strong>STHAYI:</strong>
 aankhon | me | teri  
@@ -97,21 +140,9 @@ kahaa | hai | wo
 fir | se | kahu | yaa | nahin  
 ध’ | ध’ | प{म ग रे} | म | ग रे म रे ग रे
 
-      </pre>
-    </section>
-
-   <!-- Comments -->
-    <section id="comments-section">
-      <h2>💬 Comments</h2>
-
-      <form id="comment-form">
-        <input type="text" id="commenter-name" placeholder="Your Name" required />
-        <textarea id="comment-text" placeholder="Write your comment..." required></textarea>
-        <button type="submit">Post Comment</button>
-      </form>
-
-      <div id="comment-list"></div>
-    </section>
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to Song List</a></p>
 
@@ -128,187 +159,180 @@ fir | se | kahu | yaa | nahin
   </footer>
 
 
+ <!-- =================== STYLES =================== -->
 <style>
-  
- #comments-section { margin-top: 40px; }
-  #comment-form input, #comment-form textarea {
-    width: 100%; padding: 10px; margin: 6px 0;
-    border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;
-  }
-  #comment-form button {
-    padding: 10px 20px; background-color: #c31432; color: white;
-    border: none; border-radius: 6px; cursor: pointer; font-size: 1rem;
-  }
-  #comment-form button:hover { background-color: #a10f25; }
 
-  .comment {
-    margin: 15px 0; padding: 12px;
-    border-radius: 8px; background-color: #f8f8f8;
-    border-left: 4px solid #c31432; position: relative;
-  }
-  .comment .meta { font-size: 0.85rem; color: #555; margin-bottom: 6px; }
-  .comment p { margin: 0; }
-
-  /* Trash icon button */
-  .delete-btn {
-    position: absolute; top: 10px; right: 10px;
-    background: none; border: none; cursor: pointer;
-    display: none; /* only show for owner's comment */
-  }
-  .delete-btn svg {
-    width: 18px; height: 18px;
-    fill: #999; transition: fill 0.2s;
-  }
-  .delete-btn:hover svg { fill: #c31432; }
-  
-  .video-section {
+/* ================== HEADER ================== */
+.song-header {
+  background: linear-gradient(135deg, #7b0000, #3a0000);
+  padding: 52px 20px;
   text-align: center;
-  margin: 30px 0;
+  color: #fff;
 }
 
+.song-header h1 {
+  font-size: 2.4rem;
+  letter-spacing: 0.6px;
+}
+
+.song-header p {
+  color: #f2dddd;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+/* ================== VIDEO ZONE ================== */
+.video-zone {
+  display: grid;
+  grid-template-columns: 1fr 96px;
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+/* ================== VIDEO ================== */
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%;
   height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .video-container iframe {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 22px;
 }
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
+/* ================== REACTION STRIP ================== */
+.stats-panel {
+  position: sticky;
+  top: 120px;
+  background: linear-gradient(to bottom, #fffdfb, #ffffff);
+  border-radius: 30px;
+  padding: 14px 10px;
+  border: 1px solid #ededed;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+/* ================== REACTION ITEM ================== */
+.stat {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: #fafafa;
+  border: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* Emoji */
+.stat .icon {
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+/* Count */
+.stat .count {
+  font-size: 0.75rem;
+  margin-top: 4px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Hover */
+.stat:hover {
+  transform: translateY(-4px);
+  background: #fdf4f4;
+}
+
+/* ================== SELECTED REACTION ================== */
+.stat.reaction.selected {
+  background: #fff0f0;
+  border-color: #800000;
+  box-shadow: 0 10px 22px rgba(128, 0, 0, 0.2);
+}
+
+/* Soft pulse */
+.stat.reaction.selected::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(128, 0, 0, 0.3);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+
+/* ================== NON-CLICKABLE ================== */
+.stat-view {
+  cursor: default;
+  background: #fcfcfc;
+}
+
+/* ================== SHARE ================== */
+.stat-share:hover {
+  background: #eef2ff;
+}
+
+/* ================== CONTENT ================== */
+.sargam-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  border-left: 6px solid #800000;
+  line-height: 1.65;
   margin-top: 40px;
 }
 
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
+/* ================== RESPONSIVE ================== */
+@media (max-width: 768px) {
+  .video-zone {
+    grid-template-columns: 1fr;
+  }
 
-.site-footer a:hover {
-  text-decoration: underline;
+  .stats-panel {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 18px;
+    padding: 14px;
+  }
+
+  .stat {
+    width: 56px;
+    height: 56px;
+  }
+
+  .stat .icon {
+    font-size: 1.45rem;
+  }
 }
 </style>
-<!-- ================= FIREBASE (CDN) ================= -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-
-<!-- ================= FIREBASE INIT ================= -->
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCPATUkv5hCAL10vtN83JOOeO7UiEJ2bfc",
-    authDomain: "sargamworld-comments.firebaseapp.com",
-    projectId: "sargamworld-comments",
-    storageBucket: "sargamworld-comments.firebasestorage.app",
-    messagingSenderId: "167610757992",
-    appId: "1:167610757992:web:22b5cd9fb24bc43ecc9cdd"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
 </script>
 
-
-
-<!-- ================= COMMENT SYSTEM ================= -->
-<script>
-// SONG ID fixed manually (recommended)
-const SONG_ID = "ankhon-me-teri";
-
-// bad word filter
-const badWords = ["fuck","shit","bitch","mc","bc","chutiya","madarchod","bhosdike","gand","lund","gaand"];
-
-const form = document.getElementById("comment-form");
-const commentList = document.getElementById("comment-list");
-
-// unique user ID
-if (!localStorage.getItem("commenterId")) {
-  localStorage.setItem("commenterId", "id-" + Math.random().toString(36).substr(2, 9));
-}
-const currentUserId = localStorage.getItem("commenterId");
-
-// real-time listener
-db.collection("song-comments")
-  .doc(SONG_ID)
-  .collection("comments")
-  .orderBy("timestamp", "desc")
-  .onSnapshot(snapshot => {
-    commentList.innerHTML = "";
-    snapshot.forEach(doc => addComment(doc.id, doc.data()));
-  });
-
-// submit
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("commenter-name").value.trim();
-  const text = document.getElementById("comment-text").value.trim();
-
-  if (!name || !text) return;
-
-  // prevent bad words
-  if (badWords.some(w => text.toLowerCase().includes(w))) {
-    alert("⚠️ Please avoid inappropriate language.");
-    return;
-  }
-
-  await db.collection("song-comments")
-    .doc(SONG_ID)
-    .collection("comments")
-    .add({
-      userId: currentUserId,
-      name,
-      text,
-      timestamp: Date.now()
-    });
-
-  form.reset();
-});
-
-// add comment to page
-function addComment(id, data) {
-  const div = document.createElement("div");
-  div.className = "comment";
-
-  div.innerHTML = `
-    <div class="meta"><strong>${data.name}</strong> • ${new Date(data.timestamp).toLocaleString()}</div>
-    <p>${data.text}</p>
-    <button class="delete-btn" data-id="${id}" style="display:none">🗑️</button>
-  `;
-
-  // show delete if owner
-  if (data.userId === currentUserId) {
-    const btn = div.querySelector(".delete-btn");
-    btn.style.display = "block";
-    btn.onclick = async () => {
-      await db.collection("song-comments")
-        .doc(SONG_ID)
-        .collection("comments")
-        .doc(id)
-        .delete();
-      div.remove();
-    };
-  }
-
-  commentList.appendChild(div);
-}
-</script>
 </body>
 </html>
