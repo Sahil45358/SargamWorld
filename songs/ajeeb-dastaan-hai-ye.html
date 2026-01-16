@@ -294,5 +294,11 @@ Ki jag padi hoon khwaab se
 
 <script src="../js/reactions.js"></script>
   
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
+
 </body>
 </html>
