@@ -1,22 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
   <meta charset="UTF-8" />
-  <title>Ashi Chik Motyachi Maal – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css" />
-          <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Ashi Chik Motyachi Maal – Sargam Notations | SargamWorld</title>
+
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+  
 <body>
-  <header>
-    <h1 class="notranslate">Ashi Chik Motyachi Maal</h1>
-    <p>Album: Ganpati Top 13 · Singer: Vaishali Samant · Video Director: Rajesh Limkar</p>
-    <span class="genre-badge devotional">Devotional</span>
-  </header>
+  <header class="song-header">
+  <h1 class="notranslate">Ashi Chik Motyachi Maal</h1>
+  <p>
+     Singer: Vaishali Samant
+  </p>
+</header>
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Notation</h3>
+      <h3> Understanding Swar & Notation</h3>
       <ul>
         <li><strong>Shuddha Swaras:</strong> सा रे ग म प ध नि</li>
         <li><strong>Komal Swaras:</strong> <code>(K)</code> — e.g. G(K), D(K)</li>
@@ -31,137 +51,158 @@
       </ul>
     </section>
 
-      <section class="video-section">
-    <h2> Watch on YouTube</h2>
+      <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/PNlMAInaV2w" 
-        title="Ashi Chik Motyachi Maal YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/PNlMAInaV2w"
+        title="Ashi Chik Motyachi Maal"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="ajeeb-dastaan">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+
+    </div>
   </section>
     
-    <section>
-      <h2>Full Sargam Notation</h2>
-      <pre class="notranslate">
-Starting Music:
-P.  SS  RSRG(K)   MG(K)G(K)R  RG(K)R
-P.  N.N.  SN.SR   MG(K)G(K)R  RG(K)S
-P.  SS  RSRG(K)   MG(K)G(K)R  RG(K)R
-P.  N.N.  SN.SR   MG(K)G(K)R  RG(K)S
 
-Ashi Chik Motyachi Maal  
-PP  SPPD(K)  PMMM
+<!-- ================== SARGAM ================== -->
+<section>
+  <h2>Sargam Notations</h2>
 
-Hoti Ga Tees Tolyachi Ga  
-G(K)MD(K)  PMG(K)R  RMG(K)R  SN.
+  <div class="sargam-content">
+<pre class="notranslate">
+<strong>INTRO / STARTING MUSIC:</strong>
 
-Chik Motyachi Maal  
-P.N.N.S  RMMM
+P.  SS  RSRG(K)   MG(K)G(K)R  RG(K)R  
+P.  N.N.  SN.SR   MG(K)G(K)R  RG(K)S  
 
-Hoti Ga Tees Tolyachi Ga  
-RMD(K)  PM  G(K)R  RMG(K)RS
+P.  SS  RSRG(K)   MG(K)G(K)R  RG(K)R  
+P.  N.N.  SN.SR   MG(K)G(K)R  RG(K)S  
 
-Jasa Ganpaticha Gonda  
-PP  SPPD(K)  PMMM
 
-Chaurangi Lal Bapata Ga  
-G(K)MD(K)  PMG(K)R  RMG(K)R  SN.
+<strong>MUKHDA:</strong>
 
-Ganpaticha Gonda  
-P.N.N.S  RMMM
+Ashi Chik Motyachi Maal  
+P P | S P P D(K) | P M M M  
 
-Chaurangi Lal Bapata Ga  
-RMD(K)  PM  G(K)R  RMG(K)RS
+Hoti Ga Tees Tolyachi Ga  
+G(K) M D(K) | P M G(K) R | R M G(K) R | S N.  
 
-[Middle Music repeats same four‑line pattern as above]
+Chik Motyachi Maal  
+P. N. N. S | R M M M  
 
-Ya Chik Malela  
-P  PP  PD(K)  PP
+Hoti Ga Tees Tolyachi Ga  
+R M D(K) | P M | G(K) R | R M G(K) R S  
 
-Reshami Bavashar Dor Ga  
-S’S’S’  NN  NP  PD(K)PP
 
-(repeat the Ya‑Chik / Reshami couplet)
+<strong>ANTARA:</strong>
 
-Mau Reshmachya Doryat  
-PP  SPPD(K)  PMM
+Jasa Ganpaticha Gonda  
+P P | S P P D(K) | P M M M  
 
-Naurangi Maal Ovali Ga  
-G(K)MD(K)  PMG(K)R  RMG(K)R  SN.
+Chaurangi Lal Bapata Ga  
+G(K) M D(K) | P M G(K) R | R M G(K) R | S N.  
 
-Reshmachya Doryat  
-P.N.N.S  RMMM
+Ganpaticha Gonda  
+P. N. N. S | R M M M  
 
-Naurangi Maal Ovali Ga  
-RMD(K)  PM  G(K)R  RMG(K)RS
+Chaurangi Lal Bapata Ga  
+R M D(K) | P M | G(K) R | R M G(K) R S  
 
-[— song continues following the same verse/refrain structure exactly as provided —]
-      </pre>
-    </section>
+
+<strong>MIDDLE MUSIC:</strong>
+
+(Same four-line pattern as the Starting Music)
+
+
+<strong>CHARAN / ANTARA 2:</strong>
+
+Ya Chik Malela  
+P | P P | P D(K) | P P  
+
+Reshami Bavashar Dor Ga  
+S’ S’ S’ | N N | N P | P D(K) P P  
+
+(Repeat Ya-Chik / Reshami couplet)
+
+
+<strong>ANTARA 3:</strong>
+
+Mau Reshmachya Doryat  
+P P | S P P D(K) | P M M  
+
+Naurangi Maal Ovali Ga  
+G(K) M D(K) | P M G(K) R | R M G(K) R | S N.  
+
+Reshmachya Doryat  
+P. N. N. S | R M M M  
+
+Naurangi Maal Ovali Ga  
+R M D(K) | P M | G(K) R | R M G(K) R S  
+
+
+<strong>NOTE:</strong>
+Song continues following the same Mukhda–Antara structure.
+</pre>
+  </div>
+</section>
+
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
 
