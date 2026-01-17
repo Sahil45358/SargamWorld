@@ -1,36 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Ekla Chalo Re - Sargam Notation</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <head>
+  <meta charset="UTF-8" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Ekla Chalo Re – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
+  <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1>Ekla Chalo Re</h1>
-    <p>Rabindra Sangeet · Genre: <span class="genre-badge rabindra">Rabindra Sangeet</span></p>
-  </header>
+  <header class="song-header">
+  <h1 class="notranslate">Ekla Chalo Re</h1>
+</header>
 
   <main>
-         <section class="video-section">
-    <h2> Watch on YouTube</h2>
+
+    <!-- ================== LEARNING SECTION ================== -->
+<section class="learning-swar">
+  <h3>Understanding Swar & Notation</h3>
+  <ul>
+    <li><strong>Shuddha Swar:</strong> सा रे ग म प ध नि</li>
+
+    <li><strong>Komal Swar:</strong> none used (all swaras are shuddha)</li>
+
+    <li><strong>Kaan / Grace Swar:</strong> shown in brackets — <code>(म)</code>, <code>(ध)</code>, <code>(नि)</code></li>
+
+    <li><strong>Meend / Glide:</strong> indicated using <code>~</code> (e.g., <code>ध~सा</code>)</li>
+
+    <li><strong>Octaves:</strong>
+      <ul>
+        <li><code>.सा, .रे, .ग</code> = Mandra (lower octave)</li>
+        <li><code>सा, रे, ग</code> = Madhya (middle octave)</li>
+        <li><code>सा’, रे’, ग’</code> = Taar (upper octave)</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+      <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/yPqdlR_X1Vk" 
-        title="Ekla Chalo Re YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/yPqdlR_X1Vk"
+        title="Ekla Chalo Re"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
-  </section>
-    <section class="sargam-section">
-      <h2>Sargam (notations) for – Ekla Chalo Re</h2>
 
-      <pre>
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="ekla-chalo-re">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+
+    </div>
+  </section>
+ 
+  <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
+
+    <div class="sargam-content">
+<pre class="notranslate">
+    
+
 Jodi | tor | daak | shune | keu | na | aashe |
 नि नि | नि  | सा | सा रे | रे | प | म ग म ग
 
@@ -71,64 +136,36 @@ O tui | mukh | phutey | tor
 
 moner | kotha | ekla | bolo re
 प म | ग (रे) सा | रे ग | ग रे (ग रे) सा
-      </pre>
-    </section>
+</pre>
+    </div>
+  </section>
+    
         <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
-
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 </body>
 </html>
