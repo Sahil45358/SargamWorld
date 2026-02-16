@@ -2,30 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Jeene Laga Hoon</title>
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Jeene Laga Hoon – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Jeene Laga Hoon</h1>
-    <p>Ramaiya Vastavaiya (2013) · Atif Aslam, Shreya Ghoshal · Music: Sachin–Jigar</p>
-    <span class="genre-badge romantic">Romantic</span>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Jeene Laga Hoon</h1>
+  <p>
+    Movie: Ramaiya Vastavaiya (2013) · Singer: Atif Aslam, Shreya Ghoshal ·
+    Music: Sachin–Jigar
+  </p>
+</header>
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> सा रे ग म प ध नि</li>
-        <li><strong>Komal Swar:</strong> (ग) (ध) (नि)</li>
-        <li><strong>Teevra Swar:</strong> (तीव्र म)</li>
+        <li><strong>Shuddha Swar:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swar:</strong> (Ga) (Dha) (Ni)</li>
+        <li><strong>Teevra Swar:</strong> Ma#</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.सा, .रे, .ग</code> = lower octave (mandra)</li>
-            <li><code>सा, रे, ग</code> = middle octave</li>
-            <li><code>सा’, रे’, ग’</code> = higher octave (taar)</li>
+            <li><code>.Sa, .Re, .Ga</code> = lower octave (mandra)</li>
+            <li><code>Sa, Re, Ga</code> = middle octave</li>
+            <li><code>Sa’, Re’, Ga’</code> = higher octave (taar)</li>
           </ul>
         </li>
         <li><strong>Notes in <code>( )</code>:</strong> Komal or special swar</li>
@@ -33,150 +48,171 @@
       </ul>
     </section>
 
-     <section class="video-section">
-    <h2> Watch on YouTube</h2>
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/VhRwuWp4MQ8" 
-        title="Jeene Laga Hoon YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/VhRwuWp4MQ8"
+        title="Jeene Laga Hoon"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="jeene-laga-hoon">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Full Sargam Notation</h2>
-      <pre class="notranslate">
-🎵 Starting Music:
-PDN(K)DPM
-PDN(K)DPM
-PDN(K)DPM   PS’ N(K)D   PDN(K)DPMP
+ <section>
+  <h2>Sargam Notations</h2>
 
-🎵 Start:
-Main Mera Dil Aur Tum Ho Yahan – मैं मेरा दिल और तुम हो यहाँ
-P  RPD  PDN(K)  DPD
+  <div class="sargam-content">
+<pre class="notranslate">
+<strong>INTRO / STARTING MUSIC:</strong>
 
-Phir Kyu Ho Palake Zukaye Vanha – फिर क्यूँ हो पलकें झुकाए वहाँ
-P  RPD  PDN(K)  DPD
+PDN(K)DPM  
+PDN(K)DPM  
+PDN(K)DPM   PS’ N(K)D   PDN(K)DPMP  
 
-Tum Sa Hansi Pahale Dekha Nahi – तुम सा हसीं पहले देखा नहीं
-P  RPD  PDN(K)  DPD
 
-Tum Is Se Pehle The Jaane Kanha – तुम इससे पहले थे जाने कहाँ
-P  RPD  PDN(K)  S’N(K) DPPD
+<strong>MUKHDA:</strong>
 
-Jeene Laga Hu Pehle Se Zyada – जीने लगा हूँ, पहले से ज़्यादा
-R’P’M’   G’(K)R R’P’M’   G’(K)R
+Main | Mera | Dil | Aur | Tum | Ho | Yahan  
+P  RPD  PDN(K)  DPD  
 
-Pehle Se Jyada Tum Pe Marne Laga Hun – पहले से ज़्यादा, तुम पे मरने लगा हूँ
-R’P’M’   G’(K)R R’G’(K)   S’R’ S’G’(K) R’S’  N(K)D S’N(K)DP
+Phir | Kyu | Ho | Palake | Zukaye | Vanhan  
+P  RPD  PDN(K)  DPD  
 
-🎵 Middle Music 1:
-PDN(K)DPM
-PDN(K)DPM
-PDN(K)DPM   PS’ N(K)D   PDN(K)DPMP
+Tum | Sa | Hansi | Pahale | Dekha | Nahi  
+P  RPD  PDN(K)  DPD  
 
-🎵 Middle Music 2:
-N(K)S’R’R’   N(K)S’R’ R’DD
-N(K)S’   M’M’ R’R’  N(K)S’R’ R’S’  R’N(K) S’N(K) SD   N(K)D N(K)P DP DMP
-RD   N(K)DPP   RMD PM SR
-N.(K)S  N.(K)S N.(K)S  RG(K) RG(K) RG(K)S’   DN(K)S’R’
+Tum | Is | Se | Pehle | The | Jaane | Kanha  
+P  RPD  PDN(K)  S’N(K) DPPD  
 
-🎵 New Verse:
-Rahate Ho Aake Jo Tum Paas Mere – रहते हो आके जो तुम पास मेरे
-RR   SRR’R’   S’R’S’ N(K)DD
 
-Tham Jaye Pal Ye Yanhi – थम जाए पल ये यहीं
-RR   SRR’R’   
+<strong>PRE-CHORUS:</strong>
 
-Bas Main Ye Sochu – बस मैं ये सोचूं
-S’R’S’   N(K)DD
+Jeene | Laga | Hu | Pehle | Se | Zyada  
+R’P’M’   G’(K)R   R’P’M’   G’(K)R  
 
-Sochu Main Tham Jaye Pal Ye – सोचूं मैं थम जाए पल ये
-PN(K)   DS’ N(K)D   N(K)DP
+Pehle | Se | Jyada | Tum | Pe | Marne | Laga | Hun  
+R’P’M’   G’(K)R   R’G’(K)   S’R’ S’G’(K) R’S’  N(K)D S’N(K)DP  
 
-Paas Mere Jab Ho Tum – पास मेरे जब हो तुम
-PN(K)N(K)  DS’ N(K)D
 
-🎵 Refrain:
-Chalati Hain Sanse Pahle Se Zyada – चलती है सांसें पहले से ज़्यादा
-R’P’M’   G’(K)R R’P’M’   G’(K)R
+<strong>INTERLUDE 1:</strong>
 
-Pehle Se Jyada Dil Thaharne Laga – पहले से ज्यादा, दिल ठहरने लगा
-R’P’M’   G’(K)R R’G’(K)   S’R’ S’G’(K) R’S’  N(K)D S’N(K)DP
+PDN(K)DPM  
+PDN(K)DPM  
+PDN(K)DPM   PS’ N(K)D   PDN(K)DPMP  
 
-🎵 Final Verse:
-Tanhaiyo Main Tujhe Dundhe Mera Dil – तन्हाइयों में तुझे ढूंढे मेरा दिल
-RR   SRR’R’   S’R’S’ N(K)DD
 
-Har Pal Ye Tujhko Hi Soche Bhala Kyu – हर पल ये तुझको ही, सोचे भला क्यूँ
-RR   SRR’R’   S’R’S’ N(K)DD
+<strong>INTERLUDE 2:</strong>
 
-Repeat Final Refrain…
+N(K)S’R’R’   N(K)S’R’ R’DD  
+N(K)S’   M’M’ R’R’  N(K)S’R’ R’S’  R’N(K) S’N(K) SD   N(K)D N(K)P DP DMP  
+RD   N(K)DPP   RMD PM SR  
+N.(K)S  N.(K)S N.(K)S  RG(K) RG(K) RG(K)S’   DN(K)S’R’  
 
-      </pre>
-    </section>
+
+<strong>ANTARA:</strong>
+
+Rahate | Ho | Aake | Jo | Tum | Paas | Mere  
+RR   SRR’R’   S’R’S’ N(K)DD  
+
+Tham | Jaye | Pal | Ye | Yanhi  
+RR   SRR’R’  
+
+Bas | Main | Ye | Sochu  
+S’R’S’   N(K)DD  
+
+Sochu | Main | Tham | Jaye | Pal | Ye  
+PN(K)   DS’ N(K)D   N(K)DP  
+
+Paas | Mere | Jab | Ho | Tum  
+PN(K)N(K)  DS’ N(K)D  
+
+
+<strong>REFRAIN:</strong>
+
+Chalati | Hain | Sanse | Pahle | Se | Zyada  
+R’P’M’   G’(K)R   R’P’M’   G’(K)R  
+
+Pehle | Se | Jyada | Dil | Thaharne | Laga  
+R’P’M’   G’(K)R   R’G’(K)   S’R’ S’G’(K) R’S’  N(K)D S’N(K)DP  
+
+
+<strong>FINAL ANTARA:</strong>
+
+Tanhaiyo | Main | Tujhe | Dundhe | Mera | Dil  
+RR   SRR’R’   S’R’S’ N(K)DD  
+
+Har | Pal | Ye | Tujhko | Hi | Soche | Bhala | Kyu  
+RR   SRR’R’   S’R’S’ N(K)DD  
+
+
+<strong>FINAL REFRAIN (REPEAT):</strong>
+
+Chalati | Hain | Sanse | Pahle | Se | Zyada  
+R’P’M’   G’(K)R   R’P’M’   G’(K)R  
+
+Pehle | Se | Jyada | Dil | Thaharne | Laga  
+R’P’M’   G’(K)R   R’G’(K)   S’R’ S’G’(K) R’S’  N(K)D S’N(K)DP
+</pre>
+  </div>
+</section>
+
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
-   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
