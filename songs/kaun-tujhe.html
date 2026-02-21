@@ -2,235 +2,213 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Kaun Tujhe – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css" />
-   <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Kaun Tujhe – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Kaun Tujhe</h1>
-    <p>Movie: M.S. Dhoni – The Untold Story · Singer: Palak Muchhal · Music: Amaal Mallik</p>
-    <span class="genre-badge sad">Sad</span>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Kaun Tujhe</h1>
+  <p>
+    Movie: M.S. Dhoni – The Untold Story (2016) · Singer: Palak Muchhal ·
+    Music: Amaal Mallik 
+  </p>
+</header>
 
   <main>
     <section class="learning-swar">
       <h3>🎼 Understanding Swar & Notation</h3>
       <ul>
-        <li><strong>Shuddha Swaras:</strong> सा रे ग म प ध नि</li>
-        <li><strong>Komal Swaras:</strong> <code>(K)</code> e.g. G(K), D(K)</li>
-        <li><strong>Teevra Swara:</strong> <code>(T)</code> e.g. M(T)</li>
+        <li><strong>Shuddha Swaras:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swaras:</strong> <code>(K)</code> e.g. (Ga), (Dha)</li>
+        <li><strong>Teevra Swara:</strong> <code>(T)</code> e.g. Ma#</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.S, .R, .G</code> = Mandra Saptak (lower)</li>
-            <li><code>S, R, G</code> = Madhya Saptak (middle)</li>
-            <li><code>S’, R’, G’</code> = Taar Saptak (higher)</li>
+            <li><code>.Sa, .Re, .Ga</code> = Mandra Saptak (lower)</li>
+            <li><code>Sa, Re, Ga</code> = Madhya Saptak (middle)</li>
+            <li><code>Sa’, Re’, Ga’</code> = Taar Saptak (higher)</li>
           </ul>
         </li>
       </ul>
     </section>
 
-         <section class="video-section">
-    <h2> Watch on YouTube</h2>
+      <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/Ov0YGGSY6gY" 
-        title="Kaun Tujhe YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/Ov0YGGSY6gY"
+        title="Kaun Tujhe"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="kaun-tujhe">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
-    
-    <section>
-      <h2>Full Sargam Notation</h2>
-      <pre class="notranslate">
- Starting Music:
-D(K)R(K)GR(K)   D(K)R(K)G  
-M(T)N.G(K)N.M(T)N.G(K)  
-D(K)N.G(K)N.D(K)N.G(K)  
-D(K)ND(K)R(K)GR(K)D(K)R(K)G  
 
- Tu Aata Hai Sine Me  
-D(K)DD(K)M(T)GG(K)   G(K)GGM(T)M(T)
+  <section>
+    <h2>Sargam Notations</h2>
 
- Jab Jab Sanse Bharati Hu  
-M(T)D(K)M(T)GG(K)R(K)   R(K)G(K)G(K)GG  
+    <div class="sargam-content">
+<pre class="notranslate">
 
- Tere Dil Ki Galiyo Se  
-D(K)DD(K)M(T)GG(K)   G(K)GGM(T)M(T)
+<strong>STARTING MUSIC:</strong>
 
- Main Har Roj Gujarati Hu  
-M(T)D(K)M(T)GG(K)G   G(K)R(K)R(K) R(K)
+(Dha) (Re) (Ga) (Re)   (Dha) (Re) (Ga)
+Ma# Ni .(Ga) Ni Ma# Ni .(Ga)
+(Dha) Ni .(Ga) Ni (Dha) Ni .(Ga)
+(Dha) Ni (Dha) (Re) (Ga) (Re) (Dha) (Re) (Ga)
 
- Hava Ke Jaise Chalata Hai Tu  
-D(K)DD(K)M(T)GG(K)   G(K)GGM(T)M(T)
 
- Main Ret Jaise Udati Hun  
-M(T)D(K)M(T)GG(K)R(K)   R(K)G(K)G(K)GG  
+<strong>MUKHDA:</strong>
 
- Kaun Tuze Yu Pyar Karega  
-R(K)D(K)D(K)D(K)D(K)   M(T)G G(K)GM(T)M(T) M(T)
+Tu Aata Hai Sine Me
+(Dha) (Dha) (Dha) Ma# (Ga) (Ga)   (Ga) (Ga) (Ga) Ma# Ma#
 
- Jaise Main Karati Hu  
-M(T)D(K)M(T)GG(K)G   G(K)R(K)R(K) R(K)
+Jab Jab Sanse Bharati Hu
+Ma# (Dha) Ma# (Ga) (Ga) (Re)   (Re) (Ga) (Ga) (Ga)
 
- Ho Ho..  
-R(K)G(K)GM(T)  D(K)DD(K)M(T)M(T)  G(K)GG(K)R(K)N.  
-NR(K)G(K)G  M(T)D(K)G(K)GG(K)R(K)
+Tere Dil Ki Galiyo Se
+(Dha) (Dha) (Dha) Ma# (Ga) (Ga)   (Ga) (Ga) (Ga) Ma# Ma#
 
- Middle Music:
-G(K)GD(K)  R’(K)N  
-GM(T)D(K)G’G’(K)  
-G(K)GD(K)  R’(K)N  
-GM(T)D(K)G’G’(K)
+Main Har Roj Gujarati Hu
+Ma# (Dha) Ma# (Ga) (Ga) (Ga)   (Ga) (Re) (Re) (Re)
 
- Meri Najar Ka Safar  
-R(K)D(K)M(T)D(K)  GG(K)G
 
- Tuzape Hi Aake Ruke  
-R(K)D(K)M(T)D(K)  GG(K)M(T)
+Hava Ke Jaise Chalata Hai Tu
+(Dha) (Dha) (Dha) Ma# (Ga) (Ga)   (Ga) (Ga) (Ga) Ma# Ma#
 
- Kahane Ko Baki Hai Kya  
-R(K)D(K)M(T)D(K)  GG(K)G
+Main Ret Jaise Udati Hun
+Ma# (Dha) Ma# (Ga) (Ga) (Re)   (Re) (Ga) (Ga) (Ga)
 
- Kahana Tha Jo Kah Chuke  
-R(K)D(K)M(T)D(K)  GG(K)M(T)
 
- Meri Nigahe Hai  
-D(K)DG’G’(K)  D(K)M(T)
+Kaun Tuze Yu Pyar Karega
+(Re) (Dha) (Dha) (Dha) (Dha)   Ma# Ga (Ga) Ga Ma# Ma# Ma#
 
- Teri Nigaho Ki  
-M(T)D(K)R’(K)N   M(T)G
+Jaise Main Karati Hu
+Ma# (Dha) Ma# (Ga) (Ga) (Ga)   (Ga) (Re) (Re) (Re)
 
- Tuze Khabar Kya Bekhabar  
-GM(T)DD(K)  M(T)G M(T)GG(K)
 
- Main Tuzase Hi Chup Chup Kar  
-D(K)DD(K)M(T)GG(K)   G(K)GGM(T)M(T)
+<strong>INTERLUDE:</strong>
 
- Teri Ankhe Padhati Hun  
-M(T)D(K)M(T)GG(K)R(K)   R(K)G(K)G(K)GG  
+(Re) (Ga) (Ga) Ma#   (Dha) (Dha) (Dha) Ma# Ma#   (Ga) (Ga) (Ga) (Re) .Ni
+Ni (Re) (Ga) (Ga)   Ma# (Dha) (Ga) (Ga) (Ga) (Re)
 
- Kaun Tuze Yu Pyar Karega  
-R(K)D(K)D(K)D(K)D(K)   M(T)G G(K)GM(T)M(T) M(T)
 
- Jaise Main Karati Hu  
-M(T)D(K)M(T)GG(K)G   G(K)R(K)R(K) R(K)
+<strong>MIDDLE MUSIC:</strong>
 
- Ho Ho..  
-R(K)G(K)GM(T)  D(K)DD(K)M(T)M(T)  G(K)GG(K)R(K)N.  
-NR(K)G(K)G  M(T)D(K)G(K)GG(K)R(K)
+(Ga) (Ga) (Dha)   (Re)' Ni
+(Ga) Ma# (Dha) Ga' Ga'
+(Ga) (Ga) (Dha)   (Re)' Ni
+(Ga) Ma# (Dha) Ga' Ga'
 
- Teri Ankhe Padati Hu  
-M(T)D(K)M(T)GG(K)R(K)   R(K)G(K)G(K)GG  
 
- Kaun Tuze Yu Pyar Karega  
-R(K)D(K)D(K)D(K)D(K)   M(T)G G(K)GM(T)M(T) M(T)
+<strong>ANTARA:</strong>
 
- Jaise Main Karati Hu  
-M(T)D(K)M(T)GG(K)G   G(K)R(K)R(K) R(K)
+Meri Najar Ka Safar
+(Re) (Dha) Ma# (Dha)   (Ga) (Ga) (Ga)
 
- Tu Jo Muze Aa Mila  
-R(K)D(K)M(T)D(K)  GG(K)G
+Tuzape Hi Aake Ruke
+(Re) (Dha) Ma# (Dha)   (Ga) (Ga) Ma#
 
- Sapane Hua Sarfire  
-R(K)D(K)M(T)D(K)  GG(K)M(T)
+Kahane Ko Baki Hai Kya
+(Re) (Dha) Ma# (Dha)   (Ga) (Ga) (Ga)
 
- Hantho Main Aate Nahi  
-R(K)D(K)M(T)D(K)  GG(K)G
+Kahana Tha Jo Kah Chuke
+(Re) (Dha) Ma# (Dha)   (Ga) (Ga) Ma#
 
- Udate Hain Lamhe Mere  
-R(K)D(K)M(T)D(K)  GG(K)M(T)
 
- Meri Hansi Tuzase  
-D(K)DG’G’(K)  D(K)M(T)
+Meri Nigahe Hai
+(Dha) (Dha) Ga' Ga'   (Dha) Ma#
 
- Meri Khushi Tuzase  
-M(T)D(K)R’(K)N   M(T)G
+Teri Nigaho Ki
+Ma# (Dha) (Re)' Ni   Ma# Ga
 
- Tuze Khabar Kya Bekadar  
-GM(T)DD(K)  M(T)G M(T)GG(K)
 
- Jis Din Tuzako Na Dekhu  
-D(K)DD(K)M(T)GG(K)   G(K)GGM(T)M(T)
+Tuze Khabar Kya Bekhabar
+Ga Ma# (Dha) (Dha)   Ma# Ga Ma# (Ga)
 
- Pagal Pagal Firati Hun  
-M(T)D(K)M(T)GG(K)R(K)   R(K)G(K)G(K)GG  
 
- Kaun Tuze Yu Pyar Karega  
-R(K)D(K)D(K)D(K)D(K)   M(T)G G(K)GM(T)M(T) M(T)
+Main Tuzase Hi Chup Chup Kar
+(Dha) (Dha) (Dha) Ma# (Ga) (Ga)   (Ga) (Ga) (Ga) Ma# Ma#
 
- Jaise Main Karati Hu  
-M(T)D(K)M(T)GG(K)G   G(K)R(K)R(K) R(K)
+Teri Ankhe Padhati Hun
+Ma# (Dha) Ma# (Ga) (Ga) (Re)   (Re) (Ga) (Ga) (Ga)
 
- Ho Ho..  
-R(K)G(K)GM(T)  D(K)DD(K)M(T)M(T)  G(K)GG(K)R(K)N.  
-NR(K)G(K)G  M(T)D(K)G(K)GG(K)R(K)
-      </pre>
-    </section>
+
+(Repeat same melodic pattern…)
+
+</pre>
+    </div>
+  </section>
+
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
- <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+ <!-- Footer -->
+  <footer class="site-footer">
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
-
