@@ -2,212 +2,228 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Namo Namo – Devotional Sargam</title>
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Namo Namo – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Namo Namo</h1>
-    <p>Kedarnath (2018) · Amit Trivedi · Lyrics: Amitabh Bhattacharya</p>
-    <span class="genre-badge devotional">Devotional</span>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Namo Namo</h1>
+  <p>
+    Movie: Kedarnath (2018) · Singer: Amit Trivedi · Lyrics: Amitabh Bhattacharya ·
+  </p>
+</header>
+
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> S R G M P D N</li>
-        <li><strong>Komal Swar:</strong> (G), (D), (N)</li>
-        <li><strong>Teevra Swar:</strong> (T)</li>
+        <li><strong>Shuddha Swar:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swar:</strong> (Ga), (Dha), (Ni)</li>
+        <li><strong>Teevra Swar:</strong> #</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.S, .R, .G</code> = lower octave (Mandra)</li>
-            <li><code>S, R, G</code> = middle octave (Madhya)</li>
-            <li><code>S’, R’, G’</code> = higher octave (Taar)</li>
+            <li><code>.Sa, .Re, .Ga</code> = lower octave (Mandra)</li>
+            <li><code>Sa, Re, Ga</code> = middle octave (Madhya)</li>
+            <li><code>Sa’, Re’, Ga’</code> = higher octave (Taar)</li>
           </ul>
         </li>
         <li><strong>Raag:</strong> Bhairavi-inspired</li>
       </ul>
     </section>
 
-    <section class="video-section">
-    <h2> Watch on YouTube</h2>
+ <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/dx4Teh-nv3A" 
-        title="Namo Namo YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/dx4Teh-nv3A"
+        title="Namo Namo"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="namo-namo">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Devotional Sargam Notation</h2>
-      <pre class="notranslate">
+ <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
+
+    <div class="sargam-content">
+<pre class="notranslate">
+
+  <strong>MUKHDA:</strong>
 
 Jay Ho Jay Ho Shankar Bholenath Shankara
-SS  G(K)G(K)  MM PMG(K)
+Sa Sa  (Ga) (Ga)  Ma Ma Pa Ma (Ga)
 
 Aadi Dev Shanara He Shivay Shankara
-MPD(K)N(K)  PMMG(K)
+Ma Pa (Dha) (Ni) Pa Ma Ma (Ga)
 
 Tere Jaap Ke Bina Bholenath Shankara
-SS  G(K)G(K)  MM PMG(K)
+Sa Sa   (Ga) (Ga) Ma Ma  Pa Ma (Ga)
 
 Chale Ye Sans Kis Taraha He Shivay Shankara
-MPD(K)N(K)  PMMG(K)
+Ma Pa (Dha) (Ni) Pa Ma Ma (Ga)
 
 Mere Karm Tu Hi Jane
-G’(K)G’(K)   R’R’ S’S’ N(K)N(K)
+(Ga)’ (Ga)’  Re’Re’ Sa’Sa’ (Ni) (Ni)
 
 Kya Bura Hai Kya Bhala
-N(K)S’N(K)D(K)  D(K)D(K)N(K)
+(Ni) Sa’ (Ni) (Dha)  (Dha) (Dha) (Ni)
 
 Tere Raste Pe Mein To
-G’(K)G’(K)   M’M’ R’R’ S’N(K)
+(Ga)’ (Ga)’   Ma’ Ma’ Re’Re’ Sa’ (Ni)
 
 Ankhe Mund Ke Chala
-N(K)S’N(K)D(K)  D(K)S’N(K)
+(Ni) Sa’ (Ni) (Dha)  (Dha) Sa’(Ni)
 
 Tere Naam Ki Jyot Ne
-N(K)N(K)S’   N(K)D(K)PM S’   N(K)D(K)PM
+(Ni) (Ni) Sa’   (Ni) (Dha) Pa Ma Sa’   (Ni) (Dha) Pa Ma
 
 Sara Har Liya Tamas Mera
-MPPD(K)   PMMG(K)G(K)
+Ma Pa Pa (Dha)   Pa Ma Ma (Ga) (Ga)
 
-Namo Namo Ji Shankara नमो नमो जी शंकरा
-MM  PPP MPP
+<strong>CHORUS:</strong>
+Namo Namo Ji Shankara
+Ma Ma  Pa Pa Pa  Ma Pa Pa
 
-Bholenath Shankara भोलेनाथ शंकरा
-MPPP   MPP
+Bholenath Shankara
+Ma Pa Pa Pa   Ma Pa Pa
 
-Jay Trilokanath Shambhu जय त्रिलोकनाथ शम्भू
-M  MMM   MM MM   
+Jay Trilokanath Shambhu 
+Ma  Ma Ma Ma    Ma Ma  Ma Ma   
 
-He Shivay Shankara हे शिवाय शंकरा
-MG(K)MP   MG(K)M
+He Shivay Shankara
+Ma (Ga) Ma Pa   Ma (Ga) Ma
 
-Namo Namo Ji Shankara नमो नमो जी शंकरा
-MM  PPP MPP
+Namo Namo Ji Shankara
+Ma Ma  Pa Pa Pa  Ma Pa Pa
 
-Bholenath Shankara भोलेनाथ शंकरा
-MPPP   MPP
+Bholenath Shankara
+Ma Pa Pa Pa   Ma Pa Pa
 
-Rudradev He Maheshwara रुद्रदेव हे महेश्वरा
-M  MMM   MG(K)PMG(K)
+Rudradev He Maheshwara
+Ma  Ma Ma Ma   Ma (Ga) Pa Ma (Ga)
 
-Srushti Ke Janam Se Bhi सृष्टि के जनम से भी
-S’S’  N(K)D(K)   D(K)S’N(K)
+  <strong>ANTARA:</strong>
+Srushti Ke Janam Se Bhi
+Sa’Sa’  (Ni) (Dha)   (Dha) Sa’ (Ni)
 
-Pahale Tera Vaas Tha पहले तेरा वास था
-S’R’G’(K)M’   R’S’S’N(K)
+Pahale Tera Vaas Tha
+Sa’ Re’ (Ga)’ Ma’   Re’ Sa’ Sa’ (Ni)
 
-Ye Jag Rahe Ya Na Rahe ये जग रहे या ना रहे
-S’S’  N(K)D(K)   D(K)S’N(K)
+Ye Jag Rahe Ya Na Rahe 
+Sa’Sa’  (Ni) (Dha)   (Dha) Sa’ (Ni)
 
-Rahegi Teri Aastha रहेगी तेरी आस्था
-S’R’G’(K)M’   R’S’S’N(K)
+Rahegi Teri Aastha
+Sa’ Re’ (Ga)’ Ma’   Re’ Sa’ Sa’ (Ni)
 
-Kya Samay Kya Pralay क्या समय.. क्या प्रलय
-M’NG’(K)R’S’    M’NG’(K)R’S’
+Kya Samay Kya Pralay 
+Ma’ Ni (Ga)’ Re’ Sa’    Ma’ Ni (Ga)’ Re’ Sa’
 
-Dono Mein Teri Mahanta दोनों में तेरी महानता
-D(K)S’S’   S’S’
+Dono Mein Teri Mahanta
+(Dha) Sa’ Sa’   Sa’ Sa’
 
-Mahanata Mahanata महानता.. महानता..
-N(K)S’N(K)N(K)   N(K)S’N(K)N(K)
+Mahanata Mahanata 
+(Ni) Sa’ (Ni) (Ni)   (Ni) Sa’ (Ni) (Ni)
 
-Namo Namo Ji Shankara नमो नमो जी शंकरा
-MM  PPP MPP
+  <strong>CHORUS:</strong>
+Namo Namo Ji Shankara
+Ma Ma  Pa Pa Pa  Ma Pa Pa
 
-Bholenath Shankara भोलेनाथ शंकरा
-MPPP   MPP
+Bholenath Shankara
+Ma Pa Pa Pa   Ma Pa Pa
 
-Jay Trilokanath Shambhu जय त्रिलोकनाथ शम्भू
-M  MMM   MM MM   
+Jay Trilokanath Shambhu 
+Ma  Ma Ma Ma   Ma Ma  Ma Ma   
 
-He Shivay Shankara हे शिवाय शंकरा
-MG(K)MP   MG(K)M
+He Shivay Shankara
+Ma (Ga) Ma Pa   Ma (Ga) Ma
 
-Namo Namo Ji Shankara नमो नमो जी शंकरा
-MM  PPP MPP
+Namo Namo Ji Shankara
+Ma Ma  Pa Pa Pa  Ma Pa Pa
 
-Bholenath Shankara भोलेनाथ शंकरा
-MPPP   MPP
+Bholenath Shankara
+Ma Pa Pa Pa   Ma Pa Pa
 
-Rudradev He Maheshwara रुद्रदेव हे महेश्वरा
-M  MMM   MG(K)PMG(K)
+Rudradev He Maheshwara
+Ma  Ma Ma Ma   Ma (Ga) Pa Ma (Ga)
 
-Rudraved He Maheshwara रुद्रदेव हे महेश्वरा
-M  MMM   MG(K)PMG(K)
+Rudradev He Maheshwara
+Ma  Ma Ma Ma   Ma (Ga) Pa Ma (Ga)
 
-Rudraved He Maheshwara रुद्रदेव हे महेश्वरा
-M  MMM   MG(K)PMG(K)
-      </pre>
-    </section>
+Rudradev He Maheshwara
+Ma  Ma Ma Ma   Ma (Ga) Pa Ma (Ga)
+  </pre>
+    </div>
+  </section>
     
-    <p><a href="../songs.html">⬅️ Back to song list</a></p>
-  </main>
-
+  <!-- Footer -->
   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
