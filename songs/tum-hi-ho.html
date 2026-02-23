@@ -2,212 +2,238 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Tum Hi Ho – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Tum Hi Ho – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Tum Hi Ho</h1>
-    <p>Movie: Aashiqui 2 · Singer: Arijit Singh · Music: Mithoon · Lyrics: Mithoon</p>
-    <span class="genre-badge romantic">Romantic</span>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Tum Hi Ho</h1>
+  <p>
+    Movie: Aashiqui 2 (2013) · Singer: Arijit Singh · Lyrics: Mithoon · 
+    Music: Mithoon
+  </p>
+</header>
+
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Notation</h3>
+      <h3>Understanding Swar & Notation</h3>
       <ul>
-        <li><strong>Shuddha Swaras:</strong> सा रे ग म प ध नि</li>
-        <li><strong>Komal Swaras:</strong> <code>(K)</code> e.g. G(K), D(K)</li>
-        <li><strong>Teevra Swara:</strong> <code>(T)</code> e.g. M(T)</li>
+        <li><strong>Shuddha Swaras:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swaras:</strong> <code>(K)</code> e.g. (Ga)</li>
+        <li><strong>Teevra Swara:</strong> <code>#</code> e.g. Ma#</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.S, .R, .G</code> = Mandra Saptak (lower)</li>
-            <li><code>S, R, G</code> = Madhya Saptak (middle)</li>
-            <li><code>S’, R’, G’</code> = Taar Saptak (higher)</li>
+            <li><code>.Sa, .Re, .Ga</code> = Mandra Saptak (lower)</li>
+            <li><code>Sa, Re, Ga</code> = Madhya Saptak (middle)</li>
+            <li><code>Sa’, Re’, Ga’</code> = Taar Saptak (higher)</li>
           </ul>
         </li>
       </ul>
     </section>
 
-     <section class="video-section">
-    <h2> Watch on YouTube</h2>
+
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/Umqb9KENgmk" 
-        title="Tum Hi Ho YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/Umqb9KENgmk"
+        title="Tum Hi Ho"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="tum-hi-ho">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Full Sargam Notation</h2>
-      <pre class="notranslate">
- Starting Music:
-GPN  S’P DM(T)   (x4)
+  <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
 
- Hum Tere Bin Ab Rah Nahi Sakate
-N   G’R’   R’S’ S’N   DP DS’ NN 
+    <div class="sargam-content">
+<pre class="notranslate">
+<strong>STARTING MUSIC:</strong>
 
- Tere Bina Kya Vajud Mera
-D  DP D  DP M(T)GRG
+Ga Pa Ni   Sa’ Pa Dha Ma#   (x4)
 
- Tuzase Juda Agar Hoo Jayenge
-N   G’R’   R’S’ S’N   DP DS’ NN 
+<strong>MUKHDA:</strong>
 
- To Khud Se Hi Ho Jayenge Juda
-D  DP D  DP M(T)GRG
+Hum Tere Bin Ab Rah Nahi Sakate  
+Ni   Ga’ Re’   Re’ Sa’ Sa’ Ni   Dha Pa Dha Sa’ Ni Ni  
 
- Kyunki Tum Hi Ho
-PDN  PD
+Tere Bina Kya Vajud Mera  
+Dha  Dha Pa Dha  Dha Pa Ma# Ga Re Ga
 
- Ab Tum Hi Ho
-PDN  PD 
+Tuzase Juda Agar Hoo Jayenge  
+Ni   Ga’ Re’   Re’ Sa’ Sa’ Ni   Dha Pa Dha Sa’ Ni Ni  
 
- Jindagi Ab Tum Hi Ho
-M(T)DP  M(T)GM(T)  RG
+To Khud Se Hi Ho Jayenge Juda  
+Dha  Dha Pa Dha  Dha Pa Ma# Ga Re Ga
 
- Chain Bhi Mera Dard Bhi
-M(T)PDN   PD PDN PD 
+Kyunki Tum Hi Ho  
+Pa Dha Ni  Pa Dha
 
- Meri Ashiqui Ab Tum Hi Ho
-M(T)DP  M(T)GM(T)  RG
+Ab Tum Hi Ho  
+Pa Dha Ni  Pa Dha 
 
- Middle Music:
-M(T)PD  DN DNDP  
-DN DNDP  PD   PDPM(T)G  M(T)G  
+Jindagi Ab Tum Hi Ho  
+Ma# Dha Pa  Ma# Ga Ma#  Re Ga
+
+Chain Bhi Mera Dard Bhi  
+Ma# Pa Dha Ni   Pa Dha Pa Dha Ni Pa Dha 
+
+Meri Ashiqui Ab Tum Hi Ho  
+Ma# Dha Pa  Ma# Ga Ma#  Re Ga
+
+
+<strong>INTERLUDE:</strong>
+
+Ma# Pa Dha  Dha Ni Dha Ni Dha Pa  
+Dha Ni Dha Ni Dha Pa  Pa Dha   Pa Dha Pa Ma# Ga  Ma# Ga  
 (repeat)
 
- Tera Mera Rishta Hai Kaisa
-N   G’R’   R’S’ S’N   DP DS’ NN 
 
- Ek Pal Door Gawara Nahi
-D  DP D  DP M(T)GRG
+<strong>ANTARA:</strong>
 
- Tere Lia Har Roj Hai Jeete
-N   G’R’   R’S’ S’N   DP DS’ NN 
+Tera Mera Rishta Hai Kaisa  
+Ni   Ga’ Re’   Re’ Sa’ Sa’ Ni   Dha Pa Dha Sa’ Ni Ni  
 
- Tuz Ko Diya Mer Vakt Sabhi
-D  DP D  DP M(T)GRG
+Ek Pal Door Gawara Nahi  
+Dha  Dha Pa Dha  Dha Pa Ma# Ga Re Ga
 
- Koi Lamaha Mera Na Ho Tere Bina
-RG  GM(T)M(T)  GM(T) M(T)S’S’NN  DN
+Tere Lia Har Roj Hai Jeete  
+Ni   Ga’ Re’   Re’ Sa’ Sa’ Ni   Dha Pa Dha Sa’ Ni Ni  
 
- Har Sans Pe Naam Tera
-NG’   G’(K)G’   G’N ND DP DP  PM(T)
+Tujh Ko Diya Mer Vakt Sabhi  
+Dha  Dha Pa Dha  Dha Pa Ma# Ga Re Ga
 
- Kyunki Tum Hi Ho
-PDN  PD
+Koi Lamaha Mera Na Ho Tere Bina  
+Re Ga  Ga Ma# Ma#  Ga Ma# Ma# Sa’ Sa’ Ni Ni  Dha Ni
 
- Ab Tum Hi Ho
-PDN  PD 
+Har Sans Pe Naam Tera  
+Ni Ga’   Ga’ (Ga) Ga’   Ga’ Ni Ni Dha  Dha Pa Dha Pa  Pa Ma#
 
- Jindagi Ab Tum Hi Ho
-M(T)DP  M(T)GM(T)  RG
+Kyunki Tum Hi Ho  
+Pa Dha Ni  Pa Dha
 
- Chain Bhi Mera Dard Bhi
-M(T)PDN   PD PDN PD 
+Ab Tum Hi Ho  
+Pa Dha Ni  Pa Dha 
 
- Meri Ashiqui Ab Tum Hi Ho
-M(T)DP  M(T)GM(T)  RG
+Zindagi Ab Tum Hi Ho  
+Ma# Dha Pa  Ma# Ga Ma#  Re Ga
 
- Tere Lia Hi Jiya Main
-G’G’   R’G’ G’M’(T)M’(T)R’R’S’
+Chain Bhi Mera Dard Bhi  
+Ma# Pa Dha Ni   Pa Dha Pa Dha Ni Pa Dha 
 
- Khudako Jo Yu De Diya Hai
-NNS’   S’G’ G’M’(T)M’(T)R’R’S’
+Meri Ashiqui Ab Tum Hi Ho  
+Ma# Dha Pa  Ma# Ga Ma#  Re Ga
 
- Teri Wafa Ne Muzako Sabhala
-S’S’N  S’N S’ND  PS’N
+<strong>ANTARA:</strong>
 
- Sare Gamo Ko Dil Se Nikala
-S’S’N  S’N S’ND  PS’N
+Tere Lia Hi Jiya Main  
+Ga’ Ga’   Re’ Ga’ Ga’ Ma#’ Ma#’ Re’ Re’ Sa’
 
- Tere Sath Mera Hai Nasib Juda
-RGGM(T)M(T)  GM(T) M(T)S’S’NN  DN
+Khudako Jo Yu De Diya Hai  
+Ni Ni Sa’   Sa’ Ga’ Ga’ Ma#’ Ma#’ Re’ Re’ Sa’
 
- Tuze Pake Adhura Na Raha
-NG’   G’(K)G  G’N ND DP  DP PM(T)
+Teri Wafa Ne Mujhako Sabhala  
+Sa’ Sa’ Ni  Sa’ Ni Sa’ Ni Dha  Pa Sa’ Ni
 
- Kyunki Tum Hi Ho
-PDN  PD
+Sare Gamo Ko Dil Se Nikala  
+Sa’ Sa’ Ni  Sa’ Ni Sa’ Ni Dha  Pa Sa’ Ni
 
- Ab Tum Hi Ho
-PDN  PD 
+Tere Sath Mera Hai Nasib Juda  
+Re Ga Ga Ma# Ma#  Ga Ma# Ma# Sa’ Sa’ Ni Ni  Dha Ni
 
- Jindagi Ab Tum Hi Ho
-M(T)DP  M(T)GM(T)  RG
+Tujhe Pake Adhura Na Raha  
+Ni Ga’   Ga’ (Ga) Ga’   Ga’ Ni Ni Dha  Dha Pa Dha  Pa Dha Pa Ma#
 
- Chain Bhi Mera Dard Bhi
-M(T)PDN   PD PDN PD 
+Kyunki Tum Hi Ho  
+Pa Dha Ni  Pa Dha
 
- Meri Ashiqui Ab Tum Hi Ho
-M(T)DP  M(T)GM(T)  RG
-      </pre>
-    </section>
+Ab Tum Hi Ho  
+Pa Dha Ni  Pa Dha 
+
+Zindagi Ab Tum Hi Ho  
+Ma# Dha Pa  Ma# Ga Ma#  Re Ga
+
+Chain Bhi Mera Dard Bhi  
+Ma# Pa Dha Ni   Pa Dha Pa Dha Ni Pa Dha 
+
+Meri Ashiqui Ab Tum Hi Ho  
+Ma# Dha Pa  Ma# Ga Ma#  Re Ga
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
- <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+   <!-- Footer -->
+  <footer class="site-footer">
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
