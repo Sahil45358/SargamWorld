@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tera Mujhse Hai Pehle Ka Naata – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css">
-    <link rel="icon" type="image/png" href="favicon.png" />
-  <meta name="google" content="notranslate">
+  <meta charset="UTF-8" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Tera Mujhse Hai Pehle Ka Naata – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
+  <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Tera Mujhse Hai Pehle Ka Naata</h1>
-    <p>Film: Aa Gale Lag Ja (1973) • Kishore Kumar, Poornima • Lyrics: Sahir Ludhianvi • Music: R.D. Burman</p>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Tera Mujhse Hai Pehle Ka Naata</h1>
+  <p>
+    Movie: Aa Gale Lag Ja (1973) · Singer:  Kishore Kumar, Poornima · Lyrics: Sahir Ludhianvi · 
+    Music: R.D. Burman 
+  </p>
+</header>
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> सा रे ग म प ध नि</li>
-        <li><strong>Komal Swar:</strong> ((नि)), ((ध))</li>
-        <li><strong>Kann Swar:</strong> (ग), (रे), etc.</li>
+        <li><strong>Shuddha Swar:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swar:</strong> (Ni), (Dha)</li>
+        <li><strong>Kann Swar:</strong> (Re Ga)</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.सा, .रे</code> = lower octave</li>
-            <li><code>सा, रे</code> = middle octave</li>
-            <li><code>सा’, रे’</code> = higher octave</li>
+            <li><code>.Sa, .Re</code> = lower octave</li>
+            <li><code>Sa, Re</code> = middle octave</li>
+            <li><code>Sa’, Re’</code> = higher octave</li>
           </ul>
         </li>
         <li><strong>Notes in <code>{ }</code>:</strong> Murki – fast turn</li>
@@ -32,157 +48,162 @@
       </ul>
     </section>
 
-     <section class="video-section">
-    <h2> Watch on YouTube</h2>
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/89lgb7dmXps" 
-        title="Tera Mujhse Hai Pehle Ka Naata YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/89lgb7dmXps"
+        title="Tera Mujhse Hai Pehle Ka Naata"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="tera-mujhse">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Mukhda</h2>
-      <pre class="notranslate">
-<strong>Tera | mujhse | hai | pehle | ka | naata | koi</strong>  
-सा रे | ,((ध)) सा | सा | रे(ग) रे सा | सा | सा म | प प((ध))
+  <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
 
-<strong>Yoonhi | nahin | dil | lubhaata | koi</strong>  
-सा ((नि)) | ((ध)) प | प | म ग म प | ((ध)) प प
+    <div class="sargam-content">
+<pre class="notranslate">
+<strong>MUKHDA:</strong>
 
-<strong>Mera | tujhse | hai | pehle | ka | naata | koi</strong>  
-सा रे | ,((ध)) सा | सा | रे(ग) रे सा | सा | सा म | प प((ध))
+Tera | mujhse | hai | pehle | ka | naata | koi  
+Sa Re | .(Dha) Sa | Sa | (Re Ga) Re Sa | Sa | Sa Ma | Pa Pa (Dha)
 
-<strong>Yoonhi | nahin | dil | lubhaata | koi</strong>  
-सा ((नि)) | ((ध)) प | प | सा सा ((ध)) | प म
+Yoonhi | nahin | dil | lubhaata | koi  
+Sa (Ni) | (Dha) Pa | Pa | Ma Ga Ma Pa | (Dha) Pa Pa
 
-<strong>Jaane | tu | ya | jaane | na</strong>  
-ध ध | सा’ ((नि))… | ((नि)) सा’ | ((नि)) ध | ध~((ध))~((ध))…
+Mera | tujhse | hai | pehle | ka | naata | koi  
+Sa Re | .(Dha) Sa | Sa | (Re Ga) Re Sa | Sa | Sa Ma | Pa Pa (Dha)
 
-<strong>Maane | tu | ya | maane | na</strong>  
-ध ((नि)) | सा’ रे’ सा’~((नि))… | ((नि)) रे’ | सा’ ((नि)) | ((नि)) ध सा’
+Yoonhi | nahin | dil | lubhaata | koi  
+Sa (Ni) | (Dha) Pa | Pa | Sa Sa (Dha) | Pa Ma
 
-<strong>MUSIC:</strong>  
-{सा’ ((नि)) ध प म’ ग’ रे’ सा’ ((नि)) सा’}
-      </pre>
-    </section>
+Jaane | tu | ya | jaane | na  
+Dha Dha | Sa’ (Ni)… | (Ni) Sa’ | (Ni) Dha | Dha~(Dha)~(Dha)…
 
-    <section>
-      <h2>Antara 1</h2>
-      <pre class="notranslate">
-<strong>Dhuaan | dhuaan | tha | vo | samaan</strong>  
-ध… | ((ध))~((ध))… ((नि)) सा’ | ((नि)) | ((ध)) | ((ध)) ((ध))…
+Maane | tu | ya | maane | na  
+Dha (Ni) | Sa’ Re’ Sa’~(Ni)… | (Ni) Re’ | Sa’ (Ni) | (Ni) Dha Sa’
 
-<strong>Yahan | vahan | jaane | kahan</strong>  
-((नि)) ((नि)) | ((ध)) ((नि))… सा’ | ((नि)) ((ध)) | ((ध)) ((ध))
+MUSIC:
+{Sa’ (Ni) Dha Pa Ma’ Ga’ Re’ Sa’ (Ni) Sa’}
 
-<strong>Tu | aur | main | kahin | milay | thay | pehle</strong>  
-ग म | प…प | प | प ध | ((नि)) ध | प~ध | प~ध प
 
-<strong>Dekha | tujhe | to | dil | ne | kaha</strong>  
-ग म प | प प | सा’… | ध प | म | म म
-      </pre>
-    </section>
+<strong>ANTARA:</strong>
 
-    <section>
-      <h2>Antara 2</h2>
-      <pre class="notranslate">
-<strong>Tu | bhi | rahi | mere | liye</strong>  
+Dhuaan | dhuaan | tha | vo | samaan  
+Dha… | (Dha)~(Dha)… (Ni) Sa’ | (Ni) | (Dha) | (Dha) (Dha)…
 
-<strong>Main | bhi | raha | tere | liye</strong>  
+Yahan | vahan | jaane | kahan  
+(Ni) (Ni) | (Dha) (Ni)… Sa’ | (Ni) (Dha) | (Dha) (Dha)
 
-<strong>Pehle | bhi | main | tujhe | baahon | mein | leke</strong>  
+Tu | aur | main | kahin | milay | thay | pehle  
+Ga Ma | Pa…Pa | Pa | Pa Dha | (Ni) Dha | Pa~Dha | Pa~Dha Pa
 
-<strong>Jhooma | kiya | aur | jhooma | kiya</strong>  
+Dekha | tujhe | to | dil | ne | kaha  
+Ga Ma Pa | Pa Pa | Sa’… | Dha Pa | Ma | Ma Ma
 
-<strong>Jaane | tu | ya | jaane | na</strong>  
+<strong>ANTARA:</strong>
 
-<strong>Maane | tu | ya | maane | na</strong>  
-      </pre>
-    </section>
+Tu | bhi | rahi | mere | liye  
+Dha… | (Dha)~(Dha)… (Ni) Sa’ | (Ni) | (Dha) | (Dha) (Dha)…
+  
+Main | bhi | raha | tere | liye  
+(Ni) (Ni) | (Dha) (Ni)… Sa’ | (Ni) (Dha) | (Dha) (Dha)
+  
+Pehle | bhi | main | tujhe | baahon | mein | leke  
+Ga Ma | Pa…Pa | Pa | Pa Dha | (Ni) Dha | Pa~Dha | Pa~Dha Pa
+  
+Jhooma | kiya | aur | jhooma | kiya  
+Ga Ma Pa | Pa Pa | Sa’… | Dha Pa | Ma | Ma Ma
 
-    <section>
-      <h2>Antara 3</h2>
-      <pre class="notranslate">
-<strong>Dekho | abhi | khona | nahin</strong>  
+Jaane | tu | ya | jaane | na  
+Dha Dha | Sa’ (Ni)… | (Ni) Sa’ | (Ni) Dha | Dha~(Dha)~(Dha)…
 
-<strong>Kabhi | juda | hona | nahin</strong>  
+Maane | tu | ya | maane | na  
+Dha (Ni) | Sa’ Re’ Sa’~(Ni)… | (Ni) Re’ | Sa’ (Ni) | (Ni) Dha Sa’
 
-<strong>Ab | ke | yoohin | mile | rahenge | dono</strong>  
+<strong>ANTARA:</strong>
 
-<strong>Vaada | raha | ye | is | shaam | ka</strong>  
+Dekho | abhi | khona | nahin  
+Dha… | (Dha)~(Dha)… (Ni) Sa’ | (Ni) | (Dha) | (Dha) (Dha)…
+  
+Kabhi | juda | hona | nahin  
+(Ni) (Ni) | (Dha) (Ni)… Sa’ | (Ni) (Dha) | (Dha) (Dha)
+  
+Ab | ke | yoohin | mile | rahenge | dono  
+Ga Ma | Pa…Pa | Pa | Pa Dha | (Ni) Dha | Pa~Dha | Pa~Dha Pa
+  
+Vaada | raha | ye | is | shaam | ka  
+Ga Ma Pa | Pa Pa | Sa’… | Dha Pa | Ma | Ma Ma
 
-<strong>Jaane | tu | ya | jaane | na</strong>  
+Jaane | tu | ya | jaane | na  
+Dha Dha | Sa’ (Ni)… | (Ni) Sa’ | (Ni) Dha | Dha~(Dha)~(Dha)…
 
-<strong>Maane | tu | ya | maane | na</strong>  
+Maane | tu | ya | maane | na  
+Dha (Ni) | Sa’ Re’ Sa’~(Ni)… | (Ni) Re’ | Sa’ (Ni) | (Ni) Dha Sa’
 
-<strong>Tera | mujhse | hai | pehle | ka | naata | koi</strong>  
-सा रे | ,((ध)) सा | सा | रे(ग) रे सा | सा | सा म | प प((ध))
-      </pre>
-    </section>
+Tera | mujhse | hai | pehle | ka | naata | koi  
+Sa Re | .(Dha) Sa | Sa | (Re Ga) Re Sa | Sa | Sa Ma | Pa Pa (Dha)
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
