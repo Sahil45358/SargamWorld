@@ -1,129 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Pal Pal Har Pal – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css"/>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <meta name="google" content="notranslate"/>
+  <meta charset="UTF-8" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Pal Pal Har Pal – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
+  <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Pal Pal Har Pal</h1>
-    <p>Film: Lage Raho Munna Bhai (2006) • Shreya Ghoshal & Sonu Nigam • Lyrics: Swanand Kirkire • Music: Shantanu Moitra</p>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Pal Pal Har Pal</h1>
+  <p>
+    Movie: Lage Raho Munna Bhai (2006) · Singer: Shreya Ghoshal & Sonu Nigam · Lyrics: Swanand Kirkire · 
+    Music: Shantanu Moitra
+  </p>
+</header>
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> सा रे ग म प</li>
-        <li><strong>Komal Swar:</strong> (नि), (ध) at places</li>
+        <li><strong>Shuddha Swar:</strong> Sa RE Ga Ma Pa</li>
+        <li><strong>Komal Swar:</strong> (Ni), (Dha) at places</li>
         <li><strong>Tivra Swar:</strong> none here</li>
         <li><strong>Octaves:</strong></li>
         <ul>
-          <li><code>.सा, .रे, .ग</code> = lower octave</li>
-          <li><code>सा, रे, ग</code> = middle octave</li>
-          <li><code>सा’, रे’, ग’</code> = higher octave</li>
+          <li><code>.Sa, .Re, .Ga</code> = lower octave</li>
+          <li><code>Sa, Re, Ga</code> = middle octave</li>
+          <li><code>Sa’, Re’, Ga’</code> = higher octave</li>
         </ul>
         <li><strong>Meend <code>~</code>:</strong> glide between notes</li>
       </ul>
     </section>
 
-        <section class="video-section">
-    <h2> Watch on YouTube</h2>
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/T53pDKTLvcY" 
-        title="Pal Pal Har Pal YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/T53pDKTLvcY"
+        title="Pal Pal Har Pal"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="pal-pal-pal">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Mukhda (Opening)</h2>
-      <pre class="notranslate">
-<strong>Pal | Pal | pal | pal, | Har | Pal, | Har | Pal</strong>  
-प | (ध) | रे | ग | रे | रे | ग | रे | रे | ग | रे
+    
+  <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
 
-<strong>Kaise | katega | pal, | har | pal | har | pal</strong>  
-रे | ग रे | सा | (ध) | रे | सा | सा | रे | सा | सा | रे | सा
+    <div class="sargam-content">
+<pre class="notranslate">
+<strong>MUKHDA:</strong>
 
-<strong>Dil | dil | dil | dil | main | machi | hai | machi</strong>  
-सा | रे | ग | म | म | प | म | म | प | म
+Pal | Pal | pal | pal, | Har | Pal, | Har | Pal  
+Pa | (Dha) | Re | Ga | Re | Re | Ga | Re | Re | Ga | Re
 
-<strong>Machi | hai | hulchal | hulchal | hulchal</strong>  
-प | म | ग | रे | म ग | ग | म ग | ग | म ग
+Kaise | katega | pal, | har | pal | har | pal  
+Re | Ga Re | Sa | (Dha) | Re | Sa | Sa | Re | Sa | Sa | Re | Sa
 
-<strong>Kaise | katega | pal, | har | pal | har | pal</strong>  
-म | ग | रे | सा | ग | रे | रे | ग | रे | रे | ग | रे
+Dil | dil | dil | dil | main | machi | hai | machi  
+Sa | Re | Ga | Ma | Ma | Pa | Ma | Ma | Pa | Ma
 
-<strong>Kaise | katega | pal, | har | pal | har | pal</strong>  
-ग | रे | सा | (ध) | रे | सा | सा | सा | (ध) (नि) | (ध) | (ध) | प
-      </pre>
-    </section>
+Machi | hai | hulchal | hulchal | hulchal  
+Pa | Ma | Ga | Re | Ma Ga | Ga | Ma Ga | Ga | Ma Ga
+
+Kaise | katega | pal, | har | pal | har | pal  
+Ma | Ga | Re | Sa | Ga | Re | Re | Ga | Re | Re | Ga | Re
+
+Kaise | katega | pal, | har | pal | har | pal  
+Ga | Re | Sa | (Dha) | Re | Sa | Sa | Sa | (Dha) (Ni) | (Dha) | (Dha) | Pa
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
- <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+ <!-- Footer -->
+  <footer class="site-footer">
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
