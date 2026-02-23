@@ -1,137 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Tu Tu Hai Wahi – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css"/>
-    <link rel="icon" type="image/png" href="favicon.png" />
+  <meta charset="UTF-8" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Tu Tu Hai Wahi – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Tu Tu Hai Wahi</h1>
-    <p>Movie: Ye Wada Raha (1982) | Singers: Asha Bhonsle & Kishore Kumar | Music: R D Burman | Lyrics: Gulshan Bawra</p>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Tu Tu Hai Wahi</h1>
+  <p>
+    Movie: Ye Wada Raha (1982) · Singer: Asha Bhonsle & Kishore Kumar · Lyrics: Gulshan Bawra · 
+    Music: R D Burman
+  </p>
+</header>
 
   <main>
     <!-- Swar Explanation -->
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> सा रे ग म प ध नि</li>
-        <li><strong>Komal Swar (flat):</strong> रे ग ध नि – written in lowercase or parentheses</li>
-        <li><strong>Tivra Swar (sharp):</strong> only म is sharp – written as म’ or म(t)</li>
+        <li><strong>Shuddha Swar:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swar:</strong> (Re), (Ga)</li>
+        <li><strong>Tivra Swar:</strong> Not Used</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.सा, .रे, .ग</code> = Mandra Saptak (lower octave)</li>
-            <li><code>सा, रे, ग</code> = Madhya Saptak (middle octave)</li>
-            <li><code>सा’, रे’, ग’</code> = Tara Saptak (higher octave)</li>
+            <li><code>.Sa, .Re, .Ga</code> = Mandra Saptak (lower octave)</li>
+            <li><code>Sa, Re, Ga</code> = Madhya Saptak (middle octave)</li>
+            <li><code>Sa’, Re’, Ga’</code> = Tara Saptak (higher octave)</li>
           </ul>
         </li>
       </ul>
     </section>
 
-    <section class="video-section">
-    <h2> Watch on YouTube</h2>
+
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/bLxLaVS4ZXQ" 
-        title="Tu Tu Hai Wahi YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/bLxLaVS4ZXQ"
+        title="Tu Tu Hai Wahi"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="tu-tu-hai-wahi">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <!-- Full Sargam Notation -->
-    <section>
-      <h2>Lyrics & Sargam</h2>
-      <pre class="notranslate">
-<strong>Prelude:</strong>
-(Base Guitar / Flute:)
-ग रे ,ध रे ग र, ध ,नि  
-ग~ ,ध रे ग रे ,प,प~,ध  
+ <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
 
-<strong>Instrumentation:</strong>
-,ध ,नि सा रे ग  
-{सा रे ग} × 4  
+    <div class="sargam-content">
+<pre class="notranslate">
 
-<strong>Trumpet:</strong>
-,ध सा रे ग… ,ध  
-ग… ,प,ध,नि  
-,ध सा रे ग… ,ध  
-रे… ,प ,ध,नि,ध  
-{,ध ,नि सा}, नि…  
+<strong>MUKHDA:</strong>
 
-<strong>Whistle:</strong>
-नि… ध…  
-सा’ ग’ सा’ ध नि…  
-(ध)नि… ध…  
-सा’ ग’ सा’ ध प(ध)प म…  
-
-<strong>Violins:</strong>
-प म ग र सा… रे ग र सा प…  
-म ग म ग रे  
-
-<strong>OPENING/ STHAYI:</strong>
-La | la la la la… | la la la la la  
-रे | ग म ग रे नि… | ध प म ग सा | ग प  
+La | la la la la… | la la la la la  
+Re | Ga Ma Ga Re Ni… | Dha Pa Ma Ga Sa | Ga Pa  
 
 Tu | tu | hai | vohi  
-रे | ग म | ग | रे नि…  
+Re | Ga Ma | Ga | Re Ni…  
 
 Dil ne | jise | apna | kaha  
-ध प म | ग सा | रेग रे | सा ध…  
+Dha Pa Ma | Ga Sa | Re Ga Re | Sa Dha…  
 
 Tu | hai | jahaan  
-प म | ग | रे सा  
+Pa Ma | Ga | Re Sa  
 
 Main | hoon | vahaan  
-रे ग | रे | सा प…  
+Re Ga | Re | Sa Pa…  
 
 Ab to | ye | jeena  
-म ग | रे | रे ध  
+Ma Ga | Re | Re Dha  
 
 Tere | bin | hain | saza  
-रे ग | ध…~प | प | म म…  
+Re Ga | Dha…~Pa | Pa | Ma Ma…  
 
-Ho…| mil | jaaye | is tarah  
-म~प | प | प प | प ध नि  
+Ho… | mil | jaaye | is tarah  
+Ma~Pa | Pa | Pa Pa | Pa Dha Ni  
 
 Do | leharen | jis | tarah  
-ध~प | म म | म | प ध  
+Dha~Pa | Ma Ma | Ma | Pa Dha  
 
 Fir | ho na | juda  
-म~ग | रे ग म ग | रे प…  
+Ma~Ga | Re Ga Ma Ga | Re Pa…  
 
 Haan | ye | vaada | raha  
-म~ग | रे~ग | सा (रे)ग.. | म(ग)र  
+Ma~Ga | Re~Ga | Sa (Re) Ga.. | Ma (Ga) Re  
 
-<strong>ANTARA:</strong>  
-Main | aawaaz | hoon | to  
-ध | ध र’ र’र’ | सा’… | र’~ध…  
 
-Tu | hai | geet | mera  
-प | प | सा’प | ध ध  
-
-<strong>Interlude (lower octave):</strong>  
-,ध ,नि…  
-प म म…  
-ग रे ग रे, ,ध रे  
-र र र सा सा सा, ,नि नि नि, ,ध  
+<strong>ANTARA:</strong>
 
 Main | aawaaz | hoon | to  
-ध | ध र’ र’र’ | सा’… | र’~ध…  
+Dha | Dha Re’ Re’ Re’ | Sa’… | Re’~Dha…  
 
 Tu | hai | geet | mera  
-प | प | सा’प | ध ध  
+Pa | Pa | Sa’ Pa | Dha Dha  
+
+
+<strong>INTERLUDE (Lower Octave):</strong>
+
+.Dha .Ni…  
+Pa Ma Ma…  
+Ga Re Ga Re, .Dha Re  
+Re Re Re Sa Sa Sa, .Ni .Ni .Ni, .Dha  
+
+
+<strong>ANTARA (Repeat):</strong>
+
+Main | aawaaz | hoon | to  
+Dha | Dha Re’ Re’ Re’ | Sa’… | Re’~Dha…  
+
+Tu | hai | geet | mera  
+Pa | Pa | Sa’ Pa | Dha Dha  
 
 (Repeat above two lines…)
 
-<strong>Outro:</strong>  
+
+<strong>OUTRO:</strong>
 Jahaan se niraala  
 manmeet mera…  
 Ho mil jaaye…  
@@ -151,65 +178,37 @@ najar se chura loon
 Kahi dil ke kone main  
 tujhako bitha doon  
 Ho mil jaaye is tarah…
-      </pre>
-    </section>
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
- <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
