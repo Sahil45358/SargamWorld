@@ -2,29 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Zara Zara – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css" />
-   <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Zara Zara – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Zara Zara</h1>
-    <p>Film: Rehna Hai Tere Dil Mein (2001) · Singer: Bombay Jayashree · Lyrics: Sameer · Music: Harris Jayaraj</p>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Zara Zara</h1>
+  <p>
+    Movie: Rehna Hai Tere Dil Mein (2001) · Singer: Bombay Jayashree · Lyrics: Sameer · 
+    Music: Harris Jayaraj
+  </p>
+</header>
+
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> सा रे ग म प ध नि</li>
-        <li><strong>Komal Swar:</strong> ((नि))</li>
-        <li><strong>Kann Swar:</strong> (प)</li>
+        <li><strong>Shuddha Swar:</strong> Sa Re Ga Ma Pa Dha Ni</li>
+        <li><strong>Komal Swar:</strong> (Ni)</li>
+        <li><strong>Kann Swar:</strong> (Pa)</li>
         <li><strong>Octaves:</strong>
           <ul>
-            <li><code>.सा, .रे, .ग</code> = lower octave</li>
-            <li><code>सा, रे, ग</code> = middle octave</li>
-            <li><code>सा’, रे’, ग’</code> = higher octave</li>
+            <li><code>.Sa, .Re, .Ga</code> = lower octave</li>
+            <li><code>Sa, Re, Ga</code> = middle octave</li>
+            <li><code>Sa’, Re’, Ga’</code> = higher octave</li>
           </ul>
         </li>
         <li><strong>Notes in <code>{ }</code>:</strong> Murki (fast turn)</li>
@@ -32,161 +49,150 @@
         <li><strong><code>( )</code>:</strong> Kann swar (touch note)</li>
       </ul>
     </section>
+    
 
-     <section class="video-section">
-    <h2> Watch on YouTube</h2>
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/a71xD6RyOok" 
-        title="Zara Zara YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/a71xD6RyOok"
+        title="Zara Zara"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="zara-zara">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Prelude (Flute)</h2>
-      <pre class="notranslate">
-एम प ध ध ध | ((नि)) ध प | म ग | ग एम प | म ग र  
-एम प ध ध ध | ((नि)) ध प | म ग | ग एम प | ग म र  
-रे म म म म | प प प प | ध ध ध | स रे’… ग’ रे’…  
-स’ ((नि)) ध… | ((नि)) ध प ध ((नि)) | प म ग…
-      </pre>
-    </section>
+   <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
 
-    <section>
-      <h2>Sthayi</h2>
-      <pre class="notranslate">
-<strong>Zara zara bahekta hai</strong>  
-ग म | ग म | ग म ग प ग | म
+    <div class="sargam-content">
+<pre class="notranslate">
+<strong>MUKHDA:</strong>
 
-<strong>Mahekta hai aaj to</strong>  
-म ग म प ग | म | ग ग | ध~प~ध
+Zara zara bahekta hai  
+Ga Ma | Ga Ma | Ga Ma Ga Pa Ga | Ma
 
-<strong>Mera tan badan</strong>  
-म ग | म | ग म
+Mahekta hai aaj to  
+Ma Ga Ma Pa Ga | Ma | Ga Ga | Dha~Pa~Dha
 
-<strong>Main pyaasi hoon</strong>  
-म | ग म प ग | म
+Mera tan badan  
+Ma Ga | Ma | Ga Ma
 
-<strong>Mujhe bhar le</strong>  
-म ग म | प ग | म~रे
+Main pyaasi hoon  
+Ma | Ga Ma Pa Ga | Ma
 
-<strong>Apni baahon mein</strong>  
-रे म | ग रे~ग | स
+Mujhe bhar le  
+Ma Ga Ma | Pa Ga | Ma~Re
 
-<strong>Haan meri kasam tujhko sanam</strong>  
-रे | रे म | ग रे स | स स ग | रे स ((नि))
+Apni baahon mein  
+Re Ma | Ga Re~Ga | Sa
 
-<strong>Door kahin naa jaa</strong>  
-((नि)) स | ((नि)) ,ध | ग…{म ग रे} | रे
+Haan meri kasam tujhko sanam  
+Re | Re Ma | Ga Re Sa | Sa Sa Ga | Re Sa (Ni)
 
-<strong>Yeh doori kehti hai</strong>  
-रे | म ग रे स | स ग रे स~ | ((नि))
+Door kahin naa jaa  
+(Ni) Sa | (Ni) .Dha | Ga…{Ma Ga Re} | Re
 
-<strong>Paas mere aa jaa</strong>  
-((नि)) स | ((नि)) ,ध | ग…{म ग रे} | रे
+Yeh doori kehti hai  
+Re | Ma Ga Re Sa | Sa Ga Re Sa~ | (Ni)
 
-<strong>Aaja re aa bhi ja</strong>  
-(प)~((नि))… ध | म ग… | प… | ध(प)म | म…
-      </pre>
-    </section>
+Paas mere aa jaa  
+(Ni) Sa | (Ni) .Dha | Ga…{Ma Ga Re} | Re
 
-    <section>
-      <h2>Antara</h2>
-      <pre class="notranslate">
-<strong>Yunhi baras baras kaali ghata barse</strong>  
-रे~म | प~ध प | प~ध प | प~ध प | प ध | म ग
+Aaja re aa bhi ja  
+Pa~(Ni)… Dha | Ma Ga… | Pa… | (Dha Pa) Ma | Ma…
 
-<strong>Hum yaar bheeg jaaye</strong>  
-प | प ध | म म | ग~म रे
+<strong>ANTARA:</strong>
 
-<strong>Is chaahat ki baarish mein</strong>  
-प | प प प | प ग | ग प ध~((नि)) | प~ध…
+Yunhi baras baras kaali ghata barse  
+Re~Ma | Pa~Dha Pa | Pa~Dha Pa | Pa~Dha Pa | Pa Dha | Ma Ga
 
-<strong>Meri khuli khuli laton ko suljhaaye</strong>  
-रे~म | प~ध प | प~ध प | प ध | रे’ | रे’~ध म ग
+Hum yaar bheeg jaaye  
+Pa | Pa Dha | Ma Ma | Ga~Ma Re
 
-<strong>Tu apni ungliyon se</strong>  
-प | प प प~ध | म म ग~म | रे
+Is chaahat ki baarish mein  
+Pa | Pa Pa Pa | Pa Ga | Ga Pa Dha~(Ni) | Pa~Dha…
 
-<strong>Main to hoon is khwaahish mein</strong>  
-प | प | प | प प ग | ग प ध ((नि)) | प~ध…
+Meri khuli khuli laton ko suljhaaye  
+Re~Ma | Pa~Dha Pa | Pa~Dha Pa | Pa Dha | Re’ | Re’~Dha Ma Ga
 
-<strong>Sardi ki raaton mein</strong>  
-ध~रे’ रे’~ध | ध | ध~ग’ ग’~ध | ध
+Tu apni ungliyon se  
+Pa | Pa Pa Pa~Dha | Ma Ma Ga~Ma | Re
 
-<strong>Hum soye rahe ek chaadar mein</strong>  
-ध | म’ म’ | म’ ग’ | रे’ रे’ | रे’~स’ स’~रे’ | स रे’
+Main to hoon is khwaahish mein  
+Pa | Pa | Pa | Pa Pa Ga | Ga Pa Dha (Ni) | Pa~Dha…
 
-<strong>Hum dono tanha ho</strong>  
-ध~रे’ | रे’~ध ध | ध~स’ स’~प | प
+Sardi ki raaton mein  
+Dha~Re’ Re’~Dha | Dha | Dha~Ga’ Ga’~Dha | Dha
 
-<strong>Na koi bhi rahe is ghar mein</strong>  
-प ध | प~((नि)) ((नि)) | ध | प म | ग ग | म प | ग… म
-      </pre>
-    </section>
+Hum soye rahe ek chaadar mein  
+Dha | Ma’ Ma’ | Ma’ Ga’ | Re’ Re’ | Re’~Sa’ Sa’~Re’ | Sa Re’
+
+Hum dono tanha ho  
+Dha~Re’ | Re’~Dha Dha | Dha~Sa’ Sa’~Pa | Pa
+
+Na koi bhi rahe is ghar mein  
+Pa Dha | Pa~(Ni) (Ni) | Dha | Pa Ma | Ga Ga | Ma Pa | Ga… Ma
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
+ <!-- Footer -->
   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
