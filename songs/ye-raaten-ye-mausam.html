@@ -2,164 +2,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ye Raaten, Ye Mausam – Full Sargam</title>
-  <link rel="stylesheet" href="../style.css" />
-   <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Page Title (only thing that changes per song) -->
+  <title>Ye Raaten, Ye Mausam – Sargam Notations | SargamWorld</title>
+  <!-- BASIC SEO (COMMON FOR ALL PAGES) -->
+  <meta name="description" content="Learn Hindi song sargam notations with video. Easy Indian classical sargam for beginners on SargamWorld." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="SargamWorld" />
+  <!-- LANGUAGE & MOBILE -->
+  <meta http-equiv="Content-Language" content="hi,en" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PERFORMANCE -->
   <meta name="google" content="notranslate" />
+  <!-- STYLES -->
+<link rel="stylesheet" href="../songstyle/base.css" />
+<link rel="stylesheet" href="../songstyle/style.css" />
+  <link rel="icon" type="image/png" href="/SargamWorld/favicon.png" />
 </head>
+
 <body>
-  <header>
-    <h1 class="notranslate">🎵 Ye Raaten, Ye Mausam</h1>
-    <p>Film: Dilli ka Thug (1958) • Singers: Kishore Kumar & Asha Bhonsle</p>
-  </header>
+
+<header class="song-header">
+  <h1 class="notranslate">Ye Raaten, Ye Mausam</h1>
+  <p>
+    Movie: Dilli ka Thug (1958) · Singer: Kishore Kumar & Asha Bhonsle · Lyrics: Shailendra, Majrooh Sultanpuri
+    Music: Ravi Shankar Sharma 
+  </p>
+</header>
+
+</header>
 
   <main>
     <section class="learning-swar">
-      <h3>🎼 Understanding Swar & Octaves</h3>
+      <h3>Understanding Swar & Octaves</h3>
       <ul>
-        <li><strong>Shuddha Swar:</strong> सा रे ग म प ध नि</li>
+        <li><strong>Shuddha Swar:</strong> Sa Re Ga Ma Pa Dha Ni</li>
         <li><strong>Komal/Tivra Swar:</strong> none here</li>
         <li><strong>Octaves:</strong></li>
         <ul>
-          <li><code>.सा, .रे, .ग</code> = lower octave</li>
-          <li><code>सा, रे, ग</code> = middle octave</li>
-          <li><code>सा’, रे’, ग’</code> = higher octave</li>
+          <li><code>.Sa, .Re, .Ga</code> = lower octave</li>
+          <li><code>Sa, Re, Ga</code> = middle octave</li>
+          <li><code>Sa’, Re’, Ga’</code> = higher octave</li>
         </ul>
         <li><strong>Notes in <code>{ }</code>:</strong> Murki</li>
         <li><strong><code>~</code>:</strong> Glide (meend)</li>
-        <li><strong>Kann Swar:</strong> in parentheses (e.g., (S), (N))</li>
+        <li><strong>Kann Swar:</strong> in parentheses (e.g., (Sa), (Ni))</li>
       </ul>
     </section>
 
-     <section class="video-section">
-    <h2> Watch on YouTube</h2>
+
+  <!-- ================== VIDEO + REACTIONS ================== -->
+  <section class="video-zone">
+
     <div class="video-container">
-      <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/zMGYCKr5trw" 
-        title="Ye Raaten, Ye Mausam YouTube Video" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      <iframe
+          loading="lazy"
+        src="https://www.youtube.com/embed/zMGYCKr5trw"
+        title="Ye Raaten, Ye Mausam"
+        frameborder="0"
         allowfullscreen>
       </iframe>
     </div>
+
+    <!-- 🔴 CHANGE song-id FOR EACH SONG -->
+    <div class="stats-panel reaction-box" data-song-id="ye-raaten-ye-mausam">
+
+      <button class="stat reaction" data-reaction="like">
+        <span class="icon">👍</span>
+        <span class="count" id="like-count">0</span>
+      </button>
+
+      <button class="stat reaction" data-reaction="love">
+        <span class="icon">❤️</span>
+        <span class="count" id="love-count">0</span>
+      </button>
+
+      <div class="stat stat-view">
+        <span class="icon">👁️</span>
+        <span class="count" id="view-count">0</span>
+      </div>
+
+<button class="stat stat-share" id="shareBtn" type="button">
+  <span class="icon">🔗</span>
+  <span class="count" id="share-count">0</span>
+</button>
+
+    </div>
   </section>
     
-    <section>
-      <h2>Notation & Lyrics</h2>
-      <pre class="notranslate">
-<strong>Ye | raaten, | ye | mausam,</strong>  
-सा सा~ | ग रे | सा | सा~ग रे
+ <!-- ================== SARGAM ================== -->
+  <section>
+    <h2>Sargam Notations</h2>
 
-<strong>nadi | ka | kinaara,</strong>  
-सा सा~ग | रे | सा न (S) नि~प
+    <div class="sargam-content">
+<pre class="notranslate">
+<strong>MUKHDA:</strong>
 
-<strong>ye | chanchal | hava</strong>  
-प | प~रे रे~सा | सा सा
+Ye | raaten, | ye | mausam  
+Sa Sa~ | Ga Re | Sa | Sa~Ga Re
 
-<strong>kaha | do | dilon | ne,</strong>  
-प’ प’ | प’ म | म प’ | ध
+nadi | ka | kinaara  
+Sa Sa~Ga | Re | Sa Ni (Sa) Ni~Pa
 
-<strong>ke | mil | kar | kabhi | ham</strong>  
-ध | प | म~ग | ग म | प
+ye | chanchal | hava  
+Pa | Pa~Re Re~Sa | Sa Sa
 
-<strong>Na | honge | juda</strong>  
-प | म ग म ग म | ग रे
+kaha | do | dilon | ne  
+Pa’ Pa’ | Pa’ Ma | Ma Pa’ | Dha
 
-(Repeat: Ye raaten, ye mausam…)
+ke | mil | kar | kabhi | ham  
+Dha | Pa | Ma~Ga | Ga Ma | Pa
 
-<strong>Interlude:</strong>  
-प ध प ग…  
-म ग म ग रे सा ग…  
-प नि प रे  
-रे सा रे सा नि प
+Na | honge | juda  
+Pa | Ma Ga Ma Ga Ma | Ga Re
 
-<strong>Ye | kya | baat | hai</strong>  
-प’ | प’ सा’ | सा नि | प’
+(Repeat Mukhda)
 
-<strong>aaj | ki | chaandani | men</strong>  
-म म | म प’ | ग म प ध | प
+---
 
-<strong>Interlude:</strong>  
-नि’… सा’ ग’ रे’ नि’ सा’
+<strong>INTERLUDE:</strong>
 
-<strong>ke | ham | kho | gaye</strong>  
-प’ | प’ सा’ | सा | नि प’
+Pa Dha Pa Ga…  
+Ma Ga Ma Ga Re Sa Ga…  
+Pa Ni Pa Re  
+Re Sa Re Sa Ni Pa
 
-<strong>pyaar | ki | raagini | men</strong>  
-म म | म प’ | ग म प ध | प
+---
 
-<strong>Ye | baahon | men | baahen,</strong>  
-प | प~नि नि | ध | ध नि सा’
+<strong>ANTARA:</strong>
 
-<strong>ye | bahaki | nigaahen</strong>  
-ध’ | नि नि | ध नि ध सा’
+Ye | kya | baat | hai  
+Pa’ | Pa’ Sa’ | Sa Ni | Pa’
 
-<strong>lo | aane | laga | zindagi | ka | maza</strong>  
-ध’ | नि नि~प | प प म | प म र~सा | र | म ग
+aaj | ki | chaandani | men  
+Ma Ma | Ma Pa’ | Ga Ma Pa Dha | Pa
 
-(Repeat: Ye raaten, ye mausam…)
+<strong>INTERLUDE:</strong>
+Ni’… Sa’ Ga’ Re’ Ni’ Sa’
 
-      </pre>
-    </section>
+ke | ham | kho | gaye  
+Pa’ | Pa’ Sa’ | Sa | Ni Pa’
+
+pyaar | ki | raagini | men  
+Ma Ma | Ma Pa’ | Ga Ma Pa Dha | Pa
+
+Ye | baahon | men | baahen  
+Pa | Pa~Ni Ni | Dha | Dha Ni Sa’
+
+ye | bahaki | nigaahen  
+Dha’ | Ni Ni | Dha Ni Dha Sa’
+
+lo | aane | laga | zindagi | ka | maza  
+Dha’ | Ni Ni~Pa | Pa Pa Ma | Pa Ma Re~Sa | Re | Ma Ga
+
+(Repeat Mukhda)
+</pre>
+    </div>
+  </section>
 
     <p><a href="../songs.html">⬅️ Back to song list</a></p>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
-  <small>
-    © 2025 SargamWorld — All rights reserved. 
-    <a href="privacy.html">Privacy</a> · 
-    <a href="terms.html">Terms</a> · 
-    <a href="support.html">Support Us </a>
-  </small>
-</footer>
+    <small>
+      © 2025 SargamWorld — All rights reserved.
+      <a href="../privacy.html">Privacy</a> ·
+      <a href="../terms.html">Terms</a> ·
+      <a href="../support.html">Support Us</a>
+    </small>
+  </footer>
 
-<style>
-  .video-section {
-  text-align: center;
-  margin: 30px 0;
-}
+  <!-- =================== STYLES =================== -->
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+<!-- =================== FIREBASE SDKs =================== -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-}
+<script src="../js/reactions.js"></script>
+  
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  color: #5a5a5a;
-  font-size: 0.9rem;
-  background-color: #f3eee8;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-.site-footer a {
-  color: #c31432;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.site-footer a:hover {
-  text-decoration: underline;
-}
-</style>
 </body>
 </html>
